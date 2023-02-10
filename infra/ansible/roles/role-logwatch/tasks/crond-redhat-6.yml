@@ -1,0 +1,14 @@
+---
+# yamllint disable rule:line-length
+# yamllint disable rule:truthy
+
+- name: Make sure crond is enabled and running
+  service:
+    name: crond
+    enabled: yes
+    state: started
+  tags:
+    - never
+    - logwatch_check_crond
+
+...

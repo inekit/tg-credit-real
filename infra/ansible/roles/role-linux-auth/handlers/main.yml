@@ -1,0 +1,10 @@
+---
+# yamllint disable rule:line-length
+# yamllint disable rule:truthy
+
+- name: Restart sshd
+  service:
+    name: sshd
+    state: restarted
+
+...

@@ -1,0 +1,37 @@
+---
+# yamllint disable rule:line-length
+# yamllint disable rule:truthy
+
+
+- name: Configure /etc/aliases
+  block:
+    - name: Check if newaliases executable is present
+      shell:
+        cmd: "command -v {{ newaliases_executable }}"
+
+    - name: Render /etc/aliases
+      template:
+        src: "templates/{{ mail_aliases_filename }}.j2"
+        dest: "{{ mail_aliases_filename }}"
+        owner: "{{ mail_aliases_owner }}"
+        group: "{{ mail_aliases_group }}"
+        mode: 0664
+      notify: handler_newaliases
+
+    - name: Flushing handlers
+      meta: flush_handlers
+
+    - name: Send out test emails
+      shell:
+        cmd: |
+          echo -e "{{ mail_aliases_test_email }}" | mail -s "{{ mail_aliases_test_subject }}" "{{ item }}"
+      with_items:
+        - "{{ mail_aliases_test_users }}"
+      tags:
+        - never
+        - mail_aliases_test
+
+  tags:
+    - mail_aliases
+
+...

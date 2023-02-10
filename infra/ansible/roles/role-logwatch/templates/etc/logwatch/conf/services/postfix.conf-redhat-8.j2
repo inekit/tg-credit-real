@@ -1,0 +1,115 @@
+Title = "Postfix"
+LogFile = maillog
+
+*OnlyService         = "(?:post(?:fix|grey|fwd)|policyd-spf)(?:/[-\w]*)?"
+$postfix_Syslog_Name = "(?:post(?:fix|grey|fwd)|policyd-spf)"
+
+$postfix_Max_Report_Width = 100
+$postfix_Line_Style = Truncate
+
+$postfix_ipaddr_width = 15
+$postfix_Enable_Long_Queue_Ids = Yes
+$postfix_Show_Delays = Yes
+$postfix_Show_Sect_Vars = No
+$postfix_Show_Unknown = Yes
+$postfix_Show_Summary = Yes
+$postfix_Delays_Percentiles = "0 25 50 75 90 95 98 100"
+$postfix_Reject_Reply_Patterns = "5.. 4.. Warn"
+
+$postfix_Sent                       = 1
+$postfix_SentLmtp                   = 1
+$postfix_Delivered                  = 1
+$postfix_Forwarded                  = 1
+$postfix_ConnectionLostInbound      = 1
+$postfix_TimeoutInbound             = 1
+$postfix_ConnectToFailure           = 2
+
+$postfix_EnvelopeSenders            = 0
+$postfix_EnvelopeSenderDomains      = 0
+$postfix_ConnectionInbound          = 0
+$postfix_ByIpRejects                = 0
+
+$postfix_PanicError                 = 10
+$postfix_FatalError                 = 10
+$postfix_Error                      = 10
+$postfix_Anvil                      = 3
+$postfix_AttrError                  = 10
+$postfix_CommunicationError         = 10
+$postfix_DatabaseGeneration         = 10
+$postfix_DNSError                   = 10
+$postfix_HeloError                  = 10
+$postfix_HostnameValidationError    = 10
+$postfix_HostnameVerification       = 10
+$postfix_IllegalAddrSyntax          = 10
+$postfix_LdapError                  = 10
+$postfix_MailerLoop                 = 10
+$postfix_MapProblem                 = 10
+$postfix_MessageWriteError          = 10
+$postfix_NumericHostname            = 10
+$postfix_ProcessExit                = 10
+$postfix_ProcessLimit               = 10
+$postfix_QueueWriteError            = 10
+$postfix_RBLError                   = 10
+$postfix_SaslAuthFail               = 10
+$postfix_SmtpConversationError      = 10
+$postfix_StartupError               = 10
+$postfix_WarningsOther              = 10
+
+$postfix_Bcced                      = 10
+$postfix_Discarded                  = 10
+$postfix_Filtered                   = 10
+$postfix_Hold                       = 10
+$postfix_Prepended                  = 10
+$postfix_Redirected                 = 10
+$postfix_Replaced                   = 10
+$postfix_Warned                     = 10
+
+$postfix_RejectBody                 = 10
+$postfix_RejectClient               = 10
+$postfix_RejectConfigError          = 10
+$postfix_RejectContent              = 10
+$postfix_RejectData                 = 10
+$postfix_RejectEtrn                 = 10
+$postfix_RejectHeader               = 10
+$postfix_RejectHelo                 = 10
+$postfix_RejectInsufficientSpace    = 10
+$postfix_RejectLookupFailure        = 10
+$postfix_RejectMilter               = 10
+$postfix_RejectProxy                = 10
+$postfix_RejectRBL                  = 10
+$postfix_RejectRecip                = 10
+$postfix_RejectRelay                = 10
+$postfix_RejectSender               = 10
+$postfix_RejectSize                 = 10
+$postfix_RejectUnknownClient        = 10
+$postfix_RejectUnknownReverseClient = 10
+$postfix_RejectUnknownUser          = 10
+$postfix_RejectUnverifiedClient     = 3
+$postfix_RejectVerify               = 10
+
+$postfix_Deferred                   = 10
+$postfix_Deferrals                  = 10
+$postfix_BounceLocal                = 10
+$postfix_BounceRemote               = 10
+
+$postfix_Discarded                  = 10
+$postfix_ReturnedToSender           = 10
+$postfix_NotificationSent           = 10
+$postfix_ConnectionLostOutbound     = 10
+
+$postfix_Deliverable                = 10
+$postfix_Undeliverable              = 10
+$postfix_PixWorkaround              = 10
+$postfix_SaslAuth                   = 10
+$postfix_TlsServerConnect           = 10
+$postfix_TlsClientConnect           = 10
+$postfix_TlsUnverified              = 10
+$postfix_TlsOffered                 = 10
+$postfix_SMTPProtocolViolation      = 10
+
+$postfix_Postscreen                 = 1
+$postfix_DNSBLog                    = 1
+
+$postfix_PolicySPF                  = 10
+$postfix_PolicydWeight              = 10
+$postfix_Postgrey                   = 10

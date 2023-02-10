@@ -1,0 +1,12 @@
+---
+# yamllint disable rule:line-length
+# yamllint disable rule:truthy
+
+- name: Logwatch test run
+  shell:
+    cmd: "{{ logwatch_executable }}"
+  tags:
+    - never
+    - logwatch_test
+
+...

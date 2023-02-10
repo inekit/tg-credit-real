@@ -1,0 +1,29 @@
+---
+# yamllint disable rule:line-length
+# yamllint disable rule:truthy
+
+- name: Logrotate configuration block
+  tags:
+    - logrotate
+    - logrotate_config
+
+  block:
+
+    - name: Render logrotate.conf
+      template:
+        src: templates/{{ logrotate_conf_file }}.j2
+        dest: "{{ logrotate_conf_file }}"
+        owner: "{{ logrotate_owner }}"
+        group: "{{ logrotate_group }}"
+        mode: 0664
+
+    - name: Render logrotate.conf
+      template:
+        src: "templates/{{ logrotate_include_dir }}/logrotate_unit_config.j2"
+        dest: "{{ logrotate_include_dir }}/{{ item.name }}"
+        owner: "{{ logrotate_owner }}"
+        group: "{{ logrotate_group }}"
+        mode: 0644
+      with_items: "{{ logrotate_rules }}"
+
+...

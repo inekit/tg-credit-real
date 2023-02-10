@@ -1,0 +1,15 @@
+---
+# yamllint disable rule:line-length
+# yamllint disable rule:truthy
+
+- name: Make sure crond is enabled and running
+  systemd:
+    name: crond
+    enabled: yes
+    masked: no
+    state: started
+  tags:
+    - never
+    - logwatch_check_crond
+
+...

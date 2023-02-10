@@ -1,0 +1,125 @@
+---
+# yamllint disable rule:line-length
+# yamllint disable rule:truthy
+
+- name: Logwatch configuration block
+  tags:
+    - logwatch
+    - logwatch_config
+
+  block:
+
+    - name: Render logwatch.conf
+      template:
+        src: templates/{{ logwatch_conf_file }}.j2
+        dest: "{{ logwatch_conf_file }}"
+        owner: "{{ logwatch_owner }}"
+        group: "{{ logwatch_group }}"
+        mode: 0664
+
+    - name: Calculating what is up for rendering
+      set_fact:
+        services_templates_left: |
+          {%- set result = logwatch_services_templates_default + logwatch_services_templates -%}
+          {{ result }}
+
+    - name: Render services configuration (OS-specific)
+      template:
+        src: "templates/{{ logwatch_services_dir }}/{{ item }}-{{linux_os_family}}.j2"
+        dest: "{{ logwatch_services_dir }}/{{ item }}"
+        owner: "{{ logwatch_owner }}"
+        group: "{{ logwatch_group }}"
+        mode: 0664
+      ignore_errors: yes
+      register: rendered_os_specific
+      with_items: "{{ services_templates_left }}"
+
+    - name: Calculating what's done with OS-specific templates
+      set_fact:
+        services_templates_done: |
+          {%- set result = [] -%}
+          {%- for item in rendered_os_specific.results -%}
+            {%- if not item.failed -%}
+              {{ result.append(item.item) }}
+            {%- endif -%}
+          {%- endfor -%}
+          {{ result }}
+
+    - name: Calculating what's left to render after OS-specific templates
+      set_fact:
+        services_templates_left: |
+          {{ services_templates_left | difference(services_templates_done) }}
+
+    - name: Render services configuration (default)
+      template:
+        src: "templates/{{ logwatch_services_dir }}/{{ item }}-default.j2"
+        dest: "{{ logwatch_services_dir }}/{{ item }}"
+        owner: "{{ logwatch_owner }}"
+        group: "{{ logwatch_group }}"
+        mode: 0664
+      ignore_errors: yes
+      register: rendered_default
+      with_items: "{{ services_templates_left }}"
+
+    - name: Calculating what's done with default templates
+      set_fact:
+        services_templates_done: |
+          {%- set result = [] -%}
+          {%- for item in rendered_default.results -%}
+            {%- if not item.failed -%}
+              {{ result.append(item.item) }}
+            {%- endif -%}
+          {%- endfor -%}
+          {{ result + services_templates_done}}
+
+    - name: Calculating what's left to render after default templates
+      set_fact:
+        services_templates_left: |
+          {{ services_templates_left | difference(services_templates_done) }}
+
+    - name: Render services configuration (untagged)
+      template:
+        src: "templates/{{ logwatch_services_dir }}/{{ item }}.j2"
+        dest: "{{ logwatch_services_dir }}/{{ item }}"
+        owner: "{{ logwatch_owner }}"
+        group: "{{ logwatch_group }}"
+        mode: 0664
+      ignore_errors: yes
+      register: rendered_untagged
+      with_items: "{{ services_templates_left }}"
+
+    - name: Calculating what's done with untagged templates
+      set_fact:
+        services_templates_done: |
+          {%- set result = [] -%}
+          {%- for item in rendered_untagged.results -%}
+            {%- if not item.failed -%}
+              {{ result.append(item.item) }}
+            {%- endif -%}
+          {%- endfor -%}
+          {{ result + services_templates_done}}
+      tags:
+        - config
+
+    - name: Calculating what's left to render after untagged templates
+      set_fact:
+        services_templates_left: |
+          {{ services_templates_left | difference(services_templates_done) }}
+
+    - name: Warning message if not all templates were rendered
+      debug:
+        msg:
+          - "********************************"
+          - "Not all templates were rendered:"
+          - "{{ services_templates_left | join(', ') }}"
+          - ""
+          - "A fail is going to happen next. "
+          - "********************************"
+      when: services_templates_left | length
+
+    - name: Interruptin if not all templates were rendered
+      fail:
+        msg: "Not all templates were rendered"
+      when: services_templates_left | length
+
+...

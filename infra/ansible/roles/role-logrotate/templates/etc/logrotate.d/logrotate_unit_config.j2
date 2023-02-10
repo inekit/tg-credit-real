@@ -1,0 +1,20 @@
+{% for file in item.files %}
+{{ file }}
+{% endfor %}
+{
+{% for directive in item.directives %}
+{% if directive is mapping %}
+{% for key, value in directive.items() %}
+{% if key == 'postrotate' %}
+  {{ key }}
+    {{ value }}
+  endscript
+{% else %}
+  {{ key }} {{ value }}
+{% endif %}
+{% endfor %}
+{% else %}
+  {{ directive }}
+{% endif %}
+{% endfor %}
+}

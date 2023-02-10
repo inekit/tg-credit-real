@@ -1,0 +1,13 @@
+---
+# yamllint disable rule:line-length
+# yamllint disable rule:truthy
+
+- include: facts.yml
+- include: packages.yml
+- include: network.yml
+- include: setup.yml
+- include: swap.yml
+- include: services.yml
+- include: sysctl.yml
+
+...

@@ -1,0 +1,27 @@
+# vi: shiftwidth=3 tabstop=3 et
+
+LogDir = {{ logwatch_LogDir }}
+TmpDir = {{ logwatch_TmpDir }}
+
+Output = {{ logwatch_Output }}
+Format = {{ logwatch_Format }}
+
+{% if logwatch_Encode is defined %}
+Encode = {{ logwatch_Encode }}	
+{% endif %}
+
+MailTo = {{ logwatch_MailTo | join(',') }}
+MailFrom = {{ logwatch_MailFrom }}
+
+Archives = {{ logwatch_Archives }}
+Range = {{ logwatch_Range }}
+
+Detail = {{ logwatch_Detail }}
+
+{% for item in logwatch_Service %}
+Service = {{ item }}
+{% endfor %}
+
+LogFile = {{ logwatch_LogFile }}
+mailer = {{ logwatch_mailer }}
+

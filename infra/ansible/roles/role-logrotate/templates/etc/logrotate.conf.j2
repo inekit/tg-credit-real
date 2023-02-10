@@ -1,0 +1,21 @@
+{{ logrotate_default_period }}
+rotate {{ logrotate_default_count }}
+
+{% if logrotate_default_create %}
+create {{ logrotate_default_create.mode | default('') }} {{ logrotate_default_create.owner | default('') }} {{ logrotate_default_create.group | default('') }}
+{% endif %}
+
+{% if logrotate_default_dateext %}
+dateext
+{% endif %}
+
+{% if logrotate_default_compress %}
+compress
+{% endif %}
+
+{% if logrotate_include_dir %}
+include {{ logrotate_include_dir }}
+{% endif %}
+
+{% from '_os_specific.j2' import logrotate_conf with context %}
+{{ logrotate_conf(linux_os_family) }}

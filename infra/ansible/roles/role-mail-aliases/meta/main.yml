@@ -1,0 +1,21 @@
+---
+# yamllint disable rule:line-length
+# yamllint disable rule:truthy
+
+galaxy_info:
+  author: Pavel Kim
+  description: Configures /etc/aliases
+  license: GPLv3
+  
+  min_ansible_version: 1.2
+
+  galaxy_tags:
+    - rhel
+    - centos
+    - linux
+    - mail
+    - aliases
+
+dependencies: []
+
+...
