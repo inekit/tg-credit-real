@@ -2,6 +2,10 @@
 # yamllint disable rule:line-length
 # yamllint disable rule:truthy
 
+swap_file_enabled: yes
+swap_file_path: /swap
+swap_file_size_mb: 768
+
 nameservers:
   - 8.8.8.8
   - 8.8.4.4
