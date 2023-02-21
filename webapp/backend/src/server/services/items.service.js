@@ -110,8 +110,11 @@ class UsersService {
 
   sendFiles({ user_id, item_id }, ctx) {
     return new Promise(async (res, rej) => {
-      await ctx.telegram.sendMessage(user_id, item_id);
-      await ctx.telegram.sendMessage(user_id, ctx.getTitle("ITEM_INFO_TITLE"));
+      console.log(user_id, item_id);
+      await ctx.telegram.sendMessage(user_id, item_id).catch(console.log);
+      await ctx.telegram
+        .sendMessage(user_id, ctx.getTitle("ITEM_INFO_TITLE"))
+        .catch(console.log);
       res();
     });
   }
