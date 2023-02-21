@@ -42,10 +42,16 @@ mainStage.hears(titles.getValues("BUTTON_BACK_ADMIN"), (ctx) => {
   ctx.scene.enter("adminScene");
 });
 
-mainStage.on("web_app_data", (ctx) => {
+mainStage.on("message", async (ctx, next) => {
+  console.log(ctx.message.web_app_data);
+  //ctx.reply(ctx.message.web_app_data.data);
+  next();
+});
+
+/*mainStage.on("web_app_data", (ctx) => {
   console.log(ctx);
   ctx.replyWithTitle("ITEM_INFO_TITLE");
-});
+});*/
 
 mainStage.action("admin", (ctx) => ctx.scene.enter("adminScene"));
 

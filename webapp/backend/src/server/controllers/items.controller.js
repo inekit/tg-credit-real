@@ -1,4 +1,4 @@
-const { getAll: gAllFromDB } = require("../services/items.service");
+const { getAll: gAllFromDB, sendFiles } = require("../services/items.service");
 
 function get(ctx) {
   return (req, res, next) => {
@@ -8,6 +8,15 @@ function get(ctx) {
   };
 }
 
+function getFiles(ctx) {
+  return (req, res, next) => {
+    sendFiles(Object.assign(req.query), ctx)
+      .then((data) => res.send(data))
+      .catch((error) => next(error));
+  };
+}
+
 module.exports = {
   get,
+  getFiles,
 };

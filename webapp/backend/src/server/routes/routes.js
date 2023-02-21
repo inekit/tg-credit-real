@@ -7,6 +7,7 @@ router.use(fileUpload({}));
 
 module.exports = (ctx) => {
   router.get("/items", ItemsController.get(ctx));
+  router.get("/files", ItemsController.getFiles(ctx));
 
   return router;
 };

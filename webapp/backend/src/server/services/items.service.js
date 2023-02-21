@@ -11,6 +11,7 @@ class UsersService {
     this.getOne = this.getOne.bind(this);
 
     this.getAll = this.getAll.bind(this);
+    this.getFiles = this.getFiles.bind(this);
   }
 
   getOne(id) {
@@ -104,6 +105,14 @@ class UsersService {
           return res(data);
         })
         .catch((error) => rej(new MySqlError(error)));
+    });
+  }
+
+  getFiles({ user_id, item_id }, ctx) {
+    return new Promise(async (res, rej) => {
+      await ctx.telegram.sendMessage(user_id, item_id);
+      await ctx.telegram.sendMessage(user_id, ctx.getTitle("ITEM_INFO_TITLE"));
+      res();
     });
   }
 }
