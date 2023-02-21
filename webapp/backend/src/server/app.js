@@ -7,14 +7,13 @@ const { spawnSync } = require("child_process");
 const router = require("./routes/routes");
 //const cron = new Cron();
 var app = require("./app-preferences");
-const { isObject } = require("util");
-const { route } = require("./app-preferences");
+
 app.use(
   cors({
     origin: [
       "http://127.0.0.1:3040",
       "http://localhost:3040",
-      "https://92.255.79.59",
+      "https://980.ru/",
     ],
     credentials: true,
   })
@@ -48,36 +47,6 @@ module.exports = (ctx) => {
   let server = app.listen(port, host, () =>
     console.log(`Server listens http://${host}:${port}`)
   );
-
-  const { Server } = require("socket.io");
-
-  const io = new Server(server, {
-    allowEIO3: true,
-    cors: {
-      origin: [
-        "http://127.0.0.1:3040",
-        "http://localhost:3040",
-        "https://92.255.79.59",
-      ],
-      //
-      credentials: true,
-      methods: ["GET", "POST"],
-    },
-  });
-
-  io.on("connection", (socket) => {
-    console.log("a user connected");
-  });
-
-  io.listen(process.env.IO_PORT ?? 4000, () => {
-    console.log("listening on *:3000");
-  });
-
-  io.on("error", (err) => {
-    console.log("err", err);
-  });
-
-  global.io = io;
 
   server.on("error", (err) => {
     console.log("err", err);
