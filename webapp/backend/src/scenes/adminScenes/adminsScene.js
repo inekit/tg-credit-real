@@ -104,9 +104,19 @@ scene.action("addAdmin", async (ctx) => {
   ctx.wizard.next();
 });
 
-newIdHandler.on("message", (ctx) => {
+newIdHandler.on("message", async (ctx) => {
   ctx.scene.state.newId = ctx.message?.forward_from?.id ?? ctx.message?.text;
-  ctx.replyWithKeyboard("ADD_AS_SUPERADMIN", "confirm_cancel_keyboard");
+
+  if (ctx.scene.state.newId !== parseInt(ctx.scene.state.newId)) {
+    const connection = await tOrmCon;
+    ctx.scene.state.newId = (
+      await connection
+        .query("select * from users where username = $1", [ctx.message?.text])
+        .catch(console.log)
+    )?.[0]?.id;
+  }
+
+  await ctx.replyWithKeyboard("ADD_AS_SUPERADMIN", "confirm_cancel_keyboard");
 });
 
 newIdHandler.action("confirm", async (ctx) => {
@@ -127,17 +137,6 @@ newIdHandler.action("cancel", async (ctx) => {
 
 roleHandler.action("confirm", async (ctx) => {
   const { newId, canUpdateAdmins } = ctx.scene.state;
-
-  const res = await require("../../Utils/authAdmin")(ctx.from.id, true).catch(
-    () => {
-      ctx.answerCbQuery("CANT_AUTH");
-      return ctx.scene.enter("clientScene");
-    }
-  );
-
-  if (!res) {
-    return ctx.scene.enter("clientScene");
-  }
 
   const connection = await tOrmCon;
   await connection

@@ -2,8 +2,8 @@ import { createStore } from 'vuex'
 
 export default createStore({
   state: {
-    restAddr: 'http://127.0.0.1:3000/api', //'https:///92.255.79.59/api/admin/', //'http://127.0.0.1:3030/api/admin/',
-    socketAddr: 'https://92.255.79.59',
+    restAddr: 'https://980.ru/api', //'http://127.0.0.1:3000/api', //'https:///92.255.79.59/api/admin/', //'http://127.0.0.1:3030/api/admin/',
+    //socketAddr: 'https://92.255.79.59',
     sidebarVisible: '',
     sidebarUnfoldable: false,
     searchQuery: '',

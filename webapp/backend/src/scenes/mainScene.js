@@ -18,13 +18,11 @@ const scene = new CustomWizardScene("clientScene").enter(async (ctx) => {
   const connection = await tOrmCon;
 
   if (!userObj) {
-    const referer_id = /^ref-([0-9]+)$/g.exec(ctx.startPayload)?.[1];
     userObj = await connection
       .getRepository("User")
       .save({
         id: ctx.from.id,
         username: ctx.from.username,
-        referer_id,
       })
       .catch(async (e) => {
         console.log(e);
@@ -33,46 +31,11 @@ const scene = new CustomWizardScene("clientScene").enter(async (ctx) => {
   }
 
   if (userObj.user_id)
-    ctx.replyWithKeyboard("ENTER_NAME", "main_menu_admin_keyboard");
-  //else ctx.replyWithKeyboard("ENTER_NAME", "main_keyboard");
+    return ctx.replyWithKeyboard("AGREE_TITLE", "main_admin_keyboard");
 
-  ctx.replyWithKeyboard("AGREE_TITLE", {
-    name: "agree_keyboard",
-    args: [userObj?.user_id],
-  });
+  ctx.replyWithKeyboard("AGREE_TITLE", "agree_keyboard");
 });
-/*
-  .addSelect({
-    variable: "agree",
-    options: {
-      "Отправить посылку": "agree",
-      "Могу доставить": "delivery",
-    },
-    cb: async (ctx) => {
-      await ctx.answerCbQuery().catch((e) => {});
-      return ctx.replyNextStep();
-    },
-  })
-  .addSelect({
-    variable: "question1",
-    header: "QUESTION_1",
-    keyboard: "question1_keyboard",
-    options: {
-      1: 2,
-      2: 2,
-      3: 3,
-      4: 4,
-      5: 5,
-      6: "skip",
-    },
-    cb: async (ctx) => {
-      await ctx.answerCbQuery().catch((e) => {});
 
-      ctx.scene.state.input = { question1: ctx.match[0] };
-
-      ctx.replyNextStep();
-    },
-  })*/
 scene
   .addSelect({
     variable: "agreement",
@@ -100,6 +63,15 @@ scene
 
       ctx.scene.state.input = { question1: ctx.match[0] };
 
+      const connection = await tOrmCon;
+
+      await connection
+        .query("update users set question_1 = $1 where id = $2", [
+          ctx.match[0],
+          ctx.from.id,
+        ])
+        .catch(console.log);
+
       ctx.replyWithKeyboard("WEBAPP_TITLE", "webapp_keyboard");
       ctx.wizard.selectStep(ctx.wizard.cursor + 1);
     },
@@ -114,5 +86,16 @@ scene
       ctx.replyWithTitle("ABOUT_TITLE");
     },
   });
+
+scene.command("vitrina", (ctx) => {
+  ctx.replyWithKeyboard("WEBAPP_TITLE", "webapp_keyboard");
+  ctx.wizard.selectStep(2);
+});
+
+scene.command("about", (ctx) => {
+  ctx.replyWithTitle("ABOUT_TITLE");
+});
+
+scene.on("message", (ctx) => ctx.replyWithTitle("ENTER_RIGHT_COMMAND"));
 
 module.exports = [scene];

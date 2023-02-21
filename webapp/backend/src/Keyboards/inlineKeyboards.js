@@ -10,14 +10,20 @@ const { stat } = require("fs");
 exports.agree_keyboard = (ctx) =>
   inlineKeyboard([callbackButton(ctx.getTitle("AGREE_BUTTON"), "agree")]);
 
+exports.main_admin_keyboard = (ctx) =>
+  inlineKeyboard([
+    callbackButton(ctx.getTitle("AGREE_BUTTON"), "agree"),
+    callbackButton(ctx.getTitle("ADMIN_MENU_BUTTON"), "admin"),
+  ]);
+
 exports.question1_keyboard = (ctx) =>
   inlineKeyboard([
-    [callbackButton(ctx.getTitle("answer_1_1"), "1")],
-    [callbackButton(ctx.getTitle("answer_1_2"), "2")],
-    [callbackButton(ctx.getTitle("answer_1_3"), "3")],
-    [callbackButton(ctx.getTitle("answer_1_4"), "4")],
-    [callbackButton(ctx.getTitle("answer_1_5"), "5")],
-    [callbackButton(ctx.getTitle("answer_skip"), "skip")],
+    [callbackButton(ctx.getTitle("ANSWER_1_1"), "1")],
+    [callbackButton(ctx.getTitle("ANSWER_1_2"), "2")],
+    [callbackButton(ctx.getTitle("ANSWER_1_3"), "3")],
+    [callbackButton(ctx.getTitle("ANSWER_1_4"), "4")],
+    [callbackButton(ctx.getTitle("ANSWER_1_5"), "5")],
+    [callbackButton(ctx.getTitle("ANSWER_SKIP"), "skip")],
   ]);
 
 exports.webapp_keyboard = (ctx) =>

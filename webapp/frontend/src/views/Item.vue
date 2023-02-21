@@ -21,7 +21,13 @@ export default {
         }
     },
     mounted(){
-        this.getItem(this.$route.params.id)
+        this.getItem(this.$route.params.id);
+
+        window.Telegram.WebApp.MainButton.enable();
+
+        window.Telegram.WebApp.onEvent('mainButtonClicked', function(){
+            window.Telegram.WebApp.sendData(this.item.id); 
+        });
     },
     methods: {
         getItem(id){

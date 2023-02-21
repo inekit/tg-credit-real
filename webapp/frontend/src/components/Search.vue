@@ -1,7 +1,6 @@
 <template>
-    <h1>Каталог</h1>
     <div class="search-block">
-        <input type="search" :value="$store.state.searchQuery" @input="search" @change="openResults" placeholder="Найти.."/>
+        <input type="search" :value="$store.state.searchQuery" @input="search" @change="openResults" placeholder="Поиск.."/>
     </div>
   </template>
   
@@ -29,6 +28,23 @@ export default {
 }
 </script>
 
-  <style lang="scss">
-  </style>
+<style lang="scss">
+.search-block{
+    margin: 1rem; 
+
+    input{
+        width: 100%;
+        height: 40px;
+        border-radius: 0.5rem;
+        border: 1px solid;
+        border-color: #e2e2e2;
+        font-size: 1rem;
+        padding: 1rem;
+        &:hover{
+            border-color: #7090fa;
+
+        }
+    }
+}
+</style>
   

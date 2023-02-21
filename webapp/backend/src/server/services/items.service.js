@@ -1,7 +1,4 @@
 const tOrmCon = require("../../db/connection");
-const checkInputData = require("../utils/checkInputData");
-const sendToOpposite = require("../../Utils/sendToOpposite");
-
 const {
   HttpError,
   MySqlError,

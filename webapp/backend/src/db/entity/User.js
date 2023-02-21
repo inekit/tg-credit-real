@@ -17,30 +17,10 @@ module.exports = new EntitySchema({
       type: "date",
       nullable: true,
     },
-    balance_rub: {
-      type: "int",
-      nullable: false,
-      default: 0,
-    },
-    total_income_referal: {
-      type: "int",
-      nullable: false,
-      default: 0,
-    },
-    test_url_used: {
-      type: "boolean",
-      nullable: false,
-      default: false,
-    },
-    referer_id: {
-      type: "bigint",
-      nullable: true,
-    },
-    status: {
+    question_1: {
       type: "enum",
-      enum: ["newbie", "user", "regular", "reliable", "restricted"],
-      nullable: false,
-      default: "newbie",
+      enum: ["1", "2", "3", "4", "5", "skip"],
+      nullable: true,
     },
   },
   relations: {

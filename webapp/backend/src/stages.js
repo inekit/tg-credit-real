@@ -25,9 +25,10 @@ mainStage.start(async (ctx) => ctx.scene.enter("clientScene"));
 mainStage.hears(titles.getValues("BUTTON_BACK_USER"), (ctx) =>
   ctx.scene.enter("clientScene")
 );
-mainStage.hears(titles.getValues("BUTTON_CLIENT_MENU"), (ctx) =>
-  ctx.scene.enter("clientScene")
-);
+mainStage.hears(titles.getValues("BUTTON_CLIENT_MENU"), async (ctx) => {
+  await ctx.replyWithKeyboard("BACK_CLIENT_TITLE", "remove_keyboard");
+  ctx.scene.enter("clientScene");
+});
 
 const adminStage = new Stage([
   //require("./scenes/adminScenes/adminScene"),
@@ -38,16 +39,15 @@ const adminStage = new Stage([
 ]);
 
 mainStage.hears(titles.getValues("BUTTON_BACK_ADMIN"), (ctx) => {
-  console.log(1);
   ctx.scene.enter("adminScene");
 });
 
-adminStage.hears(
-  titles.getValues("BUTTON_ADMIN_MENU"),
-  (ctx) =>
-    store.isAdmin(ctx?.from?.id) &&
-    ctx.scene.enter("adminScene", { edit: true })
-);
+mainStage.on("web_app_data", (ctx) => {
+  console.log(ctx);
+  ctx.replyWithTitle("ITEM_INFO_TITLE");
+});
+
+mainStage.action("admin", (ctx) => ctx.scene.enter("adminScene"));
 
 const stages = new Composer();
 
