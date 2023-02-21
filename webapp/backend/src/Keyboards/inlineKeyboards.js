@@ -22,7 +22,7 @@ exports.question1_keyboard = (ctx) =>
 
 exports.webapp_keyboard = (ctx) =>
   inlineKeyboard([
-    [webAppButton(ctx.getTitle("WEBAPP_BUTTON"), "https://127.0.0.1:3040")],
+    [webAppButton(ctx.getTitle("WEBAPP_BUTTON"), "https://980.ru")],
     [callbackButton(ctx.getTitle("ABOUT_BUTTON"), "help")],
   ]);
 
