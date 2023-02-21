@@ -11,7 +11,7 @@ class UsersService {
     this.getOne = this.getOne.bind(this);
 
     this.getAll = this.getAll.bind(this);
-    this.getFiles = this.getFiles.bind(this);
+    this.sendFiles = this.sendFiles.bind(this);
   }
 
   getOne(id) {
@@ -108,7 +108,7 @@ class UsersService {
     });
   }
 
-  getFiles({ user_id, item_id }, ctx) {
+  sendFiles({ user_id, item_id }, ctx) {
     return new Promise(async (res, rej) => {
       await ctx.telegram.sendMessage(user_id, item_id);
       await ctx.telegram.sendMessage(user_id, ctx.getTitle("ITEM_INFO_TITLE"));
