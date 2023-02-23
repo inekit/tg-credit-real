@@ -42,12 +42,12 @@ mainStage.hears(titles.getValues("BUTTON_BACK_ADMIN"), (ctx) => {
   ctx.scene.enter("adminScene");
 });
 
-mainStage.action(/^pd\-([0-9+])$/g, async (ctx) => {
+mainStage.action(/^pd\-([0-9]+)$/g, async (ctx) => {
   console.log(123);
   await sendFile(ctx, ".pdf", "DECLARATION_TITLE");
 });
 
-mainStage.action(/^presentation\-([0-9+])$/g, async (ctx) => {
+mainStage.action(/^presentation\-([0-9]+)$/g, async (ctx) => {
   console.log(123);
 
   await sendFile(ctx, ".txt", "PRESENTATION_TITLE");
