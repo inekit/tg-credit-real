@@ -57,25 +57,24 @@ async function sendFile(ctx, postfix, title) {
   await ctx.answerCbQuery().catch((e) => {});
 
   const item_id = ctx.match[1];
-  console.log(item_id);
   const connection = await tOrmCon;
 
-  const country_name = (
+  const city_name = (
     await connection
       .query("select * from items where id = $1", [item_id])
       .catch(console.log)
-  )?.[0];
+  )?.[0]?.city_name;
 
-  console.log(1231, country_name);
+  console.log(1231, city_name);
 
-  if (!country_name)
+  if (!city_name)
     return ctx.telegram
       .sendMessage(ctx.from.id, "NO_FILE", {
         reply_markup,
       })
       .catch(console.log);
 
-  const city_id = country_name === "Москва" ? "mos" : "spb";
+  const city_id = city_name === "Москва" ? "mos" : "spb";
 
   const filePath = `${process.env.STATIC_FOLDER}/${city_id}/${item_id}${postfix}`;
 
@@ -104,14 +103,14 @@ async function sendFile(ctx, postfix, title) {
         source: filePath,
       },
       {
-        caption: ctx.getTitle(title),
+        caption: title,
         reply_markup,
       }
     )
     .catch((e) => {
       console.log(e);
       ctx.telegram
-        .sendMessage(ctx.from.id, ctx.getTitle("NO_FILE"), {
+        .sendMessage(ctx.from.id, "NO_FILE", {
           reply_markup,
         })
         .catch(console.log);
