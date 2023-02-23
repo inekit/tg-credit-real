@@ -134,5 +134,10 @@ module.exports = new EntitySchema({
       nullable: true,
       // length: 5000,
     },
+    images_count: {
+      type: "int",
+      nullable: false,
+      default: 0,
+    },
   },
 });

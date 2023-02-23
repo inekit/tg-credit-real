@@ -6,7 +6,9 @@ const adminIdHandler = new Composer(),
   newIdHandler = new Composer(),
   roleHandler = new Composer();
 const axios = require("axios");
-var xl = require("excel4node");
+const fs = require("fs");
+const path = require("path");
+require("dotenv").config();
 
 const scene = new WizardScene(
   "importScene",
@@ -66,7 +68,7 @@ async function putToDB(excelData) {
       await queryRunner.query("delete from items");
 
       for (row of data) {
-        await queryRunner.manager.getRepository("Item").save(row);
+        await queryRunner.manager.getRepository("Item").save(await row);
       }
 
       await queryRunner.commitTransaction();
@@ -109,34 +111,44 @@ async function transformExcelData(excelData) {
     Описание: "description",
   };
 
-  excelData = excelData?.map((el) => {
-    for (let [key, value] of Object.entries(transformObj)) {
-      el[value] = el[key];
-      delete el[key];
-    }
+  excelData = excelData
+    ?.filter((el) => el["id ЖК"])
+    ?.map(async (el) => {
+      for (let [key, value] of Object.entries(transformObj)) {
+        el[value] = el[key];
+        delete el[key];
+      }
 
-    el.meter_price = parseInt(el.meter_price);
-    el.meter_price = isNaN(el.meter_price) ? undefined : el.meter_price;
+      el.meter_price = parseInt(el.meter_price);
+      el.meter_price = isNaN(el.meter_price) ? undefined : el.meter_price;
 
-    el.sale_percent = parseInt(el["Распроданность квартир %"] * 100);
-    delete el["Распроданность квартир %"];
-    delete el["Диапазон цен"];
-    delete el["Дипазон распроданности"];
+      el.sale_percent = parseInt(el["Распроданность квартир %"] * 100);
+      delete el["Распроданность квартир %"];
+      delete el["Диапазон цен"];
+      delete el["Дипазон распроданности"];
 
-    const match = /^(.+)-(.+)$/g.exec(el["Высота потолков, м"]);
+      const match = /^(.+)-(.+)$/g.exec(el["Высота потолков, м"]);
 
-    el.ceiling_height_min = parseFloat(
-      match?.[1]?.replace(",", ".") ?? el["Высота потолков, м"]
-    );
-    el.ceiling_height_max = parseFloat(
-      match?.[2]?.replace(",", ".") ?? el["Высота потолков, м"]
-    );
+      el.ceiling_height_min = parseFloat(
+        match?.[1]?.replace(",", ".") ?? el["Высота потолков, м"]
+      );
+      el.ceiling_height_max = parseFloat(
+        match?.[2]?.replace(",", ".") ?? el["Высота потолков, м"]
+      );
 
-    delete el["Высота потолков, м"];
-    //'Высота потолков, м': '2,8 - 3,1',
+      delete el["Высота потолков, м"];
+      //'Высота потолков, м': '2,8 - 3,1',
 
-    return el;
-  });
+      el.images_count = (
+        await fs.promises
+          .readdir(`${process.env.STATIC_FOLDER}/${el.id}`, {
+            withFileTypes: true,
+          })
+          .catch((e) => {})
+      )?.filter((item) => !item.isDirectory())?.length;
+
+      return el;
+    });
 
   return excelData;
 }
