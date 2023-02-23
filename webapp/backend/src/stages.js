@@ -57,19 +57,20 @@ async function sendFile(ctx, postfix, title) {
   await ctx.answerCbQuery().catch((e) => {});
 
   const item_id = ctx.match[1];
+  console.log(item_id);
   const connection = await tOrmCon;
 
   const country_name = (
     await connection
       .query("select * from items where id = $1", [item_id])
       .catch(console.log)
-  )?.[0]?.country_name;
+  )?.[0];
 
   console.log(1231, country_name);
 
   if (!country_name)
     return ctx.telegram
-      .sendMessage(ctx.from.id, ctx.getTitle("NO_FILE"), {
+      .sendMessage(ctx.from.id, "NO_FILE", {
         reply_markup,
       })
       .catch(console.log);
