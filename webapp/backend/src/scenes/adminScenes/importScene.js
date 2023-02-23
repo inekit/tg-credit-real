@@ -141,11 +141,18 @@ async function transformExcelData(excelData) {
 
       el.images_count = (
         await fs.promises
-          .readdir(`${process.env.STATIC_FOLDER}/${el.id}`, {
-            withFileTypes: true,
-          })
+          .readdir(
+            `${process.env.STATIC_FOLDER}/${
+              el.city_name === "Москва" ? "mos" : "spb"
+            }/${el.id}`,
+            {
+              withFileTypes: true,
+            }
+          )
           .catch((e) => {})
       )?.filter((item) => !item.isDirectory())?.length;
+
+      console.log(el.images_count);
 
       return el;
     });

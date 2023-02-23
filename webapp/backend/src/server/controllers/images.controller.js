@@ -3,20 +3,20 @@ require("dotenv").config();
 const path = require("path");
 
 async function get(req, res, next) {
-  const { object_id, img_id } = req.params;
+  const { city_id, object_id, img_id } = req.params;
 
-  const fileName = await getFilePath(object_id, img_id);
+  const fileName = await getFilePath(city_id, object_id, img_id);
 
   if (!fileName) return next();
 
   var options = {
-    root: path.join(process.env.STATIC_FOLDER, object_id),
+    root: "/",
   };
 
   res.sendFile(fileName, options, function (err) {
     if (err) {
       //console.log(err);
-      next(err);
+      next();
     }
   });
 }

@@ -14,10 +14,12 @@ class UsersService {
     this.getFilePath = this.getFilePath.bind(this);
   }
 
-  async getFilePath(object_id, item_id) {
+  async getFilePath(city_id, object_id, item_id) {
+    const folderPath = `${process.env.STATIC_FOLDER}/${city_id}/${object_id}`;
+
     const files = (
       await fs.promises
-        .readdir(`${process.env.STATIC_FOLDER}/${object_id}`, {
+        .readdir(folderPath, {
           withFileTypes: true,
         })
         .catch((e) => {})
@@ -25,7 +27,7 @@ class UsersService {
       ?.filter((item) => !item.isDirectory())
       ?.map((item) => item.name);
 
-    return files?.[item_id];
+    return folderPath + "/" + files?.[item_id];
   }
 }
 
