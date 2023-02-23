@@ -114,6 +114,7 @@ class UsersService {
       await ctx.telegram.sendMessage(user_id, item_id).catch(console.log);
       await ctx.telegram
         .sendMessage(user_id, ctx.getTitle("ITEM_INFO_TITLE"), {
+          parse_mode: "HTML",
           reply_markup: {
             inline_keyboard: [
               [
