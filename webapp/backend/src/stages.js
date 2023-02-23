@@ -65,7 +65,14 @@ async function sendFile(ctx, postfix, title) {
       .catch(console.log)
   )?.[0]?.country_name;
 
-  if (!country_name) return;
+  console.log(1231, country_name);
+
+  if (!country_name)
+    return ctx.telegram
+      .sendMessage(ctx.from.id, ctx.getTitle("NO_FILE"), {
+        reply_markup,
+      })
+      .catch(console.log);
 
   const city_id = country_name === "Москва" ? "mos" : "spb";
 
@@ -103,7 +110,7 @@ async function sendFile(ctx, postfix, title) {
     .catch((e) => {
       console.log(e);
       ctx.telegram
-        .sendMessage("NO_FILE", {
+        .sendMessage(ctx.from.id, ctx.getTitle("NO_FILE"), {
           reply_markup,
         })
         .catch(console.log);
