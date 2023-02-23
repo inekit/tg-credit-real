@@ -42,6 +42,71 @@ mainStage.hears(titles.getValues("BUTTON_BACK_ADMIN"), (ctx) => {
   ctx.scene.enter("adminScene");
 });
 
+mainStage.action(/^pd\-([0-9+])$/g, async (ctx) => {
+  await sendFile(ctx, ".pdf", "DECLARATION_TITLE");
+});
+
+mainStage.action(/^presentation\-([0-9+])$/g, async (ctx) => {
+  await sendFile(ctx, ".txt", "PRESENTATION_TITLE");
+});
+
+async function sendFile(ctx, postfix, title) {
+  await ctx.answerCbQuery().catch((e) => {});
+
+  const item_id = ctx.match[1];
+  const connection = await tOrmCon;
+
+  const country_name = (
+    await connection
+      .query("select * from items where id = $1", [item_id])
+      .catch(console.log)
+  )?.[0]?.country_name;
+
+  if (!country_name) return;
+
+  const city_id = country_name === "Москва" ? "mos" : "spb";
+
+  const filePath = `${process.env.STATIC_FOLDER}/${city_id}/${item_id}${postfix}`;
+
+  const reply_markup = {
+    inline_keyboard: [
+      [
+        {
+          text: "Получить бесплатную консультацию",
+          callback_data: "consult",
+        },
+      ],
+      [
+        {
+          text: "Скачать презентацию",
+          callback_data: "presentation-" + item_id,
+        },
+      ],
+    ],
+  };
+
+  ctx.telegram
+    .sendDocument(
+      ctx.from.id,
+      {
+        filename: `${item_id}${postfix}`,
+        source: filePath,
+      },
+      {
+        caption: ctx.getTitle(title),
+        reply_markup,
+      }
+    )
+    .catch((e) => {
+      console.log(e);
+      ctx.telegram
+        .sendMessage("NO_FILE", {
+          reply_markup,
+        })
+        .catch(console.log);
+    });
+}
+
 mainStage.on("message", async (ctx, next) => {
   console.log(ctx.message.web_app_data);
   //ctx.reply(ctx.message.web_app_data.data);
