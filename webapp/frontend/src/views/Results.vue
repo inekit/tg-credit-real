@@ -54,9 +54,8 @@ export default {
             this.meter_price_max = filterValue;
         }
 
-        this.sendSearchRequest()
 
-        this.results = await this.getArticles(this.$store.state.searchRequestData);
+        this.results = await this.sendSearchRequest();
 
     },
 
