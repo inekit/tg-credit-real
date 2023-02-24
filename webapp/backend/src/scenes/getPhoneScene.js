@@ -66,6 +66,7 @@ scene.action("no", async (ctx) => {
           },
         ],
       ],
+      resize_keyboard: true,
     },
   });
 });
@@ -79,7 +80,7 @@ async function sendAppointment(ctx) {
       ctx.from.id,
     ])
     .catch(console.log);
-  ctx.replyWithTitle("APPOINTMENT_SENT");
+  ctx.replyWithKeyboard("APPOINTMENT_SENT", "remove_keyboard");
 
   const admins = await connection.getRepository("Admin").find();
   for (admin of admins) {

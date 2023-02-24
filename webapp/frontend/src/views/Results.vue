@@ -198,6 +198,7 @@ export default {
             width: 100%;
             height: 30vw;
             position: relative;
+            overflow: hidden;
         }
 
         img {

@@ -3,14 +3,17 @@
     <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 300 200"></InstagramLoader>
     <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 300 200"></InstagramLoader>
 
-    <carousel :items-to-show="1.5" class="img-container">
-        <slide class="carousel__item" v-for="img_id in [...Array(item.images_count).keys()]" :key="img_id">
-            <img :src="`/api/img/${item.city_name === 'Москва' ? 'mos' : 'spb'}/${item.id}/${img_id}`" />
-        </slide>
-        <template #addons>
-            <pagination />
-        </template>
-    </carousel>
+    <div class="img-container">
+        <carousel>
+            <slide class="carousel__item" v-for="img_id in [1, 2, 3]" :key="img_id">
+                <img :src="`/api/img/${item.city_name === 'Москва' ? 'mos' : 'spb'}/${item.id}/${img_id}`" />
+            </slide>
+            <template #addons>
+                <pagination />
+            </template>
+        </carousel>
+    </div>
+
     <h1>{{ item.name }}</h1>
     <ul class="points-list">
         <li>📍 Адрес: {{ item.address }}</li>
@@ -102,7 +105,7 @@ export default {
 
 <style lang="scss">
 .img-container {
-    padding: 1rem;
+    width: 100%;
 }
 
 .points-list {
@@ -118,16 +121,18 @@ export default {
 
 .carousel__item {
     width: 100%;
-    background-color: #414141;
+    min-height: 100px;
+    background-color: #ffffff;
     color: var(--vc-clr-white);
     font-size: 20px;
     border-radius: 8px;
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
 
     img {
-        width: calc(100vw - 2rem);
+        width: 100vw;
     }
 }
 
@@ -139,7 +144,7 @@ export default {
     //width: 100%;
     //transform: unset !important;
     li {
-        width: 80% !important;
+        // width: 100% !important;
     }
 
 }
