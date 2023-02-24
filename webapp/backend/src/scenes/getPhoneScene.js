@@ -85,7 +85,10 @@ async function sendAppointment(ctx) {
   for (admin of admins) {
     await ctx.telegram.sendMessage(
       admin.user_id,
-      ctx.getTitle("NEW_APPOINTMENT", [ctx.scene.state.phone])
+      ctx.getTitle("NEW_APPOINTMENT", [
+        ctx.scene.state.object_id,
+        ctx.scene.state.phone,
+      ])
     );
   }
 }

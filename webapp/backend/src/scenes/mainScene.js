@@ -82,10 +82,10 @@ scene
     },
   });
 
-scene.action("consult", async (ctx) => {
+scene.action(/^consult\-([0-9]+)$/g, async (ctx) => {
   await ctx.answerCbQuery().catch((e) => {});
 
-  ctx.scene.enter("getPhoneScene");
+  ctx.scene.enter("getPhoneScene", { object_id: ctx.match[1] });
 });
 
 scene.command("vitrina", (ctx) => {

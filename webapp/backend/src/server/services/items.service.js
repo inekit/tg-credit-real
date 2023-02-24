@@ -120,7 +120,7 @@ class UsersService {
               [
                 {
                   text: "Получить бесплатную консультацию",
-                  callback_data: "consult",
+                  callback_data: "consult-" + item_id,
                 },
               ],
               [{ text: "Cкачать ПД", callback_data: "pd-" + item_id }],

@@ -89,7 +89,7 @@ async function sendFile(ctx, postfix, title) {
       [
         {
           text: "Получить бесплатную консультацию",
-          callback_data: "consult",
+          callback_data: "consult-" + item_id,
         },
       ],
       postfix === ".txt"
