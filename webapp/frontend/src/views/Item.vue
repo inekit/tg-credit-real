@@ -5,7 +5,7 @@
 
     <div class="img-container">
         <carousel>
-            <slide class="carousel__item" v-for="img_id in [1, 2, 3]" :key="img_id">
+            <slide class="carousel__item" v-for="img_id in [...Array(item.images_count).keys()]" :key="img_id">
                 <img :src="`/api/img/${item.city_name === 'Москва' ? 'mos' : 'spb'}/${item.id}/${img_id}`" />
             </slide>
             <template #addons>
