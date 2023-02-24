@@ -69,7 +69,7 @@ async function sendFile(ctx, postfix, title) {
 
   if (!city_name)
     return ctx.telegram
-      .sendMessage(ctx.from.id, "NO_FILE", {
+      .sendMessage(ctx.from.id, titles.getTitle("NO_FILE"), {
         reply_markup,
       })
       .catch(console.log);
@@ -86,12 +86,14 @@ async function sendFile(ctx, postfix, title) {
           callback_data: "consult",
         },
       ],
-      [
-        {
-          text: "Скачать презентацию",
-          callback_data: "presentation-" + item_id,
-        },
-      ],
+      title === "PRESENTATION_TITLE"
+        ? [{ text: "Cкачать ПД", callback_data: "pd-" + item_id }]
+        : [
+            {
+              text: "Скачать презентацию",
+              callback_data: "presentation-" + item_id,
+            },
+          ],
     ],
   };
 
