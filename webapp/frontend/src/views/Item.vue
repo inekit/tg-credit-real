@@ -1,10 +1,13 @@
 <template>
+    <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 300 250"></InstagramLoader>
+    <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 300 200"></InstagramLoader>
+    <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 300 200"></InstagramLoader>
+
     <carousel :items-to-show="1.5" class="img-container">
         <slide class="carousel__item" v-for="img_id in [...Array(item.images_count).keys()]" :key="img_id">
             <img :src="`/api/img/${item.city_name === 'Москва' ? 'mos' : 'spb'}/${item.id}/${img_id}`" />
         </slide>
         <template #addons>
-            <navigation />
             <pagination />
         </template>
     </carousel>
@@ -25,8 +28,11 @@
 import 'vue3-carousel/dist/carousel.css'
 import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
 import moment from "moment"
+import { ListLoader, InstagramLoader } from 'vue-content-loader'
+
 export default {
     components: {
+        InstagramLoader,
         Carousel,
         Slide,
         Pagination,
@@ -48,6 +54,23 @@ export default {
         window.Telegram?.WebApp.MainButton.enable();
         window.Telegram?.WebApp.MainButton.show();
         window.Telegram?.WebApp.MainButton.setText("Узнать больше");
+
+        this.$refs['results-block']?.classList.add("hidden")
+        document.body.classList.add('stop-scrolling')
+
+
+        setTimeout(() => {
+            const elements = document.getElementsByClassName('preloader')
+
+            console.log(elements)
+
+            for (let el of elements) {
+                el.classList.add("hidden")
+            }
+            this.$refs['results-block']?.classList.remove("hidden")
+            document.body.classList.remove('stop-scrolling')
+
+        }, 400)
     },
     methods: {
         getItem(id) {
@@ -94,7 +117,6 @@ export default {
 }
 
 .carousel__item {
-    min-height: 200px;
     width: 100%;
     background-color: #414141;
     color: var(--vc-clr-white);

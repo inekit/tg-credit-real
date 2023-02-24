@@ -1,4 +1,3 @@
-import { h, resolveComponent } from 'vue'
 import {
   createRouter,
   createWebHashHistory,
@@ -12,7 +11,7 @@ const routes = [
     redirect: '/filters/city',
     children: [
       {
-        path: '/results',
+        path: '/results/:city',
         name: 'ResultsSearch',
         component: () => import('@/views/Results.vue'),
       },

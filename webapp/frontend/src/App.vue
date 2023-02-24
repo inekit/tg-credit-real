@@ -44,6 +44,7 @@ body {
 h1 {
   margin: auto 1rem;
   color: #414141;
+  font-weight: 500;
 
 }
 </style>

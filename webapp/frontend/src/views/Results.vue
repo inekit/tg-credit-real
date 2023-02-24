@@ -12,7 +12,7 @@
                 <router-link :to="`/items/${item.id}`">
 
                     <div class="img-container">
-                        <img v-for="img_id in [...Array(item.images_count).keys()]" :key="img_id"
+                        <img v-for="img_id in [0]" :key="img_id"
                             :src="`/api/img/${item.city_name === 'Москва' ? 'mos' : 'spb'}/${item.id}/${img_id}`" />
                     </div>
                     <div class="text-container">
@@ -42,6 +42,9 @@ export default {
     watch: {
         "$store.state.searchQuery": async function () {
             this.$store.state.results = await this.sendSearchRequest();
+        },
+        $route(to, from) {
+
         }
     },
     async mounted() {
@@ -56,7 +59,7 @@ export default {
         const filterId = this.$route.params?.page;
         const filterValue = this.$route.params?.filter;
 
-        this.city = this.$route.params?.city;
+        if (this.$route.params?.city !== "city") this.city = this.$route.params?.city;
 
         if (filterId === "2") this.property_class = filterValue;
         else if (filterId === "3") this.commissioning_year = filterValue;
@@ -73,6 +76,8 @@ export default {
         this.$store.state.results = await this.sendSearchRequest();
 
         this.$refs['results-block']?.classList.add("hidden")
+        document.body.classList.add('stop-scrolling')
+
 
         setTimeout(() => {
             const elements = document.getElementsByClassName('preloader')
@@ -83,7 +88,9 @@ export default {
                 el.classList.add("hidden")
             }
             this.$refs['results-block']?.classList.remove("hidden")
-        }, 1000)
+            document.body.classList.remove('stop-scrolling')
+
+        }, 400)
 
         document.onload = () => {
             const elements = document.getElementsByClassName('preloader')
@@ -151,16 +158,6 @@ export default {
   
 
 <style lang="scss">
-.preloader {
-    padding-left: 1rem;
-    padding-top: 1rem;
-    width: calc(100% - 2rem);
-}
-
-.hidden {
-    display: none !important;
-}
-
 .results-block {
     // display: flex;
     width: calc(100% - 2rem);
@@ -227,18 +224,19 @@ export default {
 
             //margin: 1rem;
             .text-container {
-                margin: 1rem;
+                padding: 1rem;
                 //position: absolute;
                 top: 70%;
-                width: 40vw;
+                width: calc(100% - 2rem);
+
             }
 
             h2 {
                 margin: 0;
-                width: 37vw;
+                width: 100%;
                 color: #414141;
                 font-weight: 200;
-                font-size: 1.3rem;
+                font-size: 1.2rem;
             }
         }
 

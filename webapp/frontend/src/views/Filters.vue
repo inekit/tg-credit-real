@@ -4,7 +4,9 @@
     <ul v-if="$route.params.city === 'city'" class="filters-block">
         <li class="filter-link" v-for="city in cities" :key=city.name>
             <router-link :to="`/filters/${city.name}/filters`">
-                <img :src="city.img" />
+                <picture>
+                    <img :src="city.img" />
+                </picture>
                 <h2>{{ city.name }}</h2>
             </router-link>
         </li>
@@ -12,7 +14,9 @@
     <ul v-if="$route.params.page === 'filters'" class="filters-block">
         <li class="filter-link" v-for="filter in $store.state.filters" :key="filter.title">
             <router-link :to="`/filters/${$route.params.city}/` + filter.id">
-                <img :src="filter.img" />
+                <picture>
+                    <img :src="filter.img" />
+                </picture>
                 <h2>{{ filter.title }}</h2>
             </router-link>
         </li>
@@ -22,6 +26,9 @@
             :key="filter">
             <router-link
                 :to="'/results/' + $route.params.city + '/' + $route.params.page + '/' + (filter.max ?? filter.name ?? filter)">
+                <picture>
+                    <img :src="filter.img" />
+                </picture>
                 <h2>{{ filter.name ?? ((filter.max || filter.min) ? `${filter.min} - ${filter.max} ₽ за m²` : filter) }}
                 </h2>
             </router-link>
@@ -39,11 +46,11 @@ export default {
             cities: [
                 {
                     name: "Москва",
-                    img: "",
+                    img: require('@/assets/img/moscow.webp'),
                 },
                 {
                     name: "Санкт-Петербург",
-                    img: "",
+                    img: require('@/assets/img/spb.webp'),
                 }
             ],
 
@@ -51,9 +58,8 @@ export default {
     },
     watch: {
         $route(to, from) {
-            if ($route.params.city === 'city') window.Telegram?.WebApp.BackButton.hide();
-            if ($route.params.city === 'filters') window.Telegram?.WebApp.BackButton.show();
-
+            if (this.$route.params.city === 'city') window.Telegram?.WebApp.BackButton.hide();
+            if (this.$route.params.page === 'filters') window.Telegram?.WebApp.BackButton.show();
         }
     },
     mounted() {
@@ -81,7 +87,7 @@ export default {
         padding: 1rem;
         border-radius: 1rem;
         display: block;
-        background: gray;
+        background: rgb(255, 255, 255);
         overflow: hidden;
         position: relative;
 
@@ -101,15 +107,31 @@ export default {
             margin: 0;
             text-decoration: none;
             color: white;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
+            font-weight: 500;
+            position: absolute;
+            width: calc(100% - 2rem);
         }
 
         img {
             position: absolute;
+            width: auto;
             height: 100%;
-            width: 100%;
-            left: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            right: 0;
             top: 0;
+            margin: auto;
+        }
+
+        picture:after {
+            content: '';
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-color: rgba(0, 0, 0, 0.5);
         }
 
         &:nth-child(2n-1) {

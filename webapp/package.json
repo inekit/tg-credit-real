@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "vue-content-loader": "^2.0.1"
+  }
+}

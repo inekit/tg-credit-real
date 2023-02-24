@@ -8625,6 +8625,11 @@
     "core-util-is" "1.0.2"
     "extsprintf" "^1.2.0"
 
+"vue-content-loader@^2.0.1":
+  "integrity" "sha512-pkof4+q2xmzNEdhqelxtJejeP/vQUJtLle4/v2ueG+HURqM9Q/GIGC8GJ2bVVWeLfTDET51jqimwQdmxJTlu0g=="
+  "resolved" "https://registry.npmjs.org/vue-content-loader/-/vue-content-loader-2.0.1.tgz"
+  "version" "2.0.1"
+
 "vue-demi@^0.13.2":
   "integrity" "sha512-IR8HoEEGM65YY3ZJYAjMlKygDQn25D5ajNFNoKh9RSDMQtlzCxtfQjdQgv9jjK+m3377SsJXY8ysq8kLCZL25A=="
   "resolved" "https://registry.npmjs.org/vue-demi/-/vue-demi-0.13.11.tgz"
@@ -8687,7 +8692,7 @@
   "resolved" "https://registry.npmjs.org/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.9.1.tgz"
   "version" "1.9.1"
 
-"vue@*", "vue@^2 || ^3.2.13", "vue@^2.0.0 || >=3.0.0", "vue@^3.0.0", "vue@^3.0.0-0", "vue@^3.0.0-0 || ^2.6.0", "vue@^3.0.1", "vue@^3.0.2", "vue@^3.2.0", "vue@^3.2.23", "vue@^3.2.37", "vue@>=3.2.0", "vue@3.2.40":
+"vue@*", "vue@^2 || ^3.2.13", "vue@^2.0.0 || >=3.0.0", "vue@^3", "vue@^3.0.0", "vue@^3.0.0-0", "vue@^3.0.0-0 || ^2.6.0", "vue@^3.0.1", "vue@^3.0.2", "vue@^3.2.0", "vue@^3.2.23", "vue@^3.2.37", "vue@>=3.2.0", "vue@3.2.40":
   "integrity" "sha512-1mGHulzUbl2Nk3pfvI5aXYYyJUs1nm4kyvuz38u4xlQkLUn1i2R7nDbI4TufECmY8v1qNBHYy62bCaM+3cHP2A=="
   "resolved" "https://registry.npmjs.org/vue/-/vue-3.2.40.tgz"
   "version" "3.2.40"

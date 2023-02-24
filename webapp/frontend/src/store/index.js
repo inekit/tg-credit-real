@@ -11,7 +11,7 @@ export default createStore({
       {
         id: 1,
         title: 'Распроданность квартир',
-        img: '',
+        img: require('@/assets/img/pie.webp'),
         values: [
           {
             name: '0-10%',
@@ -37,7 +37,7 @@ export default createStore({
       {
         id: 2,
         title: 'Класс недвижимости',
-        img: '',
+        img: require('@/assets/img/class.webp'),
         values: [
           {
             name: 'Типовой',
@@ -60,13 +60,13 @@ export default createStore({
       {
         id: 3,
         title: 'Ввод в эксплуатацию',
-        img: '',
+        img: require('@/assets/img/calendar.webp'),
         values: [2023, 2024, 2025, 2026],
       },
       {
         id: 4,
         title: 'Цена за m²',
-        img: '',
+        img: require('@/assets/img/price.webp'),
         values: [
           {
             name: 'До 100 000 ₽ за m²',

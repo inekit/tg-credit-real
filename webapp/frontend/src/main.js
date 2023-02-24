@@ -12,6 +12,7 @@ store.state.myApi = myApi
 
 import MasonryWall from '@yeger/vue-masonry-wall'
 //import VueCarousel from 'vue-carousel'
+import './styles/_custom.scss'
 
 import eventBus from './eventBus'
 
