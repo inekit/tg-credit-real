@@ -72,7 +72,7 @@ export default {
             };
         },
         async sendSearchRequest() {
-            return await this.$store.state.myApi.get(this.$store.state.restAddr + '/items', {
+            const results = await this.$store.state.myApi.get(this.$store.state.restAddr + '/items', {
                 params: {
                     property_class: this.property_class,
                     sale_percent_min: this.sale_percent_min,
@@ -94,11 +94,15 @@ export default {
 
                     this.loadingUpdate = false;
 
-                    console.log(newsUpd)
 
                     return newsUpd;
                 })
                 .catch(e => { eventBus.$emit('noresponse', e) })
+
+            console.log(results)
+
+            return results
+
         }
     }
 }
