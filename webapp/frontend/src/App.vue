@@ -9,14 +9,11 @@ export default {
     foo.setAttribute("src", "https://telegram.org/js/telegram-web-app.js");
     document.head.appendChild(foo);
 
-<<<<<<< HEAD
-=======
     let nopinch = document.createElement('meta');
     nopinch.setAttribute("name", "viewport");
     nopinch.setAttribute("content", "width=device-width, user-scalable=no");
     document.head.appendChild(nopinch);
 
->>>>>>> refs/remotes/origin/master
   }
 }
 </script>
@@ -46,5 +43,7 @@ body {
 
 h1 {
   margin-left: 1rem;
+  color: #414141;
+
 }
 </style>

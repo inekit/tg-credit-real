@@ -1,25 +1,37 @@
 <template>
     <h1>Каталог</h1>
     <searchBlock />
-    <div class="results-block">
-        <div class="result-item" v-for="item in this.$store.state.results" :key="item.id">
-            <router-link :to="`/items/${item.id}`">
-                <div class="img-container">
-                    <img v-for="img_id in [...Array(item.images_count).keys()]" :key="img_id" 
-                     :src="`/api/img/${item.city_name === 'Москва' ? 'mos' : 'spb'}/${item.id}/${img_id}`"/>
-                </div>
-                <h2>{{ item.name }}</h2>
-            </router-link>
-        </div>
-    </div>
+    <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 300 250"></InstagramLoader>
+    <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 300 200"></InstagramLoader>
+    <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 300 200"></InstagramLoader>
+
+    <MasonryWall class="results-block" :items="$store.state.results ?? []" :ssr-columns="1" :column-width="bodyWidth / 5"
+        :gap="12">
+        <template #default="{ item, index }">
+            <div class="result-item">
+                <router-link :to="`/items/${item.id}`">
+
+                    <div class="img-container">
+                        <img v-for="img_id in [...Array(item.images_count).keys()]" :key="img_id"
+                            :src="`/api/img/${item.city_name === 'Москва' ? 'mos' : 'spb'}/${item.id}/${img_id}`" />
+                    </div>
+                    <div class="text-container">
+                        <h2>{{ item.name }}</h2>
+                    </div>
+                </router-link>
+            </div>
+        </template>
+
+    </MasonryWall>
 </template>
-  
+
 <script>
 import searchBlock from '@/components/Search.vue';
 import eventBus from '../eventBus'
+import { ListLoader, InstagramLoader } from 'vue-content-loader'
 
 export default {
-    components: { searchBlock },
+    components: { searchBlock, InstagramLoader },
     data() {
         return {
             page: 1,
@@ -32,17 +44,12 @@ export default {
             this.$store.state.results = await this.sendSearchRequest();
         }
     },
-<<<<<<< HEAD
-    mounted(){
-
-        window.Telegram.WebApp.MainButton.hide();
-        window.Telegram.WebApp.MainButton.disable();
-        window.Telegram.WebApp.BackButton.show()
-=======
     async mounted() {
         this.scroll()
+        this.bodyWidth = document.body.clientHeight
+        window.Telegram?.WebApp.MainButton.hide();
         window.Telegram?.WebApp.MainButton.disable();
->>>>>>> refs/remotes/origin/master
+        window.Telegram?.WebApp.BackButton.show()
 
         console.log(this.$route.params)
 
@@ -64,6 +71,30 @@ export default {
 
 
         this.$store.state.results = await this.sendSearchRequest();
+
+        this.$refs['results-block']?.classList.add("hidden")
+
+        setTimeout(() => {
+            const elements = document.getElementsByClassName('preloader')
+
+            console.log(elements)
+
+            for (let el of elements) {
+                el.classList.add("hidden")
+            }
+            this.$refs['results-block']?.classList.remove("hidden")
+        }, 1000)
+
+        document.onload = () => {
+            const elements = document.getElementsByClassName('preloader')
+
+            console.log(elements)
+
+            for (let el of elements) {
+                el.classList.add("hidden")
+            }
+            this.$refs['results-block']?.classList.remove("hidden")
+        }
 
         console.log(1, this.results)
 
@@ -117,49 +148,94 @@ export default {
     }
 }
 </script>
+  
 
 <style lang="scss">
+.preloader {
+    padding-left: 1rem;
+    padding-top: 1rem;
+    width: calc(100% - 2rem);
+}
+
+.hidden {
+    display: none !important;
+}
+
 .results-block {
-    display: flex;
-    margin: 0;
+    // display: flex;
+    width: calc(100% - 2rem);
+    margin: 1rem;
     padding: 0;
     list-style: none;
     flex-wrap: wrap;
 
     .result-item {
-        width: calc(50vw - 3.5rem);
-        height: calc(70vw - 3.5rem);
-        margin: 1rem;
-        margin-bottom: 0;
-        padding: 1rem;
+        width: 100%;
+        height: fit-content; //calc(70vw - 1.5rem);
+        //margin: 1rem;
+        //margin-bottom: 0;
+        margin: 0;
+
         border-radius: 1rem;
         display: block;
         background: rgb(255, 255, 255);
         // border: 1px solid rgb(169, 169, 169);
-        box-shadow: 0px 5px 5px rgb(169, 169, 169);
+        box-shadow: 0px 1px 5px rgb(216, 216, 216);
         overflow: hidden;
         position: relative;
 
+        &:nth-child(4n) {
+            margin-top: -6vw
+        }
+
+        &:nth-child(4n+1),
+        &:nth-child(4n) {
+            .img-container {
+                height: 40vw;
+            }
+        }
+
+        .img-container {
+            //position: absolute;
+            background-color: #414141;
+            width: 100%;
+            height: 30vw;
+            position: relative;
+        }
+
         img {
             position: absolute;
+            margin: auto;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
             max-width: 150%;
-            max-height: 30%;
+            max-height: 130%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
         }
 
         a {
             display: block;
             text-decoration: none;
-            position: absolute;
-            height: calc(100% - 2rem);
-            width: calc(100% - 2rem);
-            left: 0;
-            top: 0;
-            margin: 1rem;
+            //position: absolute;
+            height: calc(100% + 2rem);
+            width: calc(100%);
+
+            //margin: 1rem;
+            .text-container {
+                margin: 1rem;
+                //position: absolute;
+                top: 70%;
+                width: 40vw;
+            }
 
             h2 {
-                position: absolute;
-                top: 30vw;
-                width: 40vw;
+                margin: 0;
+                width: 37vw;
                 color: #414141;
                 font-weight: 200;
                 font-size: 1.3rem;

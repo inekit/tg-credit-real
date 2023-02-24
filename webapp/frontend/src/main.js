@@ -10,6 +10,9 @@ const myApi = axios.create({
 
 store.state.myApi = myApi
 
+import MasonryWall from '@yeger/vue-masonry-wall'
+//import VueCarousel from 'vue-carousel'
+
 import eventBus from './eventBus'
 
 eventBus.$on('noresponse', (error) => {
@@ -32,6 +35,8 @@ eventBus.$on('wrongInputData', (error) => {
 
 const app = createApp(App)
 
+app.use(MasonryWall)
+//app.use(VueCarousel)
 app.use(store)
 app.use(router)
 app.mount('#app')

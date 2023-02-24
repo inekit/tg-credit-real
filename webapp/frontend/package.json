@@ -24,13 +24,18 @@
   "dependencies": {
     "@vuepic/vue-datepicker": "^3.6.3",
     "@vueup/vue-quill": "^1.0.0-beta.10",
+    "@yeger/vue-masonry-wall": "^3.4.3",
     "axios": "^0.27.2",
     "core-js": "^3.19.0",
     "dompurify": "^2.4.1",
     "marked": "^4.2.3",
+    "mitt": "^3.0.0",
+    "moment": "^2.29.4",
     "turndown": "^7.1.1",
     "vue": "^3.2.23",
+    "vue-masonry": "^0.16.0",
     "vue-router": "^4.0.12",
+    "vue3-carousel": "^0.2.11",
     "vuex": "^4.0.2"
   },
   "devDependencies": {
