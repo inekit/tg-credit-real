@@ -35,7 +35,8 @@ scene.enter(async (ctx) => {
 });
 
 scene.on("message", (ctx) => {
-  if (!/^[+]*[(]{0,1}[0-9]{1,3}[)]{0,1}[-\s\.\/0-9]*$/g.test(text)) return;
+  if (!/^[+]*[(]{0,1}[0-9]{1,3}[)]{0,1}[-\s\.\/0-9]*$/g.test(ctx.message.text))
+    return;
   ctx.scene.state.phone = ctx.message.text;
   sendAppointment(ctx);
 });
@@ -85,7 +86,7 @@ async function sendAppointment(ctx) {
 }
 
 scene.on("contact", (ctx) => {
-  ctx.scene.state.phone = ctx.message.contact.phone_number;
+  ctx.scene.state.phone = ctx.message.contact?.phone_number;
   sendAppointment(ctx);
 });
 
