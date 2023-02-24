@@ -59,7 +59,7 @@ async function sendAppointment(ctx) {
 }
 
 scene.on("contact", (ctx) => {
-  ctx.scene.state.phone = ctx.contact.phone_number;
+  ctx.scene.state.phone = ctx.message.contact.phone_number;
   sendAppointment(ctx);
 });
 
