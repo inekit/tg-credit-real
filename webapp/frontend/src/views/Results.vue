@@ -21,20 +21,17 @@ export default {
         return {
             page: 1,
             perPage: 10,
-            results: [{
-                id: 1, title: "Объект 1", link: "https://google.com", img: ""
-            }],
         }
 
     },
     watch: {
-        "$store.state.searchQuery": function () {
-            this.sendSearchRequest()
+        "$store.state.searchQuery": async function () {
+            this.$store.state.results = await this.sendSearchRequest();
         }
     },
     async mounted() {
         this.scroll()
-        window.Telegram.WebApp.MainButton.disable();
+        window.Telegram?.WebApp.MainButton.disable();
 
         console.log(this.$route.params)
 
@@ -55,7 +52,9 @@ export default {
         }
 
 
-        this.results = await this.sendSearchRequest();
+        this.$store.state.results = await this.sendSearchRequest();
+
+        console.log(1, this.results)
 
     },
 
@@ -67,7 +66,7 @@ export default {
                 if (bottomwindow && !this.loadingUpdate && !this.isEnded) {
                     this.loadingUpdate = true;
                     const update = await this.sendSearchRequest();
-                    this.news = [...this.news, ...update];
+                    this.$store.state.results = [...this.$store.state.results, ...update];
                 }
             };
         },
