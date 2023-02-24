@@ -87,7 +87,9 @@ scene
     },
   });
 
-scene.action("consult", (ctx) => {
+scene.action("consult", async (ctx) => {
+  await ctx.answerCbQuery().catch((e) => {});
+
   ctx.scene.enter("getPhoneScene");
 });
 
