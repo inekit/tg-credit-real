@@ -125,7 +125,7 @@ export default {
     background-color: #ffffff;
     color: var(--vc-clr-white);
     font-size: 20px;
-    border-radius: 8px;
+    //border-radius: 8px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -134,6 +134,10 @@ export default {
     img {
         width: 100vw;
     }
+}
+
+.carousel__pagination {
+    padding: 0;
 }
 
 .carousel__track {
