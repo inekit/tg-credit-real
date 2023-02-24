@@ -33,7 +33,7 @@ class UsersService {
     {
       id,
       page = 1,
-      take = 100,
+      take = 10,
       property_class,
       sale_percent_min,
       sale_percent_max,
