@@ -43,7 +43,6 @@ mainStage.hears(titles.getValues("BUTTON_BACK_ADMIN"), (ctx) => {
 });
 
 mainStage.action(/^pd\-([0-9]+)$/g, async (ctx) => {
-  console.log(123);
   await sendFile(
     ctx,
     ".pdf",
@@ -52,8 +51,6 @@ mainStage.action(/^pd\-([0-9]+)$/g, async (ctx) => {
 });
 
 mainStage.action(/^presentation\-([0-9]+)$/g, async (ctx) => {
-  console.log(123);
-
   await sendFile(
     ctx,
     ".txt",
@@ -127,11 +124,11 @@ async function sendFile(ctx, postfix, title) {
     });
 }
 
-mainStage.on("message", async (ctx, next) => {
+/*mainStage.on("message", async (ctx, next) => {
   console.log(ctx.message.web_app_data);
   //ctx.reply(ctx.message.web_app_data.data);
   next();
-});
+});*/
 
 /*mainStage.on("web_app_data", (ctx) => {
   console.log(ctx);

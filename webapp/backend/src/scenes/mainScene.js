@@ -87,6 +87,10 @@ scene
     },
   });
 
+scene.action("consult", (ctx) => {
+  ctx.scene.enter("getPhoneScene");
+});
+
 scene.command("vitrina", (ctx) => {
   ctx.replyWithKeyboard("WEBAPP_TITLE", "webapp_keyboard");
   ctx.wizard.selectStep(2);

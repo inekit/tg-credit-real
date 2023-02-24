@@ -5,75 +5,64 @@ const {
 
 const scene = new BaseScene("adminScene");
 const main_menu_button = "admin_back_keyboard";
-const tOrmCon = require("../../db/connection");
+const tOrmCon = require("../db/connection");
+const getUser = require("../Utils/getUser");
 
 scene.enter(async (ctx) => {
-  if (!ctx.session.registered) {
-    const [{ exists }] = [{ true: 1 }];
+  const user = await getUser();
+  ctx.scene.state.phone = user.phone;
 
-    if (!exists) {
-    }
-  }
+  if (user.phone)
+    return ctx.replyWithKeyboard("USE_CURRENT_PHONE", "yes_no_keyboard");
 
+  ctx.replyWithTitle("SEND_PHONE", {
+    reply_markup: {
+      one_time_keyboard: true,
+      keyboard: [
+        [
+          {
+            text: "Оставить телефон",
+            request_contact: true,
+          },
+        ],
+      ],
+    },
+  });
+});
+
+scene.action("yes", (ctx) => {
+  sendAppointment(ctx);
+});
+
+async function sendAppointment(ctx) {
   const connection = await tOrmCon;
 
-  await connection
-    .query(
-      `update dialogs set opened_admin_id = null where opened_admin_id = $1`,
-      [ctx.from.id]
-    )
-    .catch((e) => {});
-
-  return ctx.replyWithKeyboard("CHOOSE_ACTION", "admin_keyboard");
-});
-
-scene.action("yes", async (ctx) => {
+  connection
+    .query("update users set phone = $1 where id = $2", [
+      ctx.scene.state.phone,
+      ctx.from.id,
+    ])
+    .catch(console.log);
   ctx.replyWithTitle("APPOINTMENT_SENT");
+
   const admins = await connection.getRepository("Admin").find();
   for (admin of admins) {
-    ctx.telegram.sendMessage(
+    await ctx.telegram.sendMessage(
       admin.user_id,
-      ctx.getTitle("NEW_GM_APPOINTMENT", [
-        ctx,
-        ctx.from.username,
-        money_sum,
-        payment_type,
-      ])
+      ctx.getTitle("NEW_APPOINTMENT", [ctx.scene.state.phone])
     );
   }
+}
+
+scene.on("contact", (ctx) => {
+  ctx.scene.state.phone = ctx.contact.phone_number;
+  sendAppointment(ctx);
 });
 
-scene.hears(titles.getValues("BUTTON_ACCOUNT"), (ctx) =>
-  ctx.scene.enter("changePasswordScene", { main_menu_button })
-);
-
-scene.hears(titles.getValues("BUTTON_ADMINS"), (ctx) =>
-  ctx.scene.enter("adminsScene", { main_menu_button })
-);
-
-scene.hears(titles.getValues("BUTTON_APPOINTMENTS"), (ctx) =>
-  ctx.scene.enter("appointmentsScene", { main_menu_button, waiting: false })
-);
-scene.hears(titles.getValues("BUTTON_HISTORY"), (ctx) =>
-  ctx.scene.enter("historyScene", { main_menu_button })
-);
-
-scene.hears(titles.getValues("BUTTON_SEARCH_A"), (ctx) =>
-  ctx.scene.enter("searchDialogScene", {
-    main_menu_button,
-    mode: "appointment",
-  })
-);
-scene.hears(titles.getValues("BUTTON_SEARCH_U"), (ctx) =>
-  ctx.scene.enter("searchDialogScene", { main_menu_button, mode: "username" })
-);
-
-scene.hears(titles.getValues("BUTTON_IMPORT"), (ctx) =>
-  ctx.scene.enter("importScene", { main_menu_button })
-);
-
-scene.hears(titles.getValues("BUTTON_CHANGE_RIGHTS"), (ctx) =>
-  ctx.scene.enter("changeRightsScene", { main_menu_button, mode: "username" })
-);
+scene.on("message", (ctx) => {
+  if (!/^[+]*[(]{0,1}[0-9]{1,3}[)]{0,1}[-\s\.\/0-9]*$/g.test(text)) return;
+  ctx.scene.state.phone = ctx.message.text;
+  sendAppointment(ctx);
+});
 
 module.exports = scene;

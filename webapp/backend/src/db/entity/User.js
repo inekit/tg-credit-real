@@ -22,6 +22,11 @@ module.exports = new EntitySchema({
       enum: ["1", "2", "3", "4", "5", "skip"],
       nullable: true,
     },
+    phone: {
+      type: "varchar",
+      length: 45,
+      nullable: true,
+    },
   },
   relations: {
     referer: {
