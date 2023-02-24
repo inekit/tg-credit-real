@@ -42,7 +42,7 @@ body {
 }
 
 h1 {
-  margin-left: 1rem;
+  margin: auto 1rem;
   color: #414141;
 
 }

@@ -85,7 +85,7 @@ export default {
 .points-list {
     list-style: none;
     padding: 1rem;
-    font-size: 1.3rem;
+    font-size: 1.15rem;
     margin: 0;
 
     li {
@@ -103,6 +103,10 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+
+    img {
+        width: calc(100vw - 2rem);
+    }
 }
 
 .carousel__track {
