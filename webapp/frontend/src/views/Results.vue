@@ -71,8 +71,8 @@ export default {
                 }
             };
         },
-        sendSearchRequest() {
-            return this.$store.state.myApi.get(this.$store.state.restAddr + '/items', {
+        async sendSearchRequest() {
+            return await this.$store.state.myApi.get(this.$store.state.restAddr + '/items', {
                 params: {
                     property_class: this.property_class,
                     sale_percent_min: this.sale_percent_min,
@@ -93,6 +93,8 @@ export default {
                     else this.page++;
 
                     this.loadingUpdate = false;
+
+                    console.log(newsUpd)
 
                     return newsUpd;
                 })
