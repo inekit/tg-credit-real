@@ -33,7 +33,7 @@ class UsersService {
     {
       id,
       page = 1,
-      take = 100,
+      take = 10,
       property_class,
       sale_percent_min,
       sale_percent_max,
@@ -113,7 +113,26 @@ class UsersService {
       console.log(user_id, item_id);
       await ctx.telegram.sendMessage(user_id, item_id).catch(console.log);
       await ctx.telegram
-        .sendMessage(user_id, ctx.getTitle("ITEM_INFO_TITLE"))
+        .sendMessage(user_id, ctx.getTitle("ITEM_INFO_TITLE"), {
+          parse_mode: "HTML",
+          reply_markup: {
+            inline_keyboard: [
+              [
+                {
+                  text: "Получить бесплатную консультацию",
+                  callback_data: "consult-" + item_id,
+                },
+              ],
+              [{ text: "Cкачать ПД", callback_data: "pd-" + item_id }],
+              [
+                {
+                  text: "Скачать презентацию",
+                  callback_data: "presentation-" + item_id,
+                },
+              ],
+            ],
+          },
+        })
         .catch(console.log);
       res();
     });

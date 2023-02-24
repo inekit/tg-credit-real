@@ -9,7 +9,8 @@ const tOrmCon = require("./db/connection");
 
 const mainStage = new Stage(
   [
-    ...require("./scenes/mainScene"),
+    require("./scenes/mainScene"),
+    require("./scenes/getPhoneScene"),
 
     require("./scenes/adminScenes/adminScene"),
     require("./scenes/adminScenes/adminsScene"),
@@ -42,11 +43,93 @@ mainStage.hears(titles.getValues("BUTTON_BACK_ADMIN"), (ctx) => {
   ctx.scene.enter("adminScene");
 });
 
-mainStage.on("message", async (ctx, next) => {
+mainStage.action(/^pd\-([0-9]+)$/g, async (ctx) => {
+  await sendFile(
+    ctx,
+    ".pdf",
+    "Проектная декларация в приложении. Спасибо что воспользовались нашим сервисом!"
+  );
+});
+
+mainStage.action(/^presentation\-([0-9]+)$/g, async (ctx) => {
+  await sendFile(
+    ctx,
+    ".txt",
+    "Файл-презентация в приложении. Чтобы получить такой отчет по вашему ЖК, оставьте контакты для связи."
+  );
+});
+
+async function sendFile(ctx, postfix, title) {
+  await ctx.answerCbQuery().catch((e) => {});
+
+  const item_id = ctx.match[1];
+  const connection = await tOrmCon;
+
+  const city_name = (
+    await connection
+      .query("select * from items where id = $1", [item_id])
+      .catch(console.log)
+  )?.[0]?.city_name;
+
+  console.log(1231, city_name);
+
+  if (!city_name)
+    return ctx.telegram
+      .sendMessage(ctx.from.id, titles.getTitle("NO_FILE"), {
+        reply_markup,
+      })
+      .catch(console.log);
+
+  const city_id = city_name === "Москва" ? "mos" : "spb";
+
+  const filePath = `${process.env.STATIC_FOLDER}/${city_id}/${item_id}${postfix}`;
+
+  const reply_markup = {
+    inline_keyboard: [
+      [
+        {
+          text: "Получить бесплатную консультацию",
+          callback_data: "consult-" + item_id,
+        },
+      ],
+      postfix === ".txt"
+        ? [{ text: "Cкачать ПД", callback_data: "pd-" + item_id }]
+        : [
+            {
+              text: "Скачать презентацию",
+              callback_data: "presentation-" + item_id,
+            },
+          ],
+    ],
+  };
+
+  ctx.telegram
+    .sendDocument(
+      ctx.from.id,
+      {
+        filename: `${item_id}${postfix}`,
+        source: filePath,
+      },
+      {
+        caption: titles.getTitle(title),
+        reply_markup,
+      }
+    )
+    .catch((e) => {
+      console.log(e);
+      ctx.telegram
+        .sendMessage(ctx.from.id, titles.getTitle("NO_FILE"), {
+          reply_markup,
+        })
+        .catch(console.log);
+    });
+}
+
+/*mainStage.on("message", async (ctx, next) => {
   console.log(ctx.message.web_app_data);
   //ctx.reply(ctx.message.web_app_data.data);
   next();
-});
+});*/
 
 /*mainStage.on("web_app_data", (ctx) => {
   console.log(ctx);

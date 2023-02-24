@@ -5,10 +5,18 @@
 <script>
 export default {
   mounted() {
-    let foo = document.createElement('script');    
-    foo.setAttribute("src","https://telegram.org/js/telegram-web-app.js");
+    let foo = document.createElement('script');
+    foo.setAttribute("src", "https://telegram.org/js/telegram-web-app.js");
     document.head.appendChild(foo);
 
+<<<<<<< HEAD
+=======
+    let nopinch = document.createElement('meta');
+    nopinch.setAttribute("name", "viewport");
+    nopinch.setAttribute("content", "width=device-width, user-scalable=no");
+    document.head.appendChild(nopinch);
+
+>>>>>>> refs/remotes/origin/master
   }
 }
 </script>
@@ -36,8 +44,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-h1{
+h1 {
   margin-left: 1rem;
 }
-
 </style>

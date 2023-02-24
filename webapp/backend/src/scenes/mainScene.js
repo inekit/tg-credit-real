@@ -1,18 +1,13 @@
-const e = require("express");
 const {
   CustomWizardScene,
   createKeyboard,
   handlers: { FilesHandler },
   telegraf: { Markup },
 } = require("telegraf-steps");
-const moment = require("moment");
 const tOrmCon = require("../db/connection");
 const getUser = require("../Utils/getUser");
-const { use } = require("../stages");
-const { Composer } = require("telegraf");
 
 const scene = new CustomWizardScene("clientScene").enter(async (ctx) => {
-  const { visual = true, from_dialogs } = ctx.scene.state;
   let userObj = (ctx.scene.state.userObj = await getUser(ctx));
 
   const connection = await tOrmCon;
@@ -87,6 +82,12 @@ scene
     },
   });
 
+scene.action(/^consult\-([0-9]+)$/g, async (ctx) => {
+  await ctx.answerCbQuery().catch((e) => {});
+
+  ctx.scene.enter("getPhoneScene", { object_id: ctx.match[1] });
+});
+
 scene.command("vitrina", (ctx) => {
   ctx.replyWithKeyboard("WEBAPP_TITLE", "webapp_keyboard");
   ctx.wizard.selectStep(2);
@@ -98,4 +99,4 @@ scene.command("about", (ctx) => {
 
 scene.on("message", (ctx) => ctx.replyWithTitle("ENTER_RIGHT_COMMAND"));
 
-module.exports = [scene];
+module.exports = scene;
