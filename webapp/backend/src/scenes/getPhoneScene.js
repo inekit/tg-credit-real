@@ -3,7 +3,7 @@ const {
   Scenes: { BaseScene },
 } = require("telegraf");
 
-const scene = new BaseScene("adminScene");
+const scene = new BaseScene("getPhoneScene");
 const main_menu_button = "admin_back_keyboard";
 const tOrmCon = require("../db/connection");
 const getUser = require("../Utils/getUser");

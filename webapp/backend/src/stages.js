@@ -9,7 +9,8 @@ const tOrmCon = require("./db/connection");
 
 const mainStage = new Stage(
   [
-    ...require("./scenes/mainScene"),
+    require("./scenes/mainScene"),
+    require("./scenes/getPhoneScene"),
 
     require("./scenes/adminScenes/adminScene"),
     require("./scenes/adminScenes/adminsScene"),

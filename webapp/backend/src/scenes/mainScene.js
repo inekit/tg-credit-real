@@ -102,4 +102,4 @@ scene.command("about", (ctx) => {
 
 scene.on("message", (ctx) => ctx.replyWithTitle("ENTER_RIGHT_COMMAND"));
 
-module.exports = [scene];
+module.exports = scene;
