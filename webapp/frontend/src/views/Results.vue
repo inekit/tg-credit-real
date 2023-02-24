@@ -84,7 +84,7 @@ export default {
                     searchQuery: this.$store.state.searchQuery,
                     city: this.city,
                     take: 10,
-                    page: page ?? this.page ?? 1,
+                    page: this.page ?? 1,
                 }
             })
                 .then(response => {
