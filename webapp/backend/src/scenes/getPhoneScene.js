@@ -1,9 +1,11 @@
 const {
-  Composer,
-  Scenes: { BaseScene },
-} = require("telegraf");
+  CustomWizardScene,
+  createKeyboard,
+  handlers: { FilesHandler },
+  telegraf: { Markup },
+} = require("telegraf-steps");
 
-const scene = new BaseScene("getPhoneScene");
+const scene = new CustomWizardScene("getPhoneScene");
 const tOrmCon = require("../db/connection");
 const getUser = require("../Utils/getUser");
 
@@ -14,7 +16,7 @@ scene.enter(async (ctx) => {
   if (user.phone)
     return ctx.replyWithKeyboard("USE_CURRENT_PHONE", "yes_no_keyboard");
 
-  ctx.reply(ctx.from.id, titles.getTitle("SEND_PHONE"), {
+  ctx.reply(ctx.from.id, ctx.getTitle("SEND_PHONE"), {
     reply_markup: {
       one_time_keyboard: true,
       keyboard: [

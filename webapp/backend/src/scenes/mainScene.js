@@ -8,7 +8,6 @@ const tOrmCon = require("../db/connection");
 const getUser = require("../Utils/getUser");
 
 const scene = new CustomWizardScene("clientScene").enter(async (ctx) => {
-  const { visual = true, from_dialogs } = ctx.scene.state;
   let userObj = (ctx.scene.state.userObj = await getUser(ctx));
 
   const connection = await tOrmCon;
