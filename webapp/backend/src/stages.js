@@ -105,14 +105,14 @@ async function sendFile(ctx, postfix, title) {
         source: filePath,
       },
       {
-        caption: title,
+        caption: titles.getTitle(title),
         reply_markup,
       }
     )
     .catch((e) => {
       console.log(e);
       ctx.telegram
-        .sendMessage(ctx.from.id, "NO_FILE", {
+        .sendMessage(ctx.from.id, titles.getTitle("NO_FILE"), {
           reply_markup,
         })
         .catch(console.log);
