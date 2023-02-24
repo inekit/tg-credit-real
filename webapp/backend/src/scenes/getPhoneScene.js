@@ -19,7 +19,7 @@ scene.enter(async (ctx) => {
       "yes_no_keyboard"
     );
 
-  ctx.reply(ctx.from.id, ctx.getTitle("SEND_PHONE"), {
+  ctx.reply(ctx.getTitle("SEND_PHONE"), {
     reply_markup: {
       one_time_keyboard: true,
       keyboard: [
