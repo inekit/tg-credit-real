@@ -15,7 +15,7 @@ scene.enter(async (ctx) => {
 
   if (user.phone)
     return ctx.replyWithKeyboard("USE_CURRENT_PHONE", "yes_no_keyboard", [
-      user.phone,
+      [user.phone],
     ]);
 
   ctx.reply(ctx.from.id, ctx.getTitle("SEND_PHONE"), {
