@@ -43,6 +43,7 @@ body {
 
 h1 {
   margin: auto 1rem;
+  margin-top: 1rem;
   color: #414141;
   font-weight: 500;
 
