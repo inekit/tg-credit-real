@@ -34,8 +34,34 @@ scene.enter(async (ctx) => {
   });
 });
 
-scene.action("yes", (ctx) => {
+scene.on("message", (ctx) => {
+  if (!/^[+]*[(]{0,1}[0-9]{1,3}[)]{0,1}[-\s\.\/0-9]*$/g.test(text)) return;
+  ctx.scene.state.phone = ctx.message.text;
   sendAppointment(ctx);
+});
+
+scene.action("yes", async (ctx) => {
+  await ctx.answerCbQuery().catch((e) => {});
+
+  sendAppointment(ctx);
+});
+
+scene.action("no", async (ctx) => {
+  await ctx.answerCbQuery().catch((e) => {});
+
+  ctx.reply(ctx.getTitle("SEND_PHONE"), {
+    reply_markup: {
+      one_time_keyboard: true,
+      keyboard: [
+        [
+          {
+            text: "Оставить телефон",
+            request_contact: true,
+          },
+        ],
+      ],
+    },
+  });
 });
 
 async function sendAppointment(ctx) {
@@ -60,12 +86,6 @@ async function sendAppointment(ctx) {
 
 scene.on("contact", (ctx) => {
   ctx.scene.state.phone = ctx.message.contact.phone_number;
-  sendAppointment(ctx);
-});
-
-scene.on("message", (ctx) => {
-  if (!/^[+]*[(]{0,1}[0-9]{1,3}[)]{0,1}[-\s\.\/0-9]*$/g.test(text)) return;
-  ctx.scene.state.phone = ctx.message.text;
   sendAppointment(ctx);
 });
 
