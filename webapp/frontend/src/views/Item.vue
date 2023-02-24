@@ -1,4 +1,7 @@
 <template>
+    <div class="img-container">
+        <img v-for="img_id in [...Array(item.images_count).keys()]" :key="img_id" :src="`/api/img/${item.city_name === 'Москва' ? 'mos' : 'spb'}/${item.id}/${img_id}`"/>
+    </div>
     <h1>{{item.name}}</h1>
     <ul>
         <li>📍 Адрес: {{item.address}}</li>
@@ -22,12 +25,14 @@ export default {
     },
     mounted(){
         this.getItem(this.$route.params.id);
-
+        
+        window.Telegram?.WebApp.MainButton.onClick(()=>{
+            window.Telegram?.WebApp.close();
+            this.getFiles();
+       });
         window.Telegram.WebApp.MainButton.enable();
-
-        window.Telegram.WebApp.onEvent('mainButtonClicked', function(){
-            window.Telegram.WebApp.sendData(this.item.id); 
-        });
+        window.Telegram.WebApp.MainButton.show();
+        window.Telegram.WebApp.MainButton.setText("Узнать больше");
     },
     methods: {
         getItem(id){
@@ -37,7 +42,17 @@ export default {
             }})
             .then(response => this.item = response.data)
             .catch(e=>{eventBus.$emit('noresponse', e)})
+        },
+        getFiles(){
+            this.$store.state.myApi.get(this.$store.state.restAddr+'/files',{
+                params: {
+                    user_id:  window.Telegram.WebApp.initDataUnsafe.user.id,
+                    item_id: this.$route.params.id
+            }})
+            .then(response => this.item = response.data)
+            .catch(e=>{eventBus.$emit('noresponse', e)})
         }
+        
     }
 }
 </script>

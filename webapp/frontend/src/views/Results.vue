@@ -4,7 +4,10 @@
     <div class="results-block">
         <div class="result-item" v-for="item in this.$store.state.results" :key="item.id">
             <router-link :to="`/items/${item.id}`">
-                <img :src="item.img" />
+                <div class="img-container">
+                    <img v-for="img_id in [...Array(item.images_count).keys()]" :key="img_id" 
+                     :src="`/api/img/${item.city_name === 'Москва' ? 'mos' : 'spb'}/${item.id}/${img_id}`"/>
+                </div>
                 <h2>{{ item.name }}</h2>
             </router-link>
         </div>
@@ -31,7 +34,10 @@ export default {
     }
     },
     mounted(){
+
+        window.Telegram.WebApp.MainButton.hide();
         window.Telegram.WebApp.MainButton.disable();
+        window.Telegram.WebApp.BackButton.show()
 
         console.log(this.$route.params)
 

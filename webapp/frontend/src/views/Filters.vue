@@ -46,8 +46,16 @@ export default {
             
         }
     },
+    watch: {
+        $route(to, from) {
+            window.Telegram?.WebApp.BackButton.show();    
+        }
+    },
     mounted(){
-        console.log(this.$route.params.page)
+        window.Telegram?.WebApp.expand();
+        window.Telegram?.WebApp.BackButton.onClick(()=>{
+            this.$router.go(-1)
+       });
     }
 }
 </script>

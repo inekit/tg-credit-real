@@ -8,6 +8,7 @@ export default {
     let foo = document.createElement('script');    
     foo.setAttribute("src","https://telegram.org/js/telegram-web-app.js");
     document.head.appendChild(foo);
+
   }
 }
 </script>
