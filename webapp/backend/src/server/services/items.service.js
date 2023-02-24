@@ -57,7 +57,6 @@ class UsersService {
 
       if (!searchQuery) searchQuery = undefined;
       else searchQuery = `%${searchQuery}%`;
-      //              and (lower(username) like lower($5) or $5 is NULL)
 
       connection
         .query(
@@ -83,7 +82,6 @@ class UsersService {
             )
           LIMIT $8 OFFSET $9`,
           [
-            //            or property_class like lower($7)
             property_class,
             sale_percent_min,
             sale_percent_max,
@@ -96,12 +94,6 @@ class UsersService {
           ]
         )
         .then(async (data) => {
-          /*for (let d of data) {
-            if (d.photo)
-              d.photo = (
-                await ctx.telegram.getFileLink(d.photo).catch(() => {})
-              )?.href;
-          }*/
           return res(data);
         })
         .catch((error) => rej(new MySqlError(error)));
@@ -111,7 +103,6 @@ class UsersService {
   sendFiles({ user_id, item_id }, ctx) {
     return new Promise(async (res, rej) => {
       console.log(user_id, item_id);
-      await ctx.telegram.sendMessage(user_id, item_id).catch(console.log);
       await ctx.telegram
         .sendMessage(user_id, ctx.getTitle("ITEM_INFO_TITLE"), {
           parse_mode: "HTML",
