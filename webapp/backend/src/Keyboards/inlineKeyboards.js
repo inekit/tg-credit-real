@@ -15,6 +15,11 @@ exports.main_admin_keyboard = (ctx) =>
     callbackButton(ctx.getTitle("AGREE_BUTTON"), "agree"),
     callbackButton(ctx.getTitle("ADMIN_MENU_BUTTON"), "admin"),
   ]);
+exports.yes_no_keyboard = (ctx) =>
+  inlineKeyboard([
+    [callbackButton(ctx.getTitle("Да"), "yes")],
+    [callbackButton(ctx.getTitle("Нет"), "no")],
+  ]);
 
 exports.question1_keyboard = (ctx) =>
   inlineKeyboard([
