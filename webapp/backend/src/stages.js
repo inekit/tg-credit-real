@@ -44,13 +44,21 @@ mainStage.hears(titles.getValues("BUTTON_BACK_ADMIN"), (ctx) => {
 
 mainStage.action(/^pd\-([0-9]+)$/g, async (ctx) => {
   console.log(123);
-  await sendFile(ctx, ".pdf", "DECLARATION_TITLE");
+  await sendFile(
+    ctx,
+    ".pdf",
+    "Проектная декларация в приложении. Спасибо что воспользовались нашим сервисом!"
+  );
 });
 
 mainStage.action(/^presentation\-([0-9]+)$/g, async (ctx) => {
   console.log(123);
 
-  await sendFile(ctx, ".txt", "PRESENTATION_TITLE");
+  await sendFile(
+    ctx,
+    ".txt",
+    "Файл-презентация в приложении. Чтобы получить такой отчет по вашему ЖК, оставьте контакты для связи."
+  );
 });
 
 async function sendFile(ctx, postfix, title) {
@@ -86,7 +94,7 @@ async function sendFile(ctx, postfix, title) {
           callback_data: "consult",
         },
       ],
-      title === "PRESENTATION_TITLE"
+      postfix === ".txt"
         ? [{ text: "Cкачать ПД", callback_data: "pd-" + item_id }]
         : [
             {
