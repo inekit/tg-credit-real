@@ -9,7 +9,7 @@ const tOrmCon = require("../db/connection");
 const getUser = require("../Utils/getUser");
 
 scene.enter(async (ctx) => {
-  const user = await getUser();
+  const user = await getUser(ctx);
   ctx.scene.state.phone = user.phone;
 
   if (user.phone)
