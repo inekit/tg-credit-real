@@ -1,15 +1,11 @@
-const e = require("express");
 const {
   CustomWizardScene,
   createKeyboard,
   handlers: { FilesHandler },
   telegraf: { Markup },
 } = require("telegraf-steps");
-const moment = require("moment");
 const tOrmCon = require("../db/connection");
 const getUser = require("../Utils/getUser");
-const { use } = require("../stages");
-const { Composer } = require("telegraf");
 
 const scene = new CustomWizardScene("clientScene").enter(async (ctx) => {
   const { visual = true, from_dialogs } = ctx.scene.state;

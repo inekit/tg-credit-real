@@ -4,7 +4,6 @@ const {
 } = require("telegraf");
 
 const scene = new BaseScene("getPhoneScene");
-const main_menu_button = "admin_back_keyboard";
 const tOrmCon = require("../db/connection");
 const getUser = require("../Utils/getUser");
 
@@ -15,7 +14,7 @@ scene.enter(async (ctx) => {
   if (user.phone)
     return ctx.replyWithKeyboard("USE_CURRENT_PHONE", "yes_no_keyboard");
 
-  ctx.replyWithTitle("SEND_PHONE", {
+  ctx.reply(ctx.from.id, titles.getTitle("SEND_PHONE"), {
     reply_markup: {
       one_time_keyboard: true,
       keyboard: [
