@@ -94,7 +94,9 @@ async function sendAppointment(ctx) {
     const lead_id = await queryRunner.query(
       "insert into leads (user_id, question_1, item_id, phone) values ($1,$2,$3,$4) returning id",
       [ctx.from.id, question1 ?? "skip", object_id, phone]
-    )[0].id;
+    );
+
+    console.log(lead_id);
 
     ctx.replyWithKeyboard("APPOINTMENT_SENT", "remove_keyboard");
 
