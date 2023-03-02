@@ -176,7 +176,7 @@ export default {
                 this.$store.state.myApi.delete(this.$store.state.restAddr + "/favorites", {
                     params: {
                         item_id: item.id,
-                        user_id: this.$store.state.user_id
+                        user_id: this.$store.state.user_id,
                     }
                 })
                     .then(response => {
@@ -187,7 +187,7 @@ export default {
                 this.$store.state.myApi.put(this.$store.state.restAddr + "/favorites", {
                     params: {
                         item_id: item.id,
-                        user_id: this.$store.state.user_id
+                        user_id: this.$store.state.user_id,
                     }
                 })
                     .then(response => {
