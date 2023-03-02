@@ -10,6 +10,8 @@ class UsersService {
   constructor() {
     this.getOne = this.getOne.bind(this);
 
+    this.getFavorites = this.getFavorites.bind(this);
+
     this.getAll = this.getAll.bind(this);
     this.sendFiles = this.sendFiles.bind(this);
   }
@@ -29,6 +31,43 @@ class UsersService {
     });
   }
 
+  getFavorites({ id, page = 1, take = 10, searchQuery, distinct }, ctx) {
+    return new Promise(async (res, rej) => {
+      const skip = (page - 1) * take;
+
+      const connection = await tOrmCon;
+
+      if (!searchQuery) searchQuery = undefined;
+      else searchQuery = `%${searchQuery}%`;
+
+      connection
+        .query(
+          `select * from favorites f left join items i on f.item_id = i.id
+          where (
+            lower(name) like lower($1) 
+            or lower(company_name) like lower($1)
+            or lower(city_name) like lower($1)
+            or lower(developer_name) like lower($1)
+            or lower(declaration) like lower($1)
+            or lower(address) like lower($1)
+            or lower(material) like lower($1)
+            or lower(finish_type) like lower($1)
+            or lower(description) like lower($1)
+            or lower(metro_1) like lower($1)
+            or lower(metro_2) like lower($1)
+            or lower(metro_3) like lower($1)
+            or $1 is NULL
+            )
+          LIMIT $2 OFFSET $3 order by id`,
+          [searchQuery, take, skip]
+        )
+        .then(async (data) => {
+          return res(data);
+        })
+        .catch((error) => rej(new MySqlError(error)));
+    });
+  }
+
   getAll(
     {
       id,
@@ -41,6 +80,7 @@ class UsersService {
       meter_price_min,
       meter_price_max,
       searchQuery,
+      distinct,
     },
     ctx
   ) {
@@ -58,9 +98,16 @@ class UsersService {
       if (!searchQuery) searchQuery = undefined;
       else searchQuery = `%${searchQuery}%`;
 
+      const querySubstr1 = distinct
+        ? "SELECT DISTINCT ON (declaration)id, * FROM items"
+        : "select * from items";
+      const querySubstr2 = distinct
+        ? "ORDER BY declaration DESC, id;"
+        : "order by id";
+
       connection
         .query(
-          `select * from items 
+          `${querySubstr1} 
           where (property_class = $1 or $1 is NULL)
           and ((sale_percent > $2 or $2 is NULL) and (sale_percent < $3 or $3 is NULL)) 
           and (commissioning_year = $4 or $4 is NULL)
@@ -80,7 +127,7 @@ class UsersService {
             or lower(metro_3) like lower($7)
             or $7 is NULL
             )
-          LIMIT $8 OFFSET $9`,
+          LIMIT $8 OFFSET $9 ${querySubstr2}`,
           [
             property_class,
             sale_percent_min,
@@ -102,7 +149,6 @@ class UsersService {
 
   sendFiles({ user_id, item_id }, ctx) {
     return new Promise((res, rej) => {
-      console.log(123);
       ctx.telegram
         .sendMessage(user_id, ctx.getTitle("ITEM_INFO_TITLE"), {
           parse_mode: "HTML",

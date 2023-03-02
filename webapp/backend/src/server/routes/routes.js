@@ -7,7 +7,9 @@ var fileUpload = require("express-fileupload");
 router.use(fileUpload({}));
 
 module.exports = (ctx) => {
-  router.get("/items", ItemsController.get(ctx));
+  router.get("/items", ItemsController.getItems(ctx));
+  router.get("/favorites", ItemsController.getFavorites(ctx));
+
   router.get("/img/:city_id/:object_id/:img_id", ImagesController.get);
   router.get("/files", ItemsController.getFiles(ctx));
 
