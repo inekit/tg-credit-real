@@ -116,6 +116,7 @@ async function sendAppointment(ctx) {
 
     await queryRunner.commitTransaction();
   } catch (err) {
+    console.log(err);
     await queryRunner.rollbackTransaction();
   } finally {
     await queryRunner.release();
