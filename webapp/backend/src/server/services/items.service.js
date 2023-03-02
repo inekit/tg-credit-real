@@ -65,7 +65,10 @@ class UsersService {
     });
   }
 
-  getFavorites({ id, page = 1, take = 10, searchQuery, distinct }, ctx) {
+  getFavorites(
+    { id, page = 1, take = 10, searchQuery, distinct, user_id },
+    ctx
+  ) {
     return new Promise(async (res, rej) => {
       const skip = (page - 1) * take;
 
@@ -92,9 +95,10 @@ class UsersService {
             or lower(metro_3) like lower($1)
             or $1 is NULL
             )
+            and user_id = $4
             order by id 
           LIMIT $2 OFFSET $3`,
-          [searchQuery, take, skip]
+          [searchQuery, take, skip, user_id]
         )
         .then(async (data) => {
           return res(data);

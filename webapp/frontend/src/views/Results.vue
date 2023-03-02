@@ -54,7 +54,7 @@ export default {
             await this.updatePage(300)
         },
         async $route(to, from) {
-            await this.updatePage(300)
+            await this.updatePage(400)
 
             if (this.$route.name === "Favorites" && this.$store.state.results.length > 0) {
                 window.Telegram?.WebApp.MainButton.onClick(async () => {
