@@ -34,7 +34,7 @@ exports.question1_keyboard = (ctx) =>
 exports.webapp_keyboard = (ctx) =>
   inlineKeyboard([
     [webAppButton(ctx.getTitle("WEBAPP_BUTTON"), "https://980.ru")],
-    [callbackButton(ctx.getTitle("ABOUT_BUTTON"), "help")],
+    //   [callbackButton(ctx.getTitle("ABOUT_BUTTON"), "help")],
   ]);
 
 exports.confirm_keyboard = (ctx) =>
