@@ -64,6 +64,7 @@ export default {
     },
     mounted() {
         window.Telegram?.WebApp.expand();
+        window.Telegram?.WebApp.enableClosingConfirmation()
         window.Telegram?.WebApp.BackButton.onClick(() => {
             this.$router.go(-1)
         });
@@ -74,15 +75,16 @@ export default {
 <style lang="scss">
 .filters-block {
     display: flex;
-    margin: 0;
+    margin: 1rem;
     padding: 0;
     list-style: none;
     flex-wrap: wrap;
+    gap: 1rem;
 
     .filter-link {
-        width: calc(50vw - 3.5rem);
-        height: calc(50vw - 3.5rem);
-        margin: 1rem;
+        flex: 1 1 calc((100% / 3) - 2rem);
+        height: calc(50vw - 4rem);
+        //margin: 1rem;
         margin-bottom: 0;
         padding: 1rem;
         border-radius: 1rem;
@@ -100,6 +102,7 @@ export default {
             left: 0;
             top: 0;
             padding: 1rem;
+            border-radius: 1rem;
 
         }
 
@@ -132,14 +135,8 @@ export default {
             top: 0;
             left: 0;
             background-color: rgba(0, 0, 0, 0.5);
-        }
+            border-radius: 1rem;
 
-        &:nth-child(2n-1) {
-            margin-right: 0.5rem;
-        }
-
-        &:nth-child(2n) {
-            margin-left: 0.5rem;
         }
     }
 }

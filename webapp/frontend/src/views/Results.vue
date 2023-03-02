@@ -166,6 +166,11 @@ export default {
     list-style: none;
     flex-wrap: wrap;
 
+    .masonry-column {
+        flex: 1 1 calc((100% / 3) - 2rem) !important;
+    }
+
+
     .result-item {
         width: 100%;
         height: fit-content; //calc(70vw - 1.5rem);
@@ -204,11 +209,10 @@ export default {
         img {
             position: absolute;
             margin: auto;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            max-width: 150%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-width: 200%;
             max-height: 130%;
             min-width: 100%;
             min-height: 100%;
@@ -238,6 +242,7 @@ export default {
                 color: #414141;
                 font-weight: 200;
                 font-size: 1.2rem;
+                word-wrap: break-word;
             }
         }
 

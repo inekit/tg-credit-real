@@ -44,19 +44,17 @@ mainStage.hears(titles.getValues("BUTTON_BACK_ADMIN"), (ctx) => {
 });
 
 mainStage.action(/^pd\-([0-9]+)$/g, async (ctx) => {
-  await sendFile(
-    ctx,
-    ".pdf",
-    "Проектная декларация в приложении. Спасибо что воспользовались нашим сервисом!"
-  );
+  await sendFile(ctx, ".pdf", "PD_SUCCESS");
 });
 
 mainStage.action(/^presentation\-([0-9]+)$/g, async (ctx) => {
-  await sendFile(
-    ctx,
-    ".txt",
-    "Файл-презентация в приложении. Чтобы получить такой отчет по вашему ЖК, оставьте контакты для связи."
-  );
+  await sendFile(ctx, ".txt", "PRESENTATION_SUCCESS");
+});
+
+mainStage.action(/^consult\-([0-9]+)$/g, async (ctx) => {
+  await ctx.answerCbQuery().catch((e) => {});
+
+  ctx.scene.enter("getPhoneScene", { object_id: ctx.match[1] });
 });
 
 async function sendFile(ctx, postfix, title) {

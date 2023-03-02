@@ -73,24 +73,52 @@ scene.action("no", async (ctx) => {
 
 async function sendAppointment(ctx) {
   const connection = await tOrmCon;
+  const queryRunner = connection.createQueryRunner();
+  await queryRunner.connect();
+  await queryRunner.startTransaction();
 
-  connection
-    .query("update users set phone = $1 where id = $2", [
-      ctx.scene.state.phone,
-      ctx.from.id,
-    ])
-    .catch(console.log);
-  ctx.replyWithKeyboard("APPOINTMENT_SENT", "remove_keyboard");
+  const { object_id, phone } = ctx.scene.state;
 
-  const admins = await connection.getRepository("Admin").find();
-  for (admin of admins) {
-    await ctx.telegram.sendMessage(
-      admin.user_id,
-      ctx.getTitle("NEW_APPOINTMENT", [
-        ctx.scene.state.object_id,
-        ctx.scene.state.phone,
-      ])
-    );
+  try {
+    const question1 = (
+      await queryRunner.query(
+        "update users set phone = $1 where id = $2 returning question_1",
+        [phone, ctx.from.id]
+      )
+    )[0].question1;
+
+    const { city, name } = (
+      await queryRunner.query("select * from items where id = $1", [object_id])
+    )[0];
+
+    const lead_id = await queryRunner.query(
+      "insert into leads (user_id, question_1, item_id, phone) returning id",
+      [ctx.from.id, question1, object_id, phone]
+    )[0].id;
+
+    ctx.replyWithKeyboard("APPOINTMENT_SENT", "remove_keyboard");
+
+    const admins = await connection.getRepository("Admin").find();
+    for (admin of admins) {
+      await ctx.telegram.sendMessage(
+        admin.user_id,
+        ctx.getTitle("NEW_APPOINTMENT", [
+          lead_id,
+          moment().format("HH:mm DD.MM.YYYY"),
+          city === "spb" ? "СПБ" : "МСК",
+          object_id,
+          name,
+          question1 ?? "Нет",
+          phone,
+        ])
+      );
+    }
+
+    await queryRunner.commitTransaction();
+  } catch (err) {
+    await queryRunner.rollbackTransaction();
+  } finally {
+    await queryRunner.release();
   }
 }
 

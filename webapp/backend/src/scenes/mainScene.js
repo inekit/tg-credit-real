@@ -82,12 +82,6 @@ scene
     },
   });
 
-scene.action(/^consult\-([0-9]+)$/g, async (ctx) => {
-  await ctx.answerCbQuery().catch((e) => {});
-
-  ctx.scene.enter("getPhoneScene", { object_id: ctx.match[1] });
-});
-
 scene.command("vitrina", (ctx) => {
   ctx.replyWithKeyboard("WEBAPP_TITLE", "webapp_keyboard");
   ctx.wizard.selectStep(2);

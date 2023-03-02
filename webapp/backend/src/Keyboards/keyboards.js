@@ -38,7 +38,8 @@ exports.main_menu_admin_keyboard = (ctx) => {
 
 exports.admin_keyboard = (ctx) =>
   Markup.keyboard([
-    [ctx.getTitle("BUTTON_IMPORT"), ctx.getTitle("BUTTON_ADMINS")],
+    [ctx.getTitle("BUTTON_IMPORT"), ctx.getTitle("BUTTON_CHANGE_TEXTS")],
+    [ctx.getTitle("BUTTON_ADMINS")],
     [ctx.getTitle("BUTTON_CLIENT_MENU")],
   ]).resize();
 
