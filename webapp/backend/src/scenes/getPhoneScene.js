@@ -87,8 +87,6 @@ async function sendAppointment(ctx) {
       )
     )[0][0].question_1;
 
-    console.log(question1);
-
     const { city, name } = (
       await queryRunner.query("select * from items where id = $1", [object_id])
     )[0];
@@ -112,7 +110,9 @@ async function sendAppointment(ctx) {
           city === "spb" ? "СПБ" : "МСК",
           object_id,
           name,
-          question1 ?? "Нет",
+          question1
+            ? ctx.getTitle("ANSWER_1_" + question1.toString().toUpperCase())
+            : "Нет",
           phone,
         ])
       );
