@@ -79,7 +79,6 @@ export default {
             if (!this.$store.state.user_id) return alert("Ваша версия телеграм не поддерживается")
 
             await this.getFiles().catch(console.log);
-            console.log(1321243)
             window.Telegram?.WebApp.disableClosingConfirmation()
             window.Telegram?.WebApp.close();
         },

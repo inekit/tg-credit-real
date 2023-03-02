@@ -176,9 +176,10 @@ export default {
 
             if (isFavorite) {
                 this.$store.state.myApi.delete(this.$store.state.restAddr + "/favorites", {
-                    item_id: item.id,
-                    user_id: this.$store.state.user_id,
-
+                    data: {
+                        item_id: item.id,
+                        user_id: this.$store.state.user_id,
+                    }
                 })
                     .then(response => {
                         item.is_favorite = false
