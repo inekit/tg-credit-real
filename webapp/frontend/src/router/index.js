@@ -7,8 +7,9 @@ import {
 const routes = [
   {
     path: '/:id',
-    name: 'Home',
-    redirect: '/filters/city/:id',
+    name: 'Cities',
+    component: () => import('@/views/Filters.vue'),
+
     children: [
       {
         path: '/results/:city',
@@ -24,11 +25,6 @@ const routes = [
         path: '/items/:id',
         name: 'Items',
         component: () => import('@/views/Item.vue'),
-      },
-      {
-        path: '/filters/city/:id',
-        name: 'Cities',
-        component: () => import('@/views/Filters.vue'),
       },
       {
         path: 'filters/:city/:page',

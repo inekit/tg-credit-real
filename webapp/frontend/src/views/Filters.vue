@@ -1,7 +1,7 @@
 <template>
     <h1>Каталог</h1>
     <searchBlock />
-    <ul v-if="$route.params.city === 'city'" class="filters-block">
+    <ul v-if="!$route.params.city" class="filters-block">
         <li class="filter-link" v-for="city in cities" :key=city.name>
             <router-link :to="`/filters/${city.name}/filters`">
                 <picture>
