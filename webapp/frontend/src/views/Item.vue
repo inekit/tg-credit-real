@@ -99,7 +99,7 @@ export default {
                         item_id: this.$route.params.id
                     }
                 })
-                    .then(response => { res() })
+                    .then(response => { console.log("finish res"); res() })
                     .catch(e => { rej() })
             })
 
