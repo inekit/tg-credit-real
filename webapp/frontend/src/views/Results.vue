@@ -95,6 +95,7 @@ export default {
         }
 
         await this.updatePage(400)
+
     },
 
     methods: {
