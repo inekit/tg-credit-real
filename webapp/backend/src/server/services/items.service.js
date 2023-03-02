@@ -116,6 +116,7 @@ class UsersService {
       searchQuery,
       distinct,
       city_name,
+      user_id,
     },
     ctx
   ) {
@@ -143,8 +144,9 @@ class UsersService {
       connection
         .query(
           `${querySubstr1} 
-          left join favorites f on i.id = f.item_id
-          where (property_class = $1 or $1 is NULL)
+          left join favorites f on i.id = f.item_id 
+          where (property_class = $1 or $1 is NULL) and
+          (user_id = $11 or user_id is NULL)
           and ((sale_percent > $2 or $2 is NULL) and (sale_percent < $3 or $3 is NULL)) 
           and (commissioning_year = $4 or $4 is NULL)
           and ((meter_price > $5 or $5 is NULL) and (meter_price < $6 or $6 is NULL))
@@ -177,6 +179,7 @@ class UsersService {
             city_name,
             take,
             skip,
+            user_id,
           ]
         )
         .then(async (data) => {

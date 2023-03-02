@@ -149,6 +149,8 @@ export default {
                     city_name: this.city_name,
                     take: 10,
                     page: this.page ?? 1,
+                    user_id: this.$store.state.user_id,
+
                 }
             })
                 .then(response => {
