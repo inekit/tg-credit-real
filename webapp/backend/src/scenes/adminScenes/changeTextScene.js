@@ -24,10 +24,7 @@ scene.enter(async (ctx) => {
   }
 
   const keyboard = "change_text_actions_keyboard";
-  const title = ctx.getTitle("CHANGE_TEXT", [
-    ctx.getTitle("START_TITLE"),
-    ctx.getTitle("RULES_TITLE"),
-  ]);
+  const title = ctx.getTitle("CHANGE_TEXT");
 
   if (main_menu_button) await ctx.replyWithKeyboard("⚙️", main_menu_button);
 
@@ -45,14 +42,24 @@ scene.action(/change\_(.+)/g, (ctx) => {
 scene.addNullStep().addStep({
   variable: "text",
   type: "confirm",
-  cb: (ctx) => {
-    ctx.answerCbQuery().catch(console.log);
-
+  cb: async (ctx) => {
     const { type, text } = ctx.scene.state.input;
 
-    ctx.setTitle(type, text);
+    try {
+      await ctx.setTitle(type, text);
 
-    ctx.scene.reenter();
+      await ctx.answerCbQuery(ctx.getTitle("CHANGE_TEXT_SUCCESS"), {
+        show_alert: true,
+      });
+    } catch (e) {
+      await ctx
+        .answerCbQuery(ctx.getTitle("CHANGE_TEXT_ERROR"), {
+          show_alert: true,
+        })
+        .catch(console.log);
+    }
+
+    ctx.ctx.scene.reenter();
   },
 });
 
