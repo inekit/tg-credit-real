@@ -1,7 +1,7 @@
 var EntitySchema = require("typeorm").EntitySchema;
 
 module.exports = new EntitySchema({
-  name: "Favorites",
+  name: "Favorite",
   tableName: "favorites",
   columns: {
     user_id: {
