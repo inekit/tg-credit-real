@@ -78,14 +78,6 @@ export default {
         window.Telegram?.WebApp.MainButton.disable();
         window.Telegram?.WebApp.BackButton.show()
 
-        if (this.$route.name === "Favorites" && this.$store.state.results.length > 0) {
-            window.Telegram?.WebApp.MainButton.onClick(this.finishWindow);
-
-            window.Telegram?.WebApp.MainButton.enable();
-            window.Telegram?.WebApp.MainButton.show();
-            window.Telegram?.WebApp.MainButton.setText("Скачать проектные декларации");
-        }
-
         console.log(this.$route.params)
 
         const filterId = this.$route.params?.page;
@@ -105,6 +97,14 @@ export default {
         }
 
         await this.updatePage(400)
+
+        if (this.$route.name === "Favorites" && this.$store.state.results.length > 0) {
+            window.Telegram?.WebApp.MainButton.onClick(this.finishWindow);
+
+            window.Telegram?.WebApp.MainButton.enable();
+            window.Telegram?.WebApp.MainButton.show();
+            window.Telegram?.WebApp.MainButton.setText("Скачать проектные декларации");
+        }
 
     },
 
