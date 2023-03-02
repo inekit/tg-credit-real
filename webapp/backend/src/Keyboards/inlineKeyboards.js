@@ -504,7 +504,7 @@ exports.admins_actions_keyboard = (ctx) => {
 exports.change_text_actions_keyboard = (ctx) => {
   const keyboard = inlineKeyboard(
     [
-      callbackButton(ctx.getTitle("BUTTON_CHANGE_GREETING"), "change_greeting"),
+      callbackButton("GREETING", "GREETING"),
       //callbackButton(ctx.getTitle("BUTTON_CHANGE_PHOTO"), "change_photo"),
     ],
     { columns: 1 }
