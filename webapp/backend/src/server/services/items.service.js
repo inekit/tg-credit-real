@@ -35,7 +35,6 @@ class UsersService {
     return new Promise(async (res, rej) => {
       const connection = await tOrmCon;
 
-      console.log({ user_id, item_id });
       connection
         .query(`insert into favorites (user_id, item_id) values ($1,$2)`, [
           user_id,
@@ -51,6 +50,8 @@ class UsersService {
   deleteFavorite({ user_id, item_id }) {
     return new Promise(async (res, rej) => {
       const connection = await tOrmCon;
+
+      console.log({ user_id, item_id });
 
       connection
         .query(`delete from favorites where user_id = $1 and item_id = $2`, [
