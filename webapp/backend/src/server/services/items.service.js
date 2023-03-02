@@ -74,7 +74,7 @@ class UsersService {
 
       connection
         .query(
-          `select * from favorites f left join items i on f.item_id = i.id
+          `select *, TRUE is_favorite from favorites f left join items i on f.item_id = i.id
           where (
             lower(name) like lower($1) 
             or lower(company_name) like lower($1)
@@ -133,8 +133,8 @@ class UsersService {
       else searchQuery = `%${searchQuery}%`;
 
       const querySubstr1 = distinct
-        ? "SELECT DISTINCT ON (declaration)id, * FROM items"
-        : "select * from items";
+        ? "SELECT DISTINCT ON (declaration)id, i.*, user_id is_favorite FROM items i"
+        : "select i.*, user_id is_favorite from items i";
       const querySubstr2 = distinct
         ? "ORDER BY declaration DESC, id"
         : "order by id";
@@ -142,6 +142,7 @@ class UsersService {
       connection
         .query(
           `${querySubstr1} 
+          left join favorites f on i.id = f.item_id
           where (property_class = $1 or $1 is NULL)
           and ((sale_percent > $2 or $2 is NULL) and (sale_percent < $3 or $3 is NULL)) 
           and (commissioning_year = $4 or $4 is NULL)
