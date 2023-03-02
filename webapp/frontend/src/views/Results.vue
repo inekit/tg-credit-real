@@ -2,14 +2,13 @@
     <h1>{{ $route.name === "Favorites" ? "Избранное" : "Каталог" }}</h1>
     <div class="favorites" @click="$router.push('/favorites')">
         <img :src="require('@/assets/img/fav-black.svg')" />
-
     </div>
     <searchBlock />
     <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 300 250"></InstagramLoader>
     <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 300 200"></InstagramLoader>
     <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 300 200"></InstagramLoader>
 
-    <MasonryWall class="results-block" :items="$store.state.results ?? []" :ssr-columns="1" :column-width="bodyWidth / 6"
+    <MasonryWall class="results-block" :items="$store.state.results ?? []" :ssr-columns="2" :column-width="bodyWidth / 6"
         :gap="12">
         <template #default="{ item, index }">
             <div class="result-item">
@@ -69,9 +68,12 @@ export default {
             }
         }
     },
+    beforeMount() {
+        this.bodyWidth = document.body.clientHeight
+
+    },
     async mounted() {
         this.scroll()
-        this.bodyWidth = document.body.clientHeight
         window.Telegram?.WebApp.MainButton.hide();
         window.Telegram?.WebApp.MainButton.disable();
         window.Telegram?.WebApp.BackButton.show()

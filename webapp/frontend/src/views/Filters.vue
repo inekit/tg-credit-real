@@ -1,5 +1,8 @@
 <template>
     <h1>Каталог</h1>
+    <div class="favorites" @click="$router.push('/favorites')">
+        <img :src="require('@/assets/img/fav-black.svg')" />
+    </div>
     <searchBlock />
     <ul v-if="$route.params.id" class="filters-block">
         <li class="filter-link" v-for="city in cities" :key=city.name>
