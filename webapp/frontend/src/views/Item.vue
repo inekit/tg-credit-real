@@ -100,7 +100,7 @@ export default {
                     }
                 })
                     .then(response => { console.log("finish res"); res() })
-                    .catch(e => { rej() })
+                    .catch(e => { console.log(e); rej() })
             })
 
         },
