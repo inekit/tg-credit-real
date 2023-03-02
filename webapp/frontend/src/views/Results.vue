@@ -21,7 +21,7 @@
                         <h2>{{ item.name }}</h2>
                     </div>
                 </router-link>
-                <div class="favorite-toggle" :class="is_favorite ? 'favorite-item' : ''"
+                <div class="favorite-toggle" :class="item.is_favorite ? 'favorite-item' : ''"
                     @click="toggleFavorite($event, item)"></div>
             </div>
         </template>
