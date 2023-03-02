@@ -68,6 +68,8 @@ export default {
         window.Telegram?.WebApp.BackButton.onClick(() => {
             this.$router.go(-1)
         });
+        this.$store.state.user_id = window.Telegram?.WebApp.initDataUnsafe?.user?.id
+
     }
 }
 </script>
