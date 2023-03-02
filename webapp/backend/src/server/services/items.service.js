@@ -102,7 +102,7 @@ class UsersService {
         ? "SELECT DISTINCT ON (declaration)id, * FROM items"
         : "select * from items";
       const querySubstr2 = distinct
-        ? "ORDER BY declaration DESC, id;"
+        ? "ORDER BY declaration DESC, id"
         : "order by id";
 
       connection
@@ -127,7 +127,8 @@ class UsersService {
             or lower(metro_3) like lower($7)
             or $7 is NULL
             )
-          LIMIT $8 OFFSET $9 ${querySubstr2}`,
+            ${querySubstr2} 
+          LIMIT $8 OFFSET $9`,
           [
             property_class,
             sale_percent_min,
