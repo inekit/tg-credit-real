@@ -54,6 +54,7 @@ export default {
         window.Telegram?.WebApp.MainButton.onClick(async () => {
             await this.finishWindow()
         });
+        this.user_id = window.Telegram.WebApp.initDataUnsafe.user.id
         window.Telegram?.WebApp.MainButton.enable();
         window.Telegram?.WebApp.MainButton.show();
         window.Telegram?.WebApp.MainButton.setText("Узнать больше");
@@ -95,7 +96,7 @@ export default {
             return new Promise((res, rej) => {
                 this.$store.state.myApi.get(this.$store.state.restAddr + '/files', {
                     params: {
-                        user_id: window.Telegram?.WebApp?.initDataUnsafe?.user?.id,
+                        user_id: this.user_id,
                         item_id: this.$route.params.id
                     }
                 })
