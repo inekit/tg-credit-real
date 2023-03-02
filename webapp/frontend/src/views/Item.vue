@@ -25,7 +25,6 @@
         <li>🏢 Этажей: {{ item.floor_count }}</li>
         <li>🎨 Тип отделки: {{ item.finish_type }}</li>
     </ul>
-    <button @click="finishWindow">Получить</button>
 </template>
 
 <script>
@@ -54,7 +53,7 @@ export default {
         window.Telegram?.WebApp.MainButton.onClick(async () => {
             await this.finishWindow()
         });
-        this.user_id = window.Telegram?.WebApp.initDataUnsafe.user.id
+        this.user_id = window.Telegram?.WebApp.initDataUnsafe?.user?.id
         window.Telegram?.WebApp.MainButton.enable();
         window.Telegram?.WebApp.MainButton.show();
         window.Telegram?.WebApp.MainButton.setText("Узнать больше");
@@ -78,6 +77,8 @@ export default {
     },
     methods: {
         async finishWindow() {
+            if (!this.user_id) return alert("Ваша версия телеграм не поддерживается")
+
             await this.getFiles().catch(console.log);
             console.log(1321243)
             window.Telegram?.WebApp.disableClosingConfirmation()
