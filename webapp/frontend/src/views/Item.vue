@@ -95,7 +95,7 @@ export default {
             return new Promise((res, rej) => {
                 this.$store.state.myApi.get(this.$store.state.restAddr + '/files', {
                     params: {
-                        user_id: window.Telegram.WebApp.initDataUnsafe.user.id,
+                        user_id: window.Telegram?.WebApp.initDataUnsafe.user.id,
                         item_id: this.$route.params.id
                     }
                 })
