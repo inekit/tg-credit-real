@@ -167,7 +167,7 @@ export default {
     flex-wrap: wrap;
 
     .masonry-column {
-        flex: 1 1 calc((100% / 3) - 2rem) !important;
+        flex: 1 1 calc((100% / 2) - 2rem) !important;
     }
 
 
