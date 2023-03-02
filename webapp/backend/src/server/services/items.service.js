@@ -101,9 +101,8 @@ class UsersService {
   }
 
   sendFiles({ user_id, item_id }, ctx) {
-    return new Promise(async (res, rej) => {
-      console.log(user_id, item_id);
-      await ctx.telegram
+    return new Promise((res, rej) => {
+      ctx.telegram
         .sendMessage(user_id, ctx.getTitle("ITEM_INFO_TITLE"), {
           parse_mode: "HTML",
           reply_markup: {
