@@ -49,13 +49,13 @@ export default {
     },
     watch: {
         async $route(to, from) {
-            window.Telegram?.WebApp.MainButton.offClick(this.finishWindow());
+            window.Telegram?.WebApp.MainButton.offClick(this.finishWindow);
         }
     },
     mounted() {
         this.getItem(this.$route.params.id);
 
-        window.Telegram?.WebApp.MainButton.onClick(this.finishWindow());
+        window.Telegram?.WebApp.MainButton.onClick(this.finishWindow);
         window.Telegram?.WebApp.MainButton.enable();
         window.Telegram?.WebApp.MainButton.show();
         window.Telegram?.WebApp.MainButton.setText("Узнать больше");
