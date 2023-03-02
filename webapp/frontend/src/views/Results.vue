@@ -1,6 +1,8 @@
 <template>
-    <h1>Каталог</h1>
+    <h1>{{ $route.name === "Favorites" ? "Избранное" : "Каталог" }}</h1>
     <div class="favorites" @click="$router.push('/favorites')">
+        <img :src="require('@/assets/img/fav-black.svg')" />
+
     </div>
     <searchBlock />
     <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 300 250"></InstagramLoader>
@@ -295,11 +297,11 @@ export default {
 
         .favorite-toggle {
             content: '';
-            width: 30px;
-            height: 30px;
+            width: 40px;
+            height: 40px;
             border-radius: 13px;
             background-color: transparent;
-            border: 2px solid;
+            border: 1px solid;
             border-color: rgb(197, 80, 105);
             background-color: rgb(197, 80, 105);
             position: absolute;
@@ -317,10 +319,6 @@ export default {
                 border-color: #6e6e6e;
             }
 
-            &:hover {
-                background-color: rgb(197, 80, 105);
-
-            }
         }
     }
 

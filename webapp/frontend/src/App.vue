@@ -54,15 +54,9 @@ h1 {
   width: 30px;
   border-radius: 13px;
   background-color: transparent;
-  border: 2px solid;
-  border-color: rgb(197, 80, 105);
   position: absolute;
   top: 4px;
-  right: 1rem;
+  right: calc(1rem + 2px);
 
-  &:hover {
-    background-color: rgb(197, 80, 105);
-
-  }
 }
 </style>
