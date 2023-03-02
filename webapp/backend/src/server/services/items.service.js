@@ -188,9 +188,7 @@ class UsersService {
     });
   }
 
-  sendFiles(r, ctx) {
-    console.log(r);
-
+  sendFiles({ user_id, item_id, item_ids }, ctx) {
     return new Promise(async (res, rej) => {
       if (item_id)
         ctx.telegram
@@ -216,7 +214,7 @@ class UsersService {
           })
           .catch(console.log);
       else {
-        console.log(1, item_ids, r);
+        console.log(1, item_ids);
         for (let item_id of item_ids) {
           const connection = await tOrmCon;
 
