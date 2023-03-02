@@ -168,7 +168,6 @@ export default {
 
     .masonry-column {
         flex: 1 1 calc((100% / 2) - 2rem) !important;
-        max-width: 50% !important;
     }
 
 
