@@ -8,7 +8,7 @@ const {
 const scene = new CustomWizardScene("getPhoneScene");
 const tOrmCon = require("../db/connection");
 const getUser = require("../Utils/getUser");
-
+const moment = require("moment");
 scene.enter(async (ctx) => {
   const user = await getUser(ctx);
   ctx.scene.state.phone = user.phone;
@@ -91,12 +91,12 @@ async function sendAppointment(ctx) {
       await queryRunner.query("select * from items where id = $1", [object_id])
     )[0];
 
-    const lead_id = await queryRunner.query(
-      "insert into leads (user_id, question_1, item_id, phone) values ($1,$2,$3,$4) returning id",
-      [ctx.from.id, question1 ?? "skip", object_id, phone]
-    );
-
-    console.log(lead_id);
+    const lead_id = (
+      await queryRunner.query(
+        "insert into leads (user_id, question_1, item_id, phone) values ($1,$2,$3,$4) returning id",
+        [ctx.from.id, question1 ?? "skip", object_id, phone]
+      )
+    )[0].id;
 
     ctx.replyWithKeyboard("APPOINTMENT_SENT", "remove_keyboard");
 
