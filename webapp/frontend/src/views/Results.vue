@@ -57,7 +57,7 @@ export default {
         async $route(to, from) {
             await this.updatePage(300)
 
-            if (this.$route.name === "Favorites") {
+            if (this.$route.name === "Favorites" && this.$store.state.results.length > 0) {
                 window.Telegram?.WebApp.MainButton.onClick(async () => {
                     await this.finishWindow()
                 });
@@ -108,11 +108,16 @@ export default {
         },
         async getFiles() {
             return new Promise((res, rej) => {
+                const item_ids = this.$store.state.results.map(el => el.id)
+                let params = {
+                    user_id: this.$store.state.user_id,
+                    item_ids
+                }
+                if (item_ids.length === 1) params.item_id = item_ids[0]
+                else if (item_ids.length > 3) item_ids.length = 3
+
                 this.$store.state.myApi.get(this.$store.state.restAddr + '/files', {
-                    params: {
-                        user_id: this.$store.state.user_id,
-                        item_ids: this.$store.state.results.map(el => el.id)
-                    }
+                    params
                 })
                     .then(response => { console.log("finish res"); res() })
                     .catch(e => { console.log(e); rej() })
@@ -208,6 +213,8 @@ export default {
                         if (this.$route.name === "Favorites") {
                             console.log(1212)
                             this.$store.state.results = this.$store.state.results?.filter((el) => el.id !== item.id)
+                            if (this.$store.state.results === 0) window.Telegram?.WebApp.MainButton.hide();
+
                         }
                     })
                     .catch(e => { eventBus.$emit('noresponse', e) })
