@@ -8,7 +8,7 @@ const routes = [
   {
     path: '/:id',
     name: 'Home',
-    redirect: '/:id/filters/city',
+    redirect: '/filters/city/:id',
     children: [
       {
         path: '/results/:city',
@@ -26,7 +26,7 @@ const routes = [
         component: () => import('@/views/Item.vue'),
       },
       {
-        path: '/:id/filters/:city',
+        path: '/filters/city/:id',
         name: 'Cities',
         component: () => import('@/views/Filters.vue'),
       },
