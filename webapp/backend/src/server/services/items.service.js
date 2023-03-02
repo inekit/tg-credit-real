@@ -31,7 +31,7 @@ class UsersService {
     });
   }
 
-  addFavorite({ user_id, item_id } = body) {
+  addFavorite(body) {
     return new Promise(async (res, rej) => {
       const connection = await tOrmCon;
 
