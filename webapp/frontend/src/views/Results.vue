@@ -45,13 +45,14 @@ export default {
     },
     watch: {
         "$store.state.searchQuery": async function () {
-            this.$store.state.results = await this.sendSearchRequest();
+            this.$store.state.results = await this.sendSearchRequest(true);
         },
         "$store.state.distinct": async function () {
-            this.$store.state.results = await this.sendSearchRequest();
+            this.$store.state.results = await this.sendSearchRequest(true);
         },
         async $route(to, from) {
-            this.$store.state.results = await this.sendSearchRequest();
+
+            this.$store.state.results = await this.sendSearchRequest(true);
 
         }
     },
@@ -127,7 +128,11 @@ export default {
                 }
             };
         },
-        async sendSearchRequest() {
+        async sendSearchRequest(isReload) {
+            if (isReload) {
+                this.isEnded = false
+                this.page = 1
+            }
             const subPath = this.$route.name === "Results" ? '/items' : '/favorites'
             const results = await this.$store.state.myApi.get(this.$store.state.restAddr + subPath, {
                 params: {
