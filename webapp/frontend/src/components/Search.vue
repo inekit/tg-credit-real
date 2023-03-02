@@ -28,9 +28,9 @@ export default {
         },
         openResults(e) {
             this.clickInput()
-            //if (this.$route.name === "Filters") 
             this.$store.state.searchQuery = e.target.value
-            this.$router.push('/results/' + this.$route.params.city)
+            if (this.$route.name === "Filters" || this.$route.name === "Cities")
+                this.$router.push('/results/' + this.$route.params.city)
 
         },
         clickInput() {

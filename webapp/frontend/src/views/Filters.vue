@@ -86,7 +86,7 @@ export default {
     .filter-link {
         flex: 1 1 calc((100% / 3) - 2rem);
         max-width: calc(50vw - 3.5rem);
-        height: calc(50vw - 4rem);
+        height: calc(50vw - 3.5rem);
         //margin: 1rem;
         margin-bottom: 0;
         padding: 1rem;
