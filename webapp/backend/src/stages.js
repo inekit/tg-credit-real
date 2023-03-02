@@ -44,10 +44,14 @@ mainStage.hears(titles.getValues("BUTTON_BACK_ADMIN"), (ctx) => {
 });
 
 mainStage.action(/^pd\-([0-9]+)$/g, async (ctx) => {
+  await ctx.answerCbQuery().catch((e) => {});
+
   await sendFile(ctx, ".pdf", "PD_SUCCESS");
 });
 
 mainStage.action(/^presentation\-([0-9]+)$/g, async (ctx) => {
+  await ctx.answerCbQuery().catch((e) => {});
+
   await sendFile(ctx, ".txt", "PRESENTATION_SUCCESS");
 });
 
@@ -134,7 +138,11 @@ async function sendFile(ctx, postfix, title) {
   ctx.replyWithTitle("ITEM_INFO_TITLE");
 });*/
 
-mainStage.action("admin", (ctx) => ctx.scene.enter("adminScene"));
+mainStage.action("admin", async (ctx) => {
+  await ctx.answerCbQuery().catch((e) => {});
+
+  ctx.scene.enter("adminScene");
+});
 
 const stages = new Composer();
 
