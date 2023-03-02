@@ -214,7 +214,7 @@ class UsersService {
           })
           .catch(console.log);
       else {
-        console.logs(item_ids);
+        console.log(item_ids);
         for (let id of item_ids) {
           const connection = await tOrmCon;
 
