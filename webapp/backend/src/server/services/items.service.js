@@ -58,7 +58,8 @@ class UsersService {
             or lower(metro_3) like lower($1)
             or $1 is NULL
             )
-          LIMIT $2 OFFSET $3 order by id`,
+            order by id 
+          LIMIT $2 OFFSET $3`,
           [searchQuery, take, skip]
         )
         .then(async (data) => {
@@ -81,6 +82,7 @@ class UsersService {
       meter_price_max,
       searchQuery,
       distinct,
+      city_name,
     },
     ctx
   ) {
@@ -127,8 +129,9 @@ class UsersService {
             or lower(metro_3) like lower($7)
             or $7 is NULL
             )
+            and (city_name = $8 or $8 is NULL)
             ${querySubstr2} 
-          LIMIT $8 OFFSET $9`,
+          LIMIT $9 OFFSET $10`,
           [
             property_class,
             sale_percent_min,
@@ -137,6 +140,7 @@ class UsersService {
             meter_price_min,
             meter_price_max,
             searchQuery,
+            city_name,
             take,
             skip,
           ]

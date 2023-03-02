@@ -65,7 +65,7 @@ export default {
         const filterId = this.$route.params?.page;
         const filterValue = this.$route.params?.filter;
 
-        if (this.$route.params?.city !== "city") this.city = this.$route.params?.city;
+        if (this.$route.params?.city !== "city") this.city_name = this.$route.params?.city;
 
         if (filterId === "2") this.property_class = filterValue;
         else if (filterId === "3") this.commissioning_year = filterValue;
@@ -137,7 +137,7 @@ export default {
                     meter_price_max: this.meter_price_max,
                     searchQuery: this.$store.state.searchQuery,
                     distinct: !this.$store.state.distinct,
-                    city: this.city,
+                    city_name: this.city_name,
                     take: 10,
                     page: this.page ?? 1,
                 }
