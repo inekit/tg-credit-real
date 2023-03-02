@@ -102,6 +102,7 @@ class UsersService {
 
   sendFiles({ user_id, item_id }, ctx) {
     return new Promise((res, rej) => {
+      console.log(123);
       ctx.telegram
         .sendMessage(user_id, ctx.getTitle("ITEM_INFO_TITLE"), {
           parse_mode: "HTML",
