@@ -243,19 +243,7 @@ export default {
             overflow: hidden;
         }
 
-        img {
-            position: absolute;
-            margin: auto;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            max-width: 200%;
-            max-height: 130%;
-            min-width: 100%;
-            min-height: 100%;
-            width: auto;
-            height: auto;
-        }
+
 
         a {
             display: block;
@@ -281,6 +269,20 @@ export default {
                 font-size: 1.2rem;
                 word-wrap: break-word;
             }
+
+            img {
+                position: absolute;
+                margin: auto;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                max-width: 200%;
+                max-height: 130%;
+                min-width: 100%;
+                min-height: 100%;
+                width: auto;
+                height: auto;
+            }
         }
 
         &:nth-child(2n-1) {
@@ -304,6 +306,11 @@ export default {
             top: 0.5rem;
             right: 0.5rem;
             transition: all 0.2s;
+
+            img {
+                height: 70%;
+                margin: 15%;
+            }
 
             &.favorite-item {
                 background-color: #6e6e6e;
