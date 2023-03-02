@@ -1,7 +1,7 @@
 <template>
     <h1>Каталог</h1>
     <searchBlock />
-    <ul v-if="!$route.params.city" class="filters-block">
+    <ul v-if="$route.params.id" class="filters-block">
         <li class="filter-link" v-for="city in cities" :key=city.name>
             <router-link :to="`/filters/${city.name}/filters`">
                 <picture>
@@ -21,7 +21,7 @@
             </router-link>
         </li>
     </ul>
-    <ul v-if="!['filters', 'city'].includes($route.params.page)" class="filters-block">
+    <ul v-if="!['filters', 'city'].includes($route.params.page) && $route.params.page" class="filters-block">
         <li class="filter-link" v-for="filter in $store.state.filters.find(el => el.id == $route.params.page)?.values"
             :key="filter">
             <router-link

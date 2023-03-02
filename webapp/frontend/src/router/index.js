@@ -6,9 +6,8 @@ import {
 
 const routes = [
   {
-    path: '/:id',
-    name: 'Cities',
-    component: () => import('@/views/Filters.vue'),
+    path: '/',
+    name: 'home',
 
     children: [
       {
@@ -25,6 +24,11 @@ const routes = [
         path: '/items/:id',
         name: 'Items',
         component: () => import('@/views/Item.vue'),
+      },
+      {
+        path: '/:id',
+        name: 'Cities',
+        component: () => import('@/views/Filters.vue'),
       },
       {
         path: 'filters/:city/:page',
