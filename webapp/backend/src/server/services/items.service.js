@@ -235,16 +235,10 @@ class UsersService {
 
           const filePath = `${process.env.STATIC_FOLDER}/${city_id}/${item_id}.pdf`;
           ctx.telegram
-            .sendDocument(
-              user_id,
-              {
-                filename: `${item_id}.pdf`,
-                source: filePath,
-              },
-              {
-                reply_markup,
-              }
-            )
+            .sendDocument(user_id, {
+              filename: `${item_id}.pdf`,
+              source: filePath,
+            })
             .catch((e) => {
               console.log(e);
               ctx.telegram
