@@ -51,6 +51,7 @@ export default {
         this.getItem(this.$route.params.id);
 
         window.Telegram?.WebApp.MainButton.onClick(() => {
+            window.Telegram?.WebApp.disableClosingConfirmation()
             window.Telegram?.WebApp.close();
             this.getFiles();
         });
