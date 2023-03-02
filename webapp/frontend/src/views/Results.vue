@@ -133,7 +133,9 @@ export default {
                 this.isEnded = false
                 this.page = 1
             }
-            const subPath = this.$route.name === "Results" ? '/items' : '/favorites'
+            const subPath = this.$route.name === "Results" || this.$route.name === "ResultsSearch"
+                ? '/items' : '/favorites'
+
             const results = await this.$store.state.myApi.get(this.$store.state.restAddr + subPath, {
                 params: {
                     property_class: this.property_class,
