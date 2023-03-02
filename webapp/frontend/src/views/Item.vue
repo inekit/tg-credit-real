@@ -50,10 +50,11 @@ export default {
     mounted() {
         this.getItem(this.$route.params.id);
 
-        window.Telegram?.WebApp.MainButton.onClick(() => {
+        window.Telegram?.WebApp.MainButton.onClick(async () => {
+            await this.getFiles().catch(console.log);
             window.Telegram?.WebApp.disableClosingConfirmation()
             window.Telegram?.WebApp.close();
-            this.getFiles();
+
         });
         window.Telegram?.WebApp.MainButton.enable();
         window.Telegram?.WebApp.MainButton.show();
@@ -86,15 +87,18 @@ export default {
                 .then(response => this.item = response.data)
                 .catch(e => { eventBus.$emit('noresponse', e) })
         },
-        getFiles() {
-            this.$store.state.myApi.get(this.$store.state.restAddr + '/files', {
-                params: {
-                    user_id: window.Telegram.WebApp.initDataUnsafe.user.id,
-                    item_id: this.$route.params.id
-                }
+        async getFiles() {
+            return new Promise((res, rej) => {
+                this.$store.state.myApi.get(this.$store.state.restAddr + '/files', {
+                    params: {
+                        user_id: window.Telegram.WebApp.initDataUnsafe.user.id,
+                        item_id: this.$route.params.id
+                    }
+                })
+                    .then(response => { res() })
+                    .catch(e => { rej() })
             })
-                .then(response => this.item = response.data)
-                .catch(e => { eventBus.$emit('noresponse', e) })
+
         },
         getDate(date) {
             return moment(date).format("DD.MM.YYYY")
