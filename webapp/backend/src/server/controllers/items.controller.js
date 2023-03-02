@@ -20,7 +20,7 @@ function getFavorites(ctx) {
 
 function addFavorite(req, res, next) {
   service
-    .addFavorite(req)
+    .addFavorite(req.body)
     .then((data) => res.send(data))
     .catch((error) => next(error));
 }

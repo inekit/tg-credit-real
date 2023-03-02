@@ -174,10 +174,9 @@ export default {
 
             if (isFavorite) {
                 this.$store.state.myApi.delete(this.$store.state.restAddr + "/favorites", {
-                    params: {
-                        item_id: item.id,
-                        user_id: this.$store.state.user_id,
-                    }
+                    item_id: item.id,
+                    user_id: this.$store.state.user_id,
+
                 })
                     .then(response => {
                         item.is_favorite = false
@@ -185,10 +184,9 @@ export default {
                     .catch(e => { eventBus.$emit('noresponse', e) })
             } else {
                 this.$store.state.myApi.put(this.$store.state.restAddr + "/favorites", {
-                    params: {
-                        item_id: item.id,
-                        user_id: this.$store.state.user_id,
-                    }
+                    item_id: item.id,
+                    user_id: this.$store.state.user_id,
+
                 })
                     .then(response => {
                         item.is_favorite = true
