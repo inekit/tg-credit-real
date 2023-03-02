@@ -85,7 +85,7 @@ async function sendAppointment(ctx) {
         "update users set phone = $1 where id = $2 returning question_1",
         [phone, ctx.from.id]
       )
-    )[0][0].question1;
+    )[0][0].question_1;
 
     console.log(question1);
 
