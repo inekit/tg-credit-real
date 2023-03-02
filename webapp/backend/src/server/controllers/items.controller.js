@@ -20,14 +20,14 @@ function getFavorites(ctx) {
 
 function addFavorite(req, res, next) {
   service
-    .addFavorite(req.query, ctx)
+    .addFavorite(req.query)
     .then((data) => res.send(data))
     .catch((error) => next(error));
 }
 
 function deleteFavorite(req, res, next) {
   service
-    .deleteFavorite(req.query, ctx)
+    .deleteFavorite(req.query)
     .then((data) => res.send(data))
     .catch((error) => next(error));
 }
