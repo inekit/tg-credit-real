@@ -188,30 +188,73 @@ class UsersService {
     });
   }
 
-  sendFiles({ user_id, item_id }, ctx) {
-    return new Promise((res, rej) => {
-      ctx.telegram
-        .sendMessage(user_id, ctx.getTitle("ITEM_INFO_TITLE"), {
-          parse_mode: "HTML",
-          reply_markup: {
-            inline_keyboard: [
-              [
-                {
-                  text: "Получить бесплатную консультацию",
-                  callback_data: "consult-" + item_id,
-                },
+  sendFiles({ user_id, item_id, item_ids }, ctx) {
+    return new Promise(async (res, rej) => {
+      if (item_id)
+        ctx.telegram
+          .sendMessage(user_id, ctx.getTitle("ITEM_INFO_TITLE"), {
+            parse_mode: "HTML",
+            reply_markup: {
+              inline_keyboard: [
+                [
+                  {
+                    text: "Получить бесплатную консультацию",
+                    callback_data: "consult-" + item_id,
+                  },
+                ],
+                [{ text: "Cкачать ПД", callback_data: "pd-" + item_id }],
+                [
+                  {
+                    text: "Скачать презентацию",
+                    callback_data: "presentation-" + item_id,
+                  },
+                ],
               ],
-              [{ text: "Cкачать ПД", callback_data: "pd-" + item_id }],
-              [
-                {
-                  text: "Скачать презентацию",
-                  callback_data: "presentation-" + item_id,
-                },
-              ],
-            ],
-          },
-        })
-        .catch(console.log);
+            },
+          })
+          .catch(console.log);
+      else {
+        console.logs(item_ids);
+        for (let id of item_ids) {
+          const connection = await tOrmCon;
+
+          const city_name = (
+            await connection
+              .query("select * from items where id = $1", [item_id])
+              .catch(console.log)
+          )?.[0]?.city_name;
+
+          if (!city_name)
+            return ctx.telegram
+              .sendMessage(ctx.from.id, ctx.getTitle("NO_FILE"), {
+                reply_markup,
+              })
+              .catch(console.log);
+
+          const city_id = city_name === "Москва" ? "mos" : "spb";
+
+          const filePath = `${process.env.STATIC_FOLDER}/${city_id}/${item_id}.pdf`;
+          ctx.telegram
+            .sendDocument(
+              user_id,
+              {
+                filename: `${item_id}.pdf`,
+                source: filePath,
+              },
+              {
+                reply_markup,
+              }
+            )
+            .catch((e) => {
+              console.log(e);
+              ctx.telegram
+                .sendMessage(ctx.from.id, ctx.getTitle("NO_FILE"), {
+                  reply_markup,
+                })
+                .catch(console.log);
+            });
+        }
+      }
       res();
     });
   }

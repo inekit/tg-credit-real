@@ -55,7 +55,18 @@ export default {
             await this.updatePage(300)
         },
         async $route(to, from) {
-            await this.updatePage(3200)
+            await this.updatePage(300)
+
+            if (this.$route.name === "Favorites") {
+                window.Telegram?.WebApp.MainButton.onClick(async () => {
+                    await this.finishWindow()
+                });
+                window.Telegram?.WebApp.MainButton.enable();
+                window.Telegram?.WebApp.MainButton.show();
+                window.Telegram?.WebApp.MainButton.setText("Скачать проектные декларации");
+            } else {
+                window.Telegram?.WebApp.MainButton.hide();
+            }
         }
     },
     async mounted() {
@@ -87,6 +98,26 @@ export default {
     },
 
     methods: {
+        async finishWindow() {
+            if (!this.$store.state.user_id) return alert("Ваша версия телеграм не поддерживается")
+
+            await this.getFiles().catch(console.log);
+            window.Telegram?.WebApp.disableClosingConfirmation()
+            window.Telegram?.WebApp.close();
+        },
+        async getFiles() {
+            return new Promise((res, rej) => {
+                this.$store.state.myApi.get(this.$store.state.restAddr + '/files', {
+                    params: {
+                        user_id: this.$store.state.user_id,
+                        item_ids: this.$store.state.results.map(el => el.id)
+                    }
+                })
+                    .then(response => { console.log("finish res"); res() })
+                    .catch(e => { console.log(e); rej() })
+            })
+
+        },
         async updatePage(delay) {
             this.$store.state.results = await this.sendSearchRequest(true);
 
