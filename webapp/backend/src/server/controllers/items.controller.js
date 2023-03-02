@@ -9,8 +9,9 @@ function get(ctx) {
 }
 
 function getFiles(ctx) {
-  console.log(13224);
   return (req, res, next) => {
+    console.log(13224);
+
     sendFiles(Object.assign(req.query), ctx)
       .then((data) => res.send(data))
       .catch((error) => next(error));
