@@ -31,9 +31,9 @@ exports.question1_keyboard = (ctx) =>
     [callbackButton(ctx.getTitle("ANSWER_SKIP"), "skip")],
   ]);
 
-exports.webapp_keyboard = (ctx) =>
+exports.webapp_keyboard = (ctx, id) =>
   inlineKeyboard([
-    [webAppButton(ctx.getTitle("WEBAPP_BUTTON"), "https://980.ru")],
+    [webAppButton(ctx.getTitle("WEBAPP_BUTTON"), "https://980.ru/" + id)],
     //   [callbackButton(ctx.getTitle("ABOUT_BUTTON"), "help")],
   ]);
 

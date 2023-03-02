@@ -67,7 +67,10 @@ scene
         ])
         .catch(console.log);
 
-      ctx.replyWithKeyboard("WEBAPP_TITLE", "webapp_keyboard");
+      ctx.replyWithKeyboard("WEBAPP_TITLE", {
+        name: "webapp_keyboard",
+        args: [ctx.from.id],
+      });
       ctx.wizard.selectStep(ctx.wizard.cursor + 1);
     },
   })
@@ -83,7 +86,10 @@ scene
   });
 
 scene.command("vitrina", (ctx) => {
-  ctx.replyWithKeyboard("WEBAPP_TITLE", "webapp_keyboard");
+  ctx.replyWithKeyboard("WEBAPP_TITLE", {
+    name: "webapp_keyboard",
+    args: [ctx.from.id],
+  });
   ctx.wizard.selectStep(2);
 });
 
