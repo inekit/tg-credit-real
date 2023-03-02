@@ -85,7 +85,9 @@ async function sendAppointment(ctx) {
         "update users set phone = $1 where id = $2 returning question_1",
         [phone, ctx.from.id]
       )
-    )[0].question_1;
+    )[0];
+
+    console.log(question1);
 
     const { city, name } = (
       await queryRunner.query("select * from items where id = $1", [object_id])
