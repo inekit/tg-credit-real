@@ -188,7 +188,9 @@ class UsersService {
     });
   }
 
-  sendFiles({ user_id, item_id, item_ids } = r, ctx) {
+  sendFiles(r, ctx) {
+    console.log(r);
+
     return new Promise(async (res, rej) => {
       if (item_id)
         ctx.telegram
