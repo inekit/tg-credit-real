@@ -48,4 +48,21 @@ h1 {
   font-weight: 500;
 
 }
+
+.favorites {
+  height: 30px;
+  width: 30px;
+  border-radius: 13px;
+  background-color: transparent;
+  border: 2px solid;
+  border-color: rgb(197, 80, 105);
+  position: absolute;
+  top: 4px;
+  right: 1rem;
+
+  &:hover {
+    background-color: rgb(197, 80, 105);
+
+  }
+}
 </style>

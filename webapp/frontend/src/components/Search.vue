@@ -1,6 +1,14 @@
 <template>
     <div class="search-block">
         <input type="search" :value="$store.state.searchQuery" @change="openResults" placeholder="Поиск.." />
+        <div v-show="this.$route.name === 'Results'">
+            <input class="form-check-input" type="checkbox" value="" id="distinctCheck"
+                v-model="this.$store.state.distinct">
+            <label class="form-check-label" for="distinctCheck">
+                Показать все дома в ЖК
+            </label>
+        </div>
+
     </div>
 </template>
   
@@ -38,8 +46,9 @@ export default {
 <style lang="scss">
 .search-block {
     margin: 1rem;
+    position: relative;
 
-    input {
+    input[type="search"] {
         width: 100%;
         height: 40px;
         border-radius: 0.5rem;
@@ -52,6 +61,31 @@ export default {
             border-color: #7090fa;
 
         }
+    }
+
+    input[type="checkbox"] {
+        width: 15px;
+        height: 15px;
+        border-radius: 0.5rem;
+        border: 0px solid;
+        border-color: #e2e2e2;
+        margin: 15px 0 0 5px;
+
+        &:hover {
+            border-color: #7090fa;
+
+        }
+
+    }
+
+    label {
+        position: absolute;
+        margin-top: -5px;
+        bottom: 3px;
+        left: 30px;
+        font-size: 0.9rem;
+        color: #414141;
+
     }
 }
 </style>

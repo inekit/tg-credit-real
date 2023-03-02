@@ -1,5 +1,7 @@
 <template>
     <h1>Каталог</h1>
+    <div class="favorites" @click="$router.push('/favorites')">
+    </div>
     <searchBlock />
     <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 300 250"></InstagramLoader>
     <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 300 200"></InstagramLoader>
@@ -43,7 +45,11 @@ export default {
         "$store.state.searchQuery": async function () {
             this.$store.state.results = await this.sendSearchRequest();
         },
-        $route(to, from) {
+        "$store.state.distinct": async function () {
+            this.$store.state.results = await this.sendSearchRequest();
+        },
+        async $route(to, from) {
+            this.$store.state.results = await this.sendSearchRequest();
 
         }
     },
@@ -120,7 +126,8 @@ export default {
             };
         },
         async sendSearchRequest() {
-            const results = await this.$store.state.myApi.get(this.$store.state.restAddr + '/items', {
+            const subPath = this.$route.name === "Results" ? '/items' : '/favorites'
+            const results = await this.$store.state.myApi.get(this.$store.state.restAddr + subPath, {
                 params: {
                     property_class: this.property_class,
                     sale_percent_min: this.sale_percent_min,
@@ -129,6 +136,7 @@ export default {
                     meter_price_min: this.meter_price_min,
                     meter_price_max: this.meter_price_max,
                     searchQuery: this.$store.state.searchQuery,
+                    distinct: !this.$store.state.distinct,
                     city: this.city,
                     take: 10,
                     page: this.page ?? 1,
