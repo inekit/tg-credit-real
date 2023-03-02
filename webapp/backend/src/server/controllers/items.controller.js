@@ -26,7 +26,6 @@ function addFavorite(req, res, next) {
 }
 
 function deleteFavorite(req, res, next) {
-  console.log(req);
   service
     .deleteFavorite(req.body)
     .then((data) => res.send(data))

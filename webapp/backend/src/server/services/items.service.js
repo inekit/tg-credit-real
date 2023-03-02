@@ -137,10 +137,8 @@ class UsersService {
 
       const querySubstr1 = distinct
         ? "SELECT DISTINCT ON (name) id, i.*, user_id is_favorite FROM items i"
-        : "SELECT DISTINCT ON (declaration) id, i.*, user_id is_favorite FROM items i";
-      const querySubstr2 = distinct
-        ? "ORDER BY name DESC, id"
-        : "ORDER BY declaration DESC, id";
+        : "SELECT i.*, user_id is_favorite FROM items i";
+      const querySubstr2 = distinct ? "ORDER BY name DESC, id" : "ORDER BY id";
 
       connection
         .query(

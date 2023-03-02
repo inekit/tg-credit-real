@@ -51,9 +51,7 @@ export default {
             this.$store.state.results = await this.sendSearchRequest(true);
         },
         async $route(to, from) {
-
             this.$store.state.results = await this.sendSearchRequest(true);
-
         }
     },
     async mounted() {
@@ -183,6 +181,10 @@ export default {
                 })
                     .then(response => {
                         item.is_favorite = false
+                        if (this.$route.name === "Favorites") {
+                            console.log(1212)
+                            this.$store.state.results = this.$store.state.results?.filter((el) => el.id !== item.id)
+                        }
                     })
                     .catch(e => { eventBus.$emit('noresponse', e) })
             } else {
