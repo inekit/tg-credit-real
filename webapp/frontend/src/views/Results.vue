@@ -21,6 +21,8 @@
                         <h2>{{ item.name }}</h2>
                     </div>
                 </router-link>
+                <div class="favorite-toggle" :class="is_favorite ? 'favorite-item' : ''"
+                    @click="toggleFavorite($event, item)"></div>
             </div>
         </template>
 
@@ -159,6 +161,33 @@ export default {
 
             return results
 
+        },
+        async toggleFavorite(event, item) {
+            const isFavorite = item.is_favorite
+
+            if (isFavorite) {
+                this.$store.state.myApi.delete(this.$store.state.restAddr + "/favorites", {
+                    params: {
+                        item_id: item.id,
+                        user_id: this.$store.state.user_id
+                    }
+                })
+                    .then(response => {
+                        item.is_favorite = false
+                    })
+                    .catch(e => { eventBus.$emit('noresponse', e) })
+            } else {
+                this.$store.state.myApi.put(this.$store.state.restAddr + "/favorites", {
+                    params: {
+                        item_id: item.id,
+                        user_id: this.$store.state.user_id
+                    }
+                })
+                    .then(response => {
+                        item.is_favorite = true
+                    })
+                    .catch(e => { eventBus.$emit('noresponse', e) })
+            }
         }
     }
 }
@@ -260,6 +289,24 @@ export default {
 
         &:nth-child(2n) {
             margin-left: 0.5rem;
+        }
+
+        .favorite-toggle {
+            content: '';
+            width: 30px;
+            height: 30px;
+            border-radius: 13px;
+            background-color: transparent;
+            border: 2px solid;
+            border-color: rgb(197, 80, 105);
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+
+            &:hover {
+                background-color: rgb(197, 80, 105);
+
+            }
         }
     }
 

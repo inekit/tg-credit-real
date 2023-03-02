@@ -80,7 +80,7 @@ export default {
 
     label {
         position: absolute;
-        margin-top: -5px;
+        margin-top: 0px;
         bottom: 3px;
         left: 30px;
         font-size: 0.9rem;

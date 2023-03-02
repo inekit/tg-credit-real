@@ -1,12 +1,9 @@
-const {
-  getAll: gAllFromDB,
-  sendFiles,
-  getFavorites: getFavoritesFromDB,
-} = require("../services/items.service");
+const service = require("../services/items.service");
 
 function getItems(ctx) {
   return (req, res, next) => {
-    gAllFromDB(Object.assign(req.query), ctx)
+    service
+      .getAll(Object.assign(req.query), ctx)
       .then((data) => res.send(data))
       .catch((error) => next(error));
   };
@@ -14,15 +11,31 @@ function getItems(ctx) {
 
 function getFavorites(ctx) {
   return (req, res, next) => {
-    getFavoritesFromDB(req.query, ctx)
+    service
+      .getFavorites(req.query, ctx)
       .then((data) => res.send(data))
       .catch((error) => next(error));
   };
 }
 
+function addFavorite(req, res, next) {
+  service
+    .addFavorite(req.query, ctx)
+    .then((data) => res.send(data))
+    .catch((error) => next(error));
+}
+
+function deleteFavorite(req, res, next) {
+  service
+    .deleteFavorite(req.query, ctx)
+    .then((data) => res.send(data))
+    .catch((error) => next(error));
+}
+
 function getFiles(ctx) {
   return (req, res, next) => {
-    sendFiles(Object.assign(req.query), ctx)
+    service
+      .sendFiles(Object.assign(req.query), ctx)
       .then((data) => res.send(data))
       .catch((error) => next(error));
   };
@@ -32,4 +45,6 @@ module.exports = {
   getItems,
   getFiles,
   getFavorites,
+  deleteFavorite,
+  addFavorite,
 };

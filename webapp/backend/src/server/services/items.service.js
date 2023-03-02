@@ -9,11 +9,11 @@ const {
 class UsersService {
   constructor() {
     this.getOne = this.getOne.bind(this);
-
     this.getFavorites = this.getFavorites.bind(this);
-
     this.getAll = this.getAll.bind(this);
     this.sendFiles = this.sendFiles.bind(this);
+    this.addFavorite = this.addFavorite.bind(this);
+    this.deleteFavorite = this.deleteFavorite.bind(this);
   }
 
   getOne(id) {
@@ -26,6 +26,38 @@ class UsersService {
           if (!postData?.[0]) rej(new NotFoundError());
 
           return res(postData?.[0]);
+        })
+        .catch((error) => rej(new MySqlError(error)));
+    });
+  }
+
+  addFavorite({ user_id, item_id }) {
+    return new Promise(async (res, rej) => {
+      const connection = await tOrmCon;
+
+      connection
+        .query(`insert into favorites (user_id, item_id) values ($1,$2)`, [
+          user_id,
+          item_id,
+        ])
+        .then(async (data) => {
+          return res(data);
+        })
+        .catch((error) => rej(new MySqlError(error)));
+    });
+  }
+
+  deleteFavorite({ user_id, item_id }) {
+    return new Promise(async (res, rej) => {
+      const connection = await tOrmCon;
+
+      connection
+        .query(`delete from favorites where user_id = $1 and item_id = $2`, [
+          user_id,
+          item_id,
+        ])
+        .then(async (data) => {
+          return res(data);
         })
         .catch((error) => rej(new MySqlError(error)));
     });
