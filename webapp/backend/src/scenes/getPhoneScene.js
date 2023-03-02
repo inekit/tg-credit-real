@@ -92,7 +92,7 @@ async function sendAppointment(ctx) {
     )[0];
 
     const lead_id = await queryRunner.query(
-      "insert into leads (user_id, question_1, item_id, phone) values ($,$2,$3,$4) returning id",
+      "insert into leads (user_id, question_1, item_id, phone) values ($1,$2,$3,$4) returning id",
       [ctx.from.id, question1, object_id, phone]
     )[0].id;
 
