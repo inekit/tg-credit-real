@@ -82,7 +82,7 @@ export default {
     gap: 1rem;
 
     .filter-link {
-        flex: 1 1 calc(50vw - 3.5rem);
+        flex: 1 1 calc((100% / 3) - 2rem);
         max-width: calc(50vw - 3.5rem);
         height: calc(50vw - 4rem);
         //margin: 1rem;
