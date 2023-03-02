@@ -31,11 +31,11 @@ class UsersService {
     });
   }
 
-  addFavorite(body) {
+  addFavorite(r) {
     return new Promise(async (res, rej) => {
       const connection = await tOrmCon;
 
-      console.log(body);
+      console.log(r);
       connection
         .query(`insert into favorites (user_id, item_id) values ($1,$2)`, [
           user_id,
