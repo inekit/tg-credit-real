@@ -25,6 +25,7 @@
         <li>🏢 Этажей: {{ item.floor_count }}</li>
         <li>🎨 Тип отделки: {{ item.finish_type }}</li>
     </ul>
+    <button @click="finishWindow">Получить</button>
 </template>
 
 <script>
@@ -51,10 +52,7 @@ export default {
         this.getItem(this.$route.params.id);
 
         window.Telegram?.WebApp.MainButton.onClick(async () => {
-            await this.getFiles().catch(console.log);
-            window.Telegram?.WebApp.disableClosingConfirmation()
-            window.Telegram?.WebApp.close();
-
+            await this.finishWindow()
         });
         window.Telegram?.WebApp.MainButton.enable();
         window.Telegram?.WebApp.MainButton.show();
@@ -78,6 +76,12 @@ export default {
         }, 400)
     },
     methods: {
+        async finishWindow() {
+            await this.getFiles().catch(console.log);
+            console.log(1321243)
+            window.Telegram?.WebApp.disableClosingConfirmation()
+            window.Telegram?.WebApp.close();
+        },
         getItem(id) {
             this.$store.state.myApi.get(this.$store.state.restAddr + '/items', {
                 params: {
