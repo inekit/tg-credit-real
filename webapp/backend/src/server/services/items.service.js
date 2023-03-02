@@ -133,11 +133,11 @@ class UsersService {
       else searchQuery = `%${searchQuery}%`;
 
       const querySubstr1 = distinct
-        ? "SELECT DISTINCT ON (declaration)id, i.*, user_id is_favorite FROM items i"
-        : "select i.*, user_id is_favorite from items i";
+        ? "SELECT DISTINCT ON (name) id, i.*, user_id is_favorite FROM items i"
+        : "SELECT DISTINCT ON (declaration) id, i.*, user_id is_favorite FROM items i";
       const querySubstr2 = distinct
-        ? "ORDER BY declaration DESC, id"
-        : "order by id";
+        ? "ORDER BY name DESC, id"
+        : "ORDER BY declaration DESC, id";
 
       connection
         .query(
