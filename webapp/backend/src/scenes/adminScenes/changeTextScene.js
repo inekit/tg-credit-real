@@ -22,7 +22,7 @@ scene.enter(async (ctx) => {
   ctx.replyWithKeyboard(title, keyboard);
 });
 
-scene.action(/^change_(.+)$/g, (ctx) => {
+scene.action(/^change\_(.+)$/g, (ctx) => {
   ctx.answerCbQuery().catch(console.log);
 
   ctx.scene.state.input = { type: ctx.match[1] };
@@ -50,7 +50,7 @@ scene.addNullStep().addStep({
         .catch(console.log);
     }
 
-    ctx.ctx.scene.reenter();
+    ctx.scene.enter("changeTextScene");
   },
 });
 
