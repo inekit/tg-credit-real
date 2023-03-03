@@ -47,6 +47,7 @@ scene.addNullStep().addStep({
         show_alert: true,
       });
     } catch (e) {
+      console.log(e);
       await ctx
         .answerCbQuery(ctx.getTitle("CHANGE_TEXT_ERROR"), {
           show_alert: true,
