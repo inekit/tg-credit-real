@@ -77,6 +77,10 @@ export default {
 
         }, 400)
     },
+    async beforeUnmount() {
+        window.Telegram?.WebApp.MainButton.offClick(this.finishWindow);
+        window.Telegram?.WebApp.MainButton.hide();
+    },
     methods: {
         async finishWindow() {
             if (!this.$store.state.user_id) return alert("Ваша версия телеграм не поддерживается")

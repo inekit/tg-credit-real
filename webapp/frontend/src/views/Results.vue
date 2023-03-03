@@ -54,18 +54,7 @@ export default {
             await this.updatePage(300)
         },
         async $route(to, from) {
-            await this.updatePage(400)
-
-            if (this.$route.name === "Favorites" && this.$store.state.results.length > 0) {
-                window.Telegram?.WebApp.MainButton.onClick(this.finishWindow);
-
-                window.Telegram?.WebApp.MainButton.enable();
-                window.Telegram?.WebApp.MainButton.show();
-                window.Telegram?.WebApp.MainButton.setText("Скачать проектные декларации");
-            } else {
-                window.Telegram?.WebApp.MainButton.offClick(this.finishWindow);
-                window.Telegram?.WebApp.MainButton.hide();
-            }
+            await showButtons()
         }
     },
     beforeMount() {
@@ -96,19 +85,28 @@ export default {
             this.meter_price_max = filterValue;
         }
 
-        await this.updatePage(400)
-
-        if (this.$route.name === "Favorites" && this.$store.state.results.length > 0) {
-            window.Telegram?.WebApp.MainButton.onClick(this.finishWindow);
-
-            window.Telegram?.WebApp.MainButton.enable();
-            window.Telegram?.WebApp.MainButton.show();
-            window.Telegram?.WebApp.MainButton.setText("Скачать проектные декларации");
-        }
+        await showButtons()
 
     },
-
+    async beforeUnmount() {
+        window.Telegram?.WebApp.MainButton.offClick(this.finishWindow);
+        window.Telegram?.WebApp.MainButton.hide();
+    },
     methods: {
+        async toggleButtons() {
+            await this.updatePage(400)
+
+            if (this.$route.name === "Favorites" && this.$store.state.results.length > 0) {
+                window.Telegram?.WebApp.MainButton.onClick(this.finishWindow);
+
+                window.Telegram?.WebApp.MainButton.enable();
+                window.Telegram?.WebApp.MainButton.show();
+                window.Telegram?.WebApp.MainButton.setText("Скачать проектные декларации");
+            } else {
+                window.Telegram?.WebApp.MainButton.offClick(this.finishWindow);
+                window.Telegram?.WebApp.MainButton.hide();
+            }
+        },
         async finishWindow() {
             if (!this.$store.state.user_id) return alert("Ваша версия телеграм не поддерживается")
 
