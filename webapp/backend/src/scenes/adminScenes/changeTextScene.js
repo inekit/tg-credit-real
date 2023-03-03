@@ -25,7 +25,7 @@ scene.enter(async (ctx) => {
 scene.action(/^(.+)$/g, (ctx) => {
   ctx.answerCbQuery().catch(console.log);
 
-  ctx.scene.state.input.type = ctx.match[1];
+  ctx.scene.state.input = { type: ctx.match[1] };
 
   ctx.replyStep(1);
 });
