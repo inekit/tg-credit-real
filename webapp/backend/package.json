@@ -4,6 +4,7 @@
     "server": "node src/server/app"
   },
   "dependencies": {
+    "@json2csv/node": "^6.1.2",
     "@qiwi/bill-payments-node-js-sdk": "^3.2.1",
     "adm-zip": "^0.5.9",
     "axios": "^0.27.2",
