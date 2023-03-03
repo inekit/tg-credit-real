@@ -41,7 +41,7 @@ scene.enter(async (ctx) => {
   ctx.telegram
     .sendDocument(ctx.from.id, {
       filename: `leads.csv`,
-      source: csv,
+      source: Buffer.from(csv),
     })
     .catch((e) => {
       console.log(e);
