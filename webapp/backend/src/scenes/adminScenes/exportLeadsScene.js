@@ -36,7 +36,7 @@ scene.enter(async (ctx) => {
   const asyncOpts = {};
   const parser = new AsyncParser(opts, transformOpts, asyncOpts);
 
-  const csv = await parser.parse(data).promise();
+  const csv = await parser.parse(leads).promise();
 
   //user_id, question_1, item_id, phone
 
