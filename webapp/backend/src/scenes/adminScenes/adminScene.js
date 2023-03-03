@@ -50,4 +50,8 @@ scene.hears(titles.getValues("BUTTON_CHANGE_TEXTS"), (ctx) =>
   ctx.scene.enter("changeTextScene", { main_menu_button })
 );
 
+scene.hears(titles.getValues("BUTTON_EXPORT_LEADS"), (ctx) =>
+  ctx.scene.enter("exportLeadsScene", { main_menu_button })
+);
+
 module.exports = scene;
