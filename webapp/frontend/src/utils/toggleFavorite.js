@@ -1,6 +1,8 @@
 module.exports = (event, item) => {
   const isFavorite = item.is_favorite
 
+  console.log(this)
+
   if (isFavorite) {
     this.$store.state.myApi
       .delete(this.$store.state.restAddr + '/favorites', {
