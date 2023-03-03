@@ -14,10 +14,12 @@ const scene = new CustomWizardScene("changeTextScene");
 scene.enter(async (ctx) => {
   const { edit, main_menu_button } = ctx.scene.state;
 
-  const res = await authAdmin(ctx.from.id, true).catch(() => {
-    ctx.replyWithTitle("CANT_AUTH");
-    return ctx.scene.enter("clientScene");
-  });
+  const res = await require("../../Utils/authAdmin")(ctx.from.id, true).catch(
+    () => {
+      ctx.answerCbQuery("CANT_AUTH");
+      return ctx.scene.enter("clientScene");
+    }
+  );
 
   if (!res) {
     return ctx.scene.enter("clientScene");

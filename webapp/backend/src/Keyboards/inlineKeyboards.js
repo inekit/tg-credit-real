@@ -504,8 +504,25 @@ exports.admins_actions_keyboard = (ctx) => {
 exports.change_text_actions_keyboard = (ctx) => {
   const keyboard = inlineKeyboard(
     [
-      callbackButton("GREETING", "GREETING"),
-      //callbackButton(ctx.getTitle("BUTTON_CHANGE_PHOTO"), "change_photo"),
+      callbackButton("AGREE_TITLE", "AGREE_TITLE"),
+      callbackButton("AGREE_BUTTON", "AGREE_BUTTON"),
+      callbackButton("QUESTION_1", "QUESTION_1"),
+      callbackButton("WEBAPP_TITLE", "WEBAPP_TITLE"),
+      callbackButton("ABOUT_TITLE", "ABOUT_TITLE"),
+      callbackButton("WEBAPP_BUTTON", "WEBAPP_BUTTON"),
+      callbackButton("ANSWER_1_1", "ANSWER_1_1"),
+      callbackButton("ANSWER_1_2", "ANSWER_1_2"),
+      callbackButton("ANSWER_1_3", "ANSWER_1_3"),
+      callbackButton("ANSWER_1_4", "ANSWER_1_4"),
+      callbackButton("ANSWER_1_5", "ANSWER_1_5"),
+      callbackButton("ANSWER_SKIP", "ANSWER_SKIP"),
+      callbackButton("ENTER_RIGHT_COMMAND", "ENTER_RIGHT_COMMAND"),
+      callbackButton("ITEM_INFO_TITLE", "ITEM_INFO_TITLE"),
+      callbackButton("USE_CURRENT_PHONE", "USE_CURRENT_PHONE"),
+      callbackButton("SEND_PHONE", "SEND_PHONE"),
+      callbackButton("APPOINTMENT_SENT", "APPOINTMENT_SENT"),
+      callbackButton("PD_SUCCESS", "PD_SUCCESS"),
+      callbackButton("PRESENTATION_SUCCESS", "PRESENTATION_SUCCESS"),
     ],
     { columns: 1 }
   );
