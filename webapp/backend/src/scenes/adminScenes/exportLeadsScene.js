@@ -22,12 +22,18 @@ scene.enter(async (ctx) => {
 
   leads.map((el) => {
     el.datetime_created = moment(el.datetime_created).format("HH.mm DD.MM.YYY");
-    el.who = ctx.getTitle("ANSWER_1_" + el.question_1.toString().toUpperCase());
+    el.who =
+      el.question_1 === "skip"
+        ? "Нет"
+        : ctx.getTitle("ANSWER_1_" + el.question_1.toString().toUpperCase());
     delete el.question_1;
   });
 
   console.log(leads);
 
+  const opts = {};
+  const transformOpts = {};
+  const asyncOpts = {};
   const parser = new AsyncParser(opts, transformOpts, asyncOpts);
 
   const csv = await parser.parse(data).promise();
