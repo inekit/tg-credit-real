@@ -118,7 +118,9 @@ export default {
         getDate(date) {
             return moment(date).format("DD.MM.YYYY")
         },
-        toggleFavorite,
+        toggleFavorite(event, item) {
+            toggleFavorite.bind(this)(event, item)
+        },
 
     }
 }
