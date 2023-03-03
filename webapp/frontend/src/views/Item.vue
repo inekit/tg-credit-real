@@ -12,12 +12,12 @@
                 <pagination />
             </template>
         </carousel>
-    </div>
+        <div class="favorite-toggle" :class="item.is_favorite ? 'favorite-item' : ''" @click="toggleFav($event, item)">
+            <img :src="require('@/assets/img/fav.svg')" />
+        </div>
 
-    <h1>{{ item.name }}</h1>
-    <div class="favorite-toggle" :class="item.is_favorite ? 'favorite-item' : ''" @click="toggleFav($event, item)">
-        <img :src="require('@/assets/img/fav.svg')" />
     </div>
+    <h1>{{ item.name }}</h1>
     <ul class="points-list">
         <li>📍 Адрес: {{ item.address }}</li>
         <li>📒 Проектная декларация: {{ item.declaration }}</li>
@@ -163,8 +163,13 @@ export default {
 </script>
 
 <style lang="scss">
+h1 {
+    font-weight: 400;
+}
+
 .img-container {
     width: 100%;
+    position: relative;
 }
 
 .points-list {
@@ -189,6 +194,7 @@ export default {
     justify-content: center;
     align-items: center;
     overflow: hidden;
+    max-height: 100vw;
 
     img {
         width: 100vw;
@@ -203,6 +209,7 @@ export default {
     //position: absolute;
     //left: 50%;
     margin: auto;
+    max-height: 100vw;
 
     //width: 100%;
     //transform: unset !important;
