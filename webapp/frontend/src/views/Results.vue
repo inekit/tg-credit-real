@@ -54,7 +54,7 @@ export default {
             await this.updatePage(300)
         },
         async $route(to, from) {
-            await this.showButtons()
+            await this.toggleButtons()
         }
     },
     beforeMount() {
@@ -85,7 +85,7 @@ export default {
             this.meter_price_max = filterValue;
         }
 
-        await this.showButtons()
+        await this.toggleButtons()
 
     },
     async beforeUnmount() {
