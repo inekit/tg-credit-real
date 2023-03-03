@@ -15,6 +15,9 @@
     </div>
 
     <h1>{{ item.name }}</h1>
+    <div class="favorite-toggle" :class="item.is_favorite ? 'favorite-item' : ''" @click="toggleFavorite($event, item)">
+        <img :src="require('@/assets/img/fav.svg')" />
+    </div>
     <ul class="points-list">
         <li>📍 Адрес: {{ item.address }}</li>
         <li>📒 Проектная декларация: {{ item.declaration }}</li>
@@ -92,7 +95,8 @@ export default {
         getItem(id) {
             this.$store.state.myApi.get(this.$store.state.restAddr + '/items', {
                 params: {
-                    id
+                    id,
+                    user_id: this.$store.state.user_id,
                 }
             })
                 .then(response => this.item = response.data)

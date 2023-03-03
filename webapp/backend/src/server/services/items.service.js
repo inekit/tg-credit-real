@@ -16,12 +16,16 @@ class UsersService {
     this.deleteFavorite = this.deleteFavorite.bind(this);
   }
 
-  getOne(id) {
+  getOne({ id, user_id }) {
     return new Promise(async (res, rej) => {
       const connection = await tOrmCon;
 
       connection
-        .query(`select * from items where id = $1`, [id])
+        .query(
+          `SELECT i.*, user_id is_favorite 
+          FROM items i left join favorites f on i.id = f.item_id where id = $1 user_id = $2`,
+          [id, user_id]
+        )
         .then(async (postData) => {
           if (!postData?.[0]) rej(new NotFoundError());
 
@@ -127,7 +131,7 @@ class UsersService {
   ) {
     return new Promise(async (res, rej) => {
       if (id) {
-        this.getOne(id)
+        this.getOne({ id, user_id })
           .then((data) => res(data))
           .catch((error) => rej(error));
       }
