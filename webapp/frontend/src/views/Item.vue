@@ -15,7 +15,7 @@
     </div>
 
     <h1>{{ item.name }}</h1>
-    <div class="favorite-toggle" :class="item.is_favorite ? 'favorite-item' : ''" @click="toggleFavorite($event, item)">
+    <div class="favorite-toggle" :class="item.is_favorite ? 'favorite-item' : ''" @click="toggleFav($event, item)">
         <img :src="require('@/assets/img/fav.svg')" />
     </div>
     <ul class="points-list">
@@ -118,7 +118,7 @@ export default {
         getDate(date) {
             return moment(date).format("DD.MM.YYYY")
         },
-        toggleFavorite(event, item) {
+        toggleFav(event, item) {
             toggleFavorite.bind(this)(event, item)
         },
 
