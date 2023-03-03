@@ -21,7 +21,9 @@ scene.enter(async (ctx) => {
   );
 
   leads.map((el) => {
-    el.datetime_created = moment(el.datetime_created).format("HH.mm DD.MM.YYY");
+    el.datetime_created = moment(el.datetime_created).format(
+      "HH.mm DD.MM.YYYY"
+    );
     el.who =
       el.question_1 === "skip"
         ? "Нет"
@@ -38,7 +40,7 @@ scene.enter(async (ctx) => {
 
   const csv = await parser.parse(leads).promise();
 
-  ctx.telegram
+  await ctx.telegram
     .sendDocument(ctx.from.id, {
       filename: `leads.csv`,
       source: Buffer.from(csv),
@@ -51,6 +53,7 @@ scene.enter(async (ctx) => {
         })
         .catch(console.log);
     });
+  ctx.scene.enter("adminScene");
 });
 
 module.exports = scene;

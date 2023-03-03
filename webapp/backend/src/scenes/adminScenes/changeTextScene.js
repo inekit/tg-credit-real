@@ -22,12 +22,16 @@ scene.enter(async (ctx) => {
   ctx.replyWithKeyboard(title, keyboard);
 });
 
-scene.action(/^change\_(.+)$/g, (ctx) => {
-  ctx.answerCbQuery().catch(console.log);
+scene.action(/^change\_(.+)$/g, async (ctx) => {
+  await ctx.answerCbQuery().catch(console.log);
 
   ctx.scene.state.input = { type: ctx.match[1] };
 
-  ctx.replyStep(1);
+  await ctx.replyWithTitle(
+    ctx.getTitle("CURRENT_TEXT", [ctx.getTitle(ctx.match[1])])
+  );
+
+  ctx.wizard.selectStep(1);
 });
 
 scene.addNullStep().addStep({
