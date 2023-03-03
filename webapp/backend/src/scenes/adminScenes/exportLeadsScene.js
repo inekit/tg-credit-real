@@ -16,7 +16,8 @@ scene.enter(async (ctx) => {
 
   const connection = await tOrmCon;
   const leads = await connection.query(
-    "select l.datetime_created, i.city_name, i., l.question_1, l.phone from leads l left join items i on item_id = i.id"
+    `select l.datetime_created, i.city_name, i.name, l.question_1, l.phone 
+    from leads l left join items i on item_id = i.id`
   );
 
   leads.map((el) => {
