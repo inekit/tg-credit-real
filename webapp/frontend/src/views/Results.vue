@@ -357,8 +357,8 @@ export default {
             transition: all 0.2s;
 
             img {
-                height: 70%;
-                margin: 15%;
+                height: 50%;
+                margin: 25%;
             }
 
             &.favorite-item {

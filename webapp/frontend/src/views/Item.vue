@@ -223,7 +223,6 @@ export default {
 }
 
 .favorite-toggle {
-    content: '';
     width: 50px;
     height: 50px;
     border-radius: 13px;
@@ -231,7 +230,7 @@ export default {
     border: 1px solid;
     background-color: #6e6e6e;
     border-color: #6e6e6e;
-
+    z-index: 999;
     position: absolute;
     top: 1rem;
     right: 1rem;
