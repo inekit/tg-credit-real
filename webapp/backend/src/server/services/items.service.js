@@ -23,7 +23,7 @@ class UsersService {
       connection
         .query(
           `SELECT i.*, user_id is_favorite 
-          FROM items i left join favorites f on i.id = f.item_id where id = $1 user_id = $2`,
+          FROM items i left join favorites f on i.id = f.item_id where id = $1 and (user_id = $2 or user_id is NULL)`,
           [id, user_id]
         )
         .then(async (postData) => {
