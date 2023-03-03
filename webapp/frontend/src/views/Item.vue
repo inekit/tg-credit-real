@@ -35,7 +35,7 @@ import 'vue3-carousel/dist/carousel.css'
 import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
 import moment from "moment"
 import { ListLoader, InstagramLoader } from 'vue-content-loader'
-
+import toggleFavorite from '@/utils/toggleFavorite'
 export default {
     components: {
         InstagramLoader,
@@ -117,7 +117,8 @@ export default {
         },
         getDate(date) {
             return moment(date).format("DD.MM.YYYY")
-        }
+        },
+        toggleFavorite,
 
     }
 }
