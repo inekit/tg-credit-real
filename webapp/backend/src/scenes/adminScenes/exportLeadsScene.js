@@ -38,14 +38,19 @@ scene.enter(async (ctx) => {
 
   const csv = await parser.parse(leads).promise();
 
-  //user_id, question_1, item_id, phone
-
-  const keyboard = "change_text_actions_keyboard";
-  const title = ctx.getTitle("CHANGE_TEXT");
-
-  if (main_menu_button) await ctx.replyWithKeyboard("⚙️", main_menu_button);
-
-  ctx.replyWithKeyboard(title, keyboard);
+  ctx.telegram
+    .sendDocument(ctx.from.id, {
+      filename: `leads.csv`,
+      source: csv,
+    })
+    .catch((e) => {
+      console.log(e);
+      ctx.telegram
+        .sendMessage(ctx.from.id, ctx.getTitle("NO_FILE"), {
+          reply_markup,
+        })
+        .catch(console.log);
+    });
 });
 
 module.exports = scene;
