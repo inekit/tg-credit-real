@@ -1,7 +1,5 @@
-module.exports = (event, item) => {
+module.exports = function (event, item) {
   const isFavorite = item.is_favorite
-
-  console.log(this)
 
   if (isFavorite) {
     this.$store.state.myApi
