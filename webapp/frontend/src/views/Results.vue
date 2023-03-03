@@ -349,8 +349,8 @@ export default {
             border-radius: 13px;
             background-color: transparent;
             border: 1px solid;
-            border-color: rgb(197, 80, 105);
-            background-color: rgb(197, 80, 105);
+            background-color: #6e6e6e;
+            border-color: #6e6e6e;
             position: absolute;
             top: 0.5rem;
             right: 0.5rem;
@@ -362,8 +362,8 @@ export default {
             }
 
             &.favorite-item {
-                background-color: #6e6e6e;
-                border-color: #6e6e6e;
+                border-color: rgb(197, 80, 105);
+                background-color: rgb(197, 80, 105);
             }
 
         }

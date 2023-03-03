@@ -34,6 +34,7 @@
 import 'vue3-carousel/dist/carousel.css'
 import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
 import moment from "moment"
+import eventBus from '../eventBus'
 import { ListLoader, InstagramLoader } from 'vue-content-loader'
 export default {
     components: {
@@ -219,6 +220,33 @@ export default {
 .carousel__next {
     box-sizing: content-box;
     border: 5px solid white;
+}
+
+.favorite-toggle {
+    content: '';
+    width: 50px;
+    height: 50px;
+    border-radius: 13px;
+    background-color: transparent;
+    border: 1px solid;
+    background-color: #6e6e6e;
+    border-color: #6e6e6e;
+
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    transition: all 0.2s;
+
+    img {
+        height: 50%;
+        margin: 25%;
+    }
+
+    &.favorite-item {
+        border-color: rgb(197, 80, 105);
+        background-color: rgb(197, 80, 105);
+    }
+
 }
 </style>
   
