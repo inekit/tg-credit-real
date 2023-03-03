@@ -1,22 +1,22 @@
-module.exports = function (event, item) {
+module.exports = function (that, event, item) {
   const isFavorite = item.is_favorite
 
   if (isFavorite) {
-    this.$store.state.myApi
-      .delete(this.$store.state.restAddr + '/favorites', {
+    that.$store.state.myApi
+      .delete(that.$store.state.restAddr + '/favorites', {
         data: {
           item_id: item.id,
-          user_id: this.$store.state.user_id,
+          user_id: that.$store.state.user_id,
         },
       })
       .then((response) => {
         item.is_favorite = false
-        if (this.$route.name === 'Favorites') {
+        if (that.$route.name === 'Favorites') {
           console.log(1212)
-          this.$store.state.results = this.$store.state.results?.filter(
+          that.$store.state.results = that.$store.state.results?.filter(
             (el) => el.id !== item.id,
           )
-          if (this.$store.state.results === 0)
+          if (that.$store.state.results === 0)
             window.Telegram?.WebApp.MainButton.hide()
         }
       })
@@ -24,10 +24,10 @@ module.exports = function (event, item) {
         eventBus.$emit('noresponse', e)
       })
   } else {
-    this.$store.state.myApi
-      .put(this.$store.state.restAddr + '/favorites', {
+    that.$store.state.myApi
+      .put(that.$store.state.restAddr + '/favorites', {
         item_id: item.id,
-        user_id: this.$store.state.user_id,
+        user_id: that.$store.state.user_id,
       })
       .then((response) => {
         item.is_favorite = true
