@@ -8,7 +8,6 @@ const {
   editPost,
   transformTagsArray,
   transformPreviewName,
-  updateRss,
 } = require("../services/items.service");
 
 function getAllCreator(showText = true) {
@@ -43,7 +42,6 @@ function addOne(req, res, next) {
       preview_name: fNameFullPath,
     })
     .then((data) => {
-      updateRss().catch((e) => {});
       res.send(data);
     })
     .catch((error) => next(error));

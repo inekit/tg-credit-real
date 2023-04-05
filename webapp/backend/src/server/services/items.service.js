@@ -234,8 +234,6 @@ class UsersService {
           .returning("*")
           .execute();
 
-        updateRss();
-
         await queryRunner.commitTransaction();
 
         res(data);
