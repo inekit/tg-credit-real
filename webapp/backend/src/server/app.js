@@ -18,7 +18,7 @@ app.use(
     credentials: true,
   })
 );
-app.use("/public", express.static("public"));
+app.use("/colors/server/public", express.static("public"));
 
 app.use(bodyParser.json());
 app.use(express.json());
@@ -26,7 +26,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 module.exports = (ctx) => {
-  app.use("/api", router(ctx));
+  app.use("/colors/server/api", router(ctx));
 
   app.use(function (req, res, next) {
     const err = new Error("Страница не найдена!");
