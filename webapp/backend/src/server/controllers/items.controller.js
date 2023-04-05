@@ -54,6 +54,7 @@ function addOne(req, res, next) {
 }
 
 async function editOne(req, res, next) {
+  console.log(req.body);
   editPost(Object.assign(req.body, { previewsBinary: req.files?.["images[]"] }))
     .then((data) => res.send(data))
     .catch((error) => next(error));

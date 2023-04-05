@@ -195,12 +195,15 @@ class UsersService {
     projectName,
     description,
     tagsArray,
+    images,
     previewsBinary,
   }) {
     return new Promise(async (res, rej) => {
       const fNameFullPaths = Array.isArray(previewsBinary)
         ? previewsBinary.map((preview) => this.transformPreviewName(preview))
         : [this.transformPreviewName(previewsBinary)];
+
+      console.log(previewsBinary, images, fNameFullPaths);
 
       const connection = await tOrmCon;
 
