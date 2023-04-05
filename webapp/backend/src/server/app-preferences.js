@@ -48,7 +48,7 @@ app.set("trust proxy", 1);
 
 app.use(
   session({
-    secret: "1234",
+    secret: "12345",
     store: sessionStore,
     cookie: {
       //path: "/",
