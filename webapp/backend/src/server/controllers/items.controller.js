@@ -28,11 +28,11 @@ function addOne(req, res, next) {
   const { title, text, tagsArray, projectName, previewName, description } =
     req.body;
 
-  const fNameFullPaths = req.images?.map((preview) =>
+  const fNameFullPaths = req.body?.images?.map((preview) =>
     this.transformPreviewName(preview)
   );
 
-  console.log(12, req.files, req.body, req.images, fNameFullPaths);
+  console.log(12, req.files, req.body, req.body?.images, fNameFullPaths);
 
   const tagObjs = transformTagsArray(tagsArray);
 
