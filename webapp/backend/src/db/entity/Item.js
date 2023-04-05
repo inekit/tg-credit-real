@@ -23,8 +23,9 @@ module.exports = new EntitySchema({
       type: "text",
       nullable: false,
     },
-    preview_name: {
+    image_list: {
       type: "varchar",
+      array: true,
       length: 300,
       nullable: true,
     },

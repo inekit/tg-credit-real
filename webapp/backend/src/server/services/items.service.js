@@ -143,7 +143,7 @@ class UsersService {
         .query(
           `select p.id,p.title,p.description,` +
             (showText ? `p.text,` : ``) +
-            `p.preview_name,p.publication_date,p.project_name, 
+            `p.image_list,p.publication_date,p.project_name, 
               (select array_agg(tags_name) from public.items_tags_tags where items_id = p.id) as tags_array
               from public.items p
               left join public.items_tags_tags ptt on p.id = ptt.items_id
@@ -194,10 +194,12 @@ class UsersService {
     projectName,
     description,
     tagsArray,
-    previewBinary,
+    previewsBinary,
   }) {
     return new Promise(async (res, rej) => {
-      const fNameFullPath = this.transformPreviewName(previewBinary);
+      const fNameFullPaths = previewsBinary?.map((preview) =>
+        this.transformPreviewName(preview)
+      );
 
       const connection = await tOrmCon;
 
@@ -226,7 +228,7 @@ class UsersService {
             text,
             project_name: projectName,
             description,
-            preview_name: fNameFullPath,
+            image_list: fNameFullPaths,
           })
           .where({
             id: id,

@@ -28,9 +28,11 @@ function addOne(req, res, next) {
   const { title, text, tagsArray, projectName, previewName, description } =
     req.body;
 
-  const tagObjs = transformTagsArray(tagsArray);
+  const fNameFullPaths = req.files?.images?.map((preview) =>
+    this.transformPreviewName(preview)
+  );
 
-  const fNameFullPath = transformPreviewName(req.files?.image);
+  const tagObjs = transformTagsArray(tagsArray);
 
   servicePreset
     .add({
@@ -39,7 +41,7 @@ function addOne(req, res, next) {
       text,
       category_name: projectName,
       tags: tagObjs,
-      preview_name: fNameFullPath,
+      image_list: fNameFullPaths,
     })
     .then((data) => {
       res.send(data);
@@ -48,7 +50,7 @@ function addOne(req, res, next) {
 }
 
 async function editOne(req, res, next) {
-  editPost(Object.assign(req.body, { previewBinary: req.files?.image }))
+  editPost(Object.assign(req.body, { previewsBinary: req.files?.images }))
     .then((data) => res.send(data))
     .catch((error) => next(error));
 }

@@ -88,6 +88,7 @@ export default {
       text: '',
       description: '',
       preview: '',
+      image_list: [],
       tags_array: new Set(),
     },
   },
@@ -97,7 +98,6 @@ export default {
       textEditMode: 'md2',
       formValid: false,
       preview_list: [],
-      image_list: []
     }
   },
   updated() {
@@ -137,6 +137,8 @@ export default {
       var count = input.files.length;
       var index = 0;
       this.formData.preview = input.files[0]
+      if (!this.preview_list) this.preview_list = []
+      if (!this.formData.image_list) this.formData.image_list = []
 
       if (input.files) {
         while (count--) {
@@ -186,7 +188,7 @@ export default {
           turndownService.turndown(this.$refs.postTextEditor.getHTML()),
         )
       }
-      formData.append('image', this.formData.preview)
+      formData.append('images', this.formData.image_list)
 
       this.formData.project_name &&
         formData.append('projectName', this.formData.project_name)
