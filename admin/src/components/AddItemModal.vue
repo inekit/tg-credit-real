@@ -104,6 +104,8 @@ export default {
     this.textMd2 = this.formData.text
     this.formData.text && this.$refs.postTextEditor?.setHTML(this.formData.text)
 
+    this.preview_list = this.image_list?.map(preview_name => `${this.$store.state.publicPath}/public/pics/${preview_name}`)
+
     document.getElementsByClassName('ql-toolbar')?.[0].classList.add('hidden')
   },
   async mounted() {
