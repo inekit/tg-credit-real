@@ -29,7 +29,7 @@
           label="Превью" placeholder="Превью" />
         <div class="border p-2 mt-3">
           <p>Preview Here:</p>
-          <template v-if="preview_list.length">
+          <template v-if="preview_list?.length">
             <div v-for="item, index in preview_list" :key="index">
               <img :src="item" class="img-fluid" />
               <p class="mb-0">file name: {{ formData?.image_list[index].name }}</p>
@@ -104,7 +104,7 @@ export default {
     this.textMd2 = this.formData.text
     this.formData.text && this.$refs.postTextEditor?.setHTML(this.formData.text)
 
-    this.preview_list = this.image_list?.map(preview_name => `${this.$store.state.publicPath}/public/pics/${preview_name}`)
+    this.preview_list = this.formData.image_list?.map(preview_name => `${this.$store.state.publicPath}/public/pics/${preview_name}`)
 
     document.getElementsByClassName('ql-toolbar')?.[0].classList.add('hidden')
   },
