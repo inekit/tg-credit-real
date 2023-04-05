@@ -205,7 +205,7 @@ class UsersService {
 
       console.log(previewsBinary, images, fNameFullPaths);
 
-      fNameFullPaths = [...new Set([...fNameFullPaths, images])];
+      fNameFullPaths = [...new Set([...fNameFullPaths, ...images])];
 
       const connection = await tOrmCon;
 
