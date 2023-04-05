@@ -88,7 +88,7 @@ export default {
     get(take, page) {
       console.log(this.tag)
       return myApi
-        .get(this.$store.state.publicPath + '/api/admin/posts/', {
+        .get(this.$store.state.publicPath + '/api/admin/items/', {
           params: {
             take: take ?? 10,
             page: page ?? 1,
@@ -111,7 +111,7 @@ export default {
       const result = confirm('Вы действительно хотите удалить пользователя?')
       if (result)
         return myApi
-          .delete(this.$store.state.publicPath + '/api/admin/posts/', {
+          .delete(this.$store.state.publicPath + '/api/admin/items/', {
             data: { id: item.id },
           })
           .then(() => {

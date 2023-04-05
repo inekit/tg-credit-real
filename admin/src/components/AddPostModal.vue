@@ -22,8 +22,8 @@
           <CFormCheck v-for="project in projects" :key="project.name" :id="project.name"
             :checked="project.name === formData.project_name" @change="changeP" type="radio" name="project-name"
             :value="project.name" :label="project.name" />
-          <CFormCheck id="null-name" :checked="!formData.project_name" @change="changeP" type="radio"
-            name="project-name" value="" label="Вне проекта" />
+          <CFormCheck id="null-name" :checked="!formData.project_name" @change="changeP" type="radio" name="project-name"
+            value="" label="Вне проекта" />
         </div>
         <CFormInput type="file" ref="file" v-on:change="handleFileUpload" class="mb-3" label="Превью"
           placeholder="Превью" />
@@ -110,7 +110,7 @@ export default {
     },
     async getProjects() {
       return await myApi
-        .get(this.$store.state.publicPath + '/api/projects/')
+        .get(this.$store.state.publicPath + '/api/categories/')
         .then((res) => {
           return res.data
         })
@@ -196,7 +196,7 @@ export default {
         const formData = this.constractFromData()
 
         myApi
-          .post(this.$store.state.publicPath + '/api/admin/posts', formData, {
+          .post(this.$store.state.publicPath + '/api/admin/items', formData, {
             headers: {
               'Content-Type': 'multipart/form-data',
             },
@@ -217,7 +217,7 @@ export default {
         const formData = this.constractFromData(true)
 
         myApi
-          .put(this.$store.state.publicPath + '/api/admin/posts', formData, {
+          .put(this.$store.state.publicPath + '/api/admin/items', formData, {
             headers: {
               'Content-Type': 'multipart/form-data',
             },

@@ -1,8 +1,7 @@
 <template>
   <div>
     <AddProjectModal :visible="formVisible" :formData="formData" :mode="formMode" />
-    <Table :fields="tableFieldNames" :postData="get" :actions="dataActions" :rows="rows" editMode="form"
-      name="Проекты" />
+    <Table :fields="tableFieldNames" :postData="get" :actions="dataActions" :rows="rows" editMode="form" name="Проекты" />
   </div>
 </template>
 
@@ -67,7 +66,7 @@ export default {
     },
     get(take, page) {
       return myApi
-        .get(this.$store.state.publicPath + '/api/projects/', {
+        .get(this.$store.state.publicPath + '/api/categories/', {
           params: {
             take: take ?? 10,
             page: page ?? 1,
@@ -87,7 +86,7 @@ export default {
       const result = confirm('Вы действительно хотите удалить пользователя?')
       if (result)
         return myApi
-          .delete(this.$store.state.publicPath + '/api/admin/projects/', {
+          .delete(this.$store.state.publicPath + '/api/admin/categories/', {
             data: { name: item.name },
           })
           .then(() => {
