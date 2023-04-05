@@ -199,11 +199,13 @@ class UsersService {
     previewsBinary,
   }) {
     return new Promise(async (res, rej) => {
-      const fNameFullPaths = Array.isArray(previewsBinary)
+      let fNameFullPaths = Array.isArray(previewsBinary)
         ? previewsBinary.map((preview) => this.transformPreviewName(preview))
         : [this.transformPreviewName(previewsBinary)];
 
       console.log(previewsBinary, images, fNameFullPaths);
+
+      fNameFullPaths = [...new Set([...fNameFullPaths, images])];
 
       const connection = await tOrmCon;
 
