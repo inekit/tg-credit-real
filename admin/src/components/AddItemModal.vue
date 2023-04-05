@@ -154,7 +154,7 @@ export default {
     },
     reset() {
       this.formData.preview = null;
-      this.image_list = [];
+      this.formData.image_list = [];
       this.preview_list = [];
     },
     addNewPost() {
