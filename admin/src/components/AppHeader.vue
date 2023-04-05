@@ -9,7 +9,7 @@
       </CHeaderBrand>
       <CHeaderNav class="d-none d-md-flex me-auto">
         <CNavItem>
-          <CNavLink href="/items"> Посты </CNavLink>
+          <CNavLink href="/items"> Позиции </CNavLink>
         </CNavItem>
         <CNavItem>
           <CNavLink href="/items"> Администраторы </CNavLink>

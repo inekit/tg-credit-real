@@ -1,7 +1,7 @@
 <template>
   <div>
     <AddItemModal :visible="formVisible" :formData="formData" :mode="formMode" />
-    <Table :fields="tableFieldNames" :postData="get" :actions="dataActions" :rows="rows" editMode="form" name="Посты" />
+    <Table :fields="tableFieldNames" :postData="get" :actions="dataActions" :rows="rows" editMode="form" name="Позиции" />
   </div>
 </template>
 

@@ -1,7 +1,8 @@
 <template>
   <div>
     <AddCategoryModal :visible="formVisible" :formData="formData" :mode="formMode" />
-    <Table :fields="tableFieldNames" :postData="get" :actions="dataActions" :rows="rows" editMode="form" name="Проекты" />
+    <Table :fields="tableFieldNames" :postData="get" :actions="dataActions" :rows="rows" editMode="form"
+      name="Категории" />
   </div>
 </template>
 
@@ -27,7 +28,7 @@ export default {
       formData: {},
       rows: [],
       dataActions: {
-        Посты: { action: this.routeToPosts, color: 'primary' },
+        Позиции: { action: this.routeToPosts, color: 'primary' },
         Удалить: { action: this.delete, color: 'danger' },
       },
       tableFieldNames: [

@@ -25,8 +25,20 @@
           <CFormCheck id="null-name" :checked="!formData.project_name" @change="changeP" type="radio" name="project-name"
             value="" label="Вне проекта" />
         </div>
-        <CFormInput type="file" ref="file" v-on:change="handleFileUpload" class="mb-3" label="Превью"
-          placeholder="Превью" />
+        <CFormInput type="file" accept="image/*" multiple="multiple" ref="file" @change="previewMultiImage" class="mb-3"
+          label="Превью" placeholder="Превью" />
+        <div class="border p-2 mt-3">
+          <p>Preview Here:</p>
+          <template v-if="preview_list.length">
+            <div v-for="item, index in preview_list" :key="index">
+              <img :src="item" class="img-fluid" />
+              <p class="mb-0">file name: {{ image_list[index].name }}</p>
+              <p>size: {{ image_list[index].size / 1024 }}KB</p>
+            </div>
+          </template>
+        </div>
+        <button @click="reset">Clear All</button>
+
         <CFormTextarea v-model="formData.description" label="Краткое описание" style="margin-bottom: 1rem"
           placeholder="Напишите что-нибудь" rows="5" maxlength="255" id="inputDescription"
           aria-describedby="inputGroupPrepend" required />
@@ -84,6 +96,8 @@ export default {
       textMd2: '',
       textEditMode: 'md2',
       formValid: false,
+      preview_list: [],
+      image_list: []
     }
   },
   updated() {
@@ -118,6 +132,29 @@ export default {
           eventBus.$emit('noresponse', error)
         })
     },
+    previewMultiImage(event) {
+      var input = event.target;
+      var count = input.files.length;
+      var index = 0;
+      this.formData.preview = input.files[0]
+
+      if (input.files) {
+        while (count--) {
+          var reader = new FileReader();
+          reader.onload = (e) => {
+            this.preview_list.push(e.target.result);
+          }
+          this.formData.image_list.push(input.files[index]);
+          reader.readAsDataURL(input.files[index]);
+          index++;
+        }
+      }
+    },
+    reset() {
+      this.formData.preview = null;
+      this.image_list = [];
+      this.preview_list = [];
+    },
     addNewPost() {
       eventBus.$emit('addNewPost')
     },
@@ -132,9 +169,6 @@ export default {
     },
     closeModal() {
       eventBus.$emit('closeModal')
-    },
-    handleFileUpload(event) {
-      this.formData.preview = event.target.files[0]
     },
     constractFromData(isEdit) {
       if (!this.formData.title || !this.$refs.postTextEditor.getHTML())

@@ -1,7 +1,7 @@
 export default [
   {
     component: 'CNavItem',
-    name: 'Статьи',
+    name: 'Позиции',
     to: '/items',
     icon: 'cil-description',
   },
@@ -13,7 +13,7 @@ export default [
   },
   {
     component: 'CNavItem',
-    name: 'Проекты',
+    name: 'Категории',
     to: '/categories',
     icon: 'cil-description',
   },
