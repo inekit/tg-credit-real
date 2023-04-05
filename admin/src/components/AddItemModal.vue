@@ -35,7 +35,6 @@
             </div>
           </template>
         </div>
-        <button @click="reset">Clear All</button>
 
         <CFormTextarea v-model="formData.description" label="Краткое описание" style="margin-bottom: 1rem"
           placeholder="Напишите что-нибудь" rows="5" maxlength="255" id="inputDescription"
@@ -266,7 +265,7 @@ export default {
         myApi
           .put(this.$store.state.publicPath + '/api/admin/items', formData, {
             headers: {
-              'Content-Type': `multipart/form-data; boundary=${formData.getBoundary()}`,
+              'Content-Type': `multipart/form-data; boundary=${formData._boundary}`,
 
             },
           })
@@ -292,19 +291,18 @@ export default {
 }
 
 .preview-container {
-  display: block;
+  display: flex;
   gap: 5px;
+  flex-wrap: wrap;
 
   &>div {
-    max-width: 23%;
+    max-width: 24%;
     position: relative;
 
     button {
       position: absolute;
       top: 5px;
       right: 5px;
-      height: 10px;
-      width: 10px;
     }
   }
 }
