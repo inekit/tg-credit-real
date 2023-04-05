@@ -51,13 +51,13 @@ app.use(
     secret: "1234",
     store: sessionStore,
     cookie: {
-      path: "/",
-      httpOnly: true,
-      resave: true,
-      maxAge: 60 * 60 * 1000,
+      //path: "/",
+      //httpOnly: true,
+      //resave: true,
+      //maxAge: 60 * 60 * 1000,
       //secure: true,
     },
-    resave: true,
+    //resave: true,
     saveUninitialized: true,
   })
 );
