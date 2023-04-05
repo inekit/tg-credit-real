@@ -17,7 +17,24 @@ module.exports = new EntitySchema({
       type: "varchar",
       length: 255,
       nullable: false,
-      default: "Описание поста",
+      default: "Описание",
+    },
+    text: {
+      type: "text",
+      nullable: false,
+    },
+    preview_name: {
+      type: "varchar",
+      length: 300,
+      nullable: true,
+    },
+    publication_date: {
+      createDate: true,
+    },
+    project_name: {
+      type: "varchar",
+      length: 255,
+      nullable: true,
     },
   },
   relations: {
