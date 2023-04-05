@@ -219,7 +219,7 @@ class UsersService {
         );
 
         const data = await queryRunner.manager
-          .getRepository("Post")
+          .getRepository("Item")
           .createQueryBuilder()
           .update({
             title,
