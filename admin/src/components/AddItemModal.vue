@@ -188,7 +188,13 @@ export default {
           turndownService.turndown(this.$refs.postTextEditor.getHTML()),
         )
       }
-      formData.append('images', this.formData.image_list)
+      //formData.append('images[]', this.formData.image_list)
+
+
+      this.formData.image_list?.forEach(v => {
+        formData.append('images[]', v);
+      });
+
 
       this.formData.project_name &&
         formData.append('projectName', this.formData.project_name)
