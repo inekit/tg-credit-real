@@ -18,7 +18,7 @@ const routes = [
     path: '/',
     name: 'Home',
     component: DefaultLayout,
-    redirect: '/posts',
+    redirect: '/items',
     children: [
       {
         path: '/admins',
