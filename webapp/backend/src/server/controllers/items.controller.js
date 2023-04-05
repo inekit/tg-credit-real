@@ -32,6 +32,8 @@ function addOne(req, res, next) {
     this.transformPreviewName(preview)
   );
 
+  console.log(12, req.files, req.body, req.files?.images, fNameFullPaths);
+
   const tagObjs = transformTagsArray(tagsArray);
 
   servicePreset
