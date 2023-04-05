@@ -199,7 +199,7 @@ class UsersService {
     return new Promise(async (res, rej) => {
       const fNameFullPaths = Array.isArray(previewsBinary)
         ? previewsBinary.map((preview) => transformPreviewName(preview))
-        : transformPreviewName(previewsBinary);
+        : [transformPreviewName(previewsBinary)];
 
       const connection = await tOrmCon;
 

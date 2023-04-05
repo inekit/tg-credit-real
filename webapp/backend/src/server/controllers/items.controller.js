@@ -32,7 +32,7 @@ function addOne(req, res, next) {
 
   const fNameFullPaths = Array.isArray(previewsBinary)
     ? previewsBinary.map((preview) => transformPreviewName(preview))
-    : transformPreviewName(previewsBinary);
+    : [transformPreviewName(previewsBinary)];
 
   console.log(12, req.files?.["images[]"], fNameFullPaths);
 
