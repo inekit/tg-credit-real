@@ -28,9 +28,11 @@ function addOne(req, res, next) {
   const { title, text, tagsArray, projectName, previewName, description } =
     req.body;
 
-  const fNameFullPaths = req.files?.["images[]"]?.map((preview) =>
-    transformPreviewName(preview)
-  );
+  const previewsBinary = req.files?.["images[]"];
+
+  const fNameFullPaths = Array.isArray(previewsBinary)
+    ? previewsBinary.map((preview) => transformPreviewName(preview))
+    : transformPreviewName(previewsBinary);
 
   console.log(12, req.files?.["images[]"], fNameFullPaths);
 
@@ -52,7 +54,7 @@ function addOne(req, res, next) {
 }
 
 async function editOne(req, res, next) {
-  editPost(Object.assign(req.body, { previewsBinary: req.files?.images }))
+  editPost(Object.assign(req.body, { previewsBinary: req.files?.["images[]"] }))
     .then((data) => res.send(data))
     .catch((error) => next(error));
 }
