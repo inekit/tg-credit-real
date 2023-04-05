@@ -27,13 +27,11 @@
         </div>
         <CFormInput type="file" accept="image/*" multiple="multiple" ref="file" @change="previewMultiImage" class="mb-3"
           label="Превью" placeholder="Превью" />
-        <div class="border p-2 mt-3">
-          <p>Preview Here:</p>
+        <div class="border p-2 mt-3 preview-container">
           <template v-if="preview_list?.length">
             <div v-for="item, index in preview_list" :key="index">
               <img :src="item" class="img-fluid" />
-              <p class="mb-0">file name: {{ formData?.image_list[index].name }}</p>
-              <p>size: {{ formData?.image_list[index].size / 1024 }}KB</p>
+              <button @click="dropFile(index)">Х</button>
             </div>
           </template>
         </div>
@@ -159,6 +157,11 @@ export default {
       this.formData.image_list = [];
       this.preview_list = [];
     },
+    dropFile(index) {
+      this.formData.image_list?.splice(index, 1);
+      this.preview_list?.splice(index, 1);
+
+    },
     addNewPost() {
       eventBus.$emit('addNewPost')
     },
@@ -274,6 +277,7 @@ export default {
             eventBus.$emit('noresponse', e)
           })
       } catch (e) {
+        console.log(e)
         this.formValid = true
         //eventBus.$emit('wrongInputData', e)
       }
@@ -285,6 +289,24 @@ export default {
 <style lang="scss" scoped>
 ::v-deep .hidden {
   display: none;
+}
+
+.preview-container {
+  display: block;
+  gap: 5px;
+
+  &>div {
+    max-width: 23%;
+    position: relative;
+
+    button {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      height: 10px;
+      width: 10px;
+    }
+  }
 }
 
 .tags-cloud,
