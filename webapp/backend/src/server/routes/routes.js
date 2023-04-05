@@ -5,7 +5,7 @@ var CategoriesController = require("../controllers/categories.controller");
 var TagsController = require("../controllers/tags.controller");
 
 module.exports = (ctx) => {
-  router.get("/posts", ItemsController.getAll);
+  router.get("/items", ItemsController.getAll);
 
   router.get("/categories", CategoriesController.getAll);
 

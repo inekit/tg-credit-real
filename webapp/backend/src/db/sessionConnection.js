@@ -16,7 +16,13 @@ function createConnection() {
 }
 
 function sessionConnection() {
-  let pool = new Pool({ connectionString });
+  let pool = new Pool({
+    host: DB_HOST,
+    port: DB_PORT,
+    username: DB_USER,
+    password: DB_PASSWORD,
+    database: DB_DATABASE,
+  });
 
   pool.on("error", function (err) {
     console.log("cannot connect session", err);
