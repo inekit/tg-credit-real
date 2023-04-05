@@ -9,10 +9,10 @@
       </CHeaderBrand>
       <CHeaderNav class="d-none d-md-flex me-auto">
         <CNavItem>
-          <CNavLink href="/posts"> Посты </CNavLink>
+          <CNavLink href="/items"> Посты </CNavLink>
         </CNavItem>
         <CNavItem>
-          <CNavLink href="/posts"> Администраторы </CNavLink>
+          <CNavLink href="/items"> Администраторы </CNavLink>
         </CNavItem>
       </CHeaderNav>
       <CHeaderNav>

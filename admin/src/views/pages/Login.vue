@@ -64,7 +64,7 @@ export default {
             login: this.login,
             password: this.password,
           }).then(() => {
-            this.$router.push('/posts')
+            this.$router.push('/items')
           })
           .catch(() => {
             alert("Неверные данные")
