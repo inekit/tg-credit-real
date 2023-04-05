@@ -15,11 +15,10 @@
                 <router-link :to="`/items/${item.id}`">
 
                     <div class="img-container">
-                        <img v-for="img_id in [0]" :key="img_id"
-                            :src="`/api/img/${item.city_name === 'Москва' ? 'mos' : 'spb'}/${item.id}/${img_id}`" />
+                        <img v-for="img_link, id in image_list" :key="id" :src="`/colorsserver/public/pics/${img_link}`" />
                     </div>
                     <div class="text-container">
-                        <h2>{{ item.name }}</h2>
+                        <h2>{{ item.title }}</h2>
                     </div>
                 </router-link>
                 <div class="favorite-toggle" :class="item.is_favorite ? 'favorite-item' : ''"
@@ -173,18 +172,9 @@ export default {
 
             const results = await this.$store.state.myApi.get(this.$store.state.restAddr + subPath, {
                 params: {
-                    property_class: this.property_class,
-                    sale_percent_min: this.sale_percent_min,
-                    sale_percent_max: this.sale_percent_max,
-                    commissioning_year: this.commissioning_year,
-                    meter_price_min: this.meter_price_min,
-                    meter_price_max: this.meter_price_max,
                     searchQuery: this.$store.state.searchQuery,
-                    distinct: !this.$store.state.distinct,
-                    city_name: this.city_name,
                     take: 10,
                     page: this.page ?? 1,
-                    user_id: this.$store.state.user_id,
 
                 }
             })

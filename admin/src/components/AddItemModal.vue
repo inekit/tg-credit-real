@@ -31,7 +31,7 @@
           <template v-if="preview_list?.length">
             <div v-for="item, index in preview_list" :key="index">
               <img :src="item" class="img-fluid" />
-              <button @click="dropFile(index)">Х</button>
+              <button @click.prevent="dropFile(index)">Х</button>
             </div>
           </template>
         </div>
@@ -152,7 +152,6 @@ export default {
       }
     },
     reset() {
-      this.formData.preview = null;
       this.formData.image_list = [];
       this.preview_list = [];
     },
@@ -265,7 +264,7 @@ export default {
         myApi
           .put(this.$store.state.publicPath + '/api/admin/items', formData, {
             headers: {
-              'Content-Type': `multipart/form-data; boundary=${formData._boundary}`,
+              'Content-Type': `multipart/form-data`,
 
             },
           })

@@ -11,13 +11,13 @@ const routes = [
 
     children: [
       {
-        path: '/results/:city',
-        name: 'ResultsSearch',
+        path: '/results',
+        name: 'Results',
         component: () => import('@/views/Results.vue'),
       },
       {
-        path: '/results/:city/:page/:filter',
-        name: 'Results',
+        path: '/results/:filter',
+        name: 'ResultsSearch',
         component: () => import('@/views/Results.vue'),
       },
       {
@@ -25,21 +25,10 @@ const routes = [
         name: 'Favorites',
         component: () => import('@/views/Results.vue'),
       },
-
       {
         path: '/items/:id',
         name: 'Items',
         component: () => import('@/views/Item.vue'),
-      },
-      {
-        path: '/:id',
-        name: 'Cities',
-        component: () => import('@/views/Filters.vue'),
-      },
-      {
-        path: 'filters/:city/:page',
-        name: 'Filters',
-        component: () => import('@/views/Filters.vue'),
       },
     ],
   },

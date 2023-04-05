@@ -34,8 +34,6 @@ function addOne(req, res, next) {
     ? previewsBinary.map((preview) => transformPreviewName(preview))
     : [transformPreviewName(previewsBinary)];
 
-  console.log(12, req.files?.["images[]"], fNameFullPaths);
-
   const tagObjs = transformTagsArray(tagsArray);
 
   servicePreset
@@ -54,7 +52,6 @@ function addOne(req, res, next) {
 }
 
 async function editOne(req, res, next) {
-  console.log(req.body);
   editPost(
     Object.assign(req.body, {
       images: req.body?.["images[]"],
