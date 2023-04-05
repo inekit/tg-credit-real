@@ -102,7 +102,7 @@ export default {
           })
     },
     routeToPosts(item) {
-      this.$router.push('/posts/tag/' + item.name)
+      this.$router.push('/items/tag/' + item.name)
     },
   },
 }
