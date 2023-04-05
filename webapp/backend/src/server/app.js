@@ -9,7 +9,7 @@ const adminRouter = require("./routes/adminRoutes");
 
 var app = require("./app-preferences");
 
-app.use("/public", express.static("public"));
+app.use("/colorsserver/public", express.static("public"));
 
 app.use(bodyParser.json());
 app.use(express.json());
