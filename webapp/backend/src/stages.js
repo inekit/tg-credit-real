@@ -14,9 +14,7 @@ const mainStage = new Stage(
 
     require("./scenes/adminScenes/adminScene"),
     require("./scenes/adminScenes/adminsScene"),
-    require("./scenes/adminScenes/importScene"),
     require("./scenes/adminScenes/changeTextScene"),
-    require("./scenes/adminScenes/exportLeadsScene"),
   ],
   {
     default: "clientScene",
