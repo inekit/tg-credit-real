@@ -27,7 +27,7 @@ class UsersService {
         .query(
           `select p.*, array_agg(ptt.tags_name) tags_array
                       from public.items p
-                      left join public.posts_tags_tags ptt on p.id = ptt.posts_id
+                      left join public.items_tags_tags ptt on p.id = ptt.posts_id
                       where p.id = $1
                       group by p.id`,
           [id]
@@ -144,9 +144,9 @@ class UsersService {
           `select p.id,p.title,p.description,` +
             (showText ? `p.text,` : ``) +
             `p.preview_name,p.publication_date,p.project_name, 
-              (select array_agg(tags_name) from public.posts_tags_tags where posts_id = p.id) as tags_array
+              (select array_agg(tags_name) from public.items_tags_tags where posts_id = p.id) as tags_array
               from public.items p
-              left join public.posts_tags_tags ptt on p.id = ptt.posts_id
+              left join public.items_tags_tags ptt on p.id = ptt.posts_id
               where (title like $1 or $1 is NULL) 
               and (p.project_name = $2 or $2 is NULL)  
               and (ptt.tags_name = any($3::text[]) or $3 is NULL)
@@ -209,11 +209,11 @@ class UsersService {
 
       try {
         await queryRunner.query(
-          `delete from posts_tags_tags where posts_id = $1;`,
+          `delete from items_tags_tags where posts_id = $1;`,
           [id]
         );
         await queryRunner.query(
-          `insert into posts_tags_tags (posts_id, tags_name) 
+          `insert into items_tags_tags (posts_id, tags_name) 
                  select $1 as posts_id, unnest as tags_name from  unnest($2::text[])`,
           [id, tagsArray]
         );
