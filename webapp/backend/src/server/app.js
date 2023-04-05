@@ -19,8 +19,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 module.exports = (ctx) => {
-  app.use("/api", router(ctx));
-  app.use("/api/admin", adminRouter);
+  app.use("/colorsserver/api", router(ctx));
+  app.use("/colorsserver/api/admin", adminRouter);
 
   app.use(function (req, res, next) {
     const err = new Error("Страница не найдена!");
