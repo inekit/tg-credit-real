@@ -1,23 +1,15 @@
 var express = require("express");
 var router = express.Router();
-var PostsController = require("../controllers/posts.controller");
-var CommentsController = require("../controllers/comments.controller");
-var ProjectsController = require("../controllers/projects.controller");
+var ItemsController = require("../controllers/items.controller");
+var CategoriesController = require("../controllers/categories.controller");
 var TagsController = require("../controllers/tags.controller");
-var StaticsController = require("../controllers/statics.controller");
 
 module.exports = (ctx) => {
-  router.get("/posts", PostsController.getAll);
+  router.get("/posts", ItemsController.getAll);
 
-  router.get("/rss", PostsController.getRss);
-
-  router.get("/projects", ProjectsController.getAll);
+  router.get("/categories", CategoriesController.getAll);
 
   router.get("/tags", TagsController.getAll);
-
-  router.get("/comments", CommentsController.getAll);
-
-  router.get("/statics", StaticsController.getOne);
 
   return router;
 };

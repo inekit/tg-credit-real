@@ -10,14 +10,13 @@ const {
 class UsersService {
   constructor() {
     this.getOnePost = this.getOnePost.bind(this);
-
     this.getPosts = this.getPosts.bind(this);
-
+    this.getFavorites = this.getFavorites.bind(this);
     this.transformPreviewName = this.transformPreviewName.bind(this);
-
     this.editPost = this.editPost.bind(this);
 
-    this.updateRss = updateRss;
+    this.addFavorite = this.addFavorite.bind(this);
+    this.deleteFavorite = this.deleteFavorite.bind(this);
   }
 
   getOnePost(id) {
@@ -37,6 +36,82 @@ class UsersService {
           if (!postData?.[0]) rej(new NotFoundError());
 
           return res(postData?.[0]);
+        })
+        .catch((error) => rej(new MySqlError(error)));
+    });
+  }
+
+  addFavorite({ user_id, item_id }) {
+    return new Promise(async (res, rej) => {
+      const connection = await tOrmCon;
+
+      connection
+        .query(`insert into favorites (user_id, item_id) values ($1,$2)`, [
+          user_id,
+          item_id,
+        ])
+        .then(async (data) => {
+          return res(data);
+        })
+        .catch((error) => rej(new MySqlError(error)));
+    });
+  }
+
+  deleteFavorite({ user_id, item_id }) {
+    return new Promise(async (res, rej) => {
+      const connection = await tOrmCon;
+
+      console.log({ user_id, item_id });
+
+      connection
+        .query(`delete from favorites where user_id = $1 and item_id = $2`, [
+          user_id,
+          item_id,
+        ])
+        .then(async (data) => {
+          return res(data);
+        })
+        .catch((error) => rej(new MySqlError(error)));
+    });
+  }
+
+  getFavorites(
+    { id, page = 1, take = 10, searchQuery, distinct, user_id },
+    ctx
+  ) {
+    return new Promise(async (res, rej) => {
+      const skip = (page - 1) * take;
+
+      const connection = await tOrmCon;
+
+      if (!searchQuery) searchQuery = undefined;
+      else searchQuery = `%${searchQuery}%`;
+
+      connection
+        .query(
+          `select *, TRUE is_favorite from favorites f left join items i on f.item_id = i.id
+          where (
+            lower(name) like lower($1) 
+            or lower(company_name) like lower($1)
+            or lower(city_name) like lower($1)
+            or lower(developer_name) like lower($1)
+            or lower(declaration) like lower($1)
+            or lower(address) like lower($1)
+            or lower(material) like lower($1)
+            or lower(finish_type) like lower($1)
+            or lower(description) like lower($1)
+            or lower(metro_1) like lower($1)
+            or lower(metro_2) like lower($1)
+            or lower(metro_3) like lower($1)
+            or $1 is NULL
+            )
+            and user_id = $4
+            order by id 
+          LIMIT $2 OFFSET $3`,
+          [searchQuery, take, skip, user_id]
+        )
+        .then(async (data) => {
+          return res(data);
         })
         .catch((error) => rej(new MySqlError(error)));
     });

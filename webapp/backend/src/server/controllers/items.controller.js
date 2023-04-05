@@ -62,6 +62,27 @@ function deleteOne(req, res, next) {
     .catch((error) => next(error));
 }
 
+function getFavorites(req, res, next) {
+  service
+    .getFavorites(req.query, ctx)
+    .then((data) => res.send(data))
+    .catch((error) => next(error));
+}
+
+function addFavorite(req, res, next) {
+  service
+    .addFavorite(req.body)
+    .then((data) => res.send(data))
+    .catch((error) => next(error));
+}
+
+function deleteFavorite(req, res, next) {
+  service
+    .deleteFavorite(req.body)
+    .then((data) => res.send(data))
+    .catch((error) => next(error));
+}
+
 module.exports = {
   getAll: getAllCreator(false),
   getAllWithText: getAllCreator(true),
@@ -69,4 +90,7 @@ module.exports = {
   addOne,
   editOne,
   deleteOne,
+  getFavorites,
+  deleteFavorite,
+  addFavorite,
 };
