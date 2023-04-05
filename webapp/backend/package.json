@@ -33,6 +33,7 @@
     "http": "^0.0.1-security",
     "jsdom": "^20.0.3",
     "marked": "^4.2.3",
+    "moment": "^2.29.4",
     "mysql": "^2.18.1",
     "mysql2": "^2.3.3",
     "node-cron": "^3.0.2",
