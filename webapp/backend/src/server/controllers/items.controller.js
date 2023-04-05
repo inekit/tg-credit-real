@@ -29,10 +29,10 @@ function addOne(req, res, next) {
     req.body;
 
   const fNameFullPaths = req.files?.images?.map((preview) =>
-    this.transformPreviewName(preview)
+    transformPreviewName(preview)
   );
 
-  console.log(12, fNameFullPaths);
+  console.log(12, req.files?.images, fNameFullPaths);
 
   const tagObjs = transformTagsArray(tagsArray);
 
