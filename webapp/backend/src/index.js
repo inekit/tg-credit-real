@@ -29,7 +29,7 @@ console.log("started");
   if (process.env.NODE_ENV === "production") {
     bot.catch(console.error);
 
-    const secretPath = `/delivery/telegraf/${bot.secretPathComponent()}`;
+    const secretPath = `/colors/server/telegraf/${bot.secretPathComponent()}`;
 
     console.log(secretPath);
 
@@ -49,7 +49,7 @@ console.log("started");
         console.log(r);
       });
 
-    await bot.startWebhook(secretPath, null, 3006);
+    await bot.startWebhook(secretPath, null, 3007);
 
     console.log(await ctx.telegram.getWebhookInfo());
   } else {

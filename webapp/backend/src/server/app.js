@@ -43,7 +43,7 @@ module.exports = (ctx) => {
   });
 
   const host = "127.0.0.1";
-  const port = process.env.SERVER_PORT ?? 3000;
+  const port = process.env.SERVER_PORT ?? 3006;
   let server = app.listen(port, host, () =>
     console.log(`Server listens http://${host}:${port}`)
   );
