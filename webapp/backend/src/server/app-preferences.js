@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 
 const session = require("express-session");
-var sessionConnection = require("../db/sessionConnection").sessionConnection();
+var sessionConnection = require("./db/sessionConnection").sessionConnection();
 const MySQLStore = require("express-mysql-session")(session);
 const pgSession = require("express-pg-session")(session);
 const {
@@ -11,39 +11,53 @@ const {
   invalidPathHandler,
   failSafeHandler,
 } = require("./middlewares/errorMiddleware");
+const cors = require("cors");
+const cookieParser = require("cookie-parser");
+
+app.use(
+  cors({
+    origin: [
+      "http://127.0.0.1:8080",
+      "http://127.0.0.1:3040",
+      "http://localhost:3040",
+      "https://188.225.83.97",
+      "https://92.255.79.59",
+    ],
+    credentials: true,
+  })
+);
+app.use(cookieParser());
 
 var sessionStore = new pgSession({
   pool: sessionConnection,
   tableName: "session",
-
   columnNames: {
     sid: "session_id",
     expire: "expires",
     sess: "data",
-    //session_id: "sid",
-    //expires: "expire",
-    // data: "sess",
+    session_id: "sid",
+    expires: "expire",
+    data: "sess",
   },
 
-  expiration: 10800000,
-  createDatabaseTable: true,
-  createTableIfMissing: true,
+  //expiration: 10800000,
+  //createDatabaseTable: true,
 });
 
 app.set("trust proxy", 1);
 
 app.use(
   session({
-    secret: "superdupersecret",
+    secret: "1234",
     store: sessionStore,
     cookie: {
-      path: "/",
-      httpOnly: true,
-      resave: false,
+      //path: '/',
+      //httpOnly: true,
+      //resave: true,
       maxAge: 60 * 60 * 1000,
-      secure: false,
+      //secure: true,
     },
-    resave: false,
+    resave: true,
     saveUninitialized: true,
   })
 );

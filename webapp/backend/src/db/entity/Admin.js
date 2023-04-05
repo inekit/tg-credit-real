@@ -1,31 +1,27 @@
-var EntitySchema = require("typeorm").EntitySchema;
+const { PrimaryGeneratedColumn, Generated } = require('typeorm');
+
+var EntitySchema = require('typeorm').EntitySchema;
 
 module.exports = new EntitySchema({
-  name: "Admin",
-  tableName: "admins",
+  name: 'Admin',
+  tableName: 'admins',
   columns: {
-    user_id: {
-      type: "bigint",
+    id: {
       primary: true,
+      type: 'int',
+      PrimaryGeneratedColumn: true,
+      generated: true,
+    },
+    login: {
+      type: 'varchar',
+      length: 200,
+      unique: true,
+      nullable: false,
     },
     password: {
-      type: "varchar",
-      nullable: true,
+      type: 'varchar',
       length: 255,
-    },
-    can_update_admins: {
-      type: "boolean",
-      default: false,
-    },
-  },
-  relations: {
-    user: {
-      target: "User",
-      type: "one-to-one",
-      cascade: true,
-      joinColumn: true,
-      onDelete: "cascade",
-      onUpdate: "cascade",
+      nullable: true,
     },
   },
 });

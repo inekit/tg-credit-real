@@ -1,32 +1,26 @@
 const express = require("express");
+const passport = require("passport");
 
-const cors = require("cors");
 const bodyParser = require("body-parser");
-const cookieParser = require("cookie-parser");
+
 const { spawnSync } = require("child_process");
 const router = require("./routes/routes");
-//const cron = new Cron();
+const adminRouter = require("./routes/adminRoutes");
+
 var app = require("./app-preferences");
 
-app.use(
-  cors({
-    origin: [
-      "http://127.0.0.1:3040",
-      "http://localhost:3040",
-      "https://980.ru/",
-    ],
-    credentials: true,
-  })
-);
-app.use("/colorsserver/public", express.static("public"));
+app.use("/public", express.static("public"));
 
 app.use(bodyParser.json());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 module.exports = (ctx) => {
-  app.use("/colorsserver/api", router(ctx));
+  app.use("/api", router(ctx));
+  app.use("/api/admin", adminRouter);
 
   app.use(function (req, res, next) {
     const err = new Error("Страница не найдена!");
@@ -43,7 +37,7 @@ module.exports = (ctx) => {
   });
 
   const host = "127.0.0.1";
-  const port = process.env.SERVER_PORT ?? 3006;
+  const port = process.env.PORT ?? 3000;
   let server = app.listen(port, host, () =>
     console.log(`Server listens http://${host}:${port}`)
   );
