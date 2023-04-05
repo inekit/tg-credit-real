@@ -263,7 +263,8 @@ export default {
         myApi
           .put(this.$store.state.publicPath + '/api/admin/items', formData, {
             headers: {
-              'Content-Type': 'multipart/form-data',
+              'Content-Type': `multipart/form-data; boundary=${formData.getBoundary()}`,
+
             },
           })
           .then(() => {
