@@ -55,7 +55,7 @@ app.use(
       //httpOnly: true,
       //resave: true,
       maxAge: 60 * 60 * 1000,
-      secure: true,
+      //secure: true,
     },
     resave: true,
     saveUninitialized: true,
