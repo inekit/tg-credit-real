@@ -49,7 +49,7 @@ console.log("started");
         console.log(r);
       });
 
-    await bot.startWebhook(secretPath, null, 3002);
+    await bot.startWebhook(secretPath, null, 3006);
 
     console.log(await ctx.telegram.getWebhookInfo());
   } else {
