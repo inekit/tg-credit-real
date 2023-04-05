@@ -52,8 +52,8 @@ app.use(
     store: sessionStore,
     cookie: {
       path: "/",
-      httpOnly: true,
-      resave: true,
+      //httpOnly: true,
+      //resave: true,
       maxAge: 60 * 60 * 1000,
       secure: true,
     },
