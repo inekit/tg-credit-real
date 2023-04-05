@@ -1,14 +1,11 @@
-const servicePreset = require("../services/crud.service").getService("Item", [
+const service = require("../services/crud.service").getService("Item", [
   "title",
   "text",
   "description",
 ]);
-const {
-  getPosts,
-  editPost,
-  transformTagsArray,
-  transformPreviewName,
-} = require("../services/items.service");
+const itemsService = require("../services/items.service");
+const { getPosts, editPost, transformTagsArray, transformPreviewName } =
+  itemsService;
 
 function getAllCreator(showText = true) {
   return async function getAll(req, res, next) {
@@ -36,7 +33,7 @@ function addOne(req, res, next) {
 
   const tagObjs = transformTagsArray(tagsArray);
 
-  servicePreset
+  service
     .add({
       title,
       description,
@@ -63,28 +60,28 @@ async function editOne(req, res, next) {
 }
 
 function deleteOne(req, res, next) {
-  servicePreset
+  service
     .delete(req.body.id)
     .then((data) => res.send(data))
     .catch((error) => next(error));
 }
 
 function getFavorites(req, res, next) {
-  service
+  itemsService
     .getFavorites(req.query, ctx)
     .then((data) => res.send(data))
     .catch((error) => next(error));
 }
 
 function addFavorite(req, res, next) {
-  service
+  itemsService
     .addFavorite(req.body)
     .then((data) => res.send(data))
     .catch((error) => next(error));
 }
 
 function deleteFavorite(req, res, next) {
-  service
+  itemsService
     .deleteFavorite(req.body)
     .then((data) => res.send(data))
     .catch((error) => next(error));

@@ -14,7 +14,7 @@
             <div class="result-item">
                 <router-link :to="`/items/${item.id}`">
                     <div class="img-container">
-                        <img :src="`/colorsserver/public/pics/${item.image_list[0]}`" />
+                        <img :src="`/colorsserver/public/pics/${item.image_list?.[0]}`" />
                     </div>
                     <div class="text-container">
                         <h2>{{ item.title }}</h2>
@@ -67,21 +67,7 @@ export default {
 
         console.log(this.$route.params)
 
-        const filterId = this.$route.params?.page;
-        const filterValue = this.$route.params?.filter;
-
-        if (this.$route.params?.city !== "city") this.city_name = this.$route.params?.city;
-
-        if (filterId === "2") this.property_class = filterValue;
-        else if (filterId === "3") this.commissioning_year = filterValue;
-        else if (filterId === "1") {
-            this.sale_percent_min = this.$store.state.filters.find(el => filterId == el.id)?.values.find(el => el.max == filterValue)?.min
-            this.sale_percent_max = filterValue;
-        }
-        else if (filterId === "4") {
-            this.meter_price_min = this.$store.state.filters.find(el => filterId == el.id)?.values.find(el => el.max == filterValue)?.min
-            this.meter_price_max = filterValue;
-        }
+        this.$store.state.userId = this.$route.params?.userId;
 
         await this.toggleButtons()
 

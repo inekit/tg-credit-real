@@ -11,7 +11,7 @@ const routes = [
     redirect: '/results',
     children: [
       {
-        path: '/results',
+        path: '/results:userId',
         name: 'Results',
         component: () => import('@/views/Results.vue'),
       },

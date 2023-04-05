@@ -91,18 +91,7 @@ class UsersService {
         .query(
           `select *, TRUE is_favorite from favorites f left join items i on f.item_id = i.id
           where (
-            lower(name) like lower($1) 
-            or lower(company_name) like lower($1)
-            or lower(city_name) like lower($1)
-            or lower(developer_name) like lower($1)
-            or lower(declaration) like lower($1)
-            or lower(address) like lower($1)
-            or lower(material) like lower($1)
-            or lower(finish_type) like lower($1)
-            or lower(description) like lower($1)
-            or lower(metro_1) like lower($1)
-            or lower(metro_2) like lower($1)
-            or lower(metro_3) like lower($1)
+            lower(title) like lower($1) 
             or $1 is NULL
             )
             and user_id = $4

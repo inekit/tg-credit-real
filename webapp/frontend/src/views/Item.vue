@@ -105,7 +105,7 @@ export default {
             return new Promise((res, rej) => {
                 this.$store.state.myApi.get(this.$store.state.restAddr + '/files', {
                     params: {
-                        user_id: this.$store.state.user_id,
+                        user_id: this.$store.state.userId,
                         item_id: this.$route.params.id
                     }
                 })
@@ -125,7 +125,7 @@ export default {
                     .delete(this.$store.state.restAddr + '/favorites', {
                         data: {
                             item_id: item.id,
-                            user_id: this.$store.state.user_id,
+                            user_id: this.$store.state.userId,
                         },
                     })
                     .then((response) => {
@@ -146,7 +146,7 @@ export default {
                 this.$store.state.myApi
                     .put(this.$store.state.restAddr + '/favorites', {
                         item_id: item.id,
-                        user_id: this.$store.state.user_id,
+                        user_id: this.$store.state.userId,
                     })
                     .then((response) => {
                         item.is_favorite = true
