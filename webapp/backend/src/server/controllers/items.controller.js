@@ -32,7 +32,7 @@ function addOne(req, res, next) {
     transformPreviewName(preview)
   );
 
-  console.log(12, req.files?.images, fNameFullPaths);
+  console.log(12, req.files, req.body, fNameFullPaths);
 
   const tagObjs = transformTagsArray(tagsArray);
 
