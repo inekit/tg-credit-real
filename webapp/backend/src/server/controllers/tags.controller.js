@@ -1,5 +1,8 @@
-const tOrmCon = require('../db/connection');
-const servicePreset = require('../services/crud.service').getService('Tag', ['name', 'description']);
+const tOrmCon = require("../../db/connection");
+const servicePreset = require("../services/crud.service").getService("Tag", [
+  "name",
+  "description",
+]);
 
 function getAll(req, res) {
   console.log(req.query.category);
@@ -40,7 +43,7 @@ function editOne(req, res) {
 
 function deleteOne(req, res) {
   servicePreset
-    .delete(req.body.name, 'name')
+    .delete(req.body.name, "name")
     .then((data) => res.send(data))
     .catch((error) => next(error));
 }

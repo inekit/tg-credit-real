@@ -1,16 +1,28 @@
-const tOrmCon = require('../db/connection');
-const servicePreset = require('../services/crud.service').getService('Comment', ['postId', 'text', 'authorId']);
+const tOrmCon = require("../../db/connection");
+const servicePreset = require("../services/crud.service").getService(
+  "Comment",
+  ["postId", "text", "authorId"]
+);
 
 function getAll(req, res) {
   servicePreset
-    .get(req.query.id, req.query.page, req.query.take, { post: { id: req.query.postId } }, ['author'])
+    .get(
+      req.query.id,
+      req.query.page,
+      req.query.take,
+      { post: { id: req.query.postId } },
+      ["author"]
+    )
     .then((data) => res.send(data))
-    .catch((error) => res.status(404).send({ status: false, error: error.toString() }));
+    .catch((error) =>
+      res.status(404).send({ status: false, error: error.toString() })
+    );
 }
 
 async function add(req, res) {
   const { comments, postId } = req.body;
-  if (!comments || !postId) return res.send({ status: false, error: 'no comments' });
+  if (!comments || !postId)
+    return res.send({ status: false, error: "no comments" });
 
   const connection = await tOrmCon;
 
@@ -24,8 +36,10 @@ async function add(req, res) {
       console.log(comment);
 
       if (comment.text && comment.nick)
-        queryRunner.manager.getRepository('Comment').insert({ text: comment.text, nick: comment.nick, postId });
-      else throw new Error('no comm data');
+        queryRunner.manager
+          .getRepository("Comment")
+          .insert({ text: comment.text, nick: comment.nick, postId });
+      else throw new Error("no comm data");
     }
 
     await queryRunner.commitTransaction();
@@ -49,7 +63,9 @@ function addService(queryData) {
   servicePreset
     .add(queryData)
     .then((data) => res.send({ status: true }))
-    .catch((error) => res.status(304).send({ status: false, error: error.toString() }));
+    .catch((error) =>
+      res.status(304).send({ status: false, error: error.toString() })
+    );
 }
 
 function editOne(req, res) {
@@ -60,14 +76,18 @@ function editOne(req, res) {
       id: req.body.id,
     })
     .then((data) => res.send({ status: true }))
-    .catch((error) => res.status(304).send({ status: false, error: error.toString() }));
+    .catch((error) =>
+      res.status(304).send({ status: false, error: error.toString() })
+    );
 }
 
 function deleteOne(req, res) {
   servicePreset
     .delete({ id: req.body.id })
     .then((data) => res.send({ status: true }))
-    .catch((error) => res.status(304).send({ status: false, error: error.toString() }));
+    .catch((error) =>
+      res.status(304).send({ status: false, error: error.toString() })
+    );
 }
 
 module.exports = {

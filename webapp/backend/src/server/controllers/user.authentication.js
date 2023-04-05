@@ -1,17 +1,16 @@
-const passport = require('../passport/passport');
-const bcrypt = require('bcryptjs');
-const tOrmCon = require('../db/connection');
+const passport = require("../passport/passport");
+const bcrypt = require("bcryptjs");
 const salt = bcrypt.genSaltSync(10);
-const usersService = require('../services/users.service');
+const usersService = require("../services/users.service");
 
 function loginLocal(req, res, next) {
-  passport.authenticate('local', function (err, user) {
+  passport.authenticate("local", function (err, user) {
     if (err) {
       return next(err);
     }
 
     if (!user) {
-      console.log('Укажите правильный email или пароль!');
+      console.log("Укажите правильный email или пароль!");
       return res.status(403).send(JSON.stringify({ isAutenticated: false }));
     }
 
@@ -26,7 +25,8 @@ function loginLocal(req, res, next) {
 }
 
 function registerLocal(req, res) {
-  if (!req.body.password || !req.body.login) return res.status(403).send({ error: 'no data' });
+  if (!req.body.password || !req.body.login)
+    return res.status(403).send({ error: "no data" });
 
   let password = bcrypt.hashSync(req.body.password, salt);
   const user = { login: req.body.login, password };
@@ -34,11 +34,14 @@ function registerLocal(req, res) {
   usersService
     .addUser(user)
     .then((userData) => res.send({ isRegistered: true }))
-    .catch((err) => res.status(403).send(JSON.stringify({ isRegistered: false, err })));
+    .catch((err) =>
+      res.status(403).send(JSON.stringify({ isRegistered: false, err }))
+    );
 }
 
 function editUser(req, res) {
-  if (!req.body.password || !req.body.login) return res.status(403).send({ error: 'no data' });
+  if (!req.body.password || !req.body.login)
+    return res.status(403).send({ error: "no data" });
 
   let password = bcrypt.hashSync(req.body.password, salt);
   const user = {
@@ -50,7 +53,9 @@ function editUser(req, res) {
   usersService
     .editUser(user)
     .then((userData) => res.send({ isRegistered: true }))
-    .catch((err) => res.status(403).send(JSON.stringify({ isRegistered: false })));
+    .catch((err) =>
+      res.status(403).send(JSON.stringify({ isRegistered: false }))
+    );
 }
 
 const auth = (req, res, next) => {
