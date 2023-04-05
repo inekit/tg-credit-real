@@ -32,8 +32,8 @@
           <template v-if="preview_list.length">
             <div v-for="item, index in preview_list" :key="index">
               <img :src="item" class="img-fluid" />
-              <p class="mb-0">file name: {{ image_list[index].name }}</p>
-              <p>size: {{ image_list[index].size / 1024 }}KB</p>
+              <p class="mb-0">file name: {{ formData?.image_list[index].name }}</p>
+              <p>size: {{ formData?.image_list[index].size / 1024 }}KB</p>
             </div>
           </template>
         </div>
