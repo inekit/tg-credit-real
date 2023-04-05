@@ -1,9 +1,0 @@
----
-# yamllint disable rule:line-length
-# yamllint disable rule:truthy
-
-- name: handler_newaliases
-  shell:
-    cmd: "{{ newaliases_executable }} || true"
-
-...
