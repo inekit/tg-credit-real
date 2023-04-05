@@ -1,4 +1,4 @@
-const tOrmCon = require("../db/connection");
+const tOrmCon = require("../../db/connection");
 const checkInputData = require("../utils/checkInputData");
 const {
   HttpError,

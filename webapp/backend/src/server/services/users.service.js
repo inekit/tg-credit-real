@@ -1,6 +1,11 @@
-const tOrmCon = require('../db/connection');
-const checkInputData = require('../utils/checkInputData');
-const { HttpError, MySqlError, NotFoundError, NoInputDataError } = require('../utils/httpErrors');
+const tOrmCon = require("../../db/connection");
+const checkInputData = require("../utils/checkInputData");
+const {
+  HttpError,
+  MySqlError,
+  NotFoundError,
+  NoInputDataError,
+} = require("../utils/httpErrors");
 
 class UsersService {
   getUsers(id, page, take) {
@@ -15,7 +20,7 @@ class UsersService {
 
       tOrmCon.then((connection) => {
         connection
-          .getRepository('Admin')
+          .getRepository("Admin")
           .find({ where: filteres, skip, take })
           .then((data) => res(data))
           .catch((error) => rej(new MySqlError(error)));
@@ -25,12 +30,14 @@ class UsersService {
 
   addUser(user) {
     return new Promise((res, rej) => {
-      if (!checkInputData(user, 'password', 'login'))
-        return rej(new NoInputDataError({ password: user?.password, login: user?.login }));
+      if (!checkInputData(user, "password", "login"))
+        return rej(
+          new NoInputDataError({ password: user?.password, login: user?.login })
+        );
 
       tOrmCon.then((connection) => {
         connection
-          .getRepository('Admin')
+          .getRepository("Admin")
           .save(user)
           .then((data) => res(data))
           .catch((error) => rej(new MySqlError(error)));
@@ -47,7 +54,7 @@ class UsersService {
 
       tOrmCon.then((connection) => {
         connection
-          .getRepository('Admin')
+          .getRepository("Admin")
           .delete({ id })
           .then((data) => res(data))
           .catch((error) => rej(new MySqlError(error)));
@@ -61,7 +68,7 @@ class UsersService {
 
       tOrmCon.then((connection) => {
         connection
-          .getRepository('Admin')
+          .getRepository("Admin")
           .update({ id }, user)
           .then((data) => res(data))
           .catch((error) => rej(new MySqlError(error)));

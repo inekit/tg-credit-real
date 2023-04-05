@@ -1,6 +1,11 @@
-const tOrmCon = require('../db/connection');
-const checkInputData = require('../utils/checkInputData');
-const { HttpError, MySqlError, NotFoundError, NoInputDataError } = require('../utils/httpErrors');
+const tOrmCon = require("../../db/connection");
+const checkInputData = require("../utils/checkInputData");
+const {
+  HttpError,
+  MySqlError,
+  NotFoundError,
+  NoInputDataError,
+} = require("../utils/httpErrors");
 
 class CustomServiceWrapper {
   constructor() {
@@ -46,7 +51,8 @@ class CustomServiceWrapper {
   getAdder(name, fields) {
     return (params) => {
       return new Promise((res, rej) => {
-        if (!checkInputData(params, ...fields)) return rej(new NoInputDataError(params));
+        if (!checkInputData(params, ...fields))
+          return rej(new NoInputDataError(params));
         tOrmCon.then((connection) => {
           connection
             .getRepository({ name })
@@ -59,9 +65,10 @@ class CustomServiceWrapper {
   }
 
   getDeleter(name) {
-    return (findTag, findByField = 'id') => {
+    return (findTag, findByField = "id") => {
       return new Promise((res, rej) => {
-        if (!findTag) return rej(new NoInputDataError({ [findByField]: findTag }));
+        if (!findTag)
+          return rej(new NoInputDataError({ [findByField]: findTag }));
 
         tOrmCon.then((connection) => {
           connection
@@ -92,7 +99,7 @@ class CustomServiceWrapper {
             .where({
               id: params.id,
             })
-            .returning('*')
+            .returning("*")
             .execute()
             .then((data) => res(data))
             .catch((error) => rej(new MySqlError(error)));
