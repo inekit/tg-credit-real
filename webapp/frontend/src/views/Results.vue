@@ -13,9 +13,8 @@
         <template #default="{ item, index }">
             <div class="result-item">
                 <router-link :to="`/items/${item.id}`">
-
                     <div class="img-container">
-                        <img v-for="img_link, id in image_list" :key="id" :src="`/colorsserver/public/pics/${img_link}`" />
+                        <img :src="`/colorsserver/public/pics/${item.image_list[0]}`" />
                     </div>
                     <div class="text-container">
                         <h2>{{ item.title }}</h2>

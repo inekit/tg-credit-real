@@ -5,8 +5,8 @@
 
     <div class="img-container">
         <carousel>
-            <slide class="carousel__item" v-for="img_id in [...Array(item.images_count).keys()]" :key="img_id">
-                <img :src="`/api/img/${item.city_name === 'Москва' ? 'mos' : 'spb'}/${item.id}/${img_id}`" />
+            <slide class="carousel__item" v-for="img_link, img_id in item.image_list" :key="img_id">
+                <img :src="`/colorsserver/public/pics/${img_link}`" />
             </slide>
             <template #addons>
                 <pagination />
@@ -17,7 +17,7 @@
         </div>
 
     </div>
-    <h1>{{ item.name }}</h1>
+    <h1>{{ item.title }}</h1>
     <ul class="points-list">
         <li>📍 Адрес: {{ item.address }}</li>
         <li>📒 Проектная декларация: {{ item.declaration }}</li>
@@ -96,7 +96,6 @@ export default {
             this.$store.state.myApi.get(this.$store.state.restAddr + '/items', {
                 params: {
                     id,
-                    user_id: this.$store.state.user_id,
                 }
             })
                 .then(response => this.item = response.data)
