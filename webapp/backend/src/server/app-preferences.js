@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 
 const session = require("express-session");
-var sessionConnection = require("./db/sessionConnection").sessionConnection();
+var sessionConnection = require("../db/sessionConnection").sessionConnection();
 const MySQLStore = require("express-mysql-session")(session);
 const pgSession = require("express-pg-session")(session);
 const {
