@@ -26,7 +26,7 @@ class UsersService {
       connection
         .query(
           `select p.*, array_agg(ptt.tags_name) tags_array
-                      from public.posts p
+                      from public.items p
                       left join public.posts_tags_tags ptt on p.id = ptt.posts_id
                       where p.id = $1
                       group by p.id`,
@@ -145,7 +145,7 @@ class UsersService {
             (showText ? `p.text,` : ``) +
             `p.preview_name,p.publication_date,p.project_name, 
               (select array_agg(tags_name) from public.posts_tags_tags where posts_id = p.id) as tags_array
-              from public.posts p
+              from public.items p
               left join public.posts_tags_tags ptt on p.id = ptt.posts_id
               where (title like $1 or $1 is NULL) 
               and (p.project_name = $2 or $2 is NULL)  
