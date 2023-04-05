@@ -1,4 +1,5 @@
 const { AppDataSource } = require("../../data-source");
+require("dotenv").config();
 
 const { Pool, Client } = require("pg");
 
