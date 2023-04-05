@@ -30,7 +30,7 @@ router.post("/categories", auth, CategoriesController.addOne);
 router.put("/categories", auth, CategoriesController.editOne);
 router.delete("/categories", auth, CategoriesController.deleteOne);
 
-router.get("/favorites", ItemsController.getFavorites(ctx));
+router.get("/favorites", ItemsController.getFavorites);
 router.put("/favorites", ItemsController.addFavorite);
 router.delete("/favorites", ItemsController.deleteFavorite);
 
