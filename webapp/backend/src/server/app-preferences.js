@@ -53,7 +53,7 @@ app.use(
     cookie: {
       //path: '/',
       //httpOnly: true,
-      //resave: true,
+      resave: true,
       maxAge: 60 * 60 * 1000,
       //secure: true,
     },
