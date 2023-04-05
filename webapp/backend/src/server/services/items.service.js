@@ -176,6 +176,7 @@ class UsersService {
   }
 
   transformPreviewName(image) {
+    if (typeof image === String) return image;
     let fName = image?.name;
     let fNameFullPath;
     if (fName) {
@@ -198,8 +199,8 @@ class UsersService {
   }) {
     return new Promise(async (res, rej) => {
       const fNameFullPaths = Array.isArray(previewsBinary)
-        ? previewsBinary.map((preview) => transformPreviewName(preview))
-        : [transformPreviewName(previewsBinary)];
+        ? previewsBinary.map((preview) => this.transformPreviewName(preview))
+        : [this.transformPreviewName(previewsBinary)];
 
       const connection = await tOrmCon;
 
