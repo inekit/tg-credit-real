@@ -38,7 +38,7 @@ class UsersService {
     });
   }
 
-  getAll({ id, page = 1, take = 10, id }) {
+  getAll({ id, page = 1, take = 10 }) {
     return new Promise(async (res, rej) => {
       if (id) {
         this.getOne({ id })
