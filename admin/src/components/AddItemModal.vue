@@ -129,7 +129,8 @@ export default {
       preview: '',
       image_list: [],
       tags_array: new Set(),
-      options_object: {}
+      options_object: {},
+      options_array: [],
     },
 
   },
@@ -152,6 +153,12 @@ export default {
   updated() {
     this.textMd2 = this.formData.text
     this.formData.text && this.$refs.postTextEditor?.setHTML(this.formData.text)
+
+    this.options_object = {};
+    for (let { size, material, price } of this.formData.options_array) {
+      this.options_object[material] ? this.options_object[material][size] = price : this.options_object[material] = { size: price }
+    }
+
 
     this.preview_list = this.formData.image_list?.map(preview_name => `${this.$store.state.publicPath}/public/pics/${preview_name}`)
 
