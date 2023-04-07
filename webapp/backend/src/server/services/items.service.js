@@ -184,17 +184,13 @@ class UsersService {
           ? previewsBinary.map((preview) => this.transformPreviewName(preview))
           : [this.transformPreviewName(previewsBinary)];
 
-        const { id } = queryRunner.manager
-          .getRepository("Item")
-          .save({
-            title,
-            description,
-            text,
-            category_name: projectName,
-            image_list: fNameFullPaths,
-          })
-          .returning("id")
-          .execute();
+        const { id } = queryRunner.manager.getRepository("Item").save({
+          title,
+          description,
+          text,
+          category_name: projectName,
+          image_list: fNameFullPaths,
+        });
 
         for (m in optionsObject) {
           const sizes = optionsObject[m];
