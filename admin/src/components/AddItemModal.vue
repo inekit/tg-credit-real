@@ -30,6 +30,7 @@
                   Материал</td>
                 <td v-for="price, sizeName in Object.values(options_object)?.[0]" :key="'sizeh-' + sizeName">
                   {{ sizeName }}
+                  <CButton color="secondary" @click="dropSize(sizeName)">X</CButton>
                 </td>
                 <td>
                   <CFormInput type="text" v-model="tempSize" />
@@ -39,7 +40,10 @@
             </thead>
             <tbody>
               <tr v-for="sizesObj, materialName in options_object" :key="'material-' + materialName">
-                <td>{{ materialName }}</td>
+                <td>
+                  {{ materialName }}
+                  <CButton color="secondary" @click="dropMaterial(materialName)">X</CButton>
+                </td>
                 <td v-for="price, sizeName in sizesObj" :key="'size-' + sizeName">
                   <CFormInput type="text" v-model="options_object[materialName][sizeName]" />
                 </td>
@@ -124,9 +128,9 @@ export default {
       formValid: false,
       preview_list: [],
       options_object: {
-        "option1": {
-          "weight1": 2000,
-          "weight2": 3000
+        "Размер": {
+          "Материал": 2000,
+          "Материал2": 3000
         }
       },
       tempSize: 0,
@@ -162,6 +166,15 @@ export default {
       this.options_object = Object.fromEntries(new_oo_entries)
       this.tempSize = ""
     },
+    dropMaterial(name) {
+      for (let key in this.options_object) {
+        delete this.options_object[key][name]
+      }
+    },
+    dropSize(name) {
+      delete this.options_object[name]
+    },
+
     async getTagCloud() {
       return await myApi
         .get(this.$store.state.publicPath + '/api/tags/')
@@ -333,6 +346,25 @@ export default {
 <style lang="scss" scoped>
 ::v-deep .hidden {
   display: none;
+}
+
+.table {
+  width: 100%;
+  margin-bottom: 20px;
+  border: 1px solid #dddddd;
+  border-collapse: collapse;
+}
+
+.table th {
+  font-weight: bold;
+  padding: 5px;
+  background: #efefef;
+  border: 1px solid #dddddd;
+}
+
+.table td {
+  border: 1px solid #dddddd;
+  padding: 5px;
 }
 
 .preview-container {
