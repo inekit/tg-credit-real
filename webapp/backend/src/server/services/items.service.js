@@ -209,6 +209,7 @@ class UsersService {
 
         res(data);
       } catch (error) {
+        console.log(error);
         await queryRunner.rollbackTransaction();
 
         rej(new MySqlError(error));
