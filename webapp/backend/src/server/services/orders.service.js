@@ -75,7 +75,7 @@ class UsersService {
         .getRepository("Order")
         .save(order)
         .then((data) => {
-          io.emit("UPDATE_ORDERS");
+          global.io.emit("UPDATE_ORDERS");
           res(data);
         })
         .catch((error) => rej(new MySqlError(error)));
