@@ -28,7 +28,7 @@
               <tr>
                 <td>Размер
                   Материал</td>
-                <td v-for="price, sizeName in options_object?.values[0]" :key="'sizeh-' + sizeName">
+                <td v-for="price, sizeName in Object.values(options_object)?.[0]" :key="'sizeh-' + sizeName">
                   {{ sizeName }}
                 </td>
                 <td>
@@ -139,7 +139,7 @@ export default {
 
     this.preview_list = this.formData.image_list?.map(preview_name => `${this.$store.state.publicPath}/public/pics/${preview_name}`)
 
-    document.getElementsByClassName('ql-toolbar')?.[0].classList.add('hidden')
+    document.getElementsByClassName('ql-toolbar')?.[0]?.classList.add('hidden')
   },
   async mounted() {
     this.tags = await this.getTagCloud()
@@ -154,10 +154,13 @@ export default {
       console.log(size_template)
 
       this.options_object[name] = size_template
+
+      this.tempMaterial = ""
     },
     addSize(name) {
       const new_oo_entries = Object.entries(this.options_object)?.map(([key, value]) => [key, Object.assign(value ?? {}, { [name]: 0 })])
       this.options_object = Object.fromEntries(new_oo_entries)
+      this.tempSize = ""
     },
     async getTagCloud() {
       return await myApi
