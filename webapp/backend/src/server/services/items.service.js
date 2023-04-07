@@ -184,7 +184,7 @@ class UsersService {
           ? previewsBinary.map((preview) => this.transformPreviewName(preview))
           : [this.transformPreviewName(previewsBinary)];
 
-        const { id } = await queryRunner.manager.getRepository("Item").save({
+        const data = await queryRunner.manager.getRepository("Item").save({
           title,
           description,
           text,
@@ -192,6 +192,7 @@ class UsersService {
           image_list: fNameFullPaths,
         });
 
+        const { id } = data;
         const oo = JSON.parse(optionsObject);
         for (let m in oo) {
           const sizes = oo[m];
