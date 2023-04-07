@@ -19,6 +19,22 @@ app.use(express.urlencoded({ extended: true }));
 app.use(passport.initialize());
 app.use(passport.session());
 
+const { Server } = require("socket.io");
+const io = new Server(server, {
+  cors: {
+    origin: [
+      "http://127.0.0.1:8080",
+      "http://localhost:8080",
+      "http://192.168.0.102:8080",
+      "https://92.255.79.59",
+    ],
+    credentials: true,
+    methods: ["GET", "POST"],
+  },
+});
+
+global.io = io;
+
 module.exports = (ctx) => {
   app.use("/colorsserver/api", router(ctx));
   app.use("/colorsserver/api/admin", adminRouter);
@@ -42,22 +58,6 @@ module.exports = (ctx) => {
   let server = app.listen(port, host, () =>
     console.log(`Server listens http://${host}:${port}`)
   );
-
-  const { Server } = require("socket.io");
-  const io = new Server(server, {
-    cors: {
-      origin: [
-        "http://127.0.0.1:8080",
-        "http://localhost:8080",
-        "http://192.168.0.102:8080",
-        "https://92.255.79.59",
-      ],
-      credentials: true,
-      methods: ["GET", "POST"],
-    },
-  });
-
-  global.io = io;
 
   server.on("error", (err) => {
     console.log("err", err);
