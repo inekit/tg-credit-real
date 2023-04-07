@@ -237,7 +237,9 @@ class UsersService {
       console.log(previewsBinary, images, fNameFullPaths);
       const images_array = Array.isArray(images) ? images : [images];
 
-      fNameFullPaths = [...new Set([...fNameFullPaths, ...images_array])];
+      fNameFullPaths = [
+        ...new Set([...fNameFullPaths, ...images_array]),
+      ]?.filter((el) => el);
 
       const connection = await tOrmCon;
 
