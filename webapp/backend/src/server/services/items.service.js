@@ -127,12 +127,12 @@ class UsersService {
 
       connection
         .query(
-          `select p.id,p.title,p.description,p.image_list,p.publication_date,p.project_name, 
+          `select p.id,p.title,p.description,p.image_list,p.publication_date,p.category_name, 
               (select array_agg(tags_name) from public.items_tags_tags where items_id = p.id) as tags_array
               from public.items p
               left join public.items_tags_tags ptt on p.id = ptt.items_id
               where (title like $1 or $1 is NULL) 
-              and (p.project_name = $2 or $2 is NULL)  
+              and (p.category_name = $2 or $2 is NULL)  
               and (ptt.tags_name = any($3::text[]) or $3 is NULL)
               group by p.id
               order by publication_date DESC
@@ -275,7 +275,7 @@ class UsersService {
           .update({
             title,
             text,
-            project_name: projectName,
+            category_name: projectName,
             description,
             image_list: fNameFullPaths,
           })
