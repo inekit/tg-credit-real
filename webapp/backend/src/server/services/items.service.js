@@ -192,6 +192,7 @@ class UsersService {
           image_list: fNameFullPaths,
         });
 
+        console.log(optionsObject);
         for (let m in optionsObject) {
           const sizes = optionsObject[m];
           for (let s in sizes) {
