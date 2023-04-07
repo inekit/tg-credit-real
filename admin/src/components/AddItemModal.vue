@@ -15,9 +15,9 @@
         <div class="projects-list">
           <span>Категория</span>
           <CFormCheck v-for="project in projects" :key="project.name" :id="project.name"
-            :checked="project.name === formData.project_name" @change="changeP" type="radio" name="project-name"
+            :checked="project.name === formData.category_name" @change="changeP" type="radio" name="project-name"
             :value="project.name" :label="project.name" />
-          <CFormCheck id="null-name" :checked="!formData.project_name" @change="changeP" type="radio" name="project-name"
+          <CFormCheck id="null-name" :checked="!formData.category_name" @change="changeP" type="radio" name="project-name"
             value="" label="Без категорий" />
         </div>
 
@@ -111,6 +111,7 @@ export default {
       text: '',
       description: '',
       preview: '',
+      category_name: '',
       image_list: [],
       tags_array: new Set(),
       options_object: {},
@@ -138,11 +139,12 @@ export default {
 
     this.options_object = {};
     for (let { size, material, price } of this.formData.options_array) {
+      if (!material && !size && !price) continue;
       this.options_object[material] ? this.options_object[material][size] = price : this.options_object[material] = { size: price }
     }
 
 
-    this.preview_list = this.formData.image_list?.map(preview_name => `${this.$store.state.publicPath}/public/pics/${preview_name}`)
+    this.preview_list = this.formData.image_list?.filter(el => el)?.map(preview_name => `${this.$store.state.publicPath}/public/pics/${preview_name}`)
 
     document.getElementsByClassName('ql-toolbar')?.[0]?.classList.add('hidden')
   },
@@ -218,7 +220,7 @@ export default {
     },
     changeP(e) {
       console.log(e.target.value)
-      this.formData.project_name = e.target.value
+      this.formData.category_name = e.target.value
     },
     closeModal() {
       eventBus.$emit('closeModal')
@@ -237,8 +239,8 @@ export default {
       });
 
 
-      this.formData.project_name &&
-        formData.append('categoryName', this.formData.project_name)
+      this.formData.category_name &&
+        formData.append('categoryName', this.formData.category_name)
 
 
       formData.append('optionsObject', JSON.stringify(this.options_object))
