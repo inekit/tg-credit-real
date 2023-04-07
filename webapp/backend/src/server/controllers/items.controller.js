@@ -4,7 +4,7 @@ const service = require("../services/crud.service").getService("Item", [
   "description",
 ]);
 const itemsService = require("../services/items.service");
-const { getPosts, editPost, transformTagsArray, transformPreviewName } =
+const { getPosts, add, editPost, transformTagsArray, transformPreviewName } =
   itemsService;
 
 function getAllCreator(showText = true) {
@@ -22,29 +22,13 @@ function getRss(req, res, next) {
 }
 
 function addOne(req, res, next) {
-  const { title, text, tagsArray, projectName, previewName, description } =
-    req.body;
-
-  const previewsBinary = req.files?.["images[]"];
-
-  const fNameFullPaths = Array.isArray(previewsBinary)
-    ? previewsBinary.map((preview) => transformPreviewName(preview))
-    : [transformPreviewName(previewsBinary)];
-
-  const tagObjs = transformTagsArray(tagsArray);
-
-  service
-    .add({
-      title,
-      description,
-      text,
-      category_name: projectName,
-      tags: tagObjs,
-      image_list: fNameFullPaths,
+  add(
+    Object.assign(req.body, {
+      images: req.body?.["images[]"],
+      previewsBinary: req.files?.["images[]"],
     })
-    .then((data) => {
-      res.send(data);
-    })
+  )
+    .then((data) => res.send(data))
     .catch((error) => next(error));
 }
 

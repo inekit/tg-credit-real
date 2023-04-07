@@ -13,6 +13,7 @@ class UsersService {
     this.getPosts = this.getPosts.bind(this);
     this.getFavorites = this.getFavorites.bind(this);
     this.transformPreviewName = this.transformPreviewName.bind(this);
+    this.add = this.add.bind(this);
     this.editPost = this.editPost.bind(this);
 
     this.addFavorite = this.addFavorite.bind(this);
@@ -174,6 +175,55 @@ class UsersService {
     return fNameFullPath;
   }
 
+  add({ title, text, optionsObject, projectName, previewsBinary, description }) {
+    return new Promise(async (res, rej) => {
+      const connection = await tOrmCon;
+
+      const queryRunner = connection.createQueryRunner();
+
+      await queryRunner.connect();
+
+      await queryRunner.startTransaction();
+
+      try {
+        const fNameFullPaths = Array.isArray(previewsBinary)
+          ? previewsBinary.map((preview) => this.transformPreviewName(preview))
+          : [this.transformPreviewName(previewsBinary)];
+
+        const { id } = queryRunner.manager
+          .getRepository("Item")
+          .add({
+            title,
+            description,
+            text,
+            category_name: projectName,
+            image_list: fNameFullPaths,
+          })
+          .returning("id")
+          .execute();
+
+        for (sizes,m of optionsObject){
+          for (price,s of sizes){
+            queryRunner.query(
+              "insert into item_options (item_id,size,material,price) values ($1,$2,$3,$4)",
+              [id,s,m,price]
+            );
+          }
+        }
+
+        await queryRunner.commitTransaction();
+
+        res(data);
+      } catch (error) {
+        await queryRunner.rollbackTransaction();
+
+        rej(new MySqlError(error));
+      } finally {
+        await queryRunner.release();
+      }
+    });
+  }
+
   editPost({
     id,
     text,
@@ -183,6 +233,7 @@ class UsersService {
     tagsArray,
     images,
     previewsBinary,
+    optionsObject
   }) {
     return new Promise(async (res, rej) => {
       let fNameFullPaths = Array.isArray(previewsBinary)
@@ -227,6 +278,17 @@ class UsersService {
           })
           .returning("*")
           .execute();
+
+          queryRunner.query("delete from item_options where item_id = $1", [id])
+
+          for (sizes,m of optionsObject){
+            for (price,s of sizes){
+              queryRunner.query(
+                "insert into item_options (item_id,size,material,price) values ($1,$2,$3,$4)",
+                [id,s,m,price]
+              );
+            }
+          }
 
         await queryRunner.commitTransaction();
 

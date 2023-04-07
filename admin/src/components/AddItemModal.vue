@@ -26,17 +26,17 @@
           <table class="table">
             <thead>
               <tr>
-                <td>Размер
+                <td>Размер<br />
                   Материал</td>
                 <td v-for="price, sizeName in Object.values(options_object)?.[0]" :key="'sizeh-' + sizeName">
                   {{ sizeName }}
                   <CButton color="secondary" @click="dropSize(sizeName)">X</CButton>
                 </td>
                 <td>
-                  <CInputGroup class="mb-3">
+                  <CInputGroup class="">
                     <CFormInput placeholder="Новый размер" type="text" v-model="tempSize" />
-                    <CButton type="button" color="secondary" @click="addSize(tempSize)" variant="outline">Добавить размер
-                    </CButton>
+                    <CButton class="add-button" type="button" color="secondary" @click="addSize(tempSize)"
+                      variant="outline">Добавить</CButton>
                   </CInputGroup>
                 </td>
               </tr>
@@ -55,9 +55,10 @@
               </tr>
               <tr>
                 <td>
-                  <CInputGroup class="mb-3">
-                    <CFormInput placeholder="Новый размер" type="text" v-model="tempMaterial" />
-                    <CButton type="button" color="secondary" @click="addMaterial(tempSize)" variant="outline">Добавить
+                  <CInputGroup class="">
+                    <CFormInput placeholder="Новый материал" type="text" v-model="tempMaterial" />
+                    <CButton class="add-button" type="button" color="secondary" @click="addMaterial(tempMaterial)"
+                      variant="outline">Добавить
                     </CButton>
                   </CInputGroup>
                 </td>
@@ -128,6 +129,7 @@ export default {
       preview: '',
       image_list: [],
       tags_array: new Set(),
+      options_object: {}
     },
 
   },
@@ -278,6 +280,8 @@ export default {
         formData.append(`tagsArray`, tags_array[i])
       }
 
+      formData.append('optionsObject', this.options_object)
+
       isEdit && formData.append('id', this.formData.id)
 
       return formData
@@ -375,6 +379,17 @@ export default {
 .table td {
   border: 1px solid #dddddd;
   padding: 5px;
+  position: relative;
+
+  .btn.btn-secondary {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+  }
+}
+
+.add-button {
+  margin: 0;
 }
 
 .preview-container {
