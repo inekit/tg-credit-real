@@ -35,13 +35,13 @@ eventBus.$on('wrongInputData', () => {
   alert('Некорректно введенные данные')
 })
 
+const app = createApp(App)
 app.use(
   new VueSocketIO({
     debug: true,
     connection: store?.state?.socketAddr ?? 'http://127.0.0.1:3031',
   }),
 )
-const app = createApp(App)
 app.use(store)
 app.use(router)
 app.use(CoreuiVue)
