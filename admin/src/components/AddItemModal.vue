@@ -84,8 +84,8 @@
       </CModalBody>
       <CModalFooter>
         <CButton color="secondary" @click="visible = false"> Отменить </CButton>
-        <CButton v-show="mode === 'new'" color="primary" type="submit">Добавить пост</CButton>
-        <CButton v-show="mode === 'edit'" color="primary" type="submit">Редактировать пост</CButton>
+        <CButton v-show="mode === 'new'" color="primary" type="submit">Добавить</CButton>
+        <CButton v-show="mode === 'edit'" color="primary" type="submit">Редактировать</CButton>
       </CModalFooter>
     </CForm>
   </CModal>
@@ -238,14 +238,8 @@ export default {
 
 
       this.formData.project_name &&
-        formData.append('projectName', this.formData.project_name)
-      const tags_array = Array.from(this.formData.tags_array).filter(
-        (tag) => tag !== null,
-      )
-      for (var i = 0; i < tags_array.length; i++) {
-        console.log(tags_array[i])
-        formData.append(`tagsArray`, tags_array[i])
-      }
+        formData.append('categoryName', this.formData.project_name)
+
 
       formData.append('optionsObject', JSON.stringify(this.options_object))
 
