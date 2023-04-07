@@ -104,14 +104,7 @@ class UsersService {
     });
   }
 
-  getPosts({
-    id,
-    page = 1,
-    take = 10,
-    projectName,
-    tagsArray = null,
-    searchQuery,
-  }) {
+  getPosts({ id, page = 1, take = 10, projectName, searchQuery }) {
     return new Promise(async (res, rej) => {
       if (id) {
         this.getOnePost(id)
@@ -124,20 +117,18 @@ class UsersService {
       projectName = projectName || null;
 
       const connection = await tOrmCon;
-
       connection
         .query(
-          `select p.id,p.title,p.description,p.image_list,p.publication_date,p.category_name, 
-              (select array_agg(tags_name) from public.items_tags_tags where items_id = p.id) as tags_array
+          `select p.*
+          JSON_ARRAYAGG(JSON_OBJECT('item_id', item_id, 'size', size, 'material', material, 'price', price) options_array
               from public.items p
-              left join public.items_tags_tags ptt on p.id = ptt.items_id
+              left join item_options io on p.id = io.item_id
               where (title like $1 or $1 is NULL) 
               and (p.category_name = $2 or $2 is NULL)  
-              and (ptt.tags_name = any($3::text[]) or $3 is NULL)
               group by p.id
               order by publication_date DESC
-              LIMIT $4 OFFSET $5`,
-          [searchQuery, projectName, tagsArray, take, skip]
+              LIMIT $3 OFFSET $4`,
+          [searchQuery, projectName, take, skip]
         )
         .then((data) => res(data))
         .catch((error) => rej(new MySqlError(error)));
@@ -196,7 +187,7 @@ class UsersService {
 
         const { id } = queryRunner.manager
           .getRepository("Item")
-          .add({
+          .save({
             title,
             description,
             text,
