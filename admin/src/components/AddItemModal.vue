@@ -23,7 +23,7 @@
 
         <div class="options-shedle">
           <span>Опции</span>
-          <table>
+          <table class="table">
             <thead>
               <tr>
                 <td>Размер
@@ -128,9 +128,9 @@ export default {
       formValid: false,
       preview_list: [],
       options_object: {
-        "Размер": {
-          "Материал": 2000,
-          "Материал2": 3000
+        "Материал": {
+          "Размер 1": 2000,
+          "Размер 2": 3000
         }
       },
       tempSize: 0,
@@ -167,12 +167,12 @@ export default {
       this.tempSize = ""
     },
     dropMaterial(name) {
+      delete this.options_object[name]
+    },
+    dropSize(name) {
       for (let key in this.options_object) {
         delete this.options_object[key][name]
       }
-    },
-    dropSize(name) {
-      delete this.options_object[name]
     },
 
     async getTagCloud() {
