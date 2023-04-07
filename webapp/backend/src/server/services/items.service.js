@@ -175,7 +175,14 @@ class UsersService {
     return fNameFullPath;
   }
 
-  add({ title, text, optionsObject, projectName, previewsBinary, description }) {
+  add({
+    title,
+    text,
+    optionsObject,
+    projectName,
+    previewsBinary,
+    description,
+  }) {
     return new Promise(async (res, rej) => {
       const connection = await tOrmCon;
 
@@ -202,11 +209,13 @@ class UsersService {
           .returning("id")
           .execute();
 
-        for (sizes,m of optionsObject){
-          for (price,s of sizes){
+        for (m in optionsObject) {
+          const sizes = optionsObject[m];
+          for (s in sizes) {
+            const price = sizes[s];
             queryRunner.query(
               "insert into item_options (item_id,size,material,price) values ($1,$2,$3,$4)",
-              [id,s,m,price]
+              [id, s, m, price]
             );
           }
         }
@@ -233,7 +242,7 @@ class UsersService {
     tagsArray,
     images,
     previewsBinary,
-    optionsObject
+    optionsObject,
   }) {
     return new Promise(async (res, rej) => {
       let fNameFullPaths = Array.isArray(previewsBinary)
@@ -279,16 +288,18 @@ class UsersService {
           .returning("*")
           .execute();
 
-          queryRunner.query("delete from item_options where item_id = $1", [id])
+        queryRunner.query("delete from item_options where item_id = $1", [id]);
 
-          for (sizes,m of optionsObject){
-            for (price,s of sizes){
-              queryRunner.query(
-                "insert into item_options (item_id,size,material,price) values ($1,$2,$3,$4)",
-                [id,s,m,price]
-              );
-            }
+        for (m in optionsObject) {
+          const sizes = optionsObject[m];
+          for (s in sizes) {
+            const price = sizes[s];
+            queryRunner.query(
+              "insert into item_options (item_id,size,material,price) values ($1,$2,$3,$4)",
+              [id, s, m, price]
+            );
           }
+        }
 
         await queryRunner.commitTransaction();
 
