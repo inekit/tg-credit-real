@@ -25,16 +25,18 @@
           <span>Опции</span>
           <table>
             <tbody>
-              <tr>
-                <td>
-                  <CFormInput type="text" />
+              <tr v-for="sizesObj, materialName in options_object" :key="'material-' + materialName">
+                <td v-for="price, sizeName in sizesObj" :key="'size-' + sizeName">
+                  <CFormInput type="text" v-model="options_object[materialName][sizeName]" />
                 </td>
                 <td>
-                  <CButton color="secondary">Добавить размер</CButton>
+                  <CFormInput type="text" v-model="tempSize" />
+                  <CButton color="secondary" @click="addSize(materialName, tempSize)">Добавить размер</CButton>
                 </td>
               </tr>
               <tr>
-                <CButton color="secondary">Добавить материал</CButton>
+                <CFormInput type="text" v-model="tempMaterial" />
+                <CButton color="secondary" @click="addMaterial(tempMaterial)">Добавить материал</CButton>
               </tr>
             </tbody>
           </table>
@@ -103,6 +105,14 @@ export default {
       image_list: [],
       tags_array: new Set(),
     },
+    options_object: {
+      "option1": {
+        "weight1": 2000,
+        "weight2": 3000
+      }
+    },
+    tempSize: 0,
+    tempMaterial: 0,
   },
   data() {
     return {
@@ -126,6 +136,17 @@ export default {
     console.log(this.tags, this.projects)
   },
   methods: {
+    addMaterial(name) {
+      let size_template = Object.values(this.options_object)?.[0] ?? {}
+      console.log(size_template)
+      size_template = Object.fromEntries(Object.entries(size_template)?.map(([key]) => [key, 0]))
+      console.log(size_template)
+
+      this.options_object[name] = size_template
+    },
+    addSize(material, name) {
+      this.options_object[material][name] = 0;
+    },
     async getTagCloud() {
       return await myApi
         .get(this.$store.state.publicPath + '/api/tags/')
