@@ -81,16 +81,6 @@
         <CFormTextarea v-model="formData.description" label="Краткое описание" style="margin-bottom: 1rem"
           placeholder="Напишите что-нибудь" rows="5" maxlength="255" id="inputDescription"
           aria-describedby="inputGroupPrepend" required />
-        <CButton v-if="textEditMode === 'html'" @click="htmlToMd2" color="primary" variant="outline">Режим
-          редактирования md2</CButton>
-        <CButton v-else @click="Md2ToHtml" color="primary" variant="outline">Режим редактирования html</CButton>
-        <br />
-        <CFormTextarea :style="{ display: textEditMode === 'md2' ? 'block' : 'none' }" v-model="textMd2"
-          label="Текст статьи" style="margin-bottom: 1rem" placeholder="Напишите что-нибудь" rows="20" id="inputText"
-          aria-describedby="inputGroupPrepend" required />
-
-        <QuillEditor :style="{ display: textEditMode === 'html' ? 'block' : 'none' }" theme="snow" toolbar="essential"
-          ref="postTextEditor" id="postTextEditor" placeholder="Текст статьи" />
       </CModalBody>
       <CModalFooter>
         <CButton color="secondary" @click="visible = false"> Отменить </CButton>
@@ -107,14 +97,8 @@ const myApi = axios.create({
   withCredentials: true,
 })
 import eventBus from '../eventBus'
-import { QuillEditor } from '@vueup/vue-quill'
-import '@vueup/vue-quill/dist/vue-quill.snow.css'
-import TurndownService from 'turndown'
-import { marked } from 'marked'
-import * as DOMPurify from 'dompurify'
 
 export default {
-  components: { QuillEditor },
   props: {
     mode: {
       required: true,
@@ -151,8 +135,6 @@ export default {
     }
   },
   updated() {
-    this.textMd2 = this.formData.text
-    this.formData.text && this.$refs.postTextEditor?.setHTML(this.formData.text)
 
     this.options_object = {};
     for (let { size, material, price } of this.formData.options_array) {
@@ -165,7 +147,6 @@ export default {
     document.getElementsByClassName('ql-toolbar')?.[0]?.classList.add('hidden')
   },
   async mounted() {
-    this.tags = await this.getTagCloud()
     this.projects = await this.getProjects()
     console.log(this.tags, this.projects)
   },
@@ -192,17 +173,6 @@ export default {
       for (let key in this.options_object) {
         delete this.options_object[key][name]
       }
-    },
-
-    async getTagCloud() {
-      return await myApi
-        .get(this.$store.state.publicPath + '/api/tags/')
-        .then((res) => {
-          return res.data
-        })
-        .catch((error) => {
-          eventBus.$emit('noresponse', error)
-        })
     },
     async getProjects() {
       return await myApi
@@ -261,16 +231,6 @@ export default {
 
       formData.append('title', this.formData.title)
       formData.append('description', this.formData.description)
-      if (this.textEditMode === 'md2') formData.append('text', this.textMd2)
-      else {
-        const turndownService = new TurndownService()
-        formData.append(
-          'text',
-          turndownService.turndown(this.$refs.postTextEditor.getHTML()),
-        )
-      }
-      //formData.append('images[]', this.formData.image_list)
-
 
       this.formData.image_list?.forEach(v => {
         formData.append('images[]', v);
@@ -292,28 +252,6 @@ export default {
       isEdit && formData.append('id', this.formData.id)
 
       return formData
-    },
-    htmlToMd2(e) {
-      e.preventDefault()
-      const turndownService = new TurndownService()
-
-      this.textMd2 = turndownService.turndown(
-        this.$refs.postTextEditor.getHTML(),
-      )
-      this.textEditMode = 'md2'
-
-      document.getElementsByClassName('ql-toolbar')?.[0].classList.add('hidden')
-    },
-    Md2ToHtml(e) {
-      e.preventDefault()
-      this.$refs.postTextEditor.setHTML(
-        DOMPurify.sanitize(marked.parse(this.textMd2 ?? ' ')),
-      )
-      this.textEditMode = 'html'
-
-      document
-        .getElementsByClassName('ql-toolbar')?.[0]
-        .classList.remove('hidden')
     },
     addNewing() {
       console.log(this.$refs.postTextEditor.getHTML())

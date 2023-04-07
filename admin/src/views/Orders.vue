@@ -59,7 +59,7 @@ export default {
     })
   },
   mounted() {
-    this.sockets.subscribe('UPDATE_ORDERS', (data) => {
+    this.sockets.subscribe('UPDATE_ORDERS', () => {
       console.log("updated")
       this.tableKey++
     });
