@@ -1,6 +1,12 @@
 export default [
   {
     component: 'CNavItem',
+    name: 'Заказы',
+    to: '/orders',
+    icon: 'cil-description',
+  },
+  {
+    component: 'CNavItem',
     name: 'Позиции',
     to: '/items',
     icon: 'cil-description',

@@ -75,10 +75,7 @@ class UsersService {
     });
   }
 
-  getFavorites(
-    { id, page = 1, take = 10, searchQuery, distinct, user_id },
-    ctx
-  ) {
+  getFavorites({ id, page = 1, take = 10, searchQuery, distinct, user_id }) {
     return new Promise(async (res, rej) => {
       const skip = (page - 1) * take;
 

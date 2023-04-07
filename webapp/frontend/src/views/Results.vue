@@ -92,29 +92,11 @@ export default {
             }
         },
         async finishWindow() {
-            if (!this.$store.state.user_id) return alert("Ваша версия телеграм не поддерживается")
+            if (!this.$store.state.userId) return alert("Ваша версия телеграм не поддерживается")
 
             await this.getFiles().catch(console.log);
             window.Telegram?.WebApp.disableClosingConfirmation()
             window.Telegram?.WebApp.close();
-        },
-        async getFiles() {
-            return new Promise((res, rej) => {
-                const item_ids = this.$store.state.results.map(el => el.id)
-                let params = {
-                    user_id: this.$store.state.user_id,
-                    item_ids
-                }
-                if (item_ids.length === 1) params.item_id = item_ids[0]
-                else if (item_ids.length > 3) item_ids.length = 3
-
-                this.$store.state.myApi.get(this.$store.state.restAddr + '/files', {
-                    params
-                })
-                    .then(response => { console.log("finish res"); res() })
-                    .catch(e => { console.log(e); rej() })
-            })
-
         },
         async updatePage(delay) {
             this.$store.state.results = await this.sendSearchRequest(true);
@@ -188,7 +170,7 @@ export default {
                 this.$store.state.myApi.delete(this.$store.state.restAddr + "/favorites", {
                     data: {
                         item_id: item.id,
-                        user_id: this.$store.state.user_id,
+                        user_id: this.$store.state.userId,
                     }
                 })
                     .then(response => {
@@ -204,7 +186,7 @@ export default {
             } else {
                 this.$store.state.myApi.put(this.$store.state.restAddr + "/favorites", {
                     item_id: item.id,
-                    user_id: this.$store.state.user_id,
+                    user_id: this.$store.state.userId,
 
                 })
                     .then(response => {

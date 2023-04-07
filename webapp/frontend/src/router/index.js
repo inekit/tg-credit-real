@@ -16,11 +16,6 @@ const routes = [
         component: () => import('@/views/Results.vue'),
       },
       {
-        path: '/results/:filter',
-        name: 'ResultsSearch',
-        component: () => import('@/views/Results.vue'),
-      },
-      {
         path: '/favorites',
         name: 'Favorites',
         component: () => import('@/views/Results.vue'),

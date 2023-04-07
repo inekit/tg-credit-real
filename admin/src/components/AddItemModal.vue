@@ -1,30 +1,45 @@
 <template>
-  <CButton color="primary" @click="addNewPost">Добавить пост</CButton>
+  <CButton color="primary" @click="addNewPost">Добавить товар</CButton>
   <CModal size="xl" backdrop="static" alignment="center" :visible="visible" @close="closeModal">
     <CForm novalidate :validated="formValid" ref="add-file-form" @change="wregert"
       @submit.prevent="mode === 'new' ? addNewing() : editNewing()" class="add-user" style="display: 'none'">
       <CModalHeader>
         <CModalTitle>{{
-          mode === 'new' ? 'Добавить пост' : 'Редактировать пост'
+          mode === 'new' ? 'Добавить товар' : 'Редактировать товар'
         }}</CModalTitle>
       </CModalHeader>
       <CModalBody>
         <CFormInput class="mb-3" v-model="formData.title" placeholder="Заголовок" id="inputHeader"
           aria-describedby="inputGroupPrepend" feedbackValid="Все ок" feedbackInvalid="Введите корректный заголовок"
           required />
-        <div class="tags-cloud">
-          <span>Теги</span>
-          <CFormCheck v-for="tag in tags" :key="tag.name" :id="tag.name" :checked="formData.tags_array?.has(tag.name)"
-            @change="changeT" type="checkbox" :value="tag.name" :label="tag.name" />
-        </div>
         <div class="projects-list">
-          <span>Проект</span>
+          <span>Категория</span>
           <CFormCheck v-for="project in projects" :key="project.name" :id="project.name"
             :checked="project.name === formData.project_name" @change="changeP" type="radio" name="project-name"
             :value="project.name" :label="project.name" />
           <CFormCheck id="null-name" :checked="!formData.project_name" @change="changeP" type="radio" name="project-name"
-            value="" label="Вне проекта" />
+            value="" label="Без категорий" />
         </div>
+
+        <div class="options-shedle">
+          <span>Опции</span>
+          <table>
+            <tbody>
+              <tr>
+                <td>
+                  <CFormInput type="text" />
+                </td>
+                <td>
+                  <CButton color="secondary">Добавить размер</CButton>
+                </td>
+              </tr>
+              <tr>
+                <CButton color="secondary">Добавить материал</CButton>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
         <CFormInput type="file" accept="image/*" multiple="multiple" ref="file" @change="previewMultiImage" class="mb-3"
           label="Превью" placeholder="Превью" />
         <div class="border p-2 mt-3 preview-container">
@@ -166,11 +181,6 @@ export default {
     changeP(e) {
       console.log(e.target.value)
       this.formData.project_name = e.target.value
-    },
-    changeT(e) {
-      console.log(e.target.checked)
-      if (e.target.checked) this.formData.tags_array.add(e.target.value)
-      else this.formData.tags_array.delete(e.target.value)
     },
     closeModal() {
       eventBus.$emit('closeModal')

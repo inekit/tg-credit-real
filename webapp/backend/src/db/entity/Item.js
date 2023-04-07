@@ -19,10 +19,6 @@ module.exports = new EntitySchema({
       nullable: false,
       default: "Описание",
     },
-    text: {
-      type: "text",
-      nullable: false,
-    },
     image_list: {
       type: "varchar",
       array: true,
@@ -32,7 +28,7 @@ module.exports = new EntitySchema({
     publication_date: {
       createDate: true,
     },
-    project_name: {
+    category_name: {
       type: "varchar",
       length: 255,
       nullable: true,
