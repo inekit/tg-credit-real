@@ -248,7 +248,6 @@ export default {
       return formData
     },
     addNewing() {
-      console.log(this.$refs.postTextEditor.getHTML())
       try {
         const formData = this.constractFromData()
 

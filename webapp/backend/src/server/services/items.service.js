@@ -166,7 +166,7 @@ class UsersService {
     title,
     text,
     optionsObject,
-    projectName,
+    categoryName,
     previewsBinary,
     description,
   }) {
@@ -188,7 +188,7 @@ class UsersService {
           title,
           description,
           text,
-          category_name: projectName,
+          category_name: categoryName,
           image_list: fNameFullPaths,
         });
 
@@ -223,7 +223,7 @@ class UsersService {
   editPost({
     id,
     title,
-    projectName,
+    categoryName,
     description,
     images,
     previewsBinary,
@@ -255,7 +255,7 @@ class UsersService {
           .createQueryBuilder()
           .update({
             title,
-            category_name: projectName,
+            category_name: categoryName ?? null,
             description,
             image_list: fNameFullPaths,
           })
