@@ -20,24 +20,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 const { Server } = require("socket.io");
-const io = new Server(server, {
-  cors: {
-    origin: [
-      "http://127.0.0.1:8080",
-      "http://localhost:8080",
-      "http://192.168.0.102:8080",
-      "https://92.255.79.59",
-    ],
-    credentials: true,
-    methods: ["GET", "POST"],
-  },
-});
-
-io.on("connection", (socket) => {
-  console.log("a user connected");
-});
-
-global.io = io;
 
 module.exports = (ctx) => {
   app.use("/colorsserver/api", router(ctx));
@@ -62,6 +44,25 @@ module.exports = (ctx) => {
   let server = app.listen(port, host, () =>
     console.log(`Server listens http://${host}:${port}`)
   );
+
+  const io = new Server(server, {
+    cors: {
+      origin: [
+        "http://127.0.0.1:8080",
+        "http://localhost:8080",
+        "http://192.168.0.102:8080",
+        "https://92.255.79.59",
+      ],
+      credentials: true,
+      methods: ["GET", "POST"],
+    },
+  });
+
+  io.on("connection", (socket) => {
+    console.log("a user connected");
+  });
+
+  global.io = io;
 
   server.on("error", (err) => {
     console.log("err", err);
