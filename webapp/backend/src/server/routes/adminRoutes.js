@@ -7,6 +7,8 @@ var {
 } = require("../controllers/user.authentication");
 var UsersController = require("../controllers/user.controller");
 var ItemsController = require("../controllers/items.controller");
+var OrdersController = require("../controllers/orders.controller");
+
 var TagsController = require("../controllers/tags.controller");
 var CategoriesController = require("../controllers/categories.controller");
 var StaticsController = require("../controllers/statics.controller");
@@ -22,10 +24,10 @@ router.post("/items", auth, ItemsController.addOne);
 router.put("/items", auth, ItemsController.editOne);
 router.delete("/items", auth, ItemsController.deleteOne);
 
-router.get("/orders", auth, ItemsController.getAll);
-router.post("/orders", auth, ItemsController.addOne);
-router.put("/orders", auth, ItemsController.editOne);
-router.delete("/orders", auth, ItemsController.deleteOne);
+router.get("/orders", auth, OrdersController.getAll);
+router.post("/orders", auth, OrdersController.addOne);
+router.put("/orders", auth, OrdersController.editOne);
+router.delete("/orders", auth, OrdersController.deleteOne);
 
 router.post("/tags", auth, TagsController.addOne);
 router.put("/tags", auth, TagsController.editOne);
