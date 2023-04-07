@@ -287,7 +287,7 @@ export default {
         formData.append(`tagsArray`, tags_array[i])
       }
 
-      formData.append('optionsObject', this.options_object)
+      formData.append('optionsObject', JSON.stringify(this.options_object))
 
       isEdit && formData.append('id', this.formData.id)
 
