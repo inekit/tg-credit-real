@@ -184,7 +184,7 @@ class UsersService {
           ? previewsBinary.map((preview) => this.transformPreviewName(preview))
           : [this.transformPreviewName(previewsBinary)];
 
-        const { id } = queryRunner.manager.getRepository("Item").save({
+        const { id } = await queryRunner.manager.getRepository("Item").save({
           title,
           description,
           text,
@@ -196,7 +196,7 @@ class UsersService {
           const sizes = optionsObject[m];
           for (let s in sizes) {
             const price = sizes[s];
-            queryRunner.query(
+            await queryRunner.query(
               "insert into item_options (item_id,size,material,price) values ($1,$2,$3,$4)",
               [id, s, m, price]
             );
@@ -271,13 +271,15 @@ class UsersService {
           .returning("*")
           .execute();
 
-        queryRunner.query("delete from item_options where item_id = $1", [id]);
+        await queryRunner.query("delete from item_options where item_id = $1", [
+          id,
+        ]);
 
         for (let m in optionsObject) {
           const sizes = optionsObject[m];
           for (let s in sizes) {
             const price = sizes[s];
-            queryRunner.query(
+            await queryRunner.query(
               "insert into item_options (item_id,size,material,price) values ($1,$2,$3,$4)",
               [id, s, m, price]
             );
