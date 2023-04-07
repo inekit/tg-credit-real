@@ -222,11 +222,9 @@ class UsersService {
 
   editPost({
     id,
-    text,
     title,
     projectName,
     description,
-    tagsArray,
     images,
     previewsBinary,
     optionsObject,
@@ -249,22 +247,11 @@ class UsersService {
       await queryRunner.startTransaction();
 
       try {
-        await queryRunner.query(
-          `delete from items_tags_tags where items_id = $1;`,
-          [id]
-        );
-        await queryRunner.query(
-          `insert into items_tags_tags (items_id, tags_name) 
-                 select $1 as items_id, unnest as tags_name from  unnest($2::text[])`,
-          [id, tagsArray]
-        );
-
         const data = await queryRunner.manager
           .getRepository("Item")
           .createQueryBuilder()
           .update({
             title,
-            text,
             category_name: projectName,
             description,
             image_list: fNameFullPaths,
