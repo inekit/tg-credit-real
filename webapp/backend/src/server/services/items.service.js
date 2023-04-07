@@ -119,7 +119,7 @@ class UsersService {
       const connection = await tOrmCon;
       connection
         .query(
-          `select p.*,JSON_agg(size, material, price) options_array
+          `select p.*,json_agg(json_build_object('size', io.size, 'material', io.material, 'price', io.price))  options_array
               from public.items p
               left join item_options io on p.id = io.item_id
               where (title like $1 or $1 is NULL) 
