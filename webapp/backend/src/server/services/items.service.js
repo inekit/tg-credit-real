@@ -111,7 +111,6 @@ class UsersService {
     projectName,
     tagsArray = null,
     searchQuery,
-    showText = true,
   }) {
     return new Promise(async (res, rej) => {
       if (id) {
@@ -128,9 +127,7 @@ class UsersService {
 
       connection
         .query(
-          `select p.id,p.title,p.description,` +
-            (showText ? `p.text,` : ``) +
-            `p.image_list,p.publication_date,p.project_name, 
+          `select p.id,p.title,p.description,p.image_list,p.publication_date,p.project_name, 
               (select array_agg(tags_name) from public.items_tags_tags where items_id = p.id) as tags_array
               from public.items p
               left join public.items_tags_tags ptt on p.id = ptt.items_id
