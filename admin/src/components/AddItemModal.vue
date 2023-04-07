@@ -33,8 +33,11 @@
                   <CButton color="secondary" @click="dropSize(sizeName)">X</CButton>
                 </td>
                 <td>
-                  <CFormInput type="text" v-model="tempSize" />
-                  <CButton color="secondary" @click="addSize(tempSize)">Добавить размер</CButton>
+                  <CInputGroup class="mb-3">
+                    <CFormInput placeholder="Новый размер" type="text" v-model="tempSize" />
+                    <CButton type="button" color="secondary" @click="addSize(tempSize)" variant="outline">Добавить размер
+                    </CButton>
+                  </CInputGroup>
                 </td>
               </tr>
             </thead>
@@ -47,10 +50,17 @@
                 <td v-for="price, sizeName in sizesObj" :key="'size-' + sizeName">
                   <CFormInput type="text" v-model="options_object[materialName][sizeName]" />
                 </td>
+                <td>
+                </td>
               </tr>
               <tr>
-                <CFormInput type="text" v-model="tempMaterial" />
-                <CButton color="secondary" @click="addMaterial(tempMaterial)">Добавить материал</CButton>
+                <td>
+                  <CInputGroup class="mb-3">
+                    <CFormInput placeholder="Новый размер" type="text" v-model="tempMaterial" />
+                    <CButton type="button" color="secondary" @click="addMaterial(tempSize)" variant="outline">Добавить
+                    </CButton>
+                  </CInputGroup>
+                </td>
               </tr>
             </tbody>
           </table>
