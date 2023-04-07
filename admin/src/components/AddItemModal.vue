@@ -24,14 +24,24 @@
         <div class="options-shedle">
           <span>Опции</span>
           <table>
-            <tbody>
-              <tr v-for="sizesObj, materialName in options_object" :key="'material-' + materialName">
-                <td v-for="price, sizeName in sizesObj" :key="'size-' + sizeName">
-                  <CFormInput type="text" v-model="options_object[materialName][sizeName]" />
+            <thead>
+              <tr>
+                <td>Размер
+                  Материал</td>
+                <td v-for="price, sizeName in options_object?.values[0]" :key="'sizeh-' + sizeName">
+                  {{ sizeName }}
                 </td>
                 <td>
                   <CFormInput type="text" v-model="tempSize" />
-                  <CButton color="secondary" @click="addSize(materialName, tempSize)">Добавить размер</CButton>
+                  <CButton color="secondary" @click="addSize(tempSize)">Добавить размер</CButton>
+                </td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="sizesObj, materialName in options_object" :key="'material-' + materialName">
+                <td>{{ materialName }}</td>
+                <td v-for="price, sizeName in sizesObj" :key="'size-' + sizeName">
+                  <CFormInput type="text" v-model="options_object[materialName][sizeName]" />
                 </td>
               </tr>
               <tr>
@@ -145,8 +155,9 @@ export default {
 
       this.options_object[name] = size_template
     },
-    addSize(material, name) {
-      this.options_object[material][name] = 0;
+    addSize(name) {
+      const new_oo_entries = Object.entries(this.options_object)?.map(([key, value]) => [key, Object.assign(value ?? {}, { [name]: 0 })])
+      this.options_object = Object.fromEntries(new_oo_entries)
     },
     async getTagCloud() {
       return await myApi
