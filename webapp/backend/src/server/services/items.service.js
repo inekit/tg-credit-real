@@ -192,9 +192,9 @@ class UsersService {
           image_list: fNameFullPaths,
         });
 
-        for (m in optionsObject) {
+        for (let m in optionsObject) {
           const sizes = optionsObject[m];
-          for (s in sizes) {
+          for (let s in sizes) {
             const price = sizes[s];
             queryRunner.query(
               "insert into item_options (item_id,size,material,price) values ($1,$2,$3,$4)",
@@ -273,9 +273,9 @@ class UsersService {
 
         queryRunner.query("delete from item_options where item_id = $1", [id]);
 
-        for (m in optionsObject) {
+        for (let m in optionsObject) {
           const sizes = optionsObject[m];
-          for (s in sizes) {
+          for (let s in sizes) {
             const price = sizes[s];
             queryRunner.query(
               "insert into item_options (item_id,size,material,price) values ($1,$2,$3,$4)",
