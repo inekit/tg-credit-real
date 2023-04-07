@@ -6,10 +6,6 @@ const {
   NoInputDataError,
 } = require("../utils/httpErrors");
 
-io.on("connection", (socket) => {
-  console.log("a user connected");
-});
-
 class UsersService {
   constructor() {
     this.getOne = this.getOne.bind(this);
