@@ -105,14 +105,7 @@ export default {
       image_list: [],
       tags_array: new Set(),
     },
-    options_object: {
-      "option1": {
-        "weight1": 2000,
-        "weight2": 3000
-      }
-    },
-    tempSize: 0,
-    tempMaterial: 0,
+
   },
   data() {
     return {
@@ -120,6 +113,14 @@ export default {
       textEditMode: 'md2',
       formValid: false,
       preview_list: [],
+      options_object: {
+        "option1": {
+          "weight1": 2000,
+          "weight2": 3000
+        }
+      },
+      tempSize: 0,
+      tempMaterial: 0,
     }
   },
   updated() {
