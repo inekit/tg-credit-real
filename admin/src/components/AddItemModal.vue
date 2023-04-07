@@ -224,7 +224,7 @@ export default {
       eventBus.$emit('closeModal')
     },
     constractFromData(isEdit) {
-      if (!this.formData.title || !this.$refs.postTextEditor.getHTML())
+      if (!this.formData.title || !this.formData.description)
         throw new Error()
 
       var formData = new FormData()

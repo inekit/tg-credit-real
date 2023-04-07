@@ -31,13 +31,6 @@ const routes = [
         component: () => import('@/views/Items.vue'),
         children: [
           {
-            path: '/items/tag/:tag',
-            name: 'ItemsByTag',
-            props: true,
-            component: () => import('@/views/Items.vue'),
-            children: [],
-          },
-          {
             path: '/items/project/:projectName',
             name: 'ItemsByCategory',
             props: true,
@@ -57,12 +50,6 @@ const routes = [
         path: '/static',
         name: 'Static',
         component: () => import('@/views/Static.vue'),
-        children: [],
-      },
-      {
-        path: '/tags',
-        name: 'Tags',
-        component: () => import('@/views/Tags.vue'),
         children: [],
       },
       {

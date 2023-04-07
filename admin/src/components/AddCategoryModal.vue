@@ -2,14 +2,14 @@
   <CButton color="primary" @click="addNewProject">Добавить проект</CButton>
   <CModal backdrop="static" alignment="center" :visible="visible" @close="closeModal">
     <CModalHeader>
-      <CModalTitle>Добавить проект</CModalTitle>
+      <CModalTitle>Добавить категорию</CModalTitle>
     </CModalHeader>
     <CModalBody>
       <CForm ref="add-file-form" novalidate :validated="formValid" @submit.prevent="addProject()" class="add-user"
         style="display: 'none'">
-        <CFormInput class="mb-3" v-model="formData.name" placeholder="Проект" id="inputName"
+        <CFormInput class="mb-3" v-model="formData.name" placeholder="Категория" id="inputName"
           aria-describedby="inputGroupPrepend" maxlength="255" required feedbackValid="Все ок"
-          feedbackInvalid="Введите корректное название проекта" />
+          feedbackInvalid="Введите корректное название категории" />
         <CFormTextarea v-model="formData.description" placeholder="Описание" id="inputDescription"
           aria-describedby="inputGroupPrepend" required />
       </CForm>
@@ -22,7 +22,7 @@
       ">
         Отменить
       </CButton>
-      <CButton color="primary" @click="addProject">Добавить проект</CButton>
+      <CButton color="primary" @click="addProject">Добавить категорию</CButton>
     </CModalFooter>
   </CModal>
 </template>

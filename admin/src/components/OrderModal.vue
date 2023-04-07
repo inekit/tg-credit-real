@@ -1,8 +1,7 @@
 <template>
-  <CButton color="primary" @click="addNewTag">Добавить тег</CButton>
   <CModal backdrop="static" alignment="center" :visible="visible" @close="closeModal">
     <CModalHeader>
-      <CModalTitle>Добавить тег</CModalTitle>
+      <CModalTitle>Заказ № {{ formData.id }}</CModalTitle>
     </CModalHeader>
     <CModalBody>
       <CForm ref="add-file-form" novalidate :validated="formValid" @submit.prevent="addTag" class="add-user"
@@ -20,7 +19,7 @@
       ">
         Отменить
       </CButton>
-      <CButton color="primary" @click="addTag">Добавить тег</CButton>
+      <CButton color="primary" @click="addTag">Изменить заказ</CButton>
     </CModalFooter>
   </CModal>
 </template>
