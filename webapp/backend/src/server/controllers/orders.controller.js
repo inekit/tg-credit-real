@@ -1,8 +1,3 @@
-const tOrmCon = require("../../db/connection");
-const servicePreset = require("../services/crud.service").getService(
-  "Order",
-  []
-);
 const ordersService = require("../services/orders.service");
 
 function getAll(req, res) {

@@ -17,10 +17,15 @@ router.use(fileUpload({}));
 router.get("/users", auth, UsersController.getAll);
 router.delete("/users", auth, UsersController.adminDelete);
 
-router.get("/items", auth, ItemsController.getAllWithText);
+router.get("/items", auth, ItemsController.getAll);
 router.post("/items", auth, ItemsController.addOne);
 router.put("/items", auth, ItemsController.editOne);
 router.delete("/items", auth, ItemsController.deleteOne);
+
+router.get("/orders", auth, ItemsController.getAll);
+router.post("/orders", auth, ItemsController.addOne);
+router.put("/orders", auth, ItemsController.editOne);
+router.delete("/orders", auth, ItemsController.deleteOne);
 
 router.post("/tags", auth, TagsController.addOne);
 router.put("/tags", auth, TagsController.editOne);

@@ -7,12 +7,10 @@ const itemsService = require("../services/items.service");
 const { getPosts, add, editPost, transformTagsArray, transformPreviewName } =
   itemsService;
 
-function getAllCreator(showText = true) {
-  return async function getAll(req, res, next) {
-    getPosts(Object.assign(req.query, { showText }))
-      .then((data) => res.send(data))
-      .catch((error) => next(error));
-  };
+function getAll(req, res, next) {
+  getPosts(Object.assign(req.query))
+    .then((data) => res.send(data))
+    .catch((error) => next(error));
 }
 
 function getRss(req, res, next) {
@@ -72,8 +70,7 @@ function deleteFavorite(req, res, next) {
 }
 
 module.exports = {
-  getAll: getAllCreator(false),
-  getAllWithText: getAllCreator(true),
+  getAll,
   getRss,
   addOne,
   editOne,
