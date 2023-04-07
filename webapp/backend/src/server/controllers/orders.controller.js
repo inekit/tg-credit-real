@@ -3,7 +3,7 @@ const ordersService = require("../services/orders.service");
 function getAll(req, res) {
   if (!req.query.id)
     ordersService
-      .getAll(req.query.id, req.query.page, req.query.take)
+      .getAll(req.query)
       .then((data) => res.send(data))
       .catch((error) => next(error));
   else getOne(req, res);

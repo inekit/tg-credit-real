@@ -8,7 +8,7 @@ const { getPosts, add, editPost, transformTagsArray, transformPreviewName } =
   itemsService;
 
 function getAll(req, res, next) {
-  getPosts(Object.assign(req.query))
+  getPosts(req.query)
     .then((data) => res.send(data))
     .catch((error) => next(error));
 }
