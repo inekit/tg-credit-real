@@ -9,12 +9,25 @@ module.exports = new EntitySchema({
       type: "bigint",
       generated: true,
     },
+    user_id: {
+      type: "bigint",
+      nullable: false,
+    },
     creation_date: {
       createDate: true,
     },
     status: {
       type: "enum",
-      enum: ["created", "payed", "delivery", "delivered"],
+      enum: ["basket", "created", "payed", "delivery", "delivered"],
+      default: "created",
+    },
+  },
+  relations: {
+    user: {
+      target: "User",
+      type: "many-to-one",
+      joinColumn: true,
+      cascade: false,
     },
   },
 });

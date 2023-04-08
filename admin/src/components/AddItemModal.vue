@@ -219,7 +219,6 @@ export default {
       eventBus.$emit('addNewPost')
     },
     changeP(e) {
-      console.log(e.target.value)
       this.formData.category_name = e.target.value
     },
     closeModal() {

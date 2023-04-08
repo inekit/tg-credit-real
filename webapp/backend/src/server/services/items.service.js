@@ -42,60 +42,131 @@ class UsersService {
     });
   }
 
-  addFavorite({ user_id, item_id }) {
+  addFavorite({ user_id, item_option_id, count }) {
     return new Promise(async (res, rej) => {
       const connection = await tOrmCon;
 
-      connection
-        .query(`insert into favorites (user_id, item_id) values ($1,$2)`, [
-          user_id,
-          item_id,
-        ])
-        .then(async (data) => {
-          return res(data);
-        })
-        .catch((error) => rej(new MySqlError(error)));
+      const queryRunner = connection.createQueryRunner();
+
+      await queryRunner.connect();
+
+      await queryRunner.startTransaction();
+
+      try {
+        const order = await queryRunner.query(
+          `select * from orders where user_id = $1 and status='basket' limit 1`,
+          [user_id, item_id]
+        );
+        const basket_id = order.id;
+
+        await queryRunner.query(
+          `insert into order_items (order_id, item_option_id, count) values ($1,$2,$3)`,
+          [basket_id, item_option_id, count]
+        );
+
+        await queryRunner.commitTransaction();
+
+        res(data);
+      } catch (error) {
+        console.log(error);
+        await queryRunner.rollbackTransaction();
+
+        rej(new MySqlError(error));
+      } finally {
+        await queryRunner.release();
+      }
     });
   }
 
-  deleteFavorite({ user_id, item_id }) {
+  editFavorite({ user_id, item_option_id, count }) {
     return new Promise(async (res, rej) => {
-      const connection = await tOrmCon;
+      return new Promise(async (res, rej) => {
+        const connection = await tOrmCon;
 
-      console.log({ user_id, item_id });
+        const queryRunner = connection.createQueryRunner();
 
-      connection
-        .query(`delete from favorites where user_id = $1 and item_id = $2`, [
-          user_id,
-          item_id,
-        ])
-        .then(async (data) => {
-          return res(data);
-        })
-        .catch((error) => rej(new MySqlError(error)));
+        await queryRunner.connect();
+
+        await queryRunner.startTransaction();
+
+        try {
+          const order = await queryRunner.query(
+            `select * from orders where user_id = $1 and status='basket' limit 1`,
+            [user_id, item_id]
+          );
+          const basket_id = order.id;
+
+          await queryRunner.query(
+            `update order_items set count = $3 where order_id=$1, item_option_id=$2;`,
+            [basket_id, item_option_id, count]
+          );
+
+          await queryRunner.commitTransaction();
+
+          res(data);
+        } catch (error) {
+          console.log(error);
+          await queryRunner.rollbackTransaction();
+
+          rej(new MySqlError(error));
+        } finally {
+          await queryRunner.release();
+        }
+      });
     });
   }
 
-  getFavorites({ id, page = 1, take = 10, searchQuery, distinct, user_id }) {
+  deleteFavorite({ user_id, item_option_id }) {
     return new Promise(async (res, rej) => {
-      const skip = (page - 1) * take;
+      return new Promise(async (res, rej) => {
+        const connection = await tOrmCon;
 
+        const queryRunner = connection.createQueryRunner();
+
+        await queryRunner.connect();
+
+        await queryRunner.startTransaction();
+
+        try {
+          const order = await queryRunner.query(
+            `select * from orders where user_id = $1 and status='basket' limit 1`,
+            [user_id, item_id]
+          );
+          const basket_id = order.id;
+
+          await queryRunner.query(
+            `delete from order_items where order_id=$1, item_option_id=$2;`,
+            [basket_id, item_option_id]
+          );
+
+          await queryRunner.commitTransaction();
+
+          res(data);
+        } catch (error) {
+          console.log(error);
+          await queryRunner.rollbackTransaction();
+
+          rej(new MySqlError(error));
+        } finally {
+          await queryRunner.release();
+        }
+      });
+    });
+  }
+
+  getFavorites({ user_id }) {
+    return new Promise(async (res, rej) => {
       const connection = await tOrmCon;
-
-      if (!searchQuery) searchQuery = undefined;
-      else searchQuery = `%${searchQuery}%`;
 
       connection
         .query(
-          `select *, TRUE is_favorite from favorites f left join items i on f.item_id = i.id
-          where (
-            lower(title) like lower($1) 
-            or $1 is NULL
-            )
-            and user_id = $4
-            order by id 
-          LIMIT $2 OFFSET $3`,
-          [searchQuery, take, skip, user_id]
+          `select o.*, i.title, count, size, material, price from 
+          orders o 
+          left join order_items oi on oi.order_id = o.id
+          left join item_options io on oi.item_option_id = io.id
+          left join items i on io.item_id = i.id
+          where o.user_id = $1 and o.status='basket'`,
+          [user_id]
         )
         .then(async (data) => {
           return res(data);
@@ -104,7 +175,14 @@ class UsersService {
     });
   }
 
-  getPosts({ id, page = 1, take = 10, projectName, searchQuery }) {
+  getPosts({
+    id,
+    page = 1,
+    take = 10,
+    searchQuery,
+    sort = "newing",
+    category,
+  }) {
     return new Promise(async (res, rej) => {
       if (id) {
         this.getOnePost(id)
@@ -114,20 +192,28 @@ class UsersService {
 
       const skip = (page - 1) * take;
       searchQuery = searchQuery ? `%${searchQuery}%` : null;
-      projectName = projectName || null;
+      category = category || null;
+
+      const orderQueryPart =
+        sort === "newing"
+          ? "publication_date DESC"
+          : sort === "ascending"
+          ? "price"
+          : "price DESC";
 
       const connection = await tOrmCon;
       connection
         .query(
           `select p.*,json_agg(json_build_object('size', io.size, 'material', io.material, 'price', io.price))  options_array
+          ,min(io.price) price
               from public.items p
               left join item_options io on p.id = io.item_id
               where (title like $1 or $1 is NULL) 
               and (p.category_name = $2 or $2 is NULL)  
               group by p.id
-              order by publication_date DESC
+              order by ${orderQueryPart}
               LIMIT $3 OFFSET $4`,
-          [searchQuery, projectName, take, skip]
+          [searchQuery, category, take, skip]
         )
         .then((data) => res(data))
         .catch((error) => rej(new MySqlError(error)));

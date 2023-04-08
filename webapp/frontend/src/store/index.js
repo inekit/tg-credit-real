@@ -8,6 +8,7 @@ export default createStore({
     sidebarUnfoldable: false,
     searchQuery: '',
     userId: null,
+    filters: {},
   },
   mutations: {
     toggleSidebar(state) {

@@ -1,24 +1,10 @@
 <template>
-    <h1>{{ $route.name === "Favorites" ? "Избранное" : "Каталог" }}</h1>
-    <div class="sort" @click="toggleSort">
-        <img :src="require('@/assets/img/sort.svg')" />
-    </div>
-    <div class="categories" @click="toggleCategories">
-        <img :src="require('@/assets/img/categories.svg')" />
-    </div>
-    <div ref="categories-list" class="categories-list">
-        <span>Категория</span>
-        <CFormCheck v-for="category in categories" :key="category.name" :id="category.name"
-            :checked="category.name === category_name" @change="changeCategory" type="radio" name="project-name"
-            :value="category.name" :label="category.name" />
-        <CFormCheck id="null-name" :checked="!category_name" @change="changeCategory" type="radio" name="project-name"
-            value="" label="Все категории" />
-    </div>
+    <h1>Каталог</h1>
     <searchBlock />
     <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 300 250"></InstagramLoader>
     <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 300 200"></InstagramLoader>
     <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 300 200"></InstagramLoader>
-
+    <button @click="routeToBasket">Корзина</button>
     <MasonryWall class="results-block" :items="$store.state.results ?? []" :ssr-columns="2" :column-width="bodyWidth / 6"
         :gap="12">
         <template #default="{ item, index }">
@@ -33,7 +19,6 @@
                 </router-link>
             </div>
         </template>
-
     </MasonryWall>
 </template>
 
@@ -42,14 +27,14 @@ import searchBlock from '@/components/Search.vue';
 import eventBus from '../eventBus'
 import { ListLoader, InstagramLoader } from 'vue-content-loader'
 
+
 export default {
     components: { searchBlock, InstagramLoader },
     data() {
         return {
             page: 1,
             perPage: 10,
-            categories: {},
-            category_name: null,
+
         }
 
     },
@@ -57,7 +42,7 @@ export default {
         "$store.state.searchQuery": async function () {
             await this.updatePage(300)
         },
-        "$store.state.distinct": async function () {
+        "$store.state.filters": async function () {
             await this.updatePage(300)
         },
         async $route(to, from) {
@@ -74,20 +59,18 @@ export default {
         window.Telegram?.WebApp.MainButton.disable();
         window.Telegram?.WebApp.BackButton.show()
 
-        this.categories = await getCategories()
-
-        console.log(this.$route.params)
-
         this.$store.state.userId = this.$route.params?.userId;
-
-        await this.toggleButtons()
-
     },
+
+
     async beforeUnmount() {
         window.Telegram?.WebApp.MainButton.offClick(this.finishWindow);
         window.Telegram?.WebApp.MainButton.hide();
     },
     methods: {
+        routeToBasket() {
+            this.$router.push("/basket")
+        },
         async toggleButtons() {
             await this.updatePage(400)
 
@@ -101,22 +84,6 @@ export default {
                 window.Telegram?.WebApp.MainButton.offClick(this.finishWindow);
                 window.Telegram?.WebApp.MainButton.hide();
             }
-        },
-        async getCategories() {
-            return await myApi
-                .get(this.$store.state.publicPath + '/api/categories/')
-                .then((res) => {
-                    return res.data
-                })
-                .catch((error) => {
-                    eventBus.$emit('noresponse', error)
-                })
-        },
-        toggleCategories() {
-            this.$refs['categories-list'].classList.toggle("shown")
-        },
-        changeCategory(e) {
-            this.category_name = e.target.value
         },
         async finishWindow() {
             if (!this.$store.state.userId) return alert("Ваша версия телеграм не поддерживается")
@@ -169,7 +136,8 @@ export default {
                     searchQuery: this.$store.state.searchQuery,
                     take: 10,
                     page: this.page ?? 1,
-
+                    sort: this.$store.state.filters.sort_type,
+                    category: this.$store.state.filters.category_name
                 }
             })
                 .then(response => {
@@ -320,42 +288,6 @@ export default {
 
         }
     }
-}
-
-.categories {
-    height: 30px;
-    width: 30px;
-    border-radius: 13px;
-    background-color: transparent;
-    position: absolute;
-    top: 4px;
-    right: calc(1rem + 2px);
-
-}
-
-.categories-list {
-    display: none;
-    height: 100vh;
-    width: 50vw;
-    position: absolute;
-    top: 0;
-    right: 0;
-
-    &.shown {
-        display: block;
-    }
-}
-
-.sort {
-    height: 30px;
-    width: 30px;
-    border-radius: 13px;
-    background-color: transparent;
-    position: absolute;
-    top: 4px;
-    right: calc(1rem + 2px + 40px);
-
-
 }
 </style>
   

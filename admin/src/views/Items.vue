@@ -53,10 +53,7 @@ export default {
     eventBus.$on('addNewPost', () => {
       this.formMode = 'new'
       this.formData = {
-        project_name: this.$route.params.projectName,
-        tags_array: this.$route.params.tag
-          ? new Set([this.$route.params.tag])
-          : new Set(),
+        category: this.$route.params.categoryName,
       }
       this.formVisible = true
     })
@@ -94,7 +91,7 @@ export default {
             tagsArray: this.$route.params.tag
               ? [this.$route.params.tag]
               : undefined,
-            projectName: this.$route.params.projectName,
+            category: this.$route.params.categoryName,
           },
         })
         .then((res) => {

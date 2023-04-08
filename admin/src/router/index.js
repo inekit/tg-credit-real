@@ -31,7 +31,7 @@ const routes = [
         component: () => import('@/views/Items.vue'),
         children: [
           {
-            path: '/items/project/:projectName',
+            path: '/items/project/:categoryName',
             name: 'ItemsByCategory',
             props: true,
             component: () => import('@/views/Items.vue'),

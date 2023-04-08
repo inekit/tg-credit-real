@@ -34,7 +34,7 @@ class UsersService {
     });
   }
 
-  getAll({ id, page = 1, take = 10 }) {
+  getAll({ id, page = 1, take = 10, user_id }) {
     return new Promise(async (res, rej) => {
       if (id) {
         this.getOne({ id })
@@ -52,9 +52,10 @@ class UsersService {
           left join order_items oi on o.id = oi.order_id  
           left join item_options io on oi.item_option_id = io.id  
           left join items i on io.item_id = i.id 
+          where (user_id = $3 or $3 is NULL)  
           ORDER BY id DESC
           LIMIT $1 OFFSET $2`,
-          [take, skip]
+          [take, skip, user_id]
         )
         .then(async (data) => {
           return res(data);
@@ -63,18 +64,45 @@ class UsersService {
     });
   }
 
-  add(order) {
-    return new Promise((res, rej) => {
-      if (!order.id) return rej(new NoInputDataError({ id: order.id }));
+  add({ user_id }) {
+    return new Promise(async (res, rej) => {
+      if (!user_id) return rej(new NoInputDataError({ user_id }));
 
-      connection
-        .getRepository("Order")
-        .save(order)
-        .then((data) => {
-          global.io.emit("UPDATE_ORDERS");
-          res(data);
-        })
-        .catch((error) => rej(new MySqlError(error)));
+      const connection = await tOrmCon;
+
+      const queryRunner = connection.createQueryRunner();
+
+      await queryRunner.connect();
+
+      await queryRunner.startTransaction();
+
+      try {
+        const order = await queryRunner.query(
+          `select * from orders where user_id = $1 and status='basket' limit 1`,
+          [user_id, item_id]
+        );
+        const basket_id = order.id;
+
+        const { id: order_id } = await queryRunner.manager
+          .getRepository("Order")
+          .save({ user_id });
+
+        await queryRunner.query(
+          `update order_items set order_id=$1, where order_id = $2`,
+          [order_id, basket_id]
+        );
+
+        await queryRunner.commitTransaction();
+        global.io.emit("UPDATE_ORDERS");
+        res(data);
+      } catch (error) {
+        console.log(error);
+        await queryRunner.rollbackTransaction();
+
+        rej(new MySqlError(error));
+      } finally {
+        await queryRunner.release();
+      }
     });
   }
 

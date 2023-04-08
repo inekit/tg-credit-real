@@ -8,17 +8,17 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    redirect: '/results',
+    redirect: '/results/1',
     children: [
       {
-        path: '/results:userId',
+        path: '/results/:userId',
         name: 'Results',
         component: () => import('@/views/Results.vue'),
       },
       {
-        path: '/favorites',
-        name: 'Favorites',
-        component: () => import('@/views/Results.vue'),
+        path: '/basket',
+        name: 'Basket',
+        component: () => import('@/views/Basket.vue'),
       },
       {
         path: '/items/:id',
