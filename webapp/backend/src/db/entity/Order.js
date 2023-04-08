@@ -27,7 +27,7 @@ module.exports = new EntitySchema({
       target: "User",
       type: "many-to-one",
       joinColumn: true,
-      cascade: false,
+      cascade: true,
     },
   },
 });
