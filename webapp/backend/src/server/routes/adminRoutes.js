@@ -12,7 +12,6 @@ var OrdersController = require("../controllers/orders.controller");
 var TagsController = require("../controllers/tags.controller");
 var CategoriesController = require("../controllers/categories.controller");
 var StaticsController = require("../controllers/statics.controller");
-var BasketsController = require("../controllers/baskets.controller");
 
 var fileUpload = require("express-fileupload");
 router.use(fileUpload({}));
@@ -29,11 +28,6 @@ router.get("/orders", auth, OrdersController.getAll);
 router.post("/orders", auth, OrdersController.addOne);
 router.put("/orders", auth, OrdersController.editOne);
 router.delete("/orders", auth, OrdersController.deleteOne);
-
-router.get("/favorites", auth, BasketsController.getFavorites);
-router.post("/favorites", auth, BasketsController.addFavorite);
-router.put("/favorites", auth, BasketsController.editFavorite);
-router.delete("/favorites", auth, BasketsController.deleteFavorite);
 
 router.post("/tags", auth, TagsController.addOne);
 router.put("/tags", auth, TagsController.editOne);
