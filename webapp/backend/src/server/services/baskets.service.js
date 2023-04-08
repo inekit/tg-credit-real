@@ -9,13 +9,13 @@ const {
 
 class BasketsService {
   constructor() {
-    this.getFavorites = this.getFavorites.bind(this););
+    this.getFavorites = this.getFavorites.bind(this);
     this.addFavorite = this.addFavorite.bind(this);
     this.editFavorite = this.editFavorite.bind(this);
     this.deleteFavorite = this.deleteFavorite.bind(this);
   }
 
-addFavorite({ user_id, item_option_id, count }) {
+  addFavorite({ user_id, item_option_id, count }) {
     return new Promise(async (res, rej) => {
       const connection = await tOrmCon;
 
@@ -147,7 +147,6 @@ addFavorite({ user_id, item_option_id, count }) {
         .catch((error) => rej(new MySqlError(error)));
     });
   }
-
 }
 
 module.exports = new BasketsService();
