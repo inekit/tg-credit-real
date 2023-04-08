@@ -1,7 +1,7 @@
 const basketsService = require("../services/baskets.service");
 function getFavorites(req, res, next) {
   basketsService
-    .getFavorites(req.query, ctx)
+    .getFavorites(req.query)
     .then((data) => res.send(data))
     .catch((error) => next(error));
 }
