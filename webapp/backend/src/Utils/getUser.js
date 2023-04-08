@@ -5,11 +5,9 @@ module.exports = async function getUser(ctx) {
 
   let userObj = await connection
     .query(
-      `SELECT u.*, a.user_id
-          FROM users u left join admins a on a.user_id = u.id 
+      `SELECT u.* FROM users u 
         where u.id = $1
-          group by u.id, user_id
-          limit 1`,
+        limit 1`,
       [ctx.from?.id]
     )
     .catch((e) => {

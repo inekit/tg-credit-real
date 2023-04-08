@@ -62,7 +62,7 @@ export default {
         },
         async getCategories() {
             return await this.$store.state.myApi
-                .get(this.$store.state.publicPath + '/api/categories/')
+                .get(this.$store.state.restAddr + '/categories')
                 .then((res) => {
                     return res.data
                 })
