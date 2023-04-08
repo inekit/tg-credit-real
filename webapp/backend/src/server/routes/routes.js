@@ -8,10 +8,10 @@ var BasketsController = require("../controllers/baskets.controller");
 module.exports = (ctx) => {
   router.get("/items", ItemsController.getAll);
 
-  router.get("/favorites", auth, BasketsController.getFavorites);
-  router.post("/favorites", auth, BasketsController.addFavorite);
-  router.put("/favorites", auth, BasketsController.editFavorite);
-  router.delete("/favorites", auth, BasketsController.deleteFavorite);
+  router.get("/favorites", BasketsController.getFavorites);
+  router.post("/favorites", BasketsController.addFavorite);
+  router.put("/favorites", BasketsController.editFavorite);
+  router.delete("/favorites", BasketsController.deleteFavorite);
 
   router.get("/categories", CategoriesController.getAll);
 
