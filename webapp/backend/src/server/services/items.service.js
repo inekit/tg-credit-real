@@ -17,6 +17,7 @@ class UsersService {
     this.editPost = this.editPost.bind(this);
 
     this.addFavorite = this.addFavorite.bind(this);
+    this.editFavorite = this.editFavorite.bind(this);
     this.deleteFavorite = this.deleteFavorite.bind(this);
   }
 

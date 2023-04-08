@@ -48,34 +48,10 @@ function deleteOne(req, res, next) {
     .catch((error) => next(error));
 }
 
-function getFavorites(req, res, next) {
-  itemsService
-    .getFavorites(req.query, ctx)
-    .then((data) => res.send(data))
-    .catch((error) => next(error));
-}
-
-function addFavorite(req, res, next) {
-  itemsService
-    .addFavorite(req.body)
-    .then((data) => res.send(data))
-    .catch((error) => next(error));
-}
-
-function deleteFavorite(req, res, next) {
-  itemsService
-    .deleteFavorite(req.body)
-    .then((data) => res.send(data))
-    .catch((error) => next(error));
-}
-
 module.exports = {
   getAll,
   getRss,
   addOne,
   editOne,
   deleteOne,
-  getFavorites,
-  deleteFavorite,
-  addFavorite,
 };
