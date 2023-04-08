@@ -48,15 +48,4 @@ h1 {
   font-weight: 500;
 
 }
-
-.favorites {
-  height: 30px;
-  width: 30px;
-  border-radius: 13px;
-  background-color: transparent;
-  position: absolute;
-  top: 4px;
-  right: calc(1rem + 2px);
-
-}
 </style>

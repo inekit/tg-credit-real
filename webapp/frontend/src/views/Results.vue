@@ -1,7 +1,18 @@
 <template>
     <h1>{{ $route.name === "Favorites" ? "Избранное" : "Каталог" }}</h1>
-    <div class="favorites" @click="$router.push('/favorites')">
-        <img :src="require('@/assets/img/fav-black.svg')" />
+    <div class="sort" @click="toggleSort">
+        <img :src="require('@/assets/img/sort.svg')" />
+    </div>
+    <div class="categories" @click="toggleCategories">
+        <img :src="require('@/assets/img/categories.svg')" />
+    </div>
+    <div ref="categories-list" class="categories-list">
+        <span>Категория</span>
+        <CFormCheck v-for="category in categories" :key="category.name" :id="category.name"
+            :checked="category.name === category_name" @change="changeCategory" type="radio" name="project-name"
+            :value="category.name" :label="category.name" />
+        <CFormCheck id="null-name" :checked="!category_name" @change="changeCategory" type="radio" name="project-name"
+            value="" label="Все категории" />
     </div>
     <searchBlock />
     <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 300 250"></InstagramLoader>
@@ -20,10 +31,6 @@
                         <h2>{{ item.title }}</h2>
                     </div>
                 </router-link>
-                <div class="favorite-toggle" :class="item.is_favorite ? 'favorite-item' : ''"
-                    @click="toggleFavorite($event, item)">
-                    <img :src="require('@/assets/img/fav.svg')" />
-                </div>
             </div>
         </template>
 
@@ -41,6 +48,8 @@ export default {
         return {
             page: 1,
             perPage: 10,
+            categories: {},
+            category_name: null,
         }
 
     },
@@ -64,6 +73,8 @@ export default {
         window.Telegram?.WebApp.MainButton.hide();
         window.Telegram?.WebApp.MainButton.disable();
         window.Telegram?.WebApp.BackButton.show()
+
+        this.categories = await getCategories()
 
         console.log(this.$route.params)
 
@@ -90,6 +101,22 @@ export default {
                 window.Telegram?.WebApp.MainButton.offClick(this.finishWindow);
                 window.Telegram?.WebApp.MainButton.hide();
             }
+        },
+        async getCategories() {
+            return await myApi
+                .get(this.$store.state.publicPath + '/api/categories/')
+                .then((res) => {
+                    return res.data
+                })
+                .catch((error) => {
+                    eventBus.$emit('noresponse', error)
+                })
+        },
+        toggleCategories() {
+            this.$refs['categories-list'].classList.toggle("shown")
+        },
+        changeCategory(e) {
+            this.category_name = e.target.value
         },
         async finishWindow() {
             if (!this.$store.state.userId) return alert("Ваша версия телеграм не поддерживается")
@@ -163,38 +190,6 @@ export default {
             return results
 
         },
-        async toggleFavorite(event, item) {
-            const isFavorite = item.is_favorite
-
-            if (isFavorite) {
-                this.$store.state.myApi.delete(this.$store.state.restAddr + "/favorites", {
-                    data: {
-                        item_id: item.id,
-                        user_id: this.$store.state.userId,
-                    }
-                })
-                    .then(response => {
-                        item.is_favorite = false
-                        if (this.$route.name === "Favorites") {
-                            console.log(1212)
-                            this.$store.state.results = this.$store.state.results?.filter((el) => el.id !== item.id)
-                            if (this.$store.state.results === 0) window.Telegram?.WebApp.MainButton.hide();
-
-                        }
-                    })
-                    .catch(e => { eventBus.$emit('noresponse', e) })
-            } else {
-                this.$store.state.myApi.put(this.$store.state.restAddr + "/favorites", {
-                    item_id: item.id,
-                    user_id: this.$store.state.userId,
-
-                })
-                    .then(response => {
-                        item.is_favorite = true
-                    })
-                    .catch(e => { eventBus.$emit('noresponse', e) })
-            }
-        }
     }
 }
 </script>
@@ -325,6 +320,41 @@ export default {
 
         }
     }
+}
+
+.categories {
+    height: 30px;
+    width: 30px;
+    border-radius: 13px;
+    background-color: transparent;
+    position: absolute;
+    top: 4px;
+    right: calc(1rem + 2px);
+
+}
+
+.categories-list {
+    display: none;
+    height: 100vh;
+    width: 50vw;
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    &.shown {
+        display: block;
+    }
+}
+
+.sort {
+    height: 30px;
+    width: 30px;
+    border-radius: 13px;
+    background-color: transparent;
+    position: absolute;
+    top: 4px;
+    right: calc(1rem + 2px + 40px);
+
 
 }
 </style>
