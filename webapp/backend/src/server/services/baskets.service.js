@@ -32,14 +32,14 @@ class BasketsService {
         );
         const basket_id = orders[0].id;
 
-        await queryRunner.query(
+        const data = await queryRunner.query(
           `insert into order_items (order_id, item_option_id, count) values ($1,$2,$3)`,
           [basket_id, item_option_id, count]
         );
 
         await queryRunner.commitTransaction();
 
-        res();
+        res(data);
       } catch (error) {
         console.log(error);
         await queryRunner.rollbackTransaction();
@@ -69,14 +69,14 @@ class BasketsService {
           );
           const basket_id = orders[0].id;
 
-          await queryRunner.query(
+          const data = await queryRunner.query(
             `update order_items set count = $3 where order_id=$1 and item_option_id=$2;`,
             [basket_id, item_option_id, count]
           );
 
           await queryRunner.commitTransaction();
 
-          res();
+          res(data);
         } catch (error) {
           console.log(error);
           await queryRunner.rollbackTransaction();
@@ -89,9 +89,7 @@ class BasketsService {
     });
   }
 
-  deleteFavorite(body) {
-    console.log(body);
-    const { user_id, item_option_id } = body;
+  deleteFavorite({ user_id, item_option_id }) {
     return new Promise(async (res, rej) => {
       return new Promise(async (res, rej) => {
         const connection = await tOrmCon;
@@ -109,14 +107,14 @@ class BasketsService {
           );
           const basket_id = orders[0].id;
 
-          await queryRunner.query(
+          const data = await queryRunner.query(
             `delete from order_items where order_id=$1 and item_option_id=$2;`,
             [basket_id, item_option_id]
           );
 
           await queryRunner.commitTransaction();
 
-          res();
+          res(data);
         } catch (error) {
           console.log(error);
           await queryRunner.rollbackTransaction();
