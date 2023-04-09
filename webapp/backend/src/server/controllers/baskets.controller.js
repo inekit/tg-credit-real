@@ -22,7 +22,7 @@ function editFavorite(req, res, next) {
 
 function deleteFavorite(req, res, next) {
   basketsService
-    .deleteFavorite(req.body)
+    .deleteFavorite(req)
     .then((data) => res.send(data))
     .catch((error) => next(error));
 }
