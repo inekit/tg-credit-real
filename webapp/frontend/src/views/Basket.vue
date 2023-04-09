@@ -106,7 +106,7 @@ export default {
                 }
             })
                 .then(response => {
-                    return response;
+                    return response.data;
                 })
                 .catch(e => { eventBus.$emit('noresponse', e) })
 
