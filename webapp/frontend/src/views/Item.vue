@@ -30,10 +30,10 @@
         <div class="count-select">
             <button type="button" @click="count = count - 1">-</button>
             <span>{{ count }}</span>
-            <button type="button" @click="count = count + 1">-</button>
+            <button type="button" @click="count = count + 1">+</button>
         </div>
         {{ price }}
-        <button type="submit" @submit.prevent="order"></button>
+        <button type="button" @click.prevent="order">В корзину</button>
     </form>
 
     <span>{{ item.description }}</span>
@@ -61,6 +61,7 @@ export default {
             sizes: [],
             selected_material: null,
             materials: [],
+            count: 0,
         }
     },
     watch: {
@@ -72,7 +73,7 @@ export default {
             this.selected_size = this.sizes?.[0]
             this.materials = to?.options_array?.map(({ material }) => material)
             this.selected_material = this.materials?.[0]
-            this.price = to?.options_array?.find(el => el.size === selected_size && el.material === selected_material)?.price
+            this.price = to?.options_array?.find(el => el.size === this.selected_size && el.material === this.selected_material)?.price
         }
     },
     async mounted() {
