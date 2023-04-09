@@ -28,6 +28,7 @@ class UsersService {
       const skip = (page - 1) * take;
       searchQuery = searchQuery ? `%${searchQuery}%` : null;
       category = category || null;
+      user_id = user_id || null;
 
       const orderQueryPart =
         sort === "newing"
