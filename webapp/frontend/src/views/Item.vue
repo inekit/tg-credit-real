@@ -109,7 +109,6 @@ export default {
         async finishWindow() {
             if (!this.$store.state.user_id) return alert("Ваша версия телеграм не поддерживается")
 
-            await this.getFiles().catch(console.log);
             window.Telegram?.WebApp.disableClosingConfirmation()
             window.Telegram?.WebApp.close();
         },
@@ -118,24 +117,12 @@ export default {
                 this.$store.state.myApi.get(this.$store.state.restAddr + '/items', {
                     params: {
                         id,
+                        user_id: this.$store.state.userId,
                     }
                 })
                     .then(response => { res(response.data?.[0]) })
                     .catch(e => { eventBus.$emit('noresponse', e); rej() })
             })
-        },
-        async getFiles() {
-            return new Promise((res, rej) => {
-                this.$store.state.myApi.get(this.$store.state.restAddr + '/files', {
-                    params: {
-                        user_id: this.$store.state.userId,
-                        item_id: this.$route.params.id
-                    }
-                })
-                    .then(response => { console.log("finish res"); res() })
-                    .catch(e => { console.log(e); rej() })
-            })
-
         },
         order() {
             this.$store.state.myApi

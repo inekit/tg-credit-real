@@ -137,7 +137,8 @@ export default {
                     take: 10,
                     page: this.page ?? 1,
                     sort: this.$store.state.filters.sort_type,
-                    category: this.$store.state.filters.category_name
+                    category: this.$store.state.filters.category_name,
+                    user_id: this.$store.state.userId,
                 }
             })
                 .then(response => {
