@@ -78,8 +78,10 @@ export default {
         },
         dropItem(id) {
             this.$store.state.myApi.delete(this.$store.state.restAddr + '/favorites', {
-                user_id: this.$store.state.userId,
-                item_option_id: id,
+                data: {
+                    user_id: this.$store.state.userId,
+                    item_option_id: id,
+                }
             })
                 .then(async response => {
                     this.basketItems = await this.getBasket();
