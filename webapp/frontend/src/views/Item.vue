@@ -73,7 +73,8 @@ export default {
             this.selected_size = this.sizes?.[0]
             this.materials = to?.options_array?.map(({ material }) => material)
             this.selected_material = this.materials?.[0]
-            this.price = to?.options_array?.find(el => el.size === this.selected_size && el.material === this.selected_material)?.price
+            this.selected_option = to?.options_array?.find(el => el.size === this.selected_size && el.material === this.selected_material)
+            this.price = this.selected_option.price
         }
     },
     async mounted() {
@@ -128,7 +129,7 @@ export default {
         order() {
             this.$store.state.myApi
                 .post(this.$store.state.restAddr + '/favorites', {
-                    item_option_id: this.item.id,
+                    item_option_id: this.selected_option.id,
                     count: this.count,
                     user_id: this.$store.state.userId,
                 })
