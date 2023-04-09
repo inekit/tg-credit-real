@@ -66,11 +66,9 @@ export default {
     methods: {
         changeCount(item, newCount) {
             this.$store.state.myApi.put(this.$store.state.restAddr + '/favorites', {
-                params: {
-                    user_id: this.$store.state.userId,
-                    item_option_id: item.id,
-                    count: newCount,
-                }
+                user_id: this.$store.state.userId,
+                item_option_id: item.id,
+                count: newCount,
             })
                 .then(async response => {
                     this.basketItems = await this.getBasket();
@@ -80,10 +78,8 @@ export default {
         },
         dropItem(id) {
             this.$store.state.myApi.delete(this.$store.state.restAddr + '/favorites', {
-                params: {
-                    user_id: this.$store.state.userId,
-                    item_option_id: id,
-                }
+                user_id: this.$store.state.userId,
+                item_option_id: id,
             })
                 .then(async response => {
                     this.basketItems = await this.getBasket();
