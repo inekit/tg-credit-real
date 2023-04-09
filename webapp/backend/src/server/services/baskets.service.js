@@ -30,6 +30,7 @@ class BasketsService {
           `select * from orders where user_id = $1 and status='basket' limit 1`,
           [user_id]
         );
+        console.log(user_id, order);
         const basket_id = order.id;
 
         await queryRunner.query(
