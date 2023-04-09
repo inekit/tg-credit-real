@@ -24,7 +24,7 @@
     <select v-model="selected_material">
         <option v-for="material in materials" :key="material" :value="material">{{ material }}</option>
     </select>
-    {{ item.options_array.find(el => el.size === selected_size && el.material === selected_material)?.price }}
+    {{ item?.options_array?.find(el => el.size === selected_size && el.material === selected_material)?.price }}
     <span>{{ item.description }}</span>
 </template>
 

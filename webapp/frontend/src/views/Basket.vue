@@ -3,8 +3,8 @@
     <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 300 250"></InstagramLoader>
     <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 300 200"></InstagramLoader>
     <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 300 200"></InstagramLoader>
-    <div class="basket-items" v-for="item, id in basketItems" :key="id">
-        <div class="basket-item">
+    <div class="basket-items">
+        <div class="basket-item" v-for="item, id in basketItems" :key="id">
             <span class="title">
                 {{ item.title }}
             </span>
