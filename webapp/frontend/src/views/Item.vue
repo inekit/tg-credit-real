@@ -62,7 +62,7 @@ export default {
         }
     },
     mounted() {
-        this.getItem(this.$route.params.id);
+        this.item = this.getItem(this.$route.params.id);
 
         window.Telegram?.WebApp.MainButton.onClick(this.finishWindow);
         window.Telegram?.WebApp.MainButton.enable();
@@ -99,13 +99,15 @@ export default {
             window.Telegram?.WebApp.close();
         },
         getItem(id) {
-            this.$store.state.myApi.get(this.$store.state.restAddr + '/items', {
-                params: {
-                    id,
-                }
+            return new Promise((res, rej) => {
+                this.$store.state.myApi.get(this.$store.state.restAddr + '/items', {
+                    params: {
+                        id,
+                    }
+                })
+                    .then(response => { res(response.data) })
+                    .catch(e => { eventBus.$emit('noresponse', e); rej() })
             })
-                .then(response => this.item = response.data)
-                .catch(e => { eventBus.$emit('noresponse', e) })
         },
         async getFiles() {
             return new Promise((res, rej) => {
