@@ -103,9 +103,9 @@ class BasketsService {
         try {
           const order = await queryRunner.query(
             `select * from orders where user_id = $1 and status='basket' limit 1`,
-            [user_id, item_id]
+            [user_id]
           );
-          const basket_id = order.id;
+          const basket_id = order[0].id;
 
           await queryRunner.query(
             `delete from order_items where order_id=$1, item_option_id=$2;`,
