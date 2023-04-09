@@ -9,33 +9,10 @@ const {
 
 class UsersService {
   constructor() {
-    this.getOnePost = this.getOnePost.bind(this);
     this.getPosts = this.getPosts.bind(this);
     this.transformPreviewName = this.transformPreviewName.bind(this);
     this.add = this.add.bind(this);
     this.editPost = this.editPost.bind(this);
-  }
-
-  getOnePost(id) {
-    return new Promise(async (res, rej) => {
-      const connection = await tOrmCon;
-
-      connection
-        .query(
-          `select p.*, array_agg(ptt.tags_name) tags_array
-                      from public.items p
-                      left join public.items_tags_tags ptt on p.id = ptt.items_id
-                      where p.id = $1
-                      group by p.id`,
-          [id]
-        )
-        .then(async (postData) => {
-          if (!postData?.[0]) rej(new NotFoundError());
-
-          return res(postData?.[0]);
-        })
-        .catch((error) => rej(new MySqlError(error)));
-    });
   }
 
   getPosts({
@@ -47,12 +24,6 @@ class UsersService {
     category,
   }) {
     return new Promise(async (res, rej) => {
-      if (id) {
-        this.getOnePost(id)
-          .then((data) => res(data))
-          .catch((error) => rej(error));
-      }
-
       const skip = (page - 1) * take;
       searchQuery = searchQuery ? `%${searchQuery}%` : null;
       category = category || null;
@@ -73,10 +44,11 @@ class UsersService {
               left join item_options io on p.id = io.item_id
               where (title like $1 or $1 is NULL) 
               and (p.category_name = $2 or $2 is NULL)  
+              and (p.id = $3 or $3 is NULL)  
               group by p.id
               order by ${orderQueryPart}
-              LIMIT $3 OFFSET $4`,
-          [searchQuery, category, take, skip]
+              LIMIT $4 OFFSET $5`,
+          [searchQuery, category, , id, take, skip]
         )
         .then((data) => res(data))
         .catch((error) => rej(new MySqlError(error)));

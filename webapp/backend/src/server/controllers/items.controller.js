@@ -4,8 +4,7 @@ const service = require("../services/crud.service").getService("Item", [
   "description",
 ]);
 const itemsService = require("../services/items.service");
-const { getPosts, add, editPost, transformTagsArray, transformPreviewName } =
-  itemsService;
+const { getPosts, add, editPost } = itemsService;
 
 function getAll(req, res, next) {
   getPosts(req.query)
