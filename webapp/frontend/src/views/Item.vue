@@ -18,13 +18,24 @@
 
     </div>
     <h1>{{ item.title }}</h1>
-    <select v-model="selected_size">
-        <option v-for="size in sizes" :key="size" :value="size">{{ size }}</option>
-    </select>
-    <select v-model="selected_material">
-        <option v-for="material in materials" :key="material" :value="material">{{ material }}</option>
-    </select>
-    {{ item?.options_array?.find(el => el.size === selected_size && el.material === selected_material)?.price }}
+    <form>
+        <label for="size-select">Размер</label>
+        <select id="size-select" v-model="selected_size" required>
+            <option v-for="size in sizes" :key="size" :value="size">{{ size }}</option>
+        </select>
+        <label for="material-select">Материал</label>
+        <select id="material-select" v-model="selected_material" required>
+            <option v-for="material in materials" :key="material" :value="material">{{ material }}</option>
+        </select>
+        <div class="count-select">
+            <button type="button" @click="count = count - 1">-</button>
+            <span>{{ count }}</span>
+            <button type="button" @click="count = count + 1">-</button>
+        </div>
+        {{ price }}
+        <button type="submit" @submit.prevent="order"></button>
+    </form>
+
     <span>{{ item.description }}</span>
 </template>
 
@@ -58,7 +69,10 @@ export default {
         },
         item(to) {
             this.sizes = to?.options_array?.map(({ size }) => size)
+            this.selected_size = this.sizes?.[0]
             this.materials = to?.options_array?.map(({ material }) => material)
+            this.selected_material = this.materials?.[0]
+            this.price = to?.options_array?.find(el => el.size === selected_size && el.material === selected_material)?.price
         }
     },
     async mounted() {
@@ -123,49 +137,23 @@ export default {
             })
 
         },
+        order() {
+            this.$store.state.myApi
+                .put(this.$store.state.restAddr + '/favorites', {
+                    item_option_id: this.item.id,
+                    count: this.count,
+                    user_id: this.$store.state.userId,
+                })
+                .then((response) => {
+                    item.is_favorite = true
+                })
+                .catch((e) => {
+                    eventBus.$emit('noresponse', e)
+                })
+        },
         getDate(date) {
             return moment(date).format("DD.MM.YYYY")
         },
-        toggleFav(event, item) {
-            const isFavorite = item.is_favorite
-
-            if (isFavorite) {
-                this.$store.state.myApi
-                    .delete(this.$store.state.restAddr + '/favorites', {
-                        data: {
-                            item_id: item.id,
-                            user_id: this.$store.state.userId,
-                        },
-                    })
-                    .then((response) => {
-                        item.is_favorite = false
-                        if (this.$route.name === 'Favorites') {
-                            console.log(1212)
-                            this.$store.state.results = this.$store.state.results?.filter(
-                                (el) => el.id !== item.id,
-                            )
-                            if (this.$store.state.results === 0)
-                                window.Telegram?.WebApp.MainButton.hide()
-                        }
-                    })
-                    .catch((e) => {
-                        eventBus.$emit('noresponse', e)
-                    })
-            } else {
-                this.$store.state.myApi
-                    .put(this.$store.state.restAddr + '/favorites', {
-                        item_id: item.id,
-                        user_id: this.$store.state.userId,
-                    })
-                    .then((response) => {
-                        item.is_favorite = true
-                    })
-                    .catch((e) => {
-                        eventBus.$emit('noresponse', e)
-                    })
-            }
-        }
-
     }
 }
 </script>

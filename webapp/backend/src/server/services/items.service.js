@@ -22,6 +22,7 @@ class UsersService {
     searchQuery,
     sort = "newing",
     category,
+    user_id,
   }) {
     return new Promise(async (res, rej) => {
       const skip = (page - 1) * take;
@@ -35,21 +36,34 @@ class UsersService {
           ? "price"
           : "price DESC";
 
-      const connection = await tOrmCon;
-      connection
-        .query(
-          `select p.*,json_agg(json_build_object('size', io.size, 'material', io.material, 'price', io.price))  options_array
+      const query = user_id
+        ? `select p.*,json_agg(json_build_object('size', io.size, 'material', io.material, 'price', io.price))  options_array
+      ,min(io.price) price
+          from public.items p
+          left join item_options io on p.id = io.item_id
+          left join order_items oi on io.id = oi.item_option_id
+          left join orders o on o.id = oi.order_id
+          where (title like $1 or $1 is NULL) 
+          and o.user_id = $6
+          and (p.category_name = $2 or $2 is NULL)  
+          and (p.id = $3 or $3 is NULL)  
+          group by p.id
+          order by ${orderQueryPart}
+          LIMIT $4 OFFSET $5`
+        : `select p.*,json_agg(json_build_object('size', io.size, 'material', io.material, 'price', io.price))  options_array
           ,min(io.price) price
               from public.items p
               left join item_options io on p.id = io.item_id
               where (title like $1 or $1 is NULL) 
+              and $6 is NULL
               and (p.category_name = $2 or $2 is NULL)  
               and (p.id = $3 or $3 is NULL)  
               group by p.id
               order by ${orderQueryPart}
-              LIMIT $4 OFFSET $5`,
-          [searchQuery, category, id, take, skip]
-        )
+              LIMIT $4 OFFSET $5`;
+      const connection = await tOrmCon;
+      connection
+        .query(query, [searchQuery, category, id, take, skip, user_id])
         .then((data) => res(data))
         .catch((error) => rej(new MySqlError(error)));
     });
