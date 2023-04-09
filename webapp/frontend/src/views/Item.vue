@@ -61,8 +61,9 @@ export default {
             this.materials = to?.options_array?.map(({ material }) => material)
         }
     },
-    mounted() {
-        this.item = this.getItem(this.$route.params.id);
+    async mounted() {
+        this.item = await this.getItem(this.$route.params.id);
+        console.log(this.item)
 
         window.Telegram?.WebApp.MainButton.onClick(this.finishWindow);
         window.Telegram?.WebApp.MainButton.enable();
