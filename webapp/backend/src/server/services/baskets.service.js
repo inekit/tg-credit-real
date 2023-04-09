@@ -70,7 +70,7 @@ class BasketsService {
           const basket_id = orders[0].id;
 
           await queryRunner.query(
-            `update order_items set count = $3 where order_id=$1, item_option_id=$2;`,
+            `update order_items set count = $3 where order_id=$1 and item_option_id=$2;`,
             [basket_id, item_option_id, count]
           );
 
@@ -108,7 +108,7 @@ class BasketsService {
           const basket_id = orders[0].id;
 
           await queryRunner.query(
-            `delete from order_items where order_id=$1, item_option_id=$2;`,
+            `delete from order_items where order_id=$1 and item_option_id=$2;`,
             [basket_id, item_option_id]
           );
 
