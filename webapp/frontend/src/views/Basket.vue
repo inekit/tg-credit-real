@@ -61,7 +61,7 @@ export default {
             this.$refs['basket-items']?.classList.remove("hidden")
             document.body.classList.remove('stop-scrolling')
 
-        }, delay)
+        }, 300)
     },
     methods: {
         changeCount(item, newCount) {

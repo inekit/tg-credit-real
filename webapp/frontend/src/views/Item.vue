@@ -18,16 +18,14 @@
 
     </div>
     <h1>{{ item.title }}</h1>
-    <ul class="points-list">
-        <li>📍 Адрес: {{ item.address }}</li>
-        <li>📒 Проектная декларация: {{ item.declaration }}</li>
-        <li>🗓 Ввод в эксплуатацию: {{ item.commissioning }}</li>
-        <li>🔑 Выдача ключей: {{ getDate(item.issuance_date) }}</li>
-        <li>💵 Средняя цена за 1 м²: {{ item.meter_price }}</li>
-        <li>📈 Распроданность квартир: {{ item.sale_percent }}%</li>
-        <li>🏢 Этажей: {{ item.floor_count }}</li>
-        <li>🎨 Тип отделки: {{ item.finish_type }}</li>
-    </ul>
+    <select v-model="selected_size">
+        <option v-for="size in sizes" :key="size" :value="size">{{ size }}</option>
+    </select>
+    <select v-model="selected_material">
+        <option v-for="material in materials" :key="material" :value="material">{{ material }}</option>
+    </select>
+    {{ item.options_array.find(el => el.size === selected_size && el.material === selected_material)?.price }}
+    <span>{{ item.description }}</span>
 </template>
 
 <script>
@@ -47,12 +45,20 @@ export default {
     data: () => {
         return {
             item: {},
-
+            options_array: [],
+            selected_size: null,
+            sizes: [],
+            selected_material: null,
+            materials: [],
         }
     },
     watch: {
         async $route(to, from) {
             window.Telegram?.WebApp.MainButton.offClick(this.finishWindow);
+        },
+        item(to) {
+            this.sizes = to.options_array?.map(({ size }) => size)
+            this.materials = to.options_array?.map(({ material }) => material)
         }
     },
     mounted() {
