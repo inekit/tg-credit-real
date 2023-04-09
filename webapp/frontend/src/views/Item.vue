@@ -127,7 +127,7 @@ export default {
         },
         order() {
             this.$store.state.myApi
-                .put(this.$store.state.restAddr + '/favorites', {
+                .post(this.$store.state.restAddr + '/favorites', {
                     item_option_id: this.item.id,
                     count: this.count,
                     user_id: this.$store.state.userId,
