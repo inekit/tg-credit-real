@@ -30,8 +30,7 @@ class BasketsService {
           `select * from orders where user_id = $1 and status='basket' limit 1`,
           [user_id]
         );
-        console.log(user_id, order);
-        const basket_id = order.id;
+        const basket_id = order[0].id;
 
         await queryRunner.query(
           `insert into order_items (order_id, item_option_id, count) values ($1,$2,$3)`,
@@ -68,7 +67,7 @@ class BasketsService {
             `select * from orders where user_id = $1 and status='basket' limit 1`,
             [user_id]
           );
-          const basket_id = order.id;
+          const basket_id = order[0].id;
 
           await queryRunner.query(
             `update order_items set count = $3 where order_id=$1, item_option_id=$2;`,
