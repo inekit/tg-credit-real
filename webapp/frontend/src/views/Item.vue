@@ -57,8 +57,8 @@ export default {
             window.Telegram?.WebApp.MainButton.offClick(this.finishWindow);
         },
         item(to) {
-            this.sizes = to.options_array?.map(({ size }) => size)
-            this.materials = to.options_array?.map(({ material }) => material)
+            this.sizes = to?.options_array?.map(({ size }) => size)
+            this.materials = to?.options_array?.map(({ material }) => material)
         }
     },
     mounted() {
