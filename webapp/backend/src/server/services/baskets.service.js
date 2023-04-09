@@ -39,7 +39,7 @@ class BasketsService {
 
         await queryRunner.commitTransaction();
 
-        res(data);
+        res();
       } catch (error) {
         console.log(error);
         await queryRunner.rollbackTransaction();
@@ -76,7 +76,7 @@ class BasketsService {
 
           await queryRunner.commitTransaction();
 
-          res(data);
+          res();
         } catch (error) {
           console.log(error);
           await queryRunner.rollbackTransaction();
@@ -89,7 +89,9 @@ class BasketsService {
     });
   }
 
-  deleteFavorite({ user_id, item_option_id }) {
+  deleteFavorite(body) {
+    console.log(body);
+    const { user_id, item_option_id } = body;
     return new Promise(async (res, rej) => {
       return new Promise(async (res, rej) => {
         const connection = await tOrmCon;
@@ -114,7 +116,7 @@ class BasketsService {
 
           await queryRunner.commitTransaction();
 
-          res(data);
+          res();
         } catch (error) {
           console.log(error);
           await queryRunner.rollbackTransaction();
