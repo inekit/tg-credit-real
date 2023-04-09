@@ -48,7 +48,7 @@ class UsersService {
               group by p.id
               order by ${orderQueryPart}
               LIMIT $4 OFFSET $5`,
-          [searchQuery, category, , id, take, skip]
+          [searchQuery, category, id, take, skip]
         )
         .then((data) => res(data))
         .catch((error) => rej(new MySqlError(error)));
