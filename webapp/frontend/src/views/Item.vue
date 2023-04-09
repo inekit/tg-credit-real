@@ -105,7 +105,7 @@ export default {
                         id,
                     }
                 })
-                    .then(response => { res(response.data) })
+                    .then(response => { res(response.data?.[0]) })
                     .catch(e => { eventBus.$emit('noresponse', e); rej() })
             })
         },
