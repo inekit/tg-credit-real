@@ -158,7 +158,7 @@ export default {
         width: 50vw;
         position: fixed;
         top: -1rem;
-        right: -50vh;
+        right: calc(-50% - 4rem);
         padding: 1rem;
         background-color: white;
         box-shadow: -1em 0 1em rgba(165, 165, 165, 0.404);
