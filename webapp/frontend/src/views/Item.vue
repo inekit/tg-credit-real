@@ -14,7 +14,7 @@
         </carousel>
     </div>
     <h1>{{ item.title }}</h1>
-    <hr />
+    <hr class="my-1" />
     <form>
         <div class="option-select">
             <label for="size-select">Размер</label>
@@ -38,7 +38,7 @@
         <div class="description">{{ item.description }}</div>
         <div class="order">
             <span>{{ price }} ₽</span>
-            <div class="count-select" v-if="selected_count">
+            <div class="count-select" v-if="!selected_count">
                 <button type="button" @click="count = count - 1">-</button>
                 <span>{{ count }}</span>
                 <button type="button" @click="count = count + 1">+</button>
@@ -190,6 +190,12 @@ h1 {
     font-size: 1.7rem;
 }
 
+.my-1 {
+    margin: 0 1rem;
+    margin-top: 10px;
+    width: calc(100vw - 2rem);
+}
+
 .img-container {
     width: 100%;
     position: relative;
@@ -271,7 +277,8 @@ h1 {
 
 form {
     margin: 1rem;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
+    margin-bottom: 70px;
 
     label {
         font-size: 1.2rem;
@@ -330,7 +337,9 @@ form {
         }
     }
 
-    .description {}
+    .description {
+        margin-top: 10px;
+    }
 
     .order {
         position: fixed;
@@ -359,6 +368,8 @@ form {
 
         &>span {
             font-weight: 500;
+            font-size: 1.4rem;
+            line-height: 45px;
         }
 
         &>button {
@@ -366,7 +377,7 @@ form {
             right: 1rem;
             background-color: #E6E6E6;
             border-radius: 4px;
-            padding: 15px 25px;
+            padding: 15px 40px;
             font-size: 13px;
             border: none;
         }
