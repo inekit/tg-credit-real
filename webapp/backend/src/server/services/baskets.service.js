@@ -33,7 +33,8 @@ class BasketsService {
         const basket_id = orders[0].id;
 
         const data = await queryRunner.query(
-          `insert into order_items (order_id, item_option_id, count) values ($1,$2,$3)`,
+          `insert into order_items (order_id, item_option_id, count) values ($1,$2,$3)
+          ON CONFLICT (order_id, item_option_id) DO UPDATE SET count = excluded.count+$3;`,
           [basket_id, item_option_id, count]
         );
 
