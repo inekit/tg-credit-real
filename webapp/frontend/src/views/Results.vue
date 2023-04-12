@@ -57,8 +57,6 @@ export default {
     },
     async mounted() {
         this.scroll()
-        window.Telegram?.WebApp.MainButton.hide();
-        window.Telegram?.WebApp.MainButton.disable();
         window.Telegram?.WebApp.BackButton.hide()
 
         this.$store.state.userId = this.$route.params?.userId;
@@ -66,7 +64,6 @@ export default {
         if ((await this.getBasket())?.length) {
             console.log("basket")
             window.Telegram?.WebApp.MainButton.onClick(this.routeToBasket);
-
             window.Telegram?.WebApp.MainButton.show();
             window.Telegram?.WebApp.MainButton.setText("Корзина");
         } else {
