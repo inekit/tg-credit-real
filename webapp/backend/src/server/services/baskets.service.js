@@ -53,77 +53,73 @@ class BasketsService {
 
   editFavorite({ user_id, item_option_id, count }) {
     return new Promise(async (res, rej) => {
-      return new Promise(async (res, rej) => {
-        const connection = await tOrmCon;
+      const connection = await tOrmCon;
 
-        const queryRunner = connection.createQueryRunner();
+      const queryRunner = connection.createQueryRunner();
 
-        await queryRunner.connect();
+      await queryRunner.connect();
 
-        await queryRunner.startTransaction();
+      await queryRunner.startTransaction();
 
-        try {
-          const orders = await queryRunner.query(
-            `select * from orders where user_id = $1 and status='basket' limit 1`,
-            [user_id]
-          );
-          const basket_id = orders[0].id;
+      try {
+        const orders = await queryRunner.query(
+          `select * from orders where user_id = $1 and status='basket' limit 1`,
+          [user_id]
+        );
+        const basket_id = orders[0].id;
 
-          const data = await queryRunner.query(
-            `update order_items set count = $3 where order_id=$1 and item_option_id=$2;`,
-            [basket_id, item_option_id, count]
-          );
+        const data = await queryRunner.query(
+          `update order_items set count = $3 where order_id=$1 and item_option_id=$2;`,
+          [basket_id, item_option_id, count]
+        );
 
-          await queryRunner.commitTransaction();
+        await queryRunner.commitTransaction();
 
-          res(data);
-        } catch (error) {
-          console.log(error);
-          await queryRunner.rollbackTransaction();
+        res(data);
+      } catch (error) {
+        console.log(error);
+        await queryRunner.rollbackTransaction();
 
-          rej(new MySqlError(error));
-        } finally {
-          await queryRunner.release();
-        }
-      });
+        rej(new MySqlError(error));
+      } finally {
+        await queryRunner.release();
+      }
     });
   }
 
   deleteFavorite({ user_id, item_option_id }) {
     return new Promise(async (res, rej) => {
-      return new Promise(async (res, rej) => {
-        const connection = await tOrmCon;
+      const connection = await tOrmCon;
 
-        const queryRunner = connection.createQueryRunner();
+      const queryRunner = connection.createQueryRunner();
 
-        await queryRunner.connect();
+      await queryRunner.connect();
 
-        await queryRunner.startTransaction();
+      await queryRunner.startTransaction();
 
-        try {
-          const orders = await queryRunner.query(
-            `select * from orders where user_id = $1 and status='basket' limit 1`,
-            [user_id]
-          );
-          const basket_id = orders[0].id;
+      try {
+        const orders = await queryRunner.query(
+          `select * from orders where user_id = $1 and status='basket' limit 1`,
+          [user_id]
+        );
+        const basket_id = orders[0].id;
 
-          const data = await queryRunner.query(
-            `delete from order_items where order_id=$1 and item_option_id=$2;`,
-            [basket_id, item_option_id]
-          );
+        const data = await queryRunner.query(
+          `delete from order_items where order_id=$1 and item_option_id=$2;`,
+          [basket_id, item_option_id]
+        );
 
-          await queryRunner.commitTransaction();
+        await queryRunner.commitTransaction();
 
-          res(data);
-        } catch (error) {
-          console.log(error);
-          await queryRunner.rollbackTransaction();
+        res(data);
+      } catch (error) {
+        console.log(error);
+        await queryRunner.rollbackTransaction();
 
-          rej(new MySqlError(error));
-        } finally {
-          await queryRunner.release();
-        }
-      });
+        rej(new MySqlError(error));
+      } finally {
+        await queryRunner.release();
+      }
     });
   }
 
