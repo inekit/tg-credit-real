@@ -104,6 +104,8 @@ class BasketsService {
         );
         const basket_id = orders[0].id;
 
+        console.log(orders, basket_id, user_id, item_option_id);
+
         const data = await queryRunner.query(
           `delete from order_items where order_id=$1 and item_option_id=$2;`,
           [basket_id, item_option_id]
