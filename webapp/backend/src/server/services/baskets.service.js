@@ -39,7 +39,7 @@ class BasketsService {
 
         await queryRunner.commitTransaction();
 
-        res(true);
+        res(data);
       } catch (error) {
         console.log(error);
         await queryRunner.rollbackTransaction();
@@ -131,7 +131,7 @@ class BasketsService {
 
       connection
         .query(
-          `select i.id, o.creation_date, i.title, count, size, material, price from 
+          `select io.id, o.creation_date, i.title, count, size, material, price from 
           orders o 
           left join order_items oi on oi.order_id = o.id
           left join item_options io on oi.item_option_id = io.id
