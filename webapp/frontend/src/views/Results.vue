@@ -17,6 +17,9 @@
                         <h2>{{ item.title }}</h2>
                     </div>
                 </router-link>
+                <div class="favorite-toggle" :class="item.is_favorite ? 'favorite-item' : ''">
+                    <img :src="require('@/assets/img/fav.svg')" />
+                </div>
             </div>
         </template>
     </MasonryWall>
@@ -272,6 +275,7 @@ export default {
             border: 1px solid;
             background-color: #6e6e6e;
             border-color: #6e6e6e;
+            opacity: 0;
             position: absolute;
             top: 0.5rem;
             right: 0.5rem;
@@ -283,6 +287,7 @@ export default {
             }
 
             &.favorite-item {
+                opacity: 1;
                 border-color: rgb(197, 80, 105);
                 background-color: rgb(197, 80, 105);
             }
