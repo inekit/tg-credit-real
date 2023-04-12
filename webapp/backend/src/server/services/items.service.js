@@ -57,7 +57,7 @@ class UsersService {
               from public.items p
               left join item_options io on p.id = io.item_id
               where (title like $1 or $1 is NULL) 
-              and $6 is NULL
+              and $6::int is NULL
               and (p.category_name = $2 or $2 is NULL)  
               and (p.id = $3 or $3 is NULL)  
               group by p.id
@@ -65,7 +65,7 @@ class UsersService {
               LIMIT $4 OFFSET $5`;
       const connection = await tOrmCon;
       connection
-        .query(query, [searchQuery, category, id, take, skip, user_id])
+        .query(query, [searchQuery, category, id, take, skip, user_id ?? null])
         .then((data) => res(data))
         .catch((error) => rej(new MySqlError(error)));
     });
