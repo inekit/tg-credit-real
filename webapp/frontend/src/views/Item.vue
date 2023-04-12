@@ -14,7 +14,7 @@
         </carousel>
     </div>
     <h1>{{ item.title }}</h1>
-    <br />
+    <hr />
     <form>
         <div class="option-select">
             <label for="size-select">Размер</label>
@@ -24,7 +24,7 @@
                 </select>
             </div>
         </div>
-        <br />
+        <hr />
         <div class="option-select">
             <label for="material-select">Материал</label>
             <div class="select-dropdown">
@@ -33,7 +33,7 @@
                 </select>
             </div>
         </div>
-        <br />
+        <hr />
         <label>Описание</label>
         <div class="description">{{ item.description }}</div>
         <div class="order">
@@ -301,7 +301,7 @@ form {
                 font-size: 1rem;
                 font-weight: normal;
                 max-width: 100%;
-                padding: 8px 24px 8px 10px;
+                padding: 10px 30px 10px 15px;
                 border: none;
                 background-color: transparent;
                 -webkit-appearance: none;
@@ -341,6 +341,7 @@ form {
         right: 0;
         padding: 12px 1rem;
         border-top: 1px rgba(192, 192, 192, 0.363) solid;
+        background-color: white;
 
         .count-select {
             position: absolute;
@@ -370,6 +371,14 @@ form {
             border: none;
         }
     }
+}
+
+hr {
+    height: 1px;
+    display: block;
+    background: rgba(192, 192, 192, 0.363);
+    width: 100%;
+    border: none;
 }
 </style>
   

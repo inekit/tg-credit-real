@@ -31,7 +31,6 @@ body {
   top: 0;
   left: 0;
   -webkit-overflow-scrolling: touch;
-  transform: translate3d(0, 0, 0);
 }
 
 body {
