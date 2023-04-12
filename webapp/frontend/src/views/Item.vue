@@ -91,6 +91,10 @@ export default {
         }
     },
     async mounted() {
+        window.Telegram?.WebApp.BackButton.onClick(this.routeBack);
+        window.Telegram?.WebApp.BackButton.enable();
+        window.Telegram?.WebApp.BackButton.show();
+
         this.item = await this.getItem(this.$route.params.id);
 
         this.$refs['results-block']?.classList.add("hidden")
@@ -109,12 +113,11 @@ export default {
 
         }, 400)
     },
-    routeToBasket() {
-        this.$router.push("/basket")
-    },
     async beforeUnmount() {
         window.Telegram?.WebApp.MainButton.offClick(this.routeToBasket);
         window.Telegram?.WebApp.MainButton.hide();
+        window.Telegram?.WebApp.BackButton.offClick(this.routeBack);
+        window.Telegram?.WebApp.BackButton.hide();
     },
     methods: {
         async finishWindow() {
@@ -122,6 +125,12 @@ export default {
 
             window.Telegram?.WebApp.disableClosingConfirmation()
             window.Telegram?.WebApp.close();
+        },
+        routeBack() {
+            this.$router.go(-1)
+        },
+        routeToBasket() {
+            this.$router.push("/basket")
         },
         getItem(id) {
             return new Promise((res, rej) => {

@@ -43,7 +43,10 @@ export default {
     async mounted() {
         window.Telegram?.WebApp.MainButton.hide();
         window.Telegram?.WebApp.MainButton.disable();
-        window.Telegram?.WebApp.BackButton.show()
+        window.Telegram?.WebApp.BackButton.onClick(this.routeBack);
+        window.Telegram?.WebApp.BackButton.enable();
+        window.Telegram?.WebApp.BackButton.show();
+
 
         this.basketItems = await this.getBasket();
 
@@ -62,6 +65,23 @@ export default {
             document.body.classList.remove('stop-scrolling')
 
         }, 300)
+
+        if (this.basketItems?.length) {
+            window.Telegram?.WebApp.MainButton.onClick(this.order);
+
+            window.Telegram?.WebApp.MainButton.enable();
+            window.Telegram?.WebApp.MainButton.show();
+            window.Telegram?.WebApp.MainButton.setText("Оформить заказ");
+        } else {
+            window.Telegram?.WebApp.MainButton.offClick(this.order);
+            window.Telegram?.WebApp.MainButton.hide();
+        }
+    },
+    async beforeUnmount() {
+        window.Telegram?.WebApp.MainButton.offClick(this.order);
+        window.Telegram?.WebApp.MainButton.hide();
+        window.Telegram?.WebApp.BackButton.offClick(this.routeBack);
+        window.Telegram?.WebApp.BackButton.hide();
     },
     methods: {
         changeCount(id, newCount) {
@@ -90,6 +110,9 @@ export default {
                 .catch(e => { eventBus.$emit('noresponse', e) })
         },
         order() { },
+        routeBack() {
+            this.$router.go(-1)
+        },
         async finishWindow() {
             if (!this.$store.state.userId) return alert("Ваша версия телеграм не поддерживается")
 
