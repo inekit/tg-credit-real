@@ -127,10 +127,10 @@ export default {
             })
         },
         changeMaterial() {
-            this.sizes = this.item.options_array?.filter(el => el.material === this.selected_material)?.map(({ material }) => material)
+            this.sizes = this.item.options_array?.filter(el => el.material === this.selected_material)?.map(({ size }) => size)
         },
         changeSize() {
-            this.materials = this.item.options_array?.filter(el => el.size === this.selected_size)?.map(({ size }) => size)
+            this.materials = this.item.options_array?.filter(el => el.size === this.selected_size)?.map(({ material }) => material)
         },
         order() {
             this.$store.state.myApi
