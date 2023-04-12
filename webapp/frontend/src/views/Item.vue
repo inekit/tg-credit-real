@@ -14,6 +14,7 @@
         </carousel>
     </div>
     <h1>{{ item.title }}</h1>
+    <br />
     <form>
         <div class="option-select">
             <label for="size-select">Размер</label>
@@ -23,6 +24,7 @@
                 </select>
             </div>
         </div>
+        <br />
         <div class="option-select">
             <label for="material-select">Материал</label>
             <div class="select-dropdown">
@@ -31,8 +33,9 @@
                 </select>
             </div>
         </div>
+        <br />
         <label>Описание</label>
-        <span class="description">{{ item.description }}</span>
+        <div class="description">{{ item.description }}</div>
         <div class="order">
             <span>{{ price }} ₽</span>
             <div class="count-select" v-if="selected_count">
@@ -43,8 +46,6 @@
             <button v-else type="button" @click.prevent="order">В корзину</button>
         </div>
     </form>
-
-    <span>{{ item.description }}</span>
 </template>
 
 <script>
@@ -185,7 +186,7 @@ export default {
 
 <style lang="scss">
 h1 {
-    font-weight: 500;
+    font-weight: 400;
     font-size: 1.7rem;
 }
 
@@ -273,14 +274,13 @@ form {
     font-size: 1.2rem;
 
     label {
-        font-size: 1.4rem;
+        font-size: 1.2rem;
 
     }
 
     .option-select {
         position: relative;
         margin-bottom: 20px;
-        border-bottom: 1px silver solid;
 
         .select-dropdown,
         .select-dropdown * {
@@ -292,7 +292,7 @@ form {
 
         .select-dropdown {
             position: absolute;
-            right: 1rem;
+            right: 0;
             top: 0;
             background-color: #E6E6E6;
             border-radius: 4px;
@@ -339,6 +339,8 @@ form {
         height: 70px;
         left: 0;
         right: 0;
+        padding: 12px 1rem;
+        border-top: 1px rgba(192, 192, 192, 0.363) solid;
 
         .count-select {
             position: absolute;
@@ -354,12 +356,16 @@ form {
             }
         }
 
+        &>span {
+            font-weight: 500;
+        }
+
         &>button {
             position: absolute;
             right: 1rem;
             background-color: #E6E6E6;
             border-radius: 4px;
-            padding: 10px 20px;
+            padding: 15px 25px;
             font-size: 13px;
             border: none;
         }
