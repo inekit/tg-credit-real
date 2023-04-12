@@ -64,12 +64,15 @@ export default {
         this.$store.state.userId = this.$route.params?.userId;
 
         if (await this.getBasket()?.length) {
+            console.log("basket")
             window.Telegram?.WebApp.MainButton.onClick(this.routeToBasket);
 
             window.Telegram?.WebApp.MainButton.enable();
             window.Telegram?.WebApp.MainButton.show();
             window.Telegram?.WebApp.MainButton.setText("Корзина");
         } else {
+            console.log("no basket")
+
             window.Telegram?.WebApp.MainButton.offClick(this.routeToBasket);
             window.Telegram?.WebApp.MainButton.hide();
         }
