@@ -21,25 +21,29 @@
     <form>
         <div class="option-select">
             <label for="size-select">Размер</label>
-            <select id="size-select" v-model="selected_size" @change="changeSize" required>
-                <option v-for="size in sizes" :key="size" :value="size">{{ size }}</option>
-            </select>
+            <div class="select-dropdown">
+                <select id="size-select" v-model="selected_size" @change="changeSize" required>
+                    <option v-for="size in sizes" :key="size" :value="size">{{ size }}</option>
+                </select>
+            </div>
         </div>
         <div class="option-select">
             <label for="material-select">Материал</label>
-            <select id="material-select" v-model="selected_material" @change="changeMaterial" required>
-                <option v-for="material in materials" :key="material" :value="material">{{ material }}</option>
-            </select>
-        </div>
-        <div class="count-select">
-            <button type="button" @click="count = count - 1">-</button>
-            <span>{{ count }}</span>
-            <button type="button" @click="count = count + 1">+</button>
+            <div class="select-dropdown">
+                <select id="material-select" v-model="selected_material" @change="changeMaterial" required>
+                    <option v-for="material in materials" :key="material" :value="material">{{ material }}</option>
+                </select>
+            </div>
         </div>
         <span class="description">{{ item.description }}</span>
         <div class="order">
             <span>{{ price }} ₽</span>
-            <button type="button" @click.prevent="order">В корзину</button>
+            <div class="count-select" v-if="selected_count">
+                <button type="button" @click="count = count - 1">-</button>
+                <span>{{ count }}</span>
+                <button type="button" @click="count = count + 1">+</button>
+            </div>
+            <button v-else type="button" @click.prevent="order">В корзину</button>
         </div>
     </form>
 
@@ -69,6 +73,7 @@ export default {
             selected_material: null,
             materials: [],
             count: 1,
+            selected_count: 0,
         }
     },
     watch: {
@@ -225,17 +230,8 @@ h1 {
 }
 
 .carousel__track {
-    //position: absolute;
-    //left: 50%;
     margin: auto;
-    max-height: 100vw;
-
-    //width: 100%;
-    //transform: unset !important;
-    li {
-        // width: 100% !important;
-    }
-
+    max-height: 100vh;
 }
 
 .carousel__slide {
@@ -272,6 +268,89 @@ h1 {
         background-color: rgb(197, 80, 105);
     }
 
+}
+
+form {
+    margin: 1rem;
+
+    .option-select {
+
+        .select-dropdown,
+        .select-dropdown * {
+            margin: 0;
+            padding: 0;
+            position: relative;
+            box-sizing: border-box;
+        }
+
+        .select-dropdown {
+            position: absolute;
+            right: 1rem;
+            background-color: #E6E6E6;
+            border-radius: 4px;
+
+            select {
+                font-size: 1rem;
+                font-weight: normal;
+                max-width: 100%;
+                padding: 8px 24px 8px 10px;
+                border: none;
+                background-color: transparent;
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                appearance: none;
+
+                &:focus,
+                &:active {
+                    outline: none;
+                    box-shadow: none;
+                }
+            }
+
+            &:after {
+                content: "";
+                position: absolute;
+                top: 50%;
+                right: 8px;
+                width: 0;
+                height: 0;
+                margin-top: -2px;
+                border-top: 5px solid #aaa;
+                border-right: 5px solid transparent;
+                border-left: 5px solid transparent;
+            }
+        }
+    }
+
+    .description {}
+
+    .order {
+        position: fixed;
+        top: calc(100vh - 100px);
+        top: calc(var(--tg-viewport-stable-height) - 100px);
+        height: 100px;
+
+        .count-select {
+            position: absolute;
+            right: 1rem;
+            background-color: #E6E6E6;
+            border-radius: 4px;
+            padding: 20px;
+            font-size: 20px;
+
+            &>button {
+                border: none;
+                color: white;
+            }
+        }
+
+        &>button {
+            position: absolute;
+            right: 1rem;
+            background-color: #E6E6E6;
+            border-radius: 4px;
+        }
+    }
 }
 </style>
   
