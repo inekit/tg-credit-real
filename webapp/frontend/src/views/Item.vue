@@ -143,7 +143,7 @@ export default {
                     user_id: this.$store.state.userId,
                 })
                 .then((response) => {
-                    item.is_favorite = true
+                    this.item.is_favorite = true
                 })
                 .catch((e) => {
                     eventBus.$emit('noresponse', e)
