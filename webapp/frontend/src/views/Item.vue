@@ -92,7 +92,6 @@ export default {
     },
     async mounted() {
         window.Telegram?.WebApp.BackButton.onClick(this.routeBack);
-        window.Telegram?.WebApp.BackButton.enable();
         window.Telegram?.WebApp.BackButton.show();
 
         this.item = await this.getItem(this.$route.params.id);

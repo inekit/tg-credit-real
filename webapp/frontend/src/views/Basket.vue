@@ -44,7 +44,6 @@ export default {
         window.Telegram?.WebApp.MainButton.hide();
         window.Telegram?.WebApp.MainButton.disable();
         window.Telegram?.WebApp.BackButton.onClick(this.routeBack);
-        window.Telegram?.WebApp.BackButton.enable();
         window.Telegram?.WebApp.BackButton.show();
 
 
