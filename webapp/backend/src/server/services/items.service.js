@@ -65,7 +65,7 @@ class UsersService {
               LIMIT $4 OFFSET $5`;
       const connection = await tOrmCon;
       connection
-        .query(query, [searchQuery, category, id, take, skip, user_id ?? null])
+        .query(query, [searchQuery, category, id, take, skip, user_id])
         .then((data) => res(data))
         .catch((error) => rej(new MySqlError(error)));
     });
