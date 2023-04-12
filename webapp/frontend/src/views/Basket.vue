@@ -84,6 +84,7 @@ export default {
     },
     methods: {
         changeCount(id, newCount) {
+            if (newCount < 1 || newCount > 100) return;
             this.$store.state.myApi.put(this.$store.state.restAddr + '/favorites', {
                 user_id: this.$store.state.userId,
                 item_option_id: id,
