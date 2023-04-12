@@ -61,7 +61,7 @@ export default {
             sizes: [],
             selected_material: null,
             materials: [],
-            count: 0,
+            count: 1,
         }
     },
     watch: {
@@ -74,21 +74,27 @@ export default {
             this.materials = [...new Set(to?.options_array?.map(({ material }) => material))]
             this.selected_material = this.materials?.[0]
             this.selected_option = to?.options_array?.find(el => el.size === this.selected_size && el.material === this.selected_material)
-            this.price = this.selected_option.price
+            this.price = this.selected_option.price;
+            this.count = 1;
+        },
+        "item.is_favorite"(is_favorite) {
+            if (is_favorite) {
+                window.Telegram?.WebApp.MainButton.onClick(this.routeToBasket);
+
+                window.Telegram?.WebApp.MainButton.enable();
+                window.Telegram?.WebApp.MainButton.show();
+                window.Telegram?.WebApp.MainButton.setText("Корзина");
+            } else {
+                window.Telegram?.WebApp.MainButton.offClick(this.routeToBasket);
+                window.Telegram?.WebApp.MainButton.hide();
+            }
         }
     },
     async mounted() {
         this.item = await this.getItem(this.$route.params.id);
-        console.log(this.item)
-
-        window.Telegram?.WebApp.MainButton.onClick(this.finishWindow);
-        window.Telegram?.WebApp.MainButton.enable();
-        window.Telegram?.WebApp.MainButton.show();
-        window.Telegram?.WebApp.MainButton.setText("Узнать больше");
 
         this.$refs['results-block']?.classList.add("hidden")
         document.body.classList.add('stop-scrolling')
-
 
         setTimeout(() => {
             const elements = document.getElementsByClassName('preloader')
@@ -103,8 +109,11 @@ export default {
 
         }, 400)
     },
+    routeToBasket() {
+        this.$router.push("/basket")
+    },
     async beforeUnmount() {
-        window.Telegram?.WebApp.MainButton.offClick(this.finishWindow);
+        window.Telegram?.WebApp.MainButton.offClick(this.routeToBasket);
         window.Telegram?.WebApp.MainButton.hide();
     },
     methods: {
@@ -129,11 +138,12 @@ export default {
         changeMaterial() {
             this.sizes = this.item.options_array?.filter(el => el.material === this.selected_material)?.map(({ size }) => size);
             this.selected_option = this.item.options_array?.find(el => el.size === this.selected_size && el.material === this.selected_material)
-
+            this.count = 1;
         },
         changeSize() {
             this.materials = this.item.options_array?.filter(el => el.size === this.selected_size)?.map(({ material }) => material)
             this.selected_option = this.item.options_array?.find(el => el.size === this.selected_size && el.material === this.selected_material)
+            this.count = 1;
         },
         order() {
             this.$store.state.myApi
@@ -146,7 +156,7 @@ export default {
                     this.item.is_favorite = true
                 })
                 .catch((e) => {
-                    eventBus.$emit('noresponse', e)
+                    alert("Эта позиция уже добавлена в корзину")
                 })
         },
         getDate(date) {

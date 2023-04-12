@@ -22,7 +22,7 @@
             <button class="drop-item" @click="dropItem(item.id)">Убрать</button>
         </div>
     </div>
-    <button class="order" @click="order">Оформить заказ</button>
+    <button v-if="basketItems.length > 0" class="order" @click="order">Оформить заказ</button>
 </template>
 
 <script>

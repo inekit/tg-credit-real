@@ -49,12 +49,11 @@ export default {
             await this.updatePage(300)
         },
         async $route(to, from) {
-            await this.toggleButtons()
+            //await this.toggleButtons()
         }
     },
     beforeMount() {
         this.bodyWidth = document.body.clientHeight
-
     },
     async mounted() {
         this.scroll()
@@ -63,37 +62,39 @@ export default {
         window.Telegram?.WebApp.BackButton.show()
 
         this.$store.state.userId = this.$route.params?.userId;
+
+        if (await this.getBasket()?.length) {
+            window.Telegram?.WebApp.MainButton.onClick(this.routeToBasket);
+
+            window.Telegram?.WebApp.MainButton.enable();
+            window.Telegram?.WebApp.MainButton.show();
+            window.Telegram?.WebApp.MainButton.setText("Корзина");
+        } else {
+            window.Telegram?.WebApp.MainButton.offClick(this.routeToBasket);
+            window.Telegram?.WebApp.MainButton.hide();
+        }
     },
-
-
     async beforeUnmount() {
-        window.Telegram?.WebApp.MainButton.offClick(this.finishWindow);
+        window.Telegram?.WebApp.MainButton.offClick(this.routeToBasket);
         window.Telegram?.WebApp.MainButton.hide();
     },
     methods: {
         routeToBasket() {
             this.$router.push("/basket")
         },
-        async toggleButtons() {
-            await this.updatePage(400)
+        async getBasket() {
+            const results = await this.$store.state.myApi.get(this.$store.state.restAddr + '/favorites', {
+                params: {
+                    user_id: this.$store.state.userId,
+                }
+            })
+                .then(response => {
+                    return response.data;
+                })
+                .catch(e => { eventBus.$emit('noresponse', e) })
 
-            if (this.$route.name === "Favorites" && this.$store.state.results.length > 0) {
-                window.Telegram?.WebApp.MainButton.onClick(this.finishWindow);
+            return results
 
-                window.Telegram?.WebApp.MainButton.enable();
-                window.Telegram?.WebApp.MainButton.show();
-                window.Telegram?.WebApp.MainButton.setText("Скачать проектные декларации");
-            } else {
-                window.Telegram?.WebApp.MainButton.offClick(this.finishWindow);
-                window.Telegram?.WebApp.MainButton.hide();
-            }
-        },
-        async finishWindow() {
-            if (!this.$store.state.userId) return alert("Ваша версия телеграм не поддерживается")
-
-            await this.getFiles().catch(console.log);
-            window.Telegram?.WebApp.disableClosingConfirmation()
-            window.Telegram?.WebApp.close();
         },
         async updatePage(delay) {
             this.$store.state.results = await this.sendSearchRequest(true);
