@@ -63,7 +63,7 @@ export default {
 
         this.$store.state.userId = this.$route.params?.userId;
 
-        if (await this.getBasket()?.length) {
+        if ((await this.getBasket())?.length) {
             console.log("basket")
             window.Telegram?.WebApp.MainButton.onClick(this.routeToBasket);
 
