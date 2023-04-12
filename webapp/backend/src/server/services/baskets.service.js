@@ -136,7 +136,7 @@ class BasketsService {
           left join order_items oi on oi.order_id = o.id
           left join item_options io on oi.item_option_id = io.id
           left join items i on io.item_id = i.id
-          where o.user_id = $1 and o.status='basket'`,
+          where o.user_id = $1 and o.status='basket' and io.id is not NULL`,
           [user_id]
         )
         .then(async (data) => {
