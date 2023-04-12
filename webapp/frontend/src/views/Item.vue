@@ -19,21 +19,28 @@
     </div>
     <h1>{{ item.title }}</h1>
     <form>
-        <label for="size-select">Размер</label>
-        <select id="size-select" v-model="selected_size" @change="changeSize" required>
-            <option v-for="size in sizes" :key="size" :value="size">{{ size }}</option>
-        </select>
-        <label for="material-select">Материал</label>
-        <select id="material-select" v-model="selected_material" @change="changeMaterial" required>
-            <option v-for="material in materials" :key="material" :value="material">{{ material }}</option>
-        </select>
+        <div class="option-select">
+            <label for="size-select">Размер</label>
+            <select id="size-select" v-model="selected_size" @change="changeSize" required>
+                <option v-for="size in sizes" :key="size" :value="size">{{ size }}</option>
+            </select>
+        </div>
+        <div class="option-select">
+            <label for="material-select">Материал</label>
+            <select id="material-select" v-model="selected_material" @change="changeMaterial" required>
+                <option v-for="material in materials" :key="material" :value="material">{{ material }}</option>
+            </select>
+        </div>
         <div class="count-select">
             <button type="button" @click="count = count - 1">-</button>
             <span>{{ count }}</span>
             <button type="button" @click="count = count + 1">+</button>
         </div>
-        {{ price }}
-        <button type="button" @click.prevent="order">В корзину</button>
+        <span class="description">{{ item.description }}</span>
+        <div class="order">
+            <span>{{ price }} ₽</span>
+            <button type="button" @click.prevent="order">В корзину</button>
+        </div>
     </form>
 
     <span>{{ item.description }}</span>

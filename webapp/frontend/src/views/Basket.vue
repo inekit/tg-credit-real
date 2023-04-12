@@ -19,6 +19,9 @@
             <span class="material">
                 {{ item.material }}
             </span>
+            <span class="price">
+                {{ item.price }}
+            </span>
             <button class="drop-item" @click="dropItem(item.id)">Убрать</button>
         </div>
     </div>
@@ -109,7 +112,9 @@ export default {
                 })
                 .catch(e => { eventBus.$emit('noresponse', e) })
         },
-        order() { },
+        order() {
+            this.$router.push("/basket")
+        },
         routeBack() {
             this.$router.go(-1)
         },
