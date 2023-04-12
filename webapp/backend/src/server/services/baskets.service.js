@@ -39,7 +39,7 @@ class BasketsService {
 
         await queryRunner.commitTransaction();
 
-        res(data);
+        res(true);
       } catch (error) {
         console.log(error);
         await queryRunner.rollbackTransaction();
