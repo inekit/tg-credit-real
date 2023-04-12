@@ -278,7 +278,7 @@ h1 {
 form {
     margin: 1rem;
     font-size: 1.1rem;
-    margin-bottom: 70px;
+    margin-bottom: 90px;
 
     label {
         font-size: 1.2rem;
@@ -357,12 +357,34 @@ form {
             right: 1rem;
             background-color: #E6E6E6;
             border-radius: 4px;
-            padding: 10px 20px;
-            font-size: 20px;
+            padding: 15px 40px;
+            font-size: 13px;
+            border: none;
+            top: 12px;
+            width: 50px;
+
+            &>span {
+                margin-left: auto;
+                margin-right: auto;
+                display: block;
+                width: 9px;
+                color: rgb(44, 44, 44);
+            }
 
             &>button {
                 border: none;
-                color: white;
+                color: rgb(44, 44, 44);
+                height: 47px;
+                position: absolute;
+                right: 0;
+                top: 0;
+                font-size: 25px;
+                width: 47px;
+                border-radius: 4px;
+
+                &:first-child {
+                    left: 0;
+                }
             }
         }
 
