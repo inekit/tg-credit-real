@@ -12,10 +12,6 @@
                 <pagination />
             </template>
         </carousel>
-        <div class="favorite-toggle" :class="item.is_favorite ? 'favorite-item' : ''" @click="toggleFav($event, item)">
-            <img :src="require('@/assets/img/fav.svg')" />
-        </div>
-
     </div>
     <h1>{{ item.title }}</h1>
     <form>
@@ -35,6 +31,7 @@
                 </select>
             </div>
         </div>
+        <label>Описание</label>
         <span class="description">{{ item.description }}</span>
         <div class="order">
             <span>{{ price }} ₽</span>
@@ -188,7 +185,8 @@ export default {
 
 <style lang="scss">
 h1 {
-    font-weight: 400;
+    font-weight: 500;
+    font-size: 1.7rem;
 }
 
 .img-container {
@@ -272,8 +270,17 @@ h1 {
 
 form {
     margin: 1rem;
+    font-size: 1.2rem;
+
+    label {
+        font-size: 1.4rem;
+
+    }
 
     .option-select {
+        position: relative;
+        margin-bottom: 20px;
+        border-bottom: 1px silver solid;
 
         .select-dropdown,
         .select-dropdown * {
@@ -286,6 +293,7 @@ form {
         .select-dropdown {
             position: absolute;
             right: 1rem;
+            top: 0;
             background-color: #E6E6E6;
             border-radius: 4px;
 
@@ -326,16 +334,18 @@ form {
 
     .order {
         position: fixed;
-        top: calc(100vh - 100px);
-        top: calc(var(--tg-viewport-stable-height) - 100px);
-        height: 100px;
+        top: calc(100vh - 70px);
+        top: calc(var(--tg-viewport-stable-height) - 70px);
+        height: 70px;
+        left: 0;
+        right: 0;
 
         .count-select {
             position: absolute;
             right: 1rem;
             background-color: #E6E6E6;
             border-radius: 4px;
-            padding: 20px;
+            padding: 10px 20px;
             font-size: 20px;
 
             &>button {
@@ -349,6 +359,9 @@ form {
             right: 1rem;
             background-color: #E6E6E6;
             border-radius: 4px;
+            padding: 10px 20px;
+            font-size: 13px;
+            border: none;
         }
     }
 }
