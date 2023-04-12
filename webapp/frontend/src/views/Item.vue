@@ -127,10 +127,13 @@ export default {
             })
         },
         changeMaterial() {
-            this.sizes = this.item.options_array?.filter(el => el.material === this.selected_material)?.map(({ size }) => size)
+            this.sizes = this.item.options_array?.filter(el => el.material === this.selected_material)?.map(({ size }) => size);
+            this.selected_option = to?.options_array?.find(el => el.size === this.selected_size && el.material === this.selected_material)
+
         },
         changeSize() {
             this.materials = this.item.options_array?.filter(el => el.size === this.selected_size)?.map(({ material }) => material)
+            this.selected_option = to?.options_array?.find(el => el.size === this.selected_size && el.material === this.selected_material)
         },
         order() {
             this.$store.state.myApi
