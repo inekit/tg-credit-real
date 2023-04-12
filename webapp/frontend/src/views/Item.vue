@@ -20,11 +20,11 @@
     <h1>{{ item.title }}</h1>
     <form>
         <label for="size-select">Размер</label>
-        <select id="size-select" v-model="selected_size" required>
+        <select id="size-select" v-model="selected_size" @change="changeSize" required>
             <option v-for="size in sizes" :key="size" :value="size">{{ size }}</option>
         </select>
         <label for="material-select">Материал</label>
-        <select id="material-select" v-model="selected_material" required>
+        <select id="material-select" v-model="selected_material" @change="changeMaterial" required>
             <option v-for="material in materials" :key="material" :value="material">{{ material }}</option>
         </select>
         <div class="count-select">
@@ -69,9 +69,9 @@ export default {
             window.Telegram?.WebApp.MainButton.offClick(this.finishWindow);
         },
         item(to) {
-            this.sizes = to?.options_array?.map(({ size }) => size)
+            this.sizes = [...new Set(to?.options_array?.map(({ size }) => size))]
             this.selected_size = this.sizes?.[0]
-            this.materials = to?.options_array?.map(({ material }) => material)
+            this.materials = [...new Set(to?.options_array?.map(({ material }) => material))]
             this.selected_material = this.materials?.[0]
             this.selected_option = to?.options_array?.find(el => el.size === this.selected_size && el.material === this.selected_material)
             this.price = this.selected_option.price
@@ -125,6 +125,12 @@ export default {
                     .then(response => { res(response.data?.[0]) })
                     .catch(e => { eventBus.$emit('noresponse', e); rej() })
             })
+        },
+        changeMaterial() {
+            this.sizes = this.item.options_array?.filter(el => el.material === this.selected_material)?.map(({ material }) => material)
+        },
+        changeSize() {
+            this.materials = this.item.options_array?.filter(el => el.size === this.selected_size)?.map(({ size }) => size)
         },
         order() {
             this.$store.state.myApi

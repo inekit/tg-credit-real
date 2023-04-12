@@ -10,7 +10,7 @@
             </span>
             <div class="count">
                 <span>{{ item.count }}</span>
-                <button class="increase-count" @click="increaseCount(item.id, item.count + 1)">+</button>
+                <button class="increase-count" @click="changeCount(item.id, item.count + 1)">+</button>
                 <button class="decrease-count" @click="changeCount(item.id, item.count - 1)">-</button>
             </div>
             <span class="size">
@@ -64,10 +64,10 @@ export default {
         }, 300)
     },
     methods: {
-        changeCount(item, newCount) {
+        changeCount(id, newCount) {
             this.$store.state.myApi.put(this.$store.state.restAddr + '/favorites', {
                 user_id: this.$store.state.userId,
-                item_option_id: item.id,
+                item_option_id: id,
                 count: newCount,
             })
                 .then(async response => {
