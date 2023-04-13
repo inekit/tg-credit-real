@@ -17,15 +17,19 @@
                 <button type="button" @click="changeCount(item.id, item.count + 1)">+</button>
             </div>
             <span class="size">
-                {{ item.size }}
+                Размер {{ item.size }}
             </span>
             <span class="material">
-                {{ item.material }}
+                Материал {{ item.material }}
             </span>
             <span class="price">
-                {{ item.price }}
+                {{ item.price }} ₽
             </span>
         </div>
+    </div>
+    <div class="order">
+        <span class="label">Итого:</span>
+        <span class="value">{{ basketItems?.reduce((prev, cur) => prev + cur.price, 0) }} ₽</span>
     </div>
     <button v-if="basketItems.length > 0" class="order" @click="order">Оформить заказ</button>
 </template>
@@ -178,9 +182,9 @@ export default {
 
     .title {
         position: absolute;
-        left: 30vw;
+        left: 28vw;
         top: 0;
-        font-size: 1.2rem;
+        font-size: 1.4rem;
     }
 
     .count-select {
@@ -221,16 +225,16 @@ export default {
 
     .size {
         position: absolute;
-        left: 30vw;
+        left: 28vw;
         top: 30%;
-        font-size: 1.1rem;
+        font-size: 1rem;
     }
 
     .material {
         position: absolute;
-        left: 30vw;
-        top: 60%;
-        font-size: 1.1rem;
+        left: 28vw;
+        bottom: 0;
+        font-size: 1rem;
     }
 
     .price {
@@ -239,6 +243,36 @@ export default {
         top: 0;
         font-size: 1.4rem;
         font-weight: 500;
+    }
+}
+
+.order {
+    position: fixed;
+    top: calc(100vh - 70px);
+    top: calc(var(--tg-viewport-stable-height) - 70px);
+    height: 70px;
+    left: 0;
+    right: 0;
+    padding: 12px 1rem;
+    border-top: 1px rgba(192, 192, 192, 0.363) solid;
+    background-color: white;
+
+    .label {
+        display: block;
+        position: absolute;
+        right: left;
+        font-size: 1.3rem;
+        font-weight: 400;
+        line-height: 45px;
+    }
+
+    .value {
+        display: block;
+        position: absolute;
+        right: 0;
+        font-size: 1.4rem;
+        font-weight: 500;
+        line-height: 45px;
     }
 }
 </style>
