@@ -51,8 +51,8 @@ class UsersService {
           and (o.status = 'basket' or o.status is NULL)  
           and (p.category_name = $2 or $2 is NULL)  
           and (p.id = $3 or $3 is NULL)  
-          and (io.size = $11 or $11 is NULL)
-          and (io.material = $12 or $12 is NULL)
+          and (io.size = $11 or $11::varchar is NULL)
+          and (io.material = $12 or $12::varchar is NULL)
           group by p.id
           order by ${orderQueryPart}
           LIMIT $4 OFFSET $5`
@@ -62,8 +62,8 @@ class UsersService {
               left join item_options io on p.id = io.item_id
               where (title like $1 or $1 is NULL) 
               and $6::int is NULL
-              and $7::int is NULL
-              and $8::int is NULL
+              and $7::varchar is NULL
+              and $8::varchar is NULL
               and (p.category_name = $2 or $2 is NULL)  
               and (p.id = $3 or $3 is NULL)  
               group by p.id
