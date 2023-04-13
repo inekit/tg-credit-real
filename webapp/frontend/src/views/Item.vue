@@ -48,7 +48,7 @@
         </div>
         <div class="order" v-if="mainside_id">
             <button v-if="!mainside_item?.id" type="button" @click.prevent="order">В корзину</button>
-            <button type="button" @click.prevent="routeToMainItem">К основной {{ mainside_item?.id }}</button>
+            <button v-else type="button" @click.prevent="routeToMainItem">К основной</button>
         </div>
         <div class="order" v-else>
             <span>{{ price }} ₽</span>
@@ -206,7 +206,7 @@ export default {
                     params: {
                         id,
                         item_option_id,
-                        mainside_id,
+                        mainside_id: mainside_id ?? undefined,
                         backside_id,
                         user_id: this.$store.state.userId,
                     }
@@ -245,7 +245,7 @@ export default {
                     params: {
                         user_id: this.$store.state.userId,
                         item_option_id: this.selected_option.id,
-                        mainside_id: this.mainside_id ?? undefined
+                        mainside_id: !isNaN(this.mainside_id) ? this.mainside_id : undefined
                     }
                 })
                 .then((response) => {
