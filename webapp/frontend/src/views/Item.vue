@@ -47,7 +47,7 @@
             </div>
         </div>
         <div class="order" v-if="backsideof">
-            <button v-if="!is_favorite" type="button" @click.prevent="order">В корзину</button>
+            <button v-if="!item.is_favorite" type="button" @click.prevent="order">В корзину</button>
             <button v-else type="button" @click.prevent="$router.push('/items/' + backsideof)">К основной</button>
         </div>
         <div class="order" v-else>
