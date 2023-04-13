@@ -193,7 +193,7 @@ export default {
             this.$store.state.myApi
                 .post(this.$store.state.restAddr + '/favorites', {
                     item_option_id: this.selected_option.id,
-                    count: this.count,
+                    count: 1,
                     user_id: this.$store.state.userId,
                 })
                 .then(async (response) => {
