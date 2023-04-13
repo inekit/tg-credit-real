@@ -194,8 +194,8 @@ export default {
                     count: this.count,
                     user_id: this.$store.state.userId,
                 })
-                .then((response) => {
-                    this.item.is_favorite = true
+                .then(async (response) => {
+                    this.count = (await this.getBasketOption())?.count ?? 0;
                 })
                 .catch((e) => {
                     alert("Эта позиция уже добавлена в корзину")
