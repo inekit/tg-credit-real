@@ -106,6 +106,7 @@ export default {
         window.Telegram?.WebApp.BackButton.onClick(this.routeBack);
         window.Telegram?.WebApp.BackButton.show();
 
+        let uri = window.location.search.substring(1);
         this.params = new URLSearchParams(uri)
         this.backFilters = { size: this.params.get('size'), material: this.params.get('material') }
         this.backsideof = this.params.get('backsideof')
