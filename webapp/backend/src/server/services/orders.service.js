@@ -93,9 +93,11 @@ class UsersService {
         );
         const basket_id = orders[0].id;
 
-        const { id: order_id } = await queryRunner.manager
+        const data = await queryRunner.manager
           .getRepository("Order")
           .save({ user_id, total, selected_dm, selected_po });
+
+        const { id: order_id } = data;
 
         await queryRunner.query(
           `update order_items set order_id=$1 where order_id = $2`,
