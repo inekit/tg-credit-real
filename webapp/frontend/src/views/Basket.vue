@@ -151,6 +151,10 @@ export default {
   
 
 <style lang="scss" scoped>
+.basket-items {
+    margin-bottom: 90px;
+}
+
 .basket-item {
     margin: 1rem;
     position: relative;
@@ -182,7 +186,7 @@ export default {
 
     .title {
         position: absolute;
-        left: 28vw;
+        left: 30vw;
         top: 0;
         font-size: 1.4rem;
     }
@@ -225,15 +229,15 @@ export default {
 
     .size {
         position: absolute;
-        left: 28vw;
+        left: 30vw;
         top: 25%;
         font-size: 1rem;
     }
 
     .material {
         position: absolute;
-        left: 28vw;
-        top: 40%;
+        left: 30vw;
+        top: 45%;
         font-size: 1rem;
     }
 
@@ -245,7 +249,7 @@ export default {
         font-weight: 500;
     }
 
-    margin-bottom: 90px;
+
 }
 
 .order {
