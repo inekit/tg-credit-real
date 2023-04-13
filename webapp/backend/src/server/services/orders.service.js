@@ -206,14 +206,14 @@ class UsersService {
             order.id,
           ])
           .then((data) => {
-            console.log(data);
+            const orderObj = data[0][0];
             ctx.telegram
               .sendMessage(
-                data.user_id,
+                orderObj.user_id,
                 ctx.getTitle("ORDER_NEW_STATUS_TITLE", [
-                  data.id,
-                  moment(data.creation_date).format("DD.MM.YYYY"),
-                  data.status,
+                  orderObj.id,
+                  moment(orderObj.creation_date).format("DD.MM.YYYY"),
+                  orderObj.status,
                 ]),
                 {
                   parse_mode: "HTML",
