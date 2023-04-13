@@ -201,10 +201,10 @@ class UsersService {
 
       tOrmCon.then((connection) => {
         connection
-          .getRepository("Order")
-          .update({ id: order.id }, order)
-          .returning("*")
-          .execute()
+          .query("update orders set status = $1 where id = $2 returning *", [
+            order.status,
+            order.id,
+          ])
           .then((data) => {
             ctx.telegram
               .sendMessage(
