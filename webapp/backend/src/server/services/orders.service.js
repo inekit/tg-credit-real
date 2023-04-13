@@ -202,7 +202,7 @@ class UsersService {
       tOrmCon.then((connection) => {
         connection
           .getRepository("Order")
-          .update({ id }, order)
+          .update({ id: order.id }, order)
           .then((data) => {
             res(data);
 

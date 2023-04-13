@@ -143,7 +143,8 @@ button {
     flex-wrap: wrap;
 
     button {
-        width: 200px;
+        width: 150px;
+        margin-right: 20px;
     }
 }
 </style>
