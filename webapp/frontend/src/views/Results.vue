@@ -9,7 +9,7 @@
         :gap="12">
         <template #default="{ item, index }">
             <div class="result-item">
-                <router-link :to="`/items/${item.id}`">
+                <router-link :to="`/items/${item.id}?backsideof=${backsideof}&size=${this.backFilters.size}&material=${this.backFilters.material}`">
                     <div class="img-container">
                         <img :src="`/colorsserver/public/pics/${item.image_list?.[0]}`" />
                     </div>
@@ -39,7 +39,7 @@ export default {
         return {
             page: 1,
             perPage: 10,
-
+            backFilters: {}
         }
 
     },
@@ -61,16 +61,17 @@ export default {
         this.scroll()
         window.Telegram?.WebApp.BackButton.hide()
 
+        this.params = new URLSearchParams(uri)
+        this.backFilters = { size: this.params.get('size'), material: this.params.get('material') }
+        this.backsideof = this.params.get('backsideof')
+
         this.$store.state.userId = this.$route.params?.userId;
 
         if ((await this.getBasket())?.length) {
-            console.log("basket")
             window.Telegram?.WebApp.MainButton.onClick(this.routeToBasket);
             window.Telegram?.WebApp.MainButton.show();
             window.Telegram?.WebApp.MainButton.setText("Корзина");
         } else {
-            console.log("no basket")
-
             window.Telegram?.WebApp.MainButton.offClick(this.routeToBasket);
             window.Telegram?.WebApp.MainButton.hide();
         }
@@ -136,8 +137,7 @@ export default {
                 this.isEnded = false
                 this.page = 1
             }
-            const subPath = this.$route.name === "Results" || this.$route.name === "ResultsSearch"
-                ? '/items' : '/favorites'
+            const subPath = '/items'
 
             const results = await this.$store.state.myApi.get(this.$store.state.restAddr + subPath, {
                 params: {
@@ -147,6 +147,8 @@ export default {
                     sort: this.$store.state.filters.sort_type,
                     category: this.$store.state.filters.category_name,
                     user_id: this.$store.state.userId,
+                    size: this.backFilters?.size,
+                    material: this.backFilters?.material
                 }
             })
                 .then(response => {
@@ -251,7 +253,7 @@ export default {
             h3 {
                 margin: 5px 0 -5px 0;
                 color: #414141;
-                font-weight: 200;
+                font-weight: 400;
                 font-size: 1.3rem;
             }
 

@@ -36,6 +36,9 @@
         <hr />
         <label>Описание</label>
         <div class="description">{{ item.description }}</div>
+        <div class="count-select" v-if="count">
+            <button type="button" @click="routeToBackSide">Обратная сторона</button>
+        </div>
         <div class="order">
             <span>{{ price }} ₽</span>
             <div class="count-select" v-if="count">
@@ -103,7 +106,13 @@ export default {
         window.Telegram?.WebApp.BackButton.onClick(this.routeBack);
         window.Telegram?.WebApp.BackButton.show();
 
+        this.params = new URLSearchParams(uri)
+        this.backFilters = { size: this.params.get('size'), material: this.params.get('material') }
+        this.backsideof = this.params.get('backsideof')
+
         this.item = await this.getItem(this.$route.params.id);
+
+
 
         this.$refs['results-block']?.classList.add("hidden")
         document.body.classList.add('stop-scrolling')
@@ -140,6 +149,9 @@ export default {
         routeToBasket() {
             this.$router.push("/basket")
         },
+        routeToBackSide() {
+            this.$router.push(`/results/${this.$store.state.userId}?backsideof=${this.selected_option.id}&size=${this.selected_size}&material=${selected_material}`)
+        },
         getItem(id) {
             return new Promise((res, rej) => {
                 this.$store.state.myApi.get(this.$store.state.restAddr + '/items', {
@@ -148,7 +160,12 @@ export default {
                         user_id: this.$store.state.userId,
                     }
                 })
-                    .then(response => { res(response.data?.[0]) })
+                    .then(response => {
+                        const item = response.data?.[0]
+                        if (this.backFilters) item.options_array?.filter(({ size, material }) =>
+                            size == this.backFilters.size && material == this.backFilters.material)
+                        res(item)
+                    })
                     .catch(e => { eventBus.$emit('noresponse', e); rej() })
             })
         },
@@ -196,10 +213,15 @@ export default {
                     item_option_id: this.selected_option.id,
                     count: 1,
                     user_id: this.$store.state.userId,
+                    backsideof: this.backsideof
                 })
                 .then(async (response) => {
+                    if (this.backsideof) return this.$router.push("/items/" + this.backsideof)
+
                     this.count = (await this.getBasketOption())?.count ?? 0;
                     this.item.is_favorite = true;
+
+
                 })
                 .catch((e) => {
                     alert("Эта позиция уже добавлена в корзину")
