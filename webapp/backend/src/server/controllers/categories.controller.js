@@ -3,7 +3,7 @@ const servicePreset = require("../services/crud.service").getService(
   ["name", "description"]
 );
 
-function getAll(req, res) {
+function getAll(req, res, next) {
   console.log(req.query.category);
   if (!req.query.id)
     servicePreset
@@ -13,14 +13,14 @@ function getAll(req, res) {
   else getOne(req, res);
 }
 
-function getOne(req, res) {
+function getOne(req, res, next) {
   servicePreset
     .get(req.query.id, 1, 1)
     .then((data) => res.send(data))
     .catch((error) => next(error));
 }
 
-function addOne(req, res) {
+function addOne(req, res, next) {
   const { name, description } = req.body;
 
   servicePreset
@@ -29,7 +29,7 @@ function addOne(req, res) {
     .catch((error) => next(error));
 }
 
-function editOne(req, res) {
+function editOne(req, res, next) {
   servicePreset
     .edit({
       name: req.body.name,
@@ -40,7 +40,7 @@ function editOne(req, res) {
     .catch((error) => next(error));
 }
 
-function deleteOne(req, res) {
+function deleteOne(req, res, next) {
   servicePreset
     .delete(req.body.name, "name")
     .then((data) => res.send(data))

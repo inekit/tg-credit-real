@@ -1,13 +1,13 @@
-const servicePreset = require('../services/crud.service').getService('Static');
+const servicePreset = require("../services/crud.service").getService("Static");
 
-function getOne(req, res) {
+function getOne(req, res, next) {
   servicePreset
     .get(req.query.id, 1, 1)
     .then((data) => res.send(data))
     .catch((error) => next(error));
 }
 
-function editOne(req, res) {
+function editOne(req, res, next) {
   servicePreset
     .edit({
       gitHubLink: req.body.gitHubLink,

@@ -7,7 +7,7 @@ const {
   NoInputDataError,
 } = require("../utils/httpErrors");
 
-function getId(req, res) {
+function getId(req, res, next) {
   myId = req.session.passport.user.toString();
 
   tOrmCon.then((connection) => {

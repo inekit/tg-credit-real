@@ -1,6 +1,6 @@
 const ordersService = require("../services/orders.service");
 
-function getAll(req, res) {
+function getAll(req, res, next) {
   if (!req.query.id)
     ordersService
       .getAll(req.query)
@@ -9,28 +9,28 @@ function getAll(req, res) {
   else getOne(req, res);
 }
 
-function getOne(req, res) {
+function getOne(req, res, next) {
   ordersService
     .getOne(req.query.id, 1, 1)
     .then((data) => res.send(data))
     .catch((error) => next(error));
 }
 
-function addOne(req, res) {
+function addOne(req, res, next) {
   ordersService
     .add(req.body)
     .then((data) => res.send(data))
     .catch((error) => next(error));
 }
 
-function editOne(req, res) {
+function editOne(req, res, next) {
   ordersService
     .edit(req.body)
     .then((data) => res.send(data))
     .catch((error) => next(error));
 }
 
-function deleteOne(req, res) {
+function deleteOne(req, res, next) {
   ordersService
     .delete(req.body.id)
     .then((data) => res.send(data))
