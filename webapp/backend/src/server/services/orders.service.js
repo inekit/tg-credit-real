@@ -98,7 +98,7 @@ class UsersService {
           .save({ user_id, total, selected_dm, selected_po });
 
         await queryRunner.query(
-          `update order_items set order_id=$1, where order_id = $2`,
+          `update order_items set order_id=$1 where order_id = $2`,
           [order_id, basket_id]
         );
 
