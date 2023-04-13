@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="card mb-4">
+        <div class="card mb-4 order-card">
             <div>
                 ID: {{ order.id }}
             </div>
@@ -26,7 +26,7 @@
                 Статус: {{ order.status }}
             </div>
             <div class="change-status">
-                Изменить статус:
+                <span class="w-100 mb-2">Изменить статус</span>
                 <button v-for="status in statuses" :key="status" class="btn btn-primary" @click="changeStatus(status)">{{
                     status }}</button>
             </div>
@@ -96,7 +96,7 @@ export default {
         },
         dateFormatter,
         changeStatus(newStatus) {
-            this.$store.state.myApi.put(this.$store.state.restAddr + '/admin/orders', {
+            this.$store.state.myApi.put(this.$store.state.publicPath + '/api/admin/orders', {
                 id: this.order.id,
                 status: newStatus,
             })
@@ -133,12 +133,17 @@ button {
     margin-bottom: 20px;
 }
 
-.change-status {
+.order-card {
     padding: 1rem;
+
+}
+
+.change-status {
     display: flex;
+    flex-wrap: wrap;
 
     button {
-        width: 50px;
+        width: 200px;
     }
 }
 </style>
