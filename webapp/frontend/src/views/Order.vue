@@ -86,7 +86,7 @@ export default {
                 })
                 .catch(e => { eventBus.$emit('noresponse', e) })
 
-            return results
+            return results ?? {}
 
         },
     }
