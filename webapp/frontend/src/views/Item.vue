@@ -101,7 +101,7 @@ export default {
             this.price = this.selected_option?.price;
             this.count = (await this.getBasketOption())?.count ?? 0;
             this.item.is_favorite = !!this.count;
-            await getReferencedItems()
+            await this.getReferencedItems()
         },
         "item.is_favorite"(is_favorite) {
             if (is_favorite) {
@@ -229,13 +229,13 @@ export default {
             this.sizes = this.item.options_array?.filter(el => el.material === this.selected_material)?.map(({ size }) => size);
             this.selected_option = this.item.options_array?.find(el => el.size === this.selected_size && el.material === this.selected_material)
             this.count = (await this.getBasketOption())?.count ?? 0;
-            await getReferencedItems()
+            await this.getReferencedItems()
         },
         async changeSize() {
             this.materials = this.item.options_array?.filter(el => el.size === this.selected_size)?.map(({ material }) => material)
             this.selected_option = this.item.options_array?.find(el => el.size === this.selected_size && el.material === this.selected_material)
             this.count = (await this.getBasketOption())?.count ?? 0;
-            await getReferencedItems()
+            await this.getReferencedItems()
         },
         async getBasketOption() {
             return await this.$store.state.myApi
