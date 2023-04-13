@@ -133,7 +133,7 @@ class UsersService {
         ctx.telegram
           .sendMessage(
             user_id,
-            ctx.getTitle("ORDER_INFO_TITLE", [
+            titles.getTitle("ORDER_INFO_TITLE", [
               order_id,
               moment(orders[0].creation_date).format("DD.MM.YYYY"),
               orderStr,

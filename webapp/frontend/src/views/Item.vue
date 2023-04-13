@@ -186,6 +186,8 @@ export default {
             })
                 .then(async response => {
                     this.count = (await this.getBasketOption())?.count ?? 0;
+                    this.is_favorite = !!count;
+
                 })
                 .catch(e => { eventBus.$emit('noresponse', e) })
         },
@@ -197,7 +199,8 @@ export default {
                     user_id: this.$store.state.userId,
                 })
                 .then(async (response) => {
-                    this.count = (await this.getBasketOption())?.count ?? 0;
+                    window.Telegram?.WebApp.disableClosingConfirmation()
+                    window.Telegram?.WebApp.close();
                 })
                 .catch((e) => {
                     alert("Эта позиция уже добавлена в корзину")
