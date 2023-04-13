@@ -203,7 +203,23 @@ class UsersService {
         connection
           .getRepository("Order")
           .update({ id }, order)
-          .then((data) => res(data))
+          .then((data) => {
+            res(data);
+
+            ctx.telegram
+              .sendMessage(
+                user_id,
+                ctx.getTitle("ORDER_NEW_STATUS_TITLE", [
+                  data.id,
+                  moment(data.creation_date).format("DD.MM.YYYY"),
+                  data.status,
+                ]),
+                {
+                  parse_mode: "HTML",
+                }
+              )
+              .catch(console.log);
+          })
           .catch((error) => rej(new MySqlError(error)));
       });
     });
