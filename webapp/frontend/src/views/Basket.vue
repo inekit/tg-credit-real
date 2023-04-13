@@ -30,18 +30,17 @@
     </div>
     <div class="order">
         <span class="label">Итого:</span>
-        <span class="value">{{ basketItems?.reduce((prev, cur) => prev + cur.price, 0) }} ₽</span>
+        <span class="value">{{ basketItems?.reduce((prev, cur) => prev + cur.price * cur.count, 0) }} ₽</span>
     </div>
 </template>
 
 <script>
-import searchBlock from '@/components/Search.vue';
 import eventBus from '../eventBus'
 import { ListLoader, InstagramLoader } from 'vue-content-loader'
 
 
 export default {
-    components: { searchBlock, InstagramLoader },
+    components: { InstagramLoader },
     data() {
         return {
             basketItems: []
@@ -119,7 +118,7 @@ export default {
                 .catch(e => { eventBus.$emit('noresponse', e) })
         },
         order() {
-            this.$router.push("/basket")
+            this.$router.push("/order")
         },
         routeBack() {
             this.$router.go(-1)

@@ -202,8 +202,8 @@ export default {
                 content: "";
                 position: fixed;
                 height: 100vh;
-                width: 100vw;
-                right: 0;
+                width: 42vw;
+                right: 58vw;
                 top: 0;
                 z-index: 997;
                 background: transparent;

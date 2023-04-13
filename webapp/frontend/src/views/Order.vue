@@ -1,36 +1,39 @@
 <template>
     <h1>Оформление заказа</h1>
-    <div>
+    <div class="payment">
         <h2>Метод оплаты</h2>
         <div v-for="po in paymentOptions" :key="po">
             <input type="radio" :id="po" :value="po" v-model="selected_po">
             <label :for="po">{{ po }}</label>
         </div>
     </div>
-    <div>
+    <div class="delivery">
         <h2>Способ доставки</h2>
         <div v-for="dm in deliveryMethods" :key="dm">
             <input type="radio" :id="dm" :value="dm" v-model="selected_dm">
             <label :for="dm">{{ dm }}</label>
         </div>
     </div>
-    <label for="phone">Контактный телефон *:</label>
-    <input type="tel" id="phone" name="phone">
-    <label for="address">Адрес доставки *:</label>
-    <input type="number" id="address" name="address">
-    <h2>Итого:</h2>
-    <div>Стоимость доставки<span>{{ deliveryPrice }} ₽</span></div>
-    <div>К оплате<span>{{ basketData.total + deliveryPrice }} ₽</span></div>
+    <div class="input-group">
+        <label for="phone">Контактный телефон *:</label>
+        <input type="tel" id="phone" name="phone">
+    </div>
+    <div class="input-group">
+        <label for="address">Адрес доставки *:</label>
+        <input type="number" id="address" name="address">
+    </div>
+    <h2 class="total">Итого:</h2>
+    <div class="pricing">Стоимость доставки<span>{{ deliveryPrice }} ₽</span></div>
+    <div class="pricing">К оплате<span>{{ basketData.total + deliveryPrice }} ₽</span></div>
 </template>
 
 <script>
-import searchBlock from '@/components/Search.vue';
 import eventBus from '../eventBus'
 import { ListLoader, InstagramLoader } from 'vue-content-loader'
 
 
 export default {
-    components: { searchBlock, InstagramLoader },
+    components: { InstagramLoader },
     data() {
         return {
             basketData: {},
@@ -86,5 +89,15 @@ export default {
 </script>
   
 
-<style lang="scss"></style>
+<style lang="scss">
+.payment {}
+
+.delivery {}
+
+.input-group {}
+
+.total {}
+
+.pricing {}
+</style>
   
