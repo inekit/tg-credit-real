@@ -53,6 +53,7 @@ class UsersService {
           left join item_options io on oi.item_option_id = io.id  
           left join items i on io.item_id = i.id 
           where (user_id = $3 or $3 is NULL)  
+          and status <> 'basket'
           ORDER BY id DESC
           LIMIT $1 OFFSET $2`,
           [take, skip, user_id]
