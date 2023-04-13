@@ -25,6 +25,7 @@ class UsersService {
     size,
     material,
     user_id,
+    item_option_id,
   }) {
     return new Promise(async (res, rej) => {
       const skip = (page - 1) * take;
@@ -53,6 +54,7 @@ class UsersService {
           and (p.id = $3 or $3 is NULL)  
           and (io.size = $7::varchar or $7::varchar is NULL)
           and (io.material = $8::varchar or $8::varchar is NULL)
+          and (oi.item_option_id = $9::int or $9::int is NULL)
           group by p.id
           order by ${orderQueryPart}
           LIMIT $4 OFFSET $5`
@@ -64,6 +66,7 @@ class UsersService {
               and $6::int is NULL
               and $7::varchar is NULL
               and $8::varchar is NULL
+              and $9::int is NULL
               and (p.category_name = $2 or $2 is NULL)  
               and (p.id = $3 or $3 is NULL)  
               group by p.id
@@ -80,6 +83,7 @@ class UsersService {
           user_id,
           size,
           material,
+          item_option_id,
         ])
         .then((data) => res(data))
         .catch((error) => rej(new MySqlError(error)));
