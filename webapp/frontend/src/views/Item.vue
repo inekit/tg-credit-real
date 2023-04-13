@@ -201,7 +201,7 @@ export default {
                 })
                 .catch(e => { eventBus.$emit('noresponse', e) })
         },
-        getItem(id, { item_option_id, mainside_id }) {
+        getItem(id, { item_option_id, mainside_id, backside_id } = {}) {
             return new Promise((res, rej) => {
                 this.$store.state.myApi.get(this.$store.state.restAddr + '/items', {
                     params: {
