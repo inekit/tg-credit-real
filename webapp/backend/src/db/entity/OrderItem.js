@@ -41,7 +41,7 @@ module.exports = new EntitySchema({
       joinColumn: true,
       cascade: true,
     },
-    backside_of: {
+    mainside: {
       target: "ItemOption",
       type: "many-to-one",
       joinColumn: true,
