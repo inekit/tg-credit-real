@@ -65,7 +65,7 @@ export default {
         let uri = window.location.search.substring(1);
         this.params = new URLSearchParams(uri)
         this.backFilters = { size: this.params.get('size'), material: this.params.get('material') }
-        this.backsideof = this.params.get('backsideof')
+        this.backsideof = this.params.get('backsideof') === "null" ? null : this.params.get('backsideof')
 
         this.$store.state.userId = this.$route.params?.userId;
 

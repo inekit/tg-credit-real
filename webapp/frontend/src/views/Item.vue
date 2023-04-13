@@ -41,7 +41,7 @@
             <button v-else type="button" @click="routeToBackSideItem">Обратная сторона (оформлена)</button>
         </div>
         <div class="order" v-if="backsideof">
-            <button v-if="is_favorite" type="button" @click.prevent="order">В корзину</button>
+            <button v-if="!is_favorite" type="button" @click.prevent="order">В корзину</button>
             <button v-else type="button" @click.prevent="$router.push('/items/' + backsideof)">К основной</button>
         </div>
         <div class="order" v-else>
@@ -114,7 +114,7 @@ export default {
         let uri = window.location.search.substring(1);
         this.params = new URLSearchParams(uri)
         this.backFilters = { size: this.params.get('size'), material: this.params.get('material') }
-        this.backsideof = this.params.get('backsideof')
+        this.backsideof = this.params.get('backsideof') === "null" ? null : this.params.get('backsideof')
 
         this.item = await this.getItem(this.$route.params.id);
 
@@ -204,7 +204,6 @@ export default {
                     try {
                         console.log(response.data, this.backsideof)
                         const item = response.data?.filter(el => el.backside_of_id == this.backsideof)?.[0];
-
 
                         if (!this.backsideof) this.backside_id = response.data?.filter(el => el.backside_of_id)?.[0];
 
