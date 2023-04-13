@@ -14,8 +14,8 @@ async function getOrders(userId) {
 
   return await connection
     .query(
-      `select creation_date, status
-      from orders where user_id = $2`,
+      `select id, creation_date, status
+      from orders where user_id = $1`,
       [userId]
     )
     .catch((e) => {

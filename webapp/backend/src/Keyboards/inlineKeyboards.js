@@ -245,6 +245,20 @@ exports.admins_list_keyboard = (ctx, admins) => {
   return keyboard;
 };
 
+exports.orders_list_keyboard = (ctx, orders) => {
+  const keyboard = inlineKeyboard(
+    orders.map(({ id, creation_date, status }) =>
+      callbackButton(
+        `${status} от ${moment(creation_date).format("DD.MM.YYYY")}`,
+        "order-" + id
+      )
+    ),
+    { columns: 1 }
+  );
+
+  return keyboard;
+};
+
 exports.add_delete_keyboard = (ctx) => {
   const keyboard = inlineKeyboard(
     [callbackButton("ADD", "add"), callbackButton("DELETE", "delete")],
