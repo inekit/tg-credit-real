@@ -68,19 +68,15 @@ scene.action(/^order\-([0-9]+)$/g, async (ctx) => {
     ?.map((el) => `📦 ${el.title} - ${el.count} (шт.)`)
     ?.join("/n");
 
-  ctx.replyWithKeyboard(
-    "ORDER_INFO_TITLE",
-    [
-      order_id,
-      moment(order.creation_date).format("DD.MM.YYYY"),
-      orderStr,
-      order.status,
-      order.selected_po,
-      order.selected_dm,
-      order.total,
-    ],
-    "go_back_keyboard"
-  );
+  ctx.replyWithKeyboard("ORDER_INFO_TITLE", "go_back_keyboard", [
+    order_id,
+    moment(order.creation_date).format("DD.MM.YYYY"),
+    orderStr,
+    order.status,
+    order.selected_po,
+    order.selected_dm,
+    order.total,
+  ]);
 });
 
 scene.action("go_back", async (ctx) => {
