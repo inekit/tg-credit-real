@@ -104,7 +104,7 @@ export default {
         })
     },
     delete(item) {
-      const result = confirm('Вы действительно хотите удалить пользователя?')
+      const result = confirm('Вы действительно хотите удалить позицию из каталога?')
       if (result)
         return myApi
           .delete(this.$store.state.publicPath + '/api/admin/items/', {

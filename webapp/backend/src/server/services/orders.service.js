@@ -18,11 +18,15 @@ class UsersService {
 
       connection
         .query(
-          `SELECT o.*,oi.count, io.size, io.material, io.price, i.title from orders o 
+          `SELECT o.*,count(oi.item_option_id) count_items,
+          json_agg(json_build_object('title', i.title,'count',oi.count, 'id', io.id, 'size', io.size, 'material', io.material, 'price', io.price)) items
+          from orders o 
           left join order_items oi on o.id = oi.order_id  
           left join item_options io on oi.item_option_id = io.id  
           left join items i on io.item_id = i.id  
-          where o.id = $1 limit 1`,
+          where o.id = $1 
+          group by o.id
+          limit 1`,
           [id]
         )
         .then(async (postData) => {

@@ -88,11 +88,11 @@ export default {
         })
     },
     delete(item) {
-      const result = confirm('Вы действительно хотите удалить пользователя?')
+      const result = confirm('Вы действительно хотите удалить заказ?')
       if (result)
         return myApi
           .delete(this.$store.state.publicPath + '/api/admin/orders/', {
-            data: { name: item.name },
+            data: { id: item.id },
           })
           .then(() => {
             this.get()
@@ -104,7 +104,7 @@ export default {
           })
     },
     routeToPosts(item) {
-      this.$router.push('/items/order/' + item.name)
+      this.$router.push('/items/' + item.id)
     },
   },
 }
