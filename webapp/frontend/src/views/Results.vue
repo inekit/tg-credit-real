@@ -15,7 +15,7 @@
                     </div>
                     <div class="text-container">
                         <h2>{{ item.title }}</h2>
-                        <h3>От {{ item.getMinPrice(options_array) }} ₽</h3>
+                        <h3>От {{ getMinPrice(item.options_array) }} ₽</h3>
 
                     </div>
                 </router-link>
