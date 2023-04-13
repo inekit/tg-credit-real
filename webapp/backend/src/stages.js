@@ -4,15 +4,11 @@ const {
   Composer,
 } = require("telegraf");
 const titles = require("telegraf-steps").titlesGetter(__dirname + "/Titles");
-const getUser = require("./Utils/getUser");
 const tOrmCon = require("./db/connection");
 
-const mainStage = new Stage(
-  [require("./scenes/mainScene"), require("./scenes/clientScenes/ordersScene")],
-  {
-    default: "clientScene",
-  }
-);
+const mainStage = new Stage([require("./scenes/mainScene")], {
+  default: "clientScene",
+});
 
 mainStage.start(async (ctx) => ctx.scene.enter("clientScene"));
 
