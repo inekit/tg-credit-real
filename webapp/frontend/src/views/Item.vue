@@ -143,7 +143,10 @@ export default {
         getUriParams() {
             let uri = window.location.search.substring(1);
             this.params = new URLSearchParams(uri)
-            this.backFilters = { size: this.params.get('size'), material: this.params.get('material') }
+            this.backFilters = {
+                size: this.params.get('size') === "null" ? null : this.params.get('size'),
+                material: this.params.get('material') === "null" ? null : this.params.get('material')
+            }
             this.backsideof = this.params.get('backsideof') === "null" ? null : this.params.get('backsideof')
         },
         async finishWindow() {
@@ -176,7 +179,7 @@ export default {
                 })
                     .then(response => {
                         const item = response.data?.[0];
-                        if (this.backFilters?.size && this.backFilters?.material) item.options_array = item.options_array?.filter(({ size, material }) =>
+                        if (this.backsideof) item.options_array = item.options_array?.filter(({ size, material }) =>
                             size == this.backFilters.size && material == this.backFilters.material)
 
                         res(item)
