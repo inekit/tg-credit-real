@@ -87,11 +87,11 @@ class UsersService {
       await queryRunner.startTransaction();
 
       try {
-        const order = await queryRunner.query(
+        const orders = await queryRunner.query(
           `select * from orders where user_id = $1 and status='basket' limit 1`,
-          [user_id, item_id]
+          [user_id]
         );
-        const basket_id = order.id;
+        const basket_id = orders[0].id;
 
         const { id: order_id } = await queryRunner.manager
           .getRepository("Order")
