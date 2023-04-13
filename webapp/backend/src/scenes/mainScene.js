@@ -6,7 +6,6 @@ const {
 } = require("telegraf-steps");
 const tOrmCon = require("../db/connection");
 const getUser = require("../Utils/getUser");
-const titles = global.titles;
 
 const scene = new CustomWizardScene("clientScene").enter(async (ctx) => {
   let userObj = (ctx.scene.state.userObj = await getUser(ctx));
@@ -45,4 +44,18 @@ const scene = new CustomWizardScene("clientScene").enter(async (ctx) => {
   });
 });
 
+scene.hears(titles.getValues("WEBAPP_BUTTON"), (ctx) => {
+  ctx.replyWithKeyboard("WEBAPP_TITLE", {
+    name: "webapp_keyboard",
+    args: [ctx.from.id],
+  });
+});
+
+scene.hears(titles.getValues("ABOUT_BUTTON"), (ctx) => {
+  ctx.replyWithTitle("ABOUT_TITLE");
+});
+
+scene.hears(titles.getValues("ORDERS_BUTTON"), (ctx) => {
+  ctx.scene.enter("ordersScene");
+});
 module.exports = scene;
