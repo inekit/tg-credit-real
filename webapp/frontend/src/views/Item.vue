@@ -38,10 +38,10 @@
         <div class="description">{{ item.description }}</div>
         <div class="order">
             <span>{{ price }} ₽</span>
-            <div class="count-select" v-if="!selected_count">
-                <button type="button" @click="count = count - 1">-</button>
+            <div class="count-select" v-if="count">
+                <button type="button" @click="changeCount(count - 1)">-</button>
                 <span>{{ count }}</span>
-                <button type="button" @click="count = count + 1">+</button>
+                <button type="button" @click="changeCount(count + 1)">+</button>
             </div>
             <button v-else type="button" @click.prevent="order">В корзину</button>
         </div>
@@ -70,22 +70,21 @@ export default {
             sizes: [],
             selected_material: null,
             materials: [],
-            count: 1,
-            selected_count: 0,
+            count: 0,
         }
     },
     watch: {
         async $route(to, from) {
             window.Telegram?.WebApp.MainButton.offClick(this.finishWindow);
         },
-        item(to) {
+        async item(to) {
             this.sizes = [...new Set(to?.options_array?.map(({ size }) => size))]
             this.selected_size = this.sizes?.[0]
             this.materials = [...new Set(to?.options_array?.map(({ material }) => material))]
             this.selected_material = this.materials?.[0]
             this.selected_option = to?.options_array?.find(el => el.size === this.selected_size && el.material === this.selected_material)
             this.price = this.selected_option.price;
-            this.count = 1;
+            this.count = (await this.getBasketOption())?.count ?? 0;
         },
         "item.is_favorite"(is_favorite) {
             if (is_favorite) {
@@ -153,15 +152,40 @@ export default {
                     .catch(e => { eventBus.$emit('noresponse', e); rej() })
             })
         },
-        changeMaterial() {
+        async changeMaterial() {
             this.sizes = this.item.options_array?.filter(el => el.material === this.selected_material)?.map(({ size }) => size);
             this.selected_option = this.item.options_array?.find(el => el.size === this.selected_size && el.material === this.selected_material)
-            this.count = 1;
+            this.count = (await this.getBasketOption())?.count ?? 0;
         },
-        changeSize() {
+        async changeSize() {
             this.materials = this.item.options_array?.filter(el => el.size === this.selected_size)?.map(({ material }) => material)
             this.selected_option = this.item.options_array?.find(el => el.size === this.selected_size && el.material === this.selected_material)
-            this.count = 1;
+            this.count = (await this.getBasketOption())?.count ?? 0;
+        },
+        async getBasketOption() {
+            return await this.$store.state.myApi
+                .get(this.$store.state.restAddr + '/favorites', {
+                    user_id: this.$store.state.userId,
+                    item_option_id: this.selected_option.id,
+                })
+                .then((response) => {
+                    return response.data?.[0];
+                })
+                .catch((e) => {
+                    eventBus.$emit('noresponse', e)
+                })
+        },
+        changeCount(newCount) {
+            if (newCount > 100) return;
+            this.$store.state.myApi.put(this.$store.state.restAddr + '/favorites', {
+                user_id: this.$store.state.userId,
+                item_option_id: this.selected_option.id,
+                count: newCount,
+            })
+                .then(async response => {
+                    this.count = (await this.getBasketOption())?.count ?? 0;
+                })
+                .catch(e => { eventBus.$emit('noresponse', e) })
         },
         order() {
             this.$store.state.myApi

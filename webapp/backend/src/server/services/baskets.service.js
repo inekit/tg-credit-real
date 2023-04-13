@@ -69,10 +69,18 @@ class BasketsService {
         );
         const basket_id = orders[0].id;
 
-        const data = await queryRunner.query(
-          `update order_items set count = $3 where order_id=$1 and item_option_id=$2;`,
-          [basket_id, item_option_id, count]
-        );
+        let data;
+        if (count < 0) {
+          data = await queryRunner.query(
+            `delete from order_items where order_id=$1 and item_option_id=$2;`,
+            [basket_id, item_option_id]
+          );
+        } else if (count > 100) throw new Error();
+        else
+          data = await queryRunner.query(
+            `update order_items set count = $3 where order_id=$1 and item_option_id=$2;`,
+            [basket_id, item_option_id, count]
+          );
 
         await queryRunner.commitTransaction();
 
@@ -126,19 +134,20 @@ class BasketsService {
     });
   }
 
-  getFavorites({ user_id }) {
+  getFavorites({ user_id, item_option_id }) {
     return new Promise(async (res, rej) => {
       const connection = await tOrmCon;
 
       connection
         .query(
-          `select io.id, o.creation_date, i.title, count, size, material, price from 
+          `select io.id, o.creation_date, i.title, i.image_list, count, size, material, price from 
           orders o 
           left join order_items oi on oi.order_id = o.id
           left join item_options io on oi.item_option_id = io.id
           left join items i on io.item_id = i.id
-          where o.user_id = $1 and o.status='basket' and io.id is not NULL`,
-          [user_id]
+          where o.user_id = $1 and o.status='basket' and io.id is not NULL
+          and (io.id = $2 or $2 is NULL)  `,
+          [user_id, item_option_id]
         )
         .then(async (data) => {
           return res(data);
