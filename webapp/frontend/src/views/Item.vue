@@ -175,7 +175,7 @@ export default {
             ${this.selected_option.id}&size=${this.selected_size}&material=${this.selected_material}`)
         },
         async routeToBackSideItem() {
-            const backside_item = await this.getItem(undefined, this.backside_id)
+            const backside_item = await this.getItem(undefined, { item_option_id: this.backside_id })
             console.log(backside_item)
 
             this.$router.push(`/items/${backside_item.id}?backsideof=
@@ -183,7 +183,7 @@ export default {
 
         },
         async routeToMainItem() {
-            const main_item = await this.getItem(undefined, this.backsideof)
+            const main_item = await this.getItem(undefined, { mainside_id: this.backsideof })
             console.log(main_item)
             this.$router.push('/items/' + main_item.id)
         },
@@ -201,12 +201,13 @@ export default {
                 })
                 .catch(e => { eventBus.$emit('noresponse', e) })
         },
-        getItem(id, item_option_id) {
+        getItem(id, { item_option_id, mainside_id }) {
             return new Promise((res, rej) => {
                 this.$store.state.myApi.get(this.$store.state.restAddr + '/items', {
                     params: {
                         id,
                         item_option_id,
+                        mainside_id,
                         user_id: this.$store.state.userId,
                     }
                 })
@@ -244,8 +245,6 @@ export default {
                     try {
                         console.log(response.data, this.backsideof)
                         const item = response.data?.filter(el => el.backside_of_id == this.backsideof || !this.backsideof)?.[0];
-
-                        if (!this.backsideof) this.backside_id = response.data?.filter(el => el.backside_of_id)?.[0]?.id;
 
                         return item
                     }
