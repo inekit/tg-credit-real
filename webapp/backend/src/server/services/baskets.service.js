@@ -35,8 +35,7 @@ class BasketsService {
 
         const data = await queryRunner
           .query(
-            `insert into order_items (order_id, item_option_id, is_backside, backside_of_id, count) values ($1,$2,$3,$4,$5)
-          ON CONFLICT (order_id, item_option_id, is_backside) DO UPDATE SET count = order_items.count+$3;`,
+            `insert into order_items (order_id, item_option_id, is_backside, backside_of_id, count) values ($1,$2,$3,$4,$5)`,
             [basket_id, item_option_id, !!backside_of_id, backside_of_id, count]
           )
           .catch(async (e) => {
