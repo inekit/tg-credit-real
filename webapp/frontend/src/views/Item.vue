@@ -182,7 +182,7 @@ export default {
 
         },
         async routeToMainItem() {
-            console.log(this.mainside_item)
+
             this.$router.push('/items/' + this.mainside_item?.id)
         },
         async dropBackSideItem() {
@@ -224,6 +224,7 @@ export default {
         async getReferencedItems() {
             this.backside_item = await this.getItem(undefined, { mainside_id: this.selected_option?.id });
             this.mainside_item = await this.getItem(undefined, { backside_id: this.selected_option?.id });
+            console.log(this.mainside_item)
         },
         async changeMaterial() {
             this.sizes = this.item.options_array?.filter(el => el.material === this.selected_material)?.map(({ size }) => size);
