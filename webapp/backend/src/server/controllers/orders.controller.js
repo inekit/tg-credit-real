@@ -19,7 +19,7 @@ function addOne(ctx) {
 function editOne(ctx) {
   return (req, res, next) => {
     ordersService
-      .edit(req.body)
+      .edit(req.body, ctx)
       .then((data) => res.send(data))
       .catch((error) => next(error));
   };
