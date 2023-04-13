@@ -103,7 +103,7 @@ export default {
           })
     },
     routeToPosts(item) {
-      this.$router.push('/orders/id/' + item.id)
+      this.$router.push('/order/' + item.id)
     },
   },
 }

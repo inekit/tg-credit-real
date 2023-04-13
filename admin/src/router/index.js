@@ -49,15 +49,14 @@ const routes = [
         path: '/orders',
         name: 'Orders',
         component: () => import('@/views/Orders.vue'),
-        children: [
-          {
-            path: '/orders/id/:orderId',
-            name: 'OrderItems',
-            props: true,
-            component: () => import('@/views/Order.vue'),
-            children: [],
-          },
-        ],
+        children: [],
+      },
+      {
+        path: '/order/:orderId',
+        name: 'OrderItems',
+        props: true,
+        component: () => import('@/views/Order.vue'),
+        children: [],
       },
       {
         path: '/categories',
