@@ -5,7 +5,7 @@ const {
   NotFoundError,
   NoInputDataError,
 } = require("../utils/httpErrors");
-
+const moment = require("moment");
 class UsersService {
   constructor() {
     this.getOne = this.getOne.bind(this);
@@ -91,7 +91,12 @@ class UsersService {
 
       try {
         const orders = await queryRunner.query(
-          `select o.*, count(oi.item_option_id) count_items from orders o left join order_items oi on o.id = oi.order_id 
+          `select o.*, count(oi.item_option_id) count_items,
+          json_agg(json_build_object('title', i.title, 'id', io.id, 'size', io.size, 'material', io.material, 'price', io.price)) items 
+          from orders o 
+          left join order_items oi on o.id = oi.order_id  
+          left join item_options io on oi.item_option_id = io.id  
+          left join items i on io.item_id = i.id 
           where user_id = $1 and status='basket' 
           group by o.id
           limit 1`,
@@ -121,20 +126,36 @@ class UsersService {
         global.io.emit("UPDATE_ORDERS");
         res(data);
 
+        const orderStr = orders[0].items
+          ?.map((el) => `📦 ${el.title} - ${el.count} (шт.)`)
+          ?.join("/n");
+
         ctx.telegram
-          .sendMessage(user_id, ctx.getTitle("ORDER_INFO_TITLE"), {
-            parse_mode: "HTML",
-            reply_markup: {
-              inline_keyboard: [
-                [
-                  {
-                    text: "Оплатить",
-                    callback_data: "pay-" + order_id,
-                  },
+          .sendMessage(
+            user_id,
+            ctx.getTitle("ORDER_INFO_TITLE", [
+              order_id,
+              moment(orders[0].creation_date).format("DD.MM.YYYY"),
+              orderStr,
+              "Новый",
+              selected_po,
+              selected_dm,
+              total,
+            ]),
+            {
+              parse_mode: "HTML",
+              reply_markup: {
+                inline_keyboard: [
+                  [
+                    {
+                      text: "Оплатить",
+                      callback_data: "pay-" + order_id,
+                    },
+                  ],
                 ],
-              ],
-            },
-          })
+              },
+            }
+          )
           .catch(console.log);
       } catch (error) {
         console.log(error);
