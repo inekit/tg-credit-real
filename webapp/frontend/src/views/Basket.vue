@@ -25,7 +25,6 @@
             <span class="price">
                 {{ item.price }}
             </span>
-            <button class="drop-item" @click="dropItem(item.id)">Убрать</button>
         </div>
     </div>
     <button v-if="basketItems.length > 0" class="order" @click="order">Оформить заказ</button>
@@ -147,13 +146,15 @@ export default {
 </script>
   
 
-<style lang="scss">
+<style lang="scss" scoped>
 .basket-item {
+    padding: 1rem;
+
     .img-container {
         position: relative;
         background-color: #414141;
-        width: 25vw;
-        height: 40vw;
+        width: 15vw;
+        height: 25vw;
         position: relative;
         overflow: hidden;
         padding: 1rem;
@@ -165,77 +166,77 @@ export default {
             left: 50%;
             transform: translate(-50%, -50%);
             max-width: 200%;
-            max-height: 130%;
+            max-height: 110%;
             min-width: 100%;
             min-height: 100%;
             width: auto;
             height: auto;
         }
+    }
 
-        .title {
-            position: absolute;
-            left: 35vw;
-            top: 0;
-            font-size: 1.2rem;
+    .title {
+        position: absolute;
+        left: 35vw;
+        top: 0;
+        font-size: 1.2rem;
+    }
+
+    .count-select {
+        position: absolute;
+        right: 1rem;
+        background-color: #E6E6E6;
+        border-radius: 4px;
+        padding: 15px 40px;
+        font-size: 13px;
+        border: none;
+        top: 12px;
+        width: 50px;
+
+        &>span {
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+            width: 9px;
+            color: rgb(44, 44, 44);
         }
 
-        .count-select {
-            position: absolute;
-            right: 1rem;
-            background-color: #E6E6E6;
-            border-radius: 4px;
-            padding: 15px 40px;
-            font-size: 13px;
+        &>button {
             border: none;
-            top: 12px;
-            width: 50px;
-
-            &>span {
-                margin-left: auto;
-                margin-right: auto;
-                display: block;
-                width: 9px;
-                color: rgb(44, 44, 44);
-            }
-
-            &>button {
-                border: none;
-                color: rgb(44, 44, 44);
-                height: 47px;
-                position: absolute;
-                right: 0;
-                top: 0;
-                font-size: 25px;
-                width: 47px;
-                border-radius: 4px;
-
-                &:first-child {
-                    left: 0;
-                }
-            }
-        }
-
-        .size {
-            position: absolute;
-            left: 35vw;
-            top: 30%;
-            font-size: 1.1rem;
-        }
-
-        .material {
-            position: absolute;
-            left: 35vw;
-            top: 30%;
-            font-size: 1.1rem;
-        }
-
-        .price {
+            color: rgb(44, 44, 44);
+            height: 47px;
             position: absolute;
             right: 0;
             top: 0;
-            font-size: 1.4rem;
-            font-weight: 500;
+            font-size: 25px;
+            width: 47px;
+            border-radius: 4px;
+
+            &:first-child {
+                left: 0;
+            }
         }
+    }
+
+    .size {
+        position: absolute;
+        left: 35vw;
+        top: 30%;
+        font-size: 1.1rem;
+    }
+
+    .material {
+        position: absolute;
+        left: 35vw;
+        top: 30%;
+        font-size: 1.1rem;
+    }
+
+    .price {
+        position: absolute;
+        right: 0;
+        top: 0;
+        font-size: 1.4rem;
+        font-weight: 500;
     }
 }
 </style>
