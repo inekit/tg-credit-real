@@ -185,7 +185,7 @@ export default {
         async routeToMainItem() {
             const main_item = await this.getItem(undefined, this.backsideof)
             console.log(main_item)
-            $router.push('/items/' + main_item.id)
+            this.$router.push('/items/' + main_item.id)
         },
         async dropBackSideItem() {
             this.$store.state.myApi.delete(this.$store.state.restAddr + '/favorites', {
