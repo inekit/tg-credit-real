@@ -148,7 +148,8 @@ export default {
 
 <style lang="scss" scoped>
 .basket-item {
-    padding: 1rem;
+    margin: 1rem;
+    position: relative;
 
     .img-container {
         position: relative;
@@ -158,6 +159,7 @@ export default {
         position: relative;
         overflow: hidden;
         padding: 1rem;
+        border-radius: 1rem;
 
         img {
             position: absolute;
@@ -176,20 +178,20 @@ export default {
 
     .title {
         position: absolute;
-        left: 35vw;
+        left: 30vw;
         top: 0;
         font-size: 1.2rem;
     }
 
     .count-select {
         position: absolute;
-        right: 1rem;
+        right: 0;
+        bottom: 0;
         background-color: #E6E6E6;
         border-radius: 4px;
         padding: 15px 40px;
         font-size: 13px;
         border: none;
-        top: 12px;
         width: 50px;
 
         &>span {
@@ -219,15 +221,15 @@ export default {
 
     .size {
         position: absolute;
-        left: 35vw;
+        left: 30vw;
         top: 30%;
         font-size: 1.1rem;
     }
 
     .material {
         position: absolute;
-        left: 35vw;
-        top: 30%;
+        left: 30vw;
+        top: 60%;
         font-size: 1.1rem;
     }
 
