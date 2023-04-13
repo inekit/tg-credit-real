@@ -200,9 +200,11 @@ export default {
 
             &::after {
                 content: "";
-                position: absolute;
+                position: fixed;
                 height: 100vh;
                 width: 100vw;
+                right: 0;
+                top: 0;
                 z-index: 998;
                 background: transparent;
             }
@@ -257,7 +259,7 @@ export default {
 
             &::after {
                 content: "";
-                position: absolute;
+                position: fixed;
                 height: 100vh;
                 width: 100vw;
                 z-index: 998;

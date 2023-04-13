@@ -288,6 +288,7 @@ export default {
 
             &.favorite-item {
                 opacity: 1;
+                z-index: 1;
                 border-color: rgb(197, 80, 105);
                 background-color: rgb(197, 80, 105);
             }
