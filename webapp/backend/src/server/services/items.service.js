@@ -22,6 +22,8 @@ class UsersService {
     searchQuery,
     sort = "newing",
     category,
+    size,
+    material,
     user_id,
   }) {
     return new Promise(async (res, rej) => {
@@ -49,6 +51,8 @@ class UsersService {
           and (o.status = 'basket' or o.status is NULL)  
           and (p.category_name = $2 or $2 is NULL)  
           and (p.id = $3 or $3 is NULL)  
+          and (io.size = $11 or $11 is NULL)
+          and (io.material = $12 or $12 is NULL)
           group by p.id
           order by ${orderQueryPart}
           LIMIT $4 OFFSET $5`
@@ -58,6 +62,8 @@ class UsersService {
               left join item_options io on p.id = io.item_id
               where (title like $1 or $1 is NULL) 
               and $6::int is NULL
+              and $7 is NULL
+              and $8 is NULL
               and (p.category_name = $2 or $2 is NULL)  
               and (p.id = $3 or $3 is NULL)  
               group by p.id
@@ -65,7 +71,16 @@ class UsersService {
               LIMIT $4 OFFSET $5`;
       const connection = await tOrmCon;
       connection
-        .query(query, [searchQuery, category, id, take, skip, user_id])
+        .query(query, [
+          searchQuery,
+          category,
+          id,
+          take,
+          skip,
+          user_id,
+          size,
+          material,
+        ])
         .then((data) => res(data))
         .catch((error) => rej(new MySqlError(error)));
     });

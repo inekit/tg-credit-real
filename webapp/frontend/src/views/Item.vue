@@ -151,7 +151,8 @@ export default {
             this.$router.push("/basket")
         },
         routeToBackSide() {
-            this.$router.push(`/results/${this.$store.state.userId}?backsideof=${this.selected_option.id}&size=${this.selected_size}&material=${selected_material}`)
+            this.$router.push(`/results/${this.$store.state.userId}?backsideof=
+            ${this.selected_option.id}&size=${this.selected_size}&material=${this.selected_material}`)
         },
         getItem(id) {
             return new Promise((res, rej) => {
