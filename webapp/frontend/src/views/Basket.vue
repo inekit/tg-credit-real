@@ -219,10 +219,11 @@ export default {
             top: 0;
             font-size: 25px;
             width: 47px;
-            border-radius: 4px;
+            border-radius: 0 1rem 1rem 0;
 
             &:first-child {
                 left: 0;
+                border-radius: 1rem 0 0 1rem;
             }
         }
     }
