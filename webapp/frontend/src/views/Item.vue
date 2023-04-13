@@ -39,7 +39,7 @@
         <hr />
         <div class="backside count-select" v-if="count && !mainside_id">
             <label>Обратная сторона</label>
-            <button v-if="!backside_item" type="button" @click="routeToBackSide">Выбрать</button>
+            <button v-if="!backside_item?.id" type="button" @click="routeToBackSide">Выбрать</button>
             <div v-else>
                 <span>{{ "Название" }}</span>
                 <button type="button" @click="routeToBackSideItem">Посмотреть</button>
@@ -85,7 +85,8 @@ export default {
             selected_material: null,
             materials: [],
             count: 0,
-            mainside_item: {}
+            mainside_item: {},
+            backside_item: {}
         }
     },
     watch: {
