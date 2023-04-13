@@ -103,6 +103,7 @@ export default {
 <style lang="scss">
 .search-block {
     margin: 1rem;
+    position: relative;
 
     input[type="search"] {
         width: 100%;
@@ -142,8 +143,8 @@ export default {
         border-radius: 13px;
         background-color: transparent;
         position: absolute;
-        top: 4px;
-        right: calc(1rem + 2px);
+        top: calc(-1rem - 35px);
+        right: 0;
         z-index: 999;
 
     }
@@ -157,7 +158,7 @@ export default {
         height: 100vh;
         width: 50vw;
         position: fixed;
-        top: -1rem;
+        top: 0;
         right: calc(-50% - 4rem);
         padding: 1rem;
         background-color: white;
@@ -195,6 +196,15 @@ export default {
 
             &>span {
                 opacity: 1;
+            }
+
+            &::after {
+                content: "";
+                position: absolute;
+                height: 100vh;
+                width: 100vw;
+                z-index: 998;
+                background: transparent;
             }
         }
     }
@@ -243,8 +253,16 @@ export default {
         }
 
         &.shown {
-            top: -1rem;
+            top: 0;
 
+            &::after {
+                content: "";
+                position: absolute;
+                height: 100vh;
+                width: 100vw;
+                z-index: 998;
+                background: transparent;
+            }
         }
     }
 
@@ -254,8 +272,8 @@ export default {
         border-radius: 13px;
         background-color: transparent;
         position: absolute;
-        top: 4px;
-        right: calc(1rem + 2px + 40px);
+        top: calc(-1rem - 35px);
+        right: 40px;
 
 
     }

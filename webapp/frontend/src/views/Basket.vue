@@ -3,6 +3,7 @@
     <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 300 250"></InstagramLoader>
     <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 300 200"></InstagramLoader>
     <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 300 200"></InstagramLoader>
+    <button v-if="basketItems.length > 0" class="" @click="order">Оформить заказ</button>
     <div class="basket-items">
         <div class="basket-item" v-for="item, id in basketItems" :key="id">
             <div class="img-container">
@@ -31,7 +32,6 @@
         <span class="label">Итого:</span>
         <span class="value">{{ basketItems?.reduce((prev, cur) => prev + cur.price, 0) }} ₽</span>
     </div>
-    <button v-if="basketItems.length > 0" class="" @click="order">Оформить заказ</button>
 </template>
 
 <script>
@@ -196,7 +196,7 @@ export default {
         right: 0;
         bottom: 0;
         background-color: #E6E6E6;
-        border-radius: 4px;
+        border-radius: 1rem;
         padding: 15px 40px;
         font-size: 13px;
         border: none;
