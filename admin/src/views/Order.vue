@@ -51,6 +51,7 @@ export default {
             myApi: myApi,
             formVisible: false,
             formData: {},
+            order: {},
             rows: [],
             statuses: ["Новый", "Оплачен", "На доставке", "Доставлен"],
             tableFieldNames: [
