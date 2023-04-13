@@ -204,8 +204,6 @@ class UsersService {
           .getRepository("Order")
           .update({ id: order.id }, order)
           .then((data) => {
-            res(data);
-
             ctx.telegram
               .sendMessage(
                 user_id,
@@ -219,6 +217,8 @@ class UsersService {
                 }
               )
               .catch(console.log);
+
+            res(data);
           })
           .catch((error) => rej(new MySqlError(error)));
       });

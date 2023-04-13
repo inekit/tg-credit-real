@@ -135,7 +135,7 @@ button {
 
 .order-card {
     padding: 1rem;
-
+    font-size: 1.2rem;
 }
 
 .change-status {
