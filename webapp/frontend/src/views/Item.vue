@@ -177,13 +177,13 @@ export default {
         async routeToBackSideItem() {
             console.log(this.backside_item)
 
-            this.$router.push(`/items/${this.backside_item.id}?mainside_id=
+            this.$router.push(`/items/${this.backside_item?.id}?mainside_id=
             ${this.selected_option.id}&size=${this.selected_size}&material=${this.selected_material}`);
 
         },
         async routeToMainItem() {
             console.log(this.mainside_item)
-            this.$router.push('/items/' + this.mainside_item.id)
+            this.$router.push('/items/' + this.mainside_item?.id)
         },
         async dropBackSideItem() {
             this.$store.state.myApi.delete(this.$store.state.restAddr + '/favorites', {
@@ -282,6 +282,7 @@ export default {
                 })
                 .then(async (response) => {
                     if (this.mainside_id) {
+                        await getReferencedItems()
                         await this.routeToMainItem()
                     }
 
