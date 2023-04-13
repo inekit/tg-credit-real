@@ -186,8 +186,7 @@ export default {
             })
                 .then(async response => {
                     this.count = (await this.getBasketOption())?.count ?? 0;
-                    this.is_favorite = !!count;
-
+                    this.item = await this.getItem(this.$route.params.id);
                 })
                 .catch(e => { eventBus.$emit('noresponse', e) })
         },
@@ -200,7 +199,7 @@ export default {
                 })
                 .then(async (response) => {
                     this.count = (await this.getBasketOption())?.count ?? 0;
-                    this.is_favorite = !!count;
+                    this.item.is_favorite = true;
                 })
                 .catch((e) => {
                     alert("Эта позиция уже добавлена в корзину")
