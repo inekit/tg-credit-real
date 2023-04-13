@@ -93,9 +93,7 @@ export default {
                 .then(async (response) => {
                     this.count = (await this.getBasketOption())?.count ?? 0;
                 })
-                .catch((e) => {
-                    alert("Эта позиция уже добавлена в корзину")
-                })
+                .catch(e => { eventBus.$emit('noresponse', e) })
         },
         routeBack() {
             this.$router.go(-1)

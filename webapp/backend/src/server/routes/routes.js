@@ -4,6 +4,7 @@ var ItemsController = require("../controllers/items.controller");
 var CategoriesController = require("../controllers/categories.controller");
 var TagsController = require("../controllers/tags.controller");
 var BasketsController = require("../controllers/baskets.controller");
+var OrdersController = require("../controllers/orders.controller");
 
 module.exports = (ctx) => {
   router.get("/items", ItemsController.getAll);
@@ -14,6 +15,7 @@ module.exports = (ctx) => {
   router.delete("/favorites", BasketsController.deleteFavorite);
 
   router.get("/basket_data", BasketsController.getBasketData);
+  router.post("/orders", OrdersController.addOne);
 
   router.get("/categories", CategoriesController.getAll);
 
