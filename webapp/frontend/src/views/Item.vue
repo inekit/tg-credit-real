@@ -237,7 +237,7 @@ export default {
                     params: {
                         user_id: this.$store.state.userId,
                         item_option_id: this.selected_option.id,
-                        backside_of_id: this.backsideof
+                        backside_of_id: this.backsideof ?? undefined
                     }
                 })
                 .then((response) => {
