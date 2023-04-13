@@ -174,14 +174,22 @@ export default {
         async routeToBackSideItem() {
             this.$router.push(`/items/${this.item.id}?backsideof=
             ${this.selected_option.id}&size=${this.selected_size}&material=${this.selected_material}`);
-            getUriParams();
+            this.getUriParams();
             this.item = await this.getItem(this.$route.params.id);
         },
         async dropBackSideItem() {
-            this.$router.push(`/items/${this.item.id}?backsideof=
-            ${this.selected_option.id}&size=${this.selected_size}&material=${this.selected_material}`);
-            getUriParams();
-            this.item = await this.getItem(this.$route.params.id);
+            this.$store.state.myApi.delete(this.$store.state.restAddr + '/favorites', {
+                data: {
+                    user_id: this.$store.state.userId,
+                    item_option_id: id,
+                    backside_of_id: this.selected_option.id
+                }
+            })
+                .then(async response => {
+                    this.item = await this.getItem(this.$route.params.id);
+
+                })
+                .catch(e => { eventBus.$emit('noresponse', e) })
         },
         getItem(id) {
             return new Promise((res, rej) => {
