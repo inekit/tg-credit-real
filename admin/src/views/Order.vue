@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="card">
+        <div class="card mb-4">
             <div>
                 ID: {{ order.id }}
             </div>
@@ -25,9 +25,11 @@
             <div>
                 Статус: {{ order.status }}
             </div>
-            Изменить статус:
-            <button v-for="status in statuses" :key="status" class="btn btn-primary" @change="changeStatus(status)">{{
-                status }}</button>
+            <div class="change-status">
+                Изменить статус:
+                <button v-for="status in statuses" :key="status" class="btn btn-primary" @click="changeStatus(status)">{{
+                    status }}</button>
+            </div>
         </div>
         <Table :fields="tableFieldNames" :postData="get" :actions="dataActions" :rows="rows" editMode="form"
             name="Позиции" />
@@ -129,6 +131,15 @@ export default {
 <style lang="scss">
 button {
     margin-bottom: 20px;
+}
+
+.change-status {
+    padding: 1rem;
+    display: flex;
+
+    button {
+        width: 50px;
+    }
 }
 </style>
   
