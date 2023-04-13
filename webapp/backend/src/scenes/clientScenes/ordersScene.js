@@ -1,10 +1,11 @@
 const {
-  Telegraf,
-  Composer,
-  Scenes: { WizardScene, BaseScene },
-} = require("telegraf");
+  CustomWizardScene,
+  createKeyboard,
+  handlers: { FilesHandler },
+  telegraf: { Markup },
+} = require("telegraf-steps");
 
-const scene = new BaseScene("catalogScene");
+const scene = new CustomWizardScene("ordersScene");
 
 const tOrmCon = require("../../db/connection");
 
