@@ -163,7 +163,7 @@ export default {
         padding: 1rem;
         background-color: white;
         box-shadow: -1em 0 1em rgba(165, 165, 165, 0.404);
-        z-index: 100;
+        z-index: 998;
         transition: ease-out 0.4s;
         overflow: scroll;
 
@@ -198,14 +198,14 @@ export default {
                 opacity: 1;
             }
 
-            &::after {
+            &::before {
                 content: "";
                 position: fixed;
                 height: 100vh;
                 width: 100vw;
                 right: 0;
                 top: 0;
-                z-index: 998;
+                z-index: 997;
                 background: transparent;
             }
         }
