@@ -232,7 +232,7 @@ export default {
                 .then((response) => {
                     try {
                         console.log(response.data, this.backsideof)
-                        const item = response.data?.filter(el => el.backside_of_id == this.backsideof)?.[0];
+                        const item = response.data?.filter(el => el.backside_of_id == this.backsideof || !this.backsideof)?.[0];
 
                         if (!this.backsideof) this.backside_id = response.data?.filter(el => el.backside_of_id)?.[0];
 
