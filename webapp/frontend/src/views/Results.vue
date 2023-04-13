@@ -248,6 +248,13 @@ export default {
                 word-wrap: break-word;
             }
 
+            h3 {
+                margin: 5px 0 -5px 0;
+                color: #414141;
+                font-weight: 200;
+                font-size: 1.3rem;
+            }
+
             img {
                 position: absolute;
                 margin: auto;
