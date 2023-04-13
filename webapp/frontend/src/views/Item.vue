@@ -165,8 +165,10 @@ export default {
         async getBasketOption() {
             return await this.$store.state.myApi
                 .get(this.$store.state.restAddr + '/favorites', {
-                    user_id: this.$store.state.userId,
-                    item_option_id: this.selected_option.id,
+                    params: {
+                        user_id: this.$store.state.userId,
+                        item_option_id: this.selected_option.id,
+                    }
                 })
                 .then((response) => {
                     return response.data?.[0];
