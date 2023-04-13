@@ -199,8 +199,8 @@ export default {
                     user_id: this.$store.state.userId,
                 })
                 .then(async (response) => {
-                    window.Telegram?.WebApp.disableClosingConfirmation()
-                    window.Telegram?.WebApp.close();
+                    this.count = (await this.getBasketOption())?.count ?? 0;
+                    this.is_favorite = !!count;
                 })
                 .catch((e) => {
                     alert("Эта позиция уже добавлена в корзину")

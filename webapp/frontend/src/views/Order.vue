@@ -91,7 +91,8 @@ export default {
                     total: this.basketData.total + this.deliveryPrice
                 })
                 .then(async (response) => {
-                    this.count = (await this.getBasketOption())?.count ?? 0;
+                    window.Telegram?.WebApp.disableClosingConfirmation()
+                    window.Telegram?.WebApp.close();
                 })
                 .catch(e => { eventBus.$emit('noresponse', e) })
         },
