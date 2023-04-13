@@ -111,7 +111,7 @@ export default {
         window.Telegram?.WebApp.BackButton.onClick(this.routeBack);
         window.Telegram?.WebApp.BackButton.show();
 
-        updateUriParams()
+        this.getUriParams()
 
         this.item = await this.getItem(this.$route.params.id);
 
@@ -140,7 +140,7 @@ export default {
         window.Telegram?.WebApp.BackButton.hide();
     },
     methods: {
-        updateUriParams() {
+        getUriParams() {
             let uri = window.location.search.substring(1);
             this.params = new URLSearchParams(uri)
             this.backFilters = { size: this.params.get('size'), material: this.params.get('material') }
