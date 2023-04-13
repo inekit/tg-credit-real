@@ -37,9 +37,14 @@
         <label>Описание</label>
         <div class="description">{{ item.description }}</div>
         <div class="count-select" v-if="count">
-            <button type="button" @click="routeToBackSide">Обратная сторона</button>
+            <button v-if="!backside_id" type="button" @click="routeToBackSide">Обратная сторона</button>
+            <button v-else type="button" @click="routeToBackSideItem">Обратная сторона (оформлена)</button>
         </div>
-        <div class="order">
+        <div class="order" v-if="backsideof">
+            <button v-if="is_favorite" type="button" @click.prevent="order">В корзину</button>
+            <button v-else type="button" @click.prevent="$router.push('/items/' + backsideof)">К основной</button>
+        </div>
+        <div class="order" v-else>
             <span>{{ price }} ₽</span>
             <div class="count-select" v-if="count">
                 <button type="button" @click="changeCount(count - 1)">-</button>
@@ -154,6 +159,10 @@ export default {
             this.$router.push(`/results/${this.$store.state.userId}?backsideof=
             ${this.selected_option.id}&size=${this.selected_size}&material=${this.selected_material}`)
         },
+        routeToBackSideItem() {
+            this.$router.push(`/items/${this.item.id}?backsideof=
+            ${this.selected_option.id}&size=${this.selected_size}&material=${this.selected_material}`)
+        },
         getItem(id) {
             return new Promise((res, rej) => {
                 this.$store.state.myApi.get(this.$store.state.restAddr + '/items', {
@@ -163,9 +172,12 @@ export default {
                     }
                 })
                     .then(response => {
-                        const item = response.data?.[0]
+                        const item = response.data?.filter(el => el.backside_of_id === this.backsideof)?.[0];
                         if (this.backFilters) item.options_array?.filter(({ size, material }) =>
                             size == this.backFilters.size && material == this.backFilters.material)
+
+                        if (!this.backsideof) this.backside_id = response.data?.filter(el => el.backside_of_id)?.[0];
+
                         res(item)
                     })
                     .catch(e => { eventBus.$emit('noresponse', e); rej() })
@@ -187,6 +199,7 @@ export default {
                     params: {
                         user_id: this.$store.state.userId,
                         item_option_id: this.selected_option.id,
+                        backside_of_id: this.backsideof
                     }
                 })
                 .then((response) => {
@@ -215,10 +228,13 @@ export default {
                     item_option_id: this.selected_option.id,
                     count: 1,
                     user_id: this.$store.state.userId,
-                    backsideof: this.backsideof
+                    backside_of_id: this.backsideof
                 })
                 .then(async (response) => {
-                    if (this.backsideof) return this.$router.push("/items/" + this.backsideof)
+                    if (this.backsideof) {
+                        this.$router.push("/items/" + this.backsideof)
+                        return this.item = await this.getItem(this.$route.params.id);
+                    }
 
                     this.count = (await this.getBasketOption())?.count ?? 0;
                     this.item.is_favorite = true;
