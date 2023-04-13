@@ -31,7 +31,7 @@
         <span class="label">Итого:</span>
         <span class="value">{{ basketItems?.reduce((prev, cur) => prev + cur.price, 0) }} ₽</span>
     </div>
-    <button v-if="basketItems.length > 0" class="order" @click="order">Оформить заказ</button>
+    <button v-if="basketItems.length > 0" class="" @click="order">Оформить заказ</button>
 </template>
 
 <script>
