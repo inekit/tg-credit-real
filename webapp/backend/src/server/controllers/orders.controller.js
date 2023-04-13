@@ -16,18 +16,22 @@ function getOne(req, res, next) {
     .catch((error) => next(error));
 }
 
-function addOne(req, res, next) {
-  ordersService
-    .add(req.body)
-    .then((data) => res.send(data))
-    .catch((error) => next(error));
+function addOne(ctx) {
+  return (req, res, next) => {
+    ordersService
+      .add(req.body, ctx)
+      .then((data) => res.send(data))
+      .catch((error) => next(error));
+  };
 }
 
-function editOne(req, res, next) {
-  ordersService
-    .edit(req.body)
-    .then((data) => res.send(data))
-    .catch((error) => next(error));
+function editOne(ctx) {
+  return (req, res, next) => {
+    ordersService
+      .edit(req.body)
+      .then((data) => res.send(data))
+      .catch((error) => next(error));
+  };
 }
 
 function deleteOne(req, res, next) {

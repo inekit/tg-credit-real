@@ -23,7 +23,7 @@ const { Server } = require("socket.io");
 
 module.exports = (ctx) => {
   app.use("/colorsserver/api", router(ctx));
-  app.use("/colorsserver/api/admin", adminRouter);
+  app.use("/colorsserver/api/admin", adminRouter(ctx));
 
   app.use(function (req, res, next) {
     const err = new Error("Страница не найдена!");

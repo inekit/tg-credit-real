@@ -64,17 +64,20 @@ class UsersService {
     });
   }
 
-  add({
-    user_id,
-    address,
-    selected_dm,
-    selected_po,
-    phone,
-    name,
-    surname,
-    patronymic,
-    total,
-  }) {
+  add(
+    {
+      user_id,
+      address,
+      selected_dm,
+      selected_po,
+      phone,
+      name,
+      surname,
+      patronymic,
+      total,
+    },
+    ctx
+  ) {
     return new Promise(async (res, rej) => {
       if (!user_id) return rej(new NoInputDataError({ user_id }));
 
@@ -117,6 +120,22 @@ class UsersService {
         await queryRunner.commitTransaction();
         global.io.emit("UPDATE_ORDERS");
         res(data);
+
+        ctx.telegram
+          .sendMessage(user_id, ctx.getTitle("ORDER_INFO_TITLE"), {
+            parse_mode: "HTML",
+            reply_markup: {
+              inline_keyboard: [
+                [
+                  {
+                    text: "Получить бесплатную консультацию",
+                    callback_data: "consult-" + item_id,
+                  },
+                ],
+              ],
+            },
+          })
+          .catch(console.log);
       } catch (error) {
         console.log(error);
         await queryRunner.rollbackTransaction();
@@ -142,7 +161,7 @@ class UsersService {
     });
   }
 
-  edit(order) {
+  edit(order, ctx) {
     return new Promise((res, rej) => {
       if (!order.id) return rej(new NoInputDataError({ id: order.id }));
 

@@ -16,44 +16,48 @@ var StaticsController = require("../controllers/statics.controller");
 var fileUpload = require("express-fileupload");
 router.use(fileUpload({}));
 
-router.get("/users", auth, UsersController.getAll);
-router.delete("/users", auth, UsersController.adminDelete);
+module.exports = (ctx) => {
+  router.get("/users", auth, UsersController.getAll);
+  router.delete("/users", auth, UsersController.adminDelete);
 
-router.get("/items", auth, ItemsController.getAll);
-router.post("/items", auth, ItemsController.addOne);
-router.put("/items", auth, ItemsController.editOne);
-router.delete("/items", auth, ItemsController.deleteOne);
+  router.get("/items", auth, ItemsController.getAll);
+  router.post("/items", auth, ItemsController.addOne);
+  router.put("/items", auth, ItemsController.editOne);
+  router.delete("/items", auth, ItemsController.deleteOne);
 
-router.get("/orders", auth, OrdersController.getAll);
-router.post("/orders", auth, OrdersController.addOne);
-router.put("/orders", auth, OrdersController.editOne);
-router.delete("/orders", auth, OrdersController.deleteOne);
+  router.get("/orders", auth, OrdersController.getAll);
+  router.post("/orders", auth, OrdersController.addOne(ctx));
+  router.put("/orders", auth, OrdersController.editOne(ctx));
+  router.delete("/orders", auth, OrdersController.deleteOne);
 
-router.post("/tags", auth, TagsController.addOne);
-router.put("/tags", auth, TagsController.editOne);
-router.delete("/tags", auth, TagsController.deleteOne);
+  router.post("/tags", auth, TagsController.addOne);
+  router.put("/tags", auth, TagsController.editOne);
+  router.delete("/tags", auth, TagsController.deleteOne);
 
-router.post("/categories", auth, CategoriesController.addOne);
-router.put("/categories", auth, CategoriesController.editOne);
-router.delete("/categories", auth, CategoriesController.deleteOne);
+  router.post("/categories", auth, CategoriesController.addOne);
+  router.put("/categories", auth, CategoriesController.editOne);
+  router.delete("/categories", auth, CategoriesController.deleteOne);
 
-router.post("/categories", auth, CategoriesController.addOne);
-router.put("/categories", auth, CategoriesController.editOne);
-router.delete("/categories", auth, CategoriesController.deleteOne);
+  router.post("/categories", auth, CategoriesController.addOne);
+  router.put("/categories", auth, CategoriesController.editOne);
+  router.delete("/categories", auth, CategoriesController.deleteOne);
 
-router.get("/statics", auth, StaticsController.getOne);
-router.put("/statics", auth, StaticsController.editOne);
+  router.get("/statics", auth, StaticsController.getOne);
+  router.put("/statics", auth, StaticsController.editOne);
 
-router.post("/login", login.local);
-router.put("/register", register.local);
-router.get("/logout", auth, (req, res) => {
-  req.logout(function (err) {
-    if (err) {
-      return next(err);
-    }
+  router.post("/login", login.local);
+  router.put("/register", register.local);
+  router.get("/logout", auth, (req, res) => {
+    req.logout(function (err) {
+      if (err) {
+        return next(err);
+      }
 
-    return res.send(JSON.stringify({ isAuthenticated: req.isAuthenticated() }));
+      return res.send(
+        JSON.stringify({ isAuthenticated: req.isAuthenticated() })
+      );
+    });
   });
-});
 
-module.exports = router;
+  return router;
+};
