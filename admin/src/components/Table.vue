@@ -24,8 +24,8 @@
                       Сохранить</CButton>
                     <CButton v-if="updatingId === rows[i]?.id" :color="'light'" size="md" @click="updatingId = false">
                       Отменить</CButton>
-                    <CButton v-else v-for="(info, name) in actions" :key="name + 'action'" :color="info?.color"
-                      size="sm" @click="chooseAction(name, info, i, j, column)">{{ name }}</CButton>
+                    <CButton v-else v-for="(info, name) in actions" :key="name + 'action'" :color="info?.color" size="sm"
+                      @click="chooseAction(name, info, i, j, column)">{{ name }}</CButton>
                   </div>
                 </CTableDataCell>
               </CTableRow>
@@ -120,7 +120,7 @@ export default {
         let e = pair
         children?.forEach((c) => (e = e?.[c]))
 
-        if (f?.name === 'publication_date') e = dateFormatter(e)
+        if (f?.name === 'creation_date') e = dateFormatter(e)
 
         if (f?.name === 'text') e = e.substr(0, 100)
 

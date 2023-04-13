@@ -30,8 +30,7 @@ export default {
       rows: [],
       tableKey: 1,
       dataActions: {
-        Позиции: { action: this.routeToPosts, color: 'primary' },
-        Обработка: { action: this.change, color: 'warning' },
+        "К заказу": { action: this.routeToPosts, color: 'primary' },
       },
       tableFieldNames: [
         {
@@ -104,7 +103,7 @@ export default {
           })
     },
     routeToPosts(item) {
-      this.$router.push('/items/' + item.id)
+      this.$router.push('/orders/id/' + item.id)
     },
   },
 }
