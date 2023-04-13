@@ -1,5 +1,30 @@
 <template>
     <div>
+        <div>
+            ID: {{ order.id }}
+        </div>
+        <div>
+            Создан: {{ dateFormatter(order.creation_date) }}
+        </div>
+        <div>
+            Доставка: {{ order.selected_dm }}
+        </div>
+        <div>
+            Адрес доставки: {{ order.address }}
+        </div>
+        <div>
+            ФИО получателя: {{ `${order.surname} ${order.name} ${order.patronymic}` }}
+        </div>
+        <div>
+            Метод оплаты: {{ order.selected_po }}
+        </div>
+        <div>
+            Сумма заказа: {{ order.total }}
+        </div>
+        <div>
+            Статус: {{ order.status }}
+            <button v-for="status in statuses" :key="status" @change="changeStatus(status)">{{ status }}</button>
+        </div>
         <Table :fields="tableFieldNames" :postData="get" :actions="dataActions" :rows="rows" editMode="form"
             name="Позиции" />
     </div>
@@ -8,7 +33,7 @@
 <script>
 import Table from '@/components/Table.vue'
 import eventBus from '../eventBus'
-
+import { dateFormatter } from '../utils/dateFormatter';
 import axios from 'axios'
 const myApi = axios.create({
     withCredentials: true,
@@ -27,8 +52,7 @@ export default {
             formVisible: false,
             formData: {},
             rows: [],
-            dataActions: {
-            },
+            statuses: ["Новый", "Оплачен", "На доставке", "Доставлен"],
             tableFieldNames: [
                 {
                     name: 'ID',
@@ -63,6 +87,8 @@ export default {
             console.log(elObj)
             this.formMode = 'edit'
         },
+        dateFormatter,
+        changeStatus() { },
         get(take, page) {
             console.log(this.tag)
             return myApi
@@ -74,8 +100,8 @@ export default {
                     },
                 })
                 .then((res) => {
-                    if (res.data?.length > 0) this.rows = res.data
-                    return res.data
+                    if (res.data.items?.length > 0) this.rows = res.data.items
+                    this.order = res.data
                 })
                 .catch((error) => {
                     eventBus.$emit('noresponse', error)

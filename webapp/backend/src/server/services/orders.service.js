@@ -111,9 +111,17 @@ class UsersService {
 
         const basket_id = orders[0].id;
 
-        const data = await queryRunner.manager
-          .getRepository("Order")
-          .save({ user_id, total, selected_dm, selected_po });
+        const data = await queryRunner.manager.getRepository("Order").save({
+          user_id,
+          total,
+          selected_dm,
+          selected_po,
+          phone,
+          address,
+          name,
+          surname,
+          patronymic,
+        });
 
         const { id: order_id } = data;
 

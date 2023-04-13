@@ -35,6 +35,31 @@ module.exports = new EntitySchema({
       enum: ["yookassa"],
       nullable: true,
     },
+    name: {
+      type: "varchar",
+      length: 255,
+      nullable: true,
+    },
+    surname: {
+      type: "varchar",
+      length: 255,
+      nullable: true,
+    },
+    patronymic: {
+      type: "varchar",
+      length: 255,
+      nullable: true,
+    },
+    address: {
+      type: "varchar",
+      length: 255,
+      nullable: true,
+    },
+    phone: {
+      type: "varchar",
+      length: 45,
+      nullable: true,
+    },
   },
   relations: {
     user: {
