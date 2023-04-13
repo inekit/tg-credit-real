@@ -48,7 +48,7 @@
         </div>
         <div class="order" v-if="backsideof">
             <button v-if="!item.is_favorite" type="button" @click.prevent="order">В корзину</button>
-            <button v-else type="button" @click.prevent="$router.push('/items/' + backsideof)">К основной</button>
+            <button v-else type="button" @click.prevent="routeToMainItem">К основной</button>
         </div>
         <div class="order" v-else>
             <span>{{ price }} ₽</span>
@@ -175,9 +175,17 @@ export default {
             ${this.selected_option.id}&size=${this.selected_size}&material=${this.selected_material}`)
         },
         async routeToBackSideItem() {
-            this.$router.push(`/items/${this.item.id}?backsideof=
+            const backside_item = await this.getItem(undefined, this.backside_id)
+            console.log(backside_item)
+
+            this.$router.push(`/items/${backside_item.id}?backsideof=
             ${this.selected_option.id}&size=${this.selected_size}&material=${this.selected_material}`);
 
+        },
+        async routeToMainItem() {
+            const main_item = await this.getItem(undefined, this.backsideof)
+            console.log(main_item)
+            $router.push('/items/' + main_item.id)
         },
         async dropBackSideItem() {
             this.$store.state.myApi.delete(this.$store.state.restAddr + '/favorites', {
@@ -193,11 +201,12 @@ export default {
                 })
                 .catch(e => { eventBus.$emit('noresponse', e) })
         },
-        getItem(id) {
+        getItem(id, item_option_id) {
             return new Promise((res, rej) => {
                 this.$store.state.myApi.get(this.$store.state.restAddr + '/items', {
                     params: {
                         id,
+                        item_option_id,
                         user_id: this.$store.state.userId,
                     }
                 })
