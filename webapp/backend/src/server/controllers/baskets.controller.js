@@ -6,6 +6,13 @@ function getFavorites(req, res, next) {
     .catch((error) => next(error));
 }
 
+function getBasketData(req, res, next) {
+  basketsService
+    .getBasketData(req.query)
+    .then((data) => res.send(data))
+    .catch((error) => next(error));
+}
+
 function addFavorite(req, res, next) {
   basketsService
     .addFavorite(req.body)
@@ -32,4 +39,5 @@ module.exports = {
   deleteFavorite,
   addFavorite,
   editFavorite,
+  getBasketData,
 };

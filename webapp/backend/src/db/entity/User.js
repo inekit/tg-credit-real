@@ -17,9 +17,24 @@ module.exports = new EntitySchema({
       type: "date",
       nullable: true,
     },
-    question_1: {
-      type: "enum",
-      enum: ["1", "2", "3", "4", "5", "skip"],
+    name: {
+      type: "varchar",
+      length: 255,
+      nullable: true,
+    },
+    surname: {
+      type: "varchar",
+      length: 255,
+      nullable: true,
+    },
+    patronymic: {
+      type: "varchar",
+      length: 255,
+      nullable: true,
+    },
+    address: {
+      type: "varchar",
+      length: 255,
       nullable: true,
     },
     phone: {

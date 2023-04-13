@@ -13,6 +13,8 @@ module.exports = (ctx) => {
   router.put("/favorites", BasketsController.editFavorite);
   router.delete("/favorites", BasketsController.deleteFavorite);
 
+  router.get("/basket_data", BasketsController.getBasketData);
+
   router.get("/categories", CategoriesController.getAll);
 
   router.get("/tags", TagsController.getAll);

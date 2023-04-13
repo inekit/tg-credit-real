@@ -10,6 +10,7 @@ const {
 class BasketsService {
   constructor() {
     this.getFavorites = this.getFavorites.bind(this);
+    this.getBasketData = this.getBasketData.bind(this);
     this.addFavorite = this.addFavorite.bind(this);
     this.editFavorite = this.editFavorite.bind(this);
     this.deleteFavorite = this.deleteFavorite.bind(this);
@@ -159,6 +160,29 @@ class BasketsService {
         )
         .then(async (data) => {
           return res(data);
+        })
+        .catch((error) => rej(new MySqlError(error)));
+    });
+  }
+
+  getBasketData({ user_id }) {
+    return new Promise(async (res, rej) => {
+      const connection = await tOrmCon;
+
+      connection
+        .query(
+          `select u.name, u.surname, u.patronymic, u.address, u.phone, sum(io.price*io.count) total from users u 
+          left join orders o on i.id = o.user_id
+          left join order_items oi on oi.order_id = o.id
+          left join item_options io on oi.item_option_id = io.id
+          where u.id = $1
+          group by u.id
+          limit 1`,
+          [user_id]
+        )
+        .then(async (data) => {
+          if (!data?.[0]) rej(new Error(data));
+          return res(data[0]);
         })
         .catch((error) => rej(new MySqlError(error)));
     });
