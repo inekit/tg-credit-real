@@ -267,7 +267,7 @@ export default {
                 })
                 .then(async (response) => {
                     if (this.backsideof) {
-                        this.$router.push("/items/" + this.backsideof)
+                        this.$router.push("/items/" + parseInt(this.backsideof))
 
                     }
 
