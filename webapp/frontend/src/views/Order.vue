@@ -1,6 +1,6 @@
 <template>
+    <h1>Оформление заказа</h1>
     <div class="order-block">
-        <h1>Оформление заказа</h1>
         <button class="" @click="order">Оформить заказ</button>
 
         <div class="payment">
@@ -102,15 +102,13 @@ export default {
     input[type="radio"] {
         -webkit-appearance: none;
         appearance: none;
-        background-color: transparent;
+        background-color: #E6E6E6;
         margin: 0;
-
         font: inherit;
-        color: currentColor;
-        width: 1.15em;
-        height: 1.15em;
-        border: 0.15em solid #414141;
-        border-radius: 50%;
+        width: 100px;
+        height: 30px;
+        border-radius: 1rem;
+        border: none;
         transform: translateY(-0.075em);
 
         display: grid;
@@ -119,13 +117,13 @@ export default {
 
     input[type="radio"]::before {
         content: "";
-        width: 0.65em;
-        height: 0.65em;
-        border-radius: 50%;
+        width: 100px;
+        height: 30px;
+        z-index: 999;
+        border-radius: 1rem;
         transform: scale(0);
         transition: 120ms transform ease-in-out;
-        box-shadow: inset 1em 1em #414141;
-        /* Windows High Contrast Mode */
+        box-shadow: inset 1em 1em #929292;
         background-color: CanvasText;
     }
 
@@ -134,7 +132,7 @@ export default {
     }
 
     input[type="radio"]:focus {
-        outline: max(2px, 0.15em) solid #414141;
+        outline: none;
         outline-offset: max(2px, 0.15em);
     }
 }
@@ -150,11 +148,16 @@ export default {
         display: block;
     }
 
+    position: relative;
+
     input {
-        background-color: #414141;
+        background-color: #E6E6E6;
+        padding: 17px 20px;
+        width: calc(100% - 40px);
         border-radius: 1rem;
         border: none;
         margin-bottom: 10px;
+        font-size: 1rem;
     }
 
     margin-bottom: 20px;
