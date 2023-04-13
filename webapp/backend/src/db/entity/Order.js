@@ -18,8 +18,8 @@ module.exports = new EntitySchema({
     },
     status: {
       type: "enum",
-      enum: ["basket", "created", "payed", "delivery", "delivered"],
-      default: "created",
+      enum: ["basket", "created", "Новичек", "payed", "delivery", "delivered"],
+      default: "Новичек",
     },
     total: {
       type: "int",

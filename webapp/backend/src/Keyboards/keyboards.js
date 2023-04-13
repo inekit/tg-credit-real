@@ -1,5 +1,14 @@
 const { Markup } = require("telegraf");
 
+exports.main_menu_keyboard = (ctx) => {
+  const buttons = [
+    [ctx.getTitle("WEBAPP_BUTTON"), ctx.getTitle("ORDERS_BUTTON")],
+    [ctx.getTitle("ABOUT_BUTTON")],
+  ];
+
+  return Markup.keyboard(buttons).resize();
+};
+
 exports.custom_bottom_keyboard = (ctx, bNames, columns = 2) => {
   let k = Markup.keyboard([], { columns: 2 }).resize();
 

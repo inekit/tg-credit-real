@@ -36,10 +36,24 @@ const scene = new CustomWizardScene("clientScene").enter(async (ctx) => {
       });
   }
 
+  ctx.replyWithKeyboard("START_TITLE", {
+    name: "main_menu_keyboard",
+  });
+});
+
+scene.hears(titles.getTitle("WEBAPP_BUTTON"), (ctx) => {
   ctx.replyWithKeyboard("WEBAPP_TITLE", {
     name: "webapp_keyboard",
     args: [ctx.from.id],
   });
+});
+
+scene.hears(titles.getTitle("ABOUT_BUTTON"), (ctx) => {
+  ctx.replyWithTitle("ABOUT_TITLE");
+});
+
+scene.hears(titles.getTitle("ORDERS_BUTTON"), (ctx) => {
+  ctx.scene.enter("ordersScene");
 });
 
 module.exports = scene;
