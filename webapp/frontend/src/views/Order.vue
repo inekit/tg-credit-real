@@ -27,8 +27,7 @@
             <input type="text" id="surname" name="surname" placeholder="Фамилия">
             <input type="text" id="patronymic" name="patronymic" placeholder="Отчество">
             <input type="tel" id="phone" name="phone" placeholder="Телефон">
-            <label for="address">Адрес доставки *:</label>
-            <input type="number" id="address" name="address">
+            <input type="number" id="address" name="address" placeholder="Адрес доставки">
         </div>
         <h2 class="total">Итого</h2>
         <div class="pricing">Стоимость доставки<span>{{ deliveryPrice }} ₽</span></div>
@@ -148,9 +147,14 @@ export default {
 }
 
 .select-group {
-    position: relative;
-    display: inline-block;
-    margin: 20px;
+    display: flex;
+    gap: 1rem;
+
+    &>div {
+        position: relative;
+        display: inline-block;
+        width: 120px;
+    }
 
     label {
         display: block;
@@ -159,8 +163,14 @@ export default {
         line-height: 20px;
         z-index: 999;
         color: white;
+        top: 0;
+        left: 0;
+        right: 0;
+        width: fit-content;
     }
 }
+
+
 
 .input-group {
 
@@ -185,6 +195,8 @@ export default {
 
 .pricing {
     position: relative;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
 
     span {
         display: block;
