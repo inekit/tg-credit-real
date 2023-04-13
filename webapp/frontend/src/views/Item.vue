@@ -102,7 +102,7 @@ export default {
             this.count = (await this.getBasketOption())?.count ?? 0;
             this.item.is_favorite = !!this.count
             this.backside_item = await this.getItem(undefined, { mainside_id: this.selected_option?.id })
-            this.main_item = await this.getItem(undefined, { backside_id: this.mainside_id })
+            this.main_item = await this.getItem(undefined, { backside_id: this.selected_option?.id })
 
         },
         "item.is_favorite"(is_favorite) {
