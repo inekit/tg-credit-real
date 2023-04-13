@@ -32,11 +32,18 @@ class BasketsService {
         );
         const basket_id = orders[0].id;
 
-        const data = await queryRunner.query(
-          `insert into order_items (order_id, item_option_id, count) values ($1,$2,$3)
+        const data = await queryRunner
+          .query(
+            `insert into order_items (order_id, item_option_id, count) values ($1,$2,$3)
           ON CONFLICT (order_id, item_option_id) DO UPDATE SET count = order_items.count+$3;`,
-          [basket_id, item_option_id, count]
-        );
+            [basket_id, item_option_id, count]
+          )
+          .catch(async (e) => {
+            return await queryRunner.query(
+              `update order_items set count = $3 where order_id=$1 and item_option_id=$2;`,
+              [basket_id, item_option_id, count]
+            );
+          });
 
         await queryRunner.commitTransaction();
 
