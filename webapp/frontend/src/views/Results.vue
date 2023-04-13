@@ -15,6 +15,8 @@
                     </div>
                     <div class="text-container">
                         <h2>{{ item.title }}</h2>
+                        <h3>От {{ item.getMinPrice(options_array) }} ₽</h3>
+
                     </div>
                 </router-link>
                 <div class="favorite-toggle" :class="item.is_favorite ? 'favorite-item' : ''">
@@ -80,6 +82,9 @@ export default {
     methods: {
         routeToBasket() {
             this.$router.push("/basket")
+        },
+        getMinPrice(options_array) {
+            return Math.min(...(options_array?.map(el => el.price) ?? [0]))
         },
         async getBasket() {
             const results = await this.$store.state.myApi.get(this.$store.state.restAddr + '/favorites', {
