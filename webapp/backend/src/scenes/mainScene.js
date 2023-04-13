@@ -6,6 +6,7 @@ const {
 } = require("telegraf-steps");
 const tOrmCon = require("../db/connection");
 const getUser = require("../Utils/getUser");
+const titles = global.titles;
 
 const scene = new CustomWizardScene("clientScene").enter(async (ctx) => {
   let userObj = (ctx.scene.state.userObj = await getUser(ctx));
