@@ -88,7 +88,7 @@ class UsersService {
 
       try {
         const orders = await queryRunner.query(
-          `select o.*, count(oi.id) count_items from orders o left join order_items oi on o.id = oi.order_id 
+          `select o.*, count(oi.item_option_id) count_items from orders o left join order_items oi on o.id = oi.order_id 
           where user_id = $1 and status='basket' 
           group by o.id
           limit 1`,
