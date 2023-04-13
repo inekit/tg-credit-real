@@ -48,7 +48,7 @@
         </div>
         <div class="order" v-if="mainside_id">
             <button v-if="!mainside_item?.id" type="button" @click.prevent="order">В корзину</button>
-            <button v-if="mainside_item" type="button" @click.prevent="routeToMainItem">К основной</button>
+            <button type="button" @click.prevent="routeToMainItem">К основной {{ mainside_item?.id }}</button>
         </div>
         <div class="order" v-else>
             <span>{{ price }} ₽</span>
@@ -85,6 +85,7 @@ export default {
             selected_material: null,
             materials: [],
             count: 0,
+            mainside_item: {}
         }
     },
     watch: {
