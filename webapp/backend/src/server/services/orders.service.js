@@ -128,8 +128,8 @@ class UsersService {
               inline_keyboard: [
                 [
                   {
-                    text: "Получить бесплатную консультацию",
-                    callback_data: "consult-" + item_id,
+                    text: "Оплатить",
+                    callback_data: "pay-" + order_id,
                   },
                 ],
               ],

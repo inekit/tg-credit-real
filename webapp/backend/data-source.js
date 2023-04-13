@@ -45,7 +45,7 @@ const AppDataSource = new DataSource({
     migrationsDir: "./src/db/migrations",
   },
   migrationsDir: "./src/db/migrations",
-  logging: false,
+  logging: true,
   namingStrategy: new SnakeNamingStrategy(),
 });
 
