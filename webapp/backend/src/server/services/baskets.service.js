@@ -172,7 +172,7 @@ class BasketsService {
       connection
         .query(
           `select u.name, u.surname, u.patronymic, u.address, u.phone, sum(io.price*io.count) total from users u 
-          left join orders o on i.id = o.user_id
+          left join orders o on u.id = o.user_id
           left join order_items oi on oi.order_id = o.id
           left join item_options io on oi.item_option_id = io.id
           where u.id = $1
