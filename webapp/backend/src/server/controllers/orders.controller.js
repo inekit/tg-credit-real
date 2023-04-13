@@ -1,17 +1,8 @@
 const ordersService = require("../services/orders.service");
 
 function getAll(req, res, next) {
-  if (!req.query.id)
-    ordersService
-      .getAll(req.query)
-      .then((data) => res.send(data))
-      .catch((error) => next(error));
-  else getOne(req, res);
-}
-
-function getOne(req, res, next) {
   ordersService
-    .getOne(req.query.id, 1, 1)
+    .getAll(req.query)
     .then((data) => res.send(data))
     .catch((error) => next(error));
 }
@@ -43,7 +34,6 @@ function deleteOne(req, res, next) {
 
 module.exports = {
   getAll,
-  getOne,
   addOne,
   editOne,
   deleteOne,
