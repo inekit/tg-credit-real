@@ -89,7 +89,8 @@ export default {
     },
     watch: {
         async $route(to, from) {
-            window.Telegram?.WebApp.MainButton.offClick(this.finishWindow);
+            this.getUriParams();
+            this.item = await this.getItem(this.$route.params.id);
         },
         async item(to) {
             this.sizes = [...new Set(to?.options_array?.map(({ size }) => size))]
@@ -139,10 +140,6 @@ export default {
 
         }, 400)
     },
-    async updated() {
-        this.getUriParams()
-        this.item = await this.getItem(this.$route.params.id);
-    },
     async beforeUnmount() {
         window.Telegram?.WebApp.MainButton.offClick(this.routeToBasket);
         window.Telegram?.WebApp.MainButton.hide();
@@ -178,8 +175,7 @@ export default {
         async routeToBackSideItem() {
             this.$router.push(`/items/${this.item.id}?backsideof=
             ${this.selected_option.id}&size=${this.selected_size}&material=${this.selected_material}`);
-            this.getUriParams();
-            this.item = await this.getItem(this.$route.params.id);
+
         },
         async dropBackSideItem() {
             this.$store.state.myApi.delete(this.$store.state.restAddr + '/favorites', {
@@ -272,9 +268,7 @@ export default {
                 .then(async (response) => {
                     if (this.backsideof) {
                         this.$router.push("/items/" + this.backsideof)
-                        this.backFilters = {}
-                        this.backsideof = null;
-                        this.item = await this.getItem(this.$route.params.id);
+
                     }
 
                     this.count = (await this.getBasketOption())?.count ?? 0;
