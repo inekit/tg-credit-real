@@ -91,7 +91,7 @@ export default {
             this.materials = [...new Set(to?.options_array?.map(({ material }) => material))]
             this.selected_material = this.materials?.[0]
             this.selected_option = to?.options_array?.find(el => el.size === this.selected_size && el.material === this.selected_material)
-            this.price = this.selected_option.price;
+            this.price = this.selected_option?.price;
             this.count = (await this.getBasketOption())?.count ?? 0;
         },
         "item.is_favorite"(is_favorite) {
@@ -180,9 +180,9 @@ export default {
                     .then(response => {
                         const item = response.data?.[0];
                         console.log(1, this.backsideof, this.backFilters.size, size == this.backFilters.size)
-                        if (this.backsideof) item.options_array = item.options_array?.filter(({ size, material }) =>
-                            size == this.backFilters.size && material == this.backFilters.material)
-
+                        /* if (this.backsideof) item.options_array = item.options_array?.filter(({ size, material }) =>
+                             size == this.backFilters.size && material == this.backFilters.material)
+ */
                         res(item)
                     })
                     .catch(e => { eventBus.$emit('noresponse', e); rej() })
