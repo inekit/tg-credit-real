@@ -154,7 +154,7 @@ export default {
                 size: this.params.get('size') === "null" ? null : this.params.get('size'),
                 material: this.params.get('material') === "null" ? null : this.params.get('material')
             }
-            this.backsideof = this.params.get('backsideof') === "null" ? null : this.params.get('backsideof')
+            this.backsideof = this.params.get('backsideof') === "null" ? null : parseInt(this.params.get('backsideof'))
         },
         async finishWindow() {
             if (!this.$store.state.user_id) return alert("Ваша версия телеграм не поддерживается")
@@ -267,7 +267,7 @@ export default {
                 })
                 .then(async (response) => {
                     if (this.backsideof) {
-                        this.$router.push("/items/" + parseInt(this.backsideof))
+                        this.$router.push("/items/" + this.backsideof)
 
                     }
 
