@@ -111,10 +111,7 @@ export default {
         window.Telegram?.WebApp.BackButton.onClick(this.routeBack);
         window.Telegram?.WebApp.BackButton.show();
 
-        let uri = window.location.search.substring(1);
-        this.params = new URLSearchParams(uri)
-        this.backFilters = { size: this.params.get('size'), material: this.params.get('material') }
-        this.backsideof = this.params.get('backsideof') === "null" ? null : this.params.get('backsideof')
+        updateUriParams()
 
         this.item = await this.getItem(this.$route.params.id);
 
@@ -143,6 +140,12 @@ export default {
         window.Telegram?.WebApp.BackButton.hide();
     },
     methods: {
+        updateUriParams() {
+            let uri = window.location.search.substring(1);
+            this.params = new URLSearchParams(uri)
+            this.backFilters = { size: this.params.get('size'), material: this.params.get('material') }
+            this.backsideof = this.params.get('backsideof') === "null" ? null : this.params.get('backsideof')
+        },
         async finishWindow() {
             if (!this.$store.state.user_id) return alert("Ваша версия телеграм не поддерживается")
 
@@ -173,7 +176,7 @@ export default {
                 })
                     .then(response => {
                         const item = response.data?.[0];
-                        if (this.backFilters) item.options_array?.filter(({ size, material }) =>
+                        if (this.backFilters) item.options_array = item.options_array?.filter(({ size, material }) =>
                             size == this.backFilters.size && material == this.backFilters.material)
 
                         res(item)
@@ -239,7 +242,8 @@ export default {
                 .then(async (response) => {
                     if (this.backsideof) {
                         this.$router.push("/items/" + this.backsideof)
-                        return this.item = await this.getItem(this.$route.params.id);
+                        updateUriParams()
+                        this.item = await this.getItem(this.$route.params.id);
                     }
 
                     this.count = (await this.getBasketOption())?.count ?? 0;
