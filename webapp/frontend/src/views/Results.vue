@@ -10,7 +10,7 @@
         <template #default="{ item, index }">
             <div class="result-item">
                 <router-link
-                    :to="`/items/${item.id}?backsideof=${backsideof}&size=${this.backFilters.size}&material=${this.backFilters.material}`">
+                    :to="`/items/${item.id}?mainside_id=${mainside_id}&size=${this.backFilters.size}&material=${this.backFilters.material}`">
                     <div class="img-container">
                         <img :src="`/colorsserver/public/pics/${item.image_list?.[0]}`" />
                     </div>
@@ -65,7 +65,7 @@ export default {
         let uri = window.location.search.substring(1);
         this.params = new URLSearchParams(uri)
         this.backFilters = { size: this.params.get('size'), material: this.params.get('material') }
-        this.backsideof = this.params.get('backsideof') === "null" ? null : this.params.get('backsideof')
+        this.mainside_id = this.params.get('mainside_id') === "null" ? null : this.params.get('mainside_id')
 
         this.$store.state.userId = this.$route.params?.userId;
 

@@ -37,16 +37,16 @@
         <label>Описание</label>
         <div class="description">{{ item.description }}</div>
         <hr />
-        <div class="backside count-select" v-if="count && !backsideof">
+        <div class="backside count-select" v-if="count && !mainside_id">
             <label>Обратная сторона</label>
-            <button v-if="!backside_id" type="button" @click="routeToBackSide">Выбрать</button>
+            <button v-if="!backside_item" type="button" @click="routeToBackSide">Выбрать</button>
             <div v-else>
                 <span>{{ "Название" }}</span>
                 <button type="button" @click="routeToBackSideItem">Посмотреть</button>
                 <button type="button" @click="dropBackSideItem">Убрать</button>
             </div>
         </div>
-        <div class="order" v-if="backsideof">
+        <div class="order" v-if="mainside_id">
             <button v-if="!item.is_favorite" type="button" @click.prevent="order">В корзину</button>
             <button v-else type="button" @click.prevent="routeToMainItem">К основной</button>
         </div>
@@ -101,7 +101,9 @@ export default {
             this.price = this.selected_option?.price;
             this.count = (await this.getBasketOption())?.count ?? 0;
             this.item.is_favorite = !!this.count
-            console.log(this)
+            this.backside_item = await this.getItem(undefined, { backside_id: this.this.selected_option?.id })
+            this.main_item = await this.getItem(undefined, { mainside_id: this.mainside_id })
+
         },
         "item.is_favorite"(is_favorite) {
             if (is_favorite) {
@@ -156,7 +158,7 @@ export default {
                 size: this.params.get('size') === "null" ? null : this.params.get('size'),
                 material: this.params.get('material') === "null" ? null : this.params.get('material')
             }
-            this.backsideof = this.params.get('backsideof') === "null" ? null : parseInt(this.params.get('backsideof'))
+            this.mainside_id = this.params.get('mainside_id') === "null" ? null : parseInt(this.params.get('mainside_id'))
         },
         async finishWindow() {
             if (!this.$store.state.user_id) return alert("Ваша версия телеграм не поддерживается")
@@ -171,28 +173,26 @@ export default {
             this.$router.push("/basket")
         },
         routeToBackSide() {
-            this.$router.push(`/results/${this.$store.state.userId}?backsideof=
+            this.$router.push(`/results/${this.$store.state.userId}?mainside_id=
             ${this.selected_option.id}&size=${this.selected_size}&material=${this.selected_material}`)
         },
         async routeToBackSideItem() {
-            const backside_item = await this.getItem(undefined, { item_option_id: this.backside_id })
-            console.log(backside_item)
+            console.log(this.backside_item)
 
-            this.$router.push(`/items/${backside_item.id}?backsideof=
+            this.$router.push(`/items/${this.backside_item.id}?mainside_id=
             ${this.selected_option.id}&size=${this.selected_size}&material=${this.selected_material}`);
 
         },
         async routeToMainItem() {
-            const main_item = await this.getItem(undefined, { mainside_id: this.backsideof })
-            console.log(main_item)
-            this.$router.push('/items/' + main_item.id)
+            console.log(this.main_item)
+            this.$router.push('/items/' + this.main_item.id)
         },
         async dropBackSideItem() {
             this.$store.state.myApi.delete(this.$store.state.restAddr + '/favorites', {
                 data: {
                     user_id: this.$store.state.userId,
                     item_option_id: id,
-                    backside_of_id: this.selected_option.id
+                    mainside_id: this.selected_option.id
                 }
             })
                 .then(async response => {
@@ -213,8 +213,8 @@ export default {
                 })
                     .then(response => {
                         const item = response.data?.[0];
-                        //console.log(1, this.backsideof, this.backFilters.size, size == this.backFilters.size)
-                        /* if (this.backsideof) item.options_array = item.options_array?.filter(({ size, material }) =>
+                        //console.log(1, this.mainside_id, this.backFilters.size, size == this.backFilters.size)
+                        /* if (this.mainside_id) item.options_array = item.options_array?.filter(({ size, material }) =>
                              size == this.backFilters.size && material == this.backFilters.material)
  */
                         res(item)
@@ -238,13 +238,13 @@ export default {
                     params: {
                         user_id: this.$store.state.userId,
                         item_option_id: this.selected_option.id,
-                        backside_of_id: this.backsideof ?? undefined
+                        mainside_id: this.mainside_id ?? undefined
                     }
                 })
                 .then((response) => {
                     try {
-                        console.log(response.data, this.backsideof)
-                        const item = response.data?.filter(el => el.backside_of_id == this.backsideof || !this.backsideof)?.[0];
+                        console.log(response.data, this.mainside_id)
+                        const item = response.data?.filter(el => el.mainside_id == this.mainside_id || !this.mainside_id)?.[0];
 
                         return item
                     }
@@ -273,12 +273,11 @@ export default {
                     item_option_id: this.selected_option.id,
                     count: 1,
                     user_id: this.$store.state.userId,
-                    backside_of_id: this.backsideof
+                    mainside_id: this.mainside_id
                 })
                 .then(async (response) => {
-                    if (this.backsideof) {
-                        this.$router.push("/items/" + this.backsideof)
-
+                    if (this.mainside_id) {
+                        await this.routeToMainItem()
                     }
 
                     this.count = (await this.getBasketOption())?.count ?? 0;
