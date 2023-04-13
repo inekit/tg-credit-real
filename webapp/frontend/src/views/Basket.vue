@@ -5,13 +5,16 @@
     <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 300 200"></InstagramLoader>
     <div class="basket-items">
         <div class="basket-item" v-for="item, id in basketItems" :key="id">
+            <div class="img-container">
+                <img :src="`/colorsserver/public/pics/${item.image_list?.[0]}`" />
+            </div>
             <span class="title">
                 {{ item.title }}
             </span>
-            <div class="count">
+            <div class="count-select">
+                <button type="button" @click="changeCount(item.id, item.count - 1)">-</button>
                 <span>{{ item.count }}</span>
-                <button class="increase-count" @click="changeCount(item.id, item.count + 1)">+</button>
-                <button class="decrease-count" @click="changeCount(item.id, item.count - 1)">-</button>
+                <button type="button" @click="changeCount(item.id, item.count + 1)">+</button>
             </div>
             <span class="size">
                 {{ item.size }}
@@ -144,5 +147,96 @@ export default {
 </script>
   
 
-<style lang="scss"></style>
+<style lang="scss">
+.basket-item {
+    .img-container {
+        position: relative;
+        background-color: #414141;
+        width: 25vw;
+        height: 40vw;
+        position: relative;
+        overflow: hidden;
+        padding: 1rem;
+
+        img {
+            position: absolute;
+            margin: auto;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-width: 200%;
+            max-height: 130%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+        }
+
+        .title {
+            position: absolute;
+            left: 35vw;
+            top: 0;
+            font-size: 1.2rem;
+        }
+
+        .count-select {
+            position: absolute;
+            right: 1rem;
+            background-color: #E6E6E6;
+            border-radius: 4px;
+            padding: 15px 40px;
+            font-size: 13px;
+            border: none;
+            top: 12px;
+            width: 50px;
+
+            &>span {
+                margin-left: auto;
+                margin-right: auto;
+                display: block;
+                width: 9px;
+                color: rgb(44, 44, 44);
+            }
+
+            &>button {
+                border: none;
+                color: rgb(44, 44, 44);
+                height: 47px;
+                position: absolute;
+                right: 0;
+                top: 0;
+                font-size: 25px;
+                width: 47px;
+                border-radius: 4px;
+
+                &:first-child {
+                    left: 0;
+                }
+            }
+        }
+
+        .size {
+            position: absolute;
+            left: 35vw;
+            top: 30%;
+            font-size: 1.1rem;
+        }
+
+        .material {
+            position: absolute;
+            left: 35vw;
+            top: 30%;
+            font-size: 1.1rem;
+        }
+
+        .price {
+            position: absolute;
+            right: 0;
+            top: 0;
+            font-size: 1.4rem;
+            font-weight: 500;
+        }
+    }
+}
+</style>
   
