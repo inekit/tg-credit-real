@@ -176,7 +176,7 @@ class BasketsService {
           left join orders o on u.id = o.user_id
           left join order_items oi on oi.order_id = o.id
           left join item_options io on oi.item_option_id = io.id
-          where u.id = $1
+          where u.id = $1 and status='basket' 
           group by u.id
           limit 1`,
           [user_id]
