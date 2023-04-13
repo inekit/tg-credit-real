@@ -173,7 +173,8 @@ export default {
                 })
                     .then(response => {
                         try {
-                            const item = response.data?.filter(el => el.backside_of_id === this.backsideof)?.[0];
+                            console.log(el.backside_of_id, this.backsideof)
+                            const item = response.data?.filter(el => el.backside_of_id == this.backsideof)?.[0];
                             if (this.backFilters) item.options_array?.filter(({ size, material }) =>
                                 size == this.backFilters.size && material == this.backFilters.material)
 
