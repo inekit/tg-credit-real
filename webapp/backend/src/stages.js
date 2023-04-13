@@ -8,14 +8,7 @@ const getUser = require("./Utils/getUser");
 const tOrmCon = require("./db/connection");
 
 const mainStage = new Stage(
-  [
-    require("./scenes/mainScene"),
-    require("./scenes/getPhoneScene"),
-
-    require("./scenes/adminScenes/adminScene"),
-    require("./scenes/adminScenes/adminsScene"),
-    require("./scenes/adminScenes/changeTextScene"),
-  ],
+  [require("./scenes/mainScene"), require("./scenes/clientScenes/ordersScene")],
   {
     default: "clientScene",
   }
