@@ -47,7 +47,7 @@
             </div>
         </div>
         <div class="order" v-if="mainside_id">
-            <button v-if="!mainside_item" type="button" @click.prevent="order">В корзину</button>
+            <button v-if="!mainside_item?.id" type="button" @click.prevent="order">В корзину</button>
             <button v-else type="button" @click.prevent="routeToMainItem">К основной</button>
         </div>
         <div class="order" v-else>
