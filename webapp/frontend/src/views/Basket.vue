@@ -158,8 +158,8 @@ export default {
     .img-container {
         position: relative;
         background-color: #414141;
-        width: 15vw;
-        height: 25vw;
+        width: 18vw;
+        height: 30vw;
         position: relative;
         overflow: hidden;
         padding: 1rem;
@@ -226,14 +226,14 @@ export default {
     .size {
         position: absolute;
         left: 28vw;
-        top: 30%;
+        top: 25%;
         font-size: 1rem;
     }
 
     .material {
         position: absolute;
         left: 28vw;
-        bottom: 0;
+        top: 40%;
         font-size: 1rem;
     }
 
@@ -244,6 +244,8 @@ export default {
         font-size: 1.4rem;
         font-weight: 500;
     }
+
+    margin-bottom: 90px;
 }
 
 .order {
@@ -269,7 +271,7 @@ export default {
     .value {
         display: block;
         position: absolute;
-        right: 0;
+        right: 1rem;
         font-size: 1.4rem;
         font-weight: 500;
         line-height: 45px;
