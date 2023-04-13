@@ -5,16 +5,20 @@
 
         <div class="payment">
             <h2>Метод оплаты</h2>
-            <div v-for="po in paymentOptions" :key="po">
-                <input type="radio" :id="po" :value="po" v-model="selected_po">
-                <label :for="po">{{ po }}</label>
+            <div class="select-group">
+                <div v-for="po in paymentOptions" :key="po">
+                    <input type="radio" :id="po" :value="po" v-model="selected_po">
+                    <label :for="po" @click="selected_po = po">{{ po }}</label>
+                </div>
             </div>
         </div>
         <div class="delivery">
             <h2>Способ доставки</h2>
-            <div v-for="dm in deliveryMethods" :key="dm">
-                <input type="radio" :id="dm" :value="dm" v-model="selected_dm">
-                <label :for="dm">{{ dm }}</label>
+            <div class="select-group">
+                <div v-for="dm in deliveryMethods" :key="dm">
+                    <input type="radio" :id="dm" :value="dm" v-model="selected_dm">
+                    <label :for="dm" @click="selected_dm = dm">{{ dm }}</label>
+                </div>
             </div>
         </div>
         <h2>Получатель</h2>
@@ -105,8 +109,8 @@ export default {
         background-color: #E6E6E6;
         margin: 0;
         font: inherit;
-        width: 100px;
-        height: 30px;
+        width: 120px;
+        height: 40px;
         border-radius: 1rem;
         border: none;
         transform: translateY(-0.075em);
@@ -117,14 +121,14 @@ export default {
 
     input[type="radio"]::before {
         content: "";
-        width: 100px;
-        height: 30px;
+        width: 120px;
+        height: 40px;
         z-index: 999;
         border-radius: 1rem;
         transform: scale(0);
         transition: 120ms transform ease-in-out;
-        box-shadow: inset 1em 1em #929292;
-        background-color: CanvasText;
+        box-shadow: none;
+        background-color: #666666;
     }
 
     input[type="radio"]:checked::before {
@@ -143,10 +147,23 @@ export default {
     margin-bottom: 20px;
 }
 
-.input-group {
+.select-group {
+    position: relative;
+    display: inline-block;
+    margin: 20px;
+
     label {
         display: block;
+        position: absolute;
+        margin: 10px;
+        line-height: 20px;
+        z-index: 999;
+        color: white;
     }
+}
+
+.input-group {
+
 
     position: relative;
 
