@@ -27,6 +27,7 @@ class UsersService {
     user_id,
     item_option_id,
     mainside_id,
+    backside_id,
   }) {
     return new Promise(async (res, rej) => {
       const skip = (page - 1) * take;
@@ -53,11 +54,28 @@ class UsersService {
               left join item_options io on p.id = io.item_id
               left join order_items oi on io.id = oi.item_option_id
               left join orders o on o.id = oi.order_id
-              left join items i2 on i2.id = p.backside_of_id
-              where p.backside_of_id = $1
+              where p.mainside_id = $1
               group by p.id
               limit 1`,
             [mainside_id]
+          )
+          .then((data) => res(data))
+          .catch((error) => rej(new MySqlError(error)));
+      else if (backside_id)
+        connection
+          .query(
+            `select p.*,
+          json_agg(json_build_object('id', io.id, 'size', io.size, 'material', io.material, 'price', io.price))  options_array
+          ,min(io.price) price, case when count(o.id) > 0 then true else false end as is_favorite
+              from public.items p
+              left join item_options io on p.id = io.item_id
+              left join order_items oi on io.id = oi.item_option_id
+              left join orders o on o.id = oi.order_id
+              left join items i2 on i2.mainside_id = p.id
+              where i2.mainside_id = $1
+              group by p.id
+              limit 1`,
+            [backside_id]
           )
           .then((data) => res(data))
           .catch((error) => rej(new MySqlError(error)));

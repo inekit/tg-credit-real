@@ -19,7 +19,7 @@ module.exports = new EntitySchema({
       type: "bigint",
       nullable: false,
     },
-    backside_of_id: {
+    mainside_id: {
       type: "bigint",
       nullable: true,
     },

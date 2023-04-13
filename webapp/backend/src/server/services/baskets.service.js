@@ -16,7 +16,7 @@ class BasketsService {
     this.deleteFavorite = this.deleteFavorite.bind(this);
   }
 
-  addFavorite({ user_id, item_option_id, count, backside_of_id }) {
+  addFavorite({ user_id, item_option_id, count, mainside_id }) {
     return new Promise(async (res, rej) => {
       const connection = await tOrmCon;
 
@@ -35,13 +35,13 @@ class BasketsService {
 
         const data = await queryRunner
           .query(
-            `insert into order_items (order_id, item_option_id, is_backside, backside_of_id, count) values ($1,$2,$3,$4,$5)`,
-            [basket_id, item_option_id, !!backside_of_id, backside_of_id, count]
+            `insert into order_items (order_id, item_option_id, is_backside, mainside_id, count) values ($1,$2,$3,$4,$5)`,
+            [basket_id, item_option_id, !!mainside_id, mainside_id, count]
           )
           .catch(async (e) => {
             return await queryRunner.query(
               `update order_items set count = $3 where order_id=$1 and item_option_id=$2 and is_backside=$4;`,
-              [basket_id, item_option_id, count, !!backside_of_id]
+              [basket_id, item_option_id, count, !!mainside_id]
             );
           });
 
@@ -103,7 +103,7 @@ class BasketsService {
     });
   }
 
-  deleteFavorite({ user_id, item_option_id, backside_of_id }) {
+  deleteFavorite({ user_id, item_option_id, mainside_id }) {
     return new Promise(async (res, rej) => {
       const connection = await tOrmCon;
 
@@ -123,8 +123,8 @@ class BasketsService {
         console.log(orders, basket_id, user_id, item_option_id);
 
         const data = await queryRunner.query(
-          `delete from order_items where order_id=$1 and item_option_id=$2 and (backside_of_id = $3 or $3 in NULL);`,
-          [basket_id, item_option_id, backside_of_id]
+          `delete from order_items where order_id=$1 and item_option_id=$2 and (mainside_id = $3 or $3 in NULL);`,
+          [basket_id, item_option_id, mainside_id]
         );
 
         await queryRunner.commitTransaction();
@@ -141,13 +141,13 @@ class BasketsService {
     });
   }
 
-  getFavorites({ user_id, item_option_id, backside_of_id }) {
+  getFavorites({ user_id, item_option_id, mainside_id }) {
     return new Promise(async (res, rej) => {
       const connection = await tOrmCon;
 
       connection
         .query(
-          `select io.id, o.creation_date, i.title, i.image_list, count, size, material, price, backside_of_id from 
+          `select io.id, o.creation_date, i.title, i.image_list, count, size, material, price, mainside_id from 
           orders o 
           left join order_items oi on oi.order_id = o.id
           left join item_options io on oi.item_option_id = io.id
