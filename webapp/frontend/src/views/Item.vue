@@ -100,6 +100,8 @@ export default {
             this.selected_option = to?.options_array?.find(el => el.size === this.selected_size && el.material === this.selected_material)
             this.price = this.selected_option?.price;
             this.count = (await this.getBasketOption())?.count ?? 0;
+            this.item.is_favorite = !!this.count
+            console.log(this)
         },
         "item.is_favorite"(is_favorite) {
             if (is_favorite) {
