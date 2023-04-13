@@ -35,13 +35,8 @@ const scene = new CustomWizardScene("clientScene").enter(async (ctx) => {
         ctx.replyWithTitle("DB_ERROR");
       });
   }
-  ctx.replyWithKeyboard("WEBAPP_TITLE", {
-    name: "webapp_keyboard",
-    args: [ctx.from.id],
-  });
-  ctx.replyWithKeyboard("START_TITLE", {
-    name: "main_menu_keyboard",
-  });
+
+  ctx.replyWithKeyboard("START_TITLE", "main_menu_keyboard");
 });
 
 scene.hears(titles.getValues("WEBAPP_BUTTON"), (ctx) => {
