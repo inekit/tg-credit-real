@@ -9,15 +9,20 @@ module.exports = new EntitySchema({
       type: "bigint",
       nullable: false,
     },
-    backside_of_id: {
+    is_backside: {
       primary: true,
-      type: "bigint",
-      nullable: true,
+      type: "boolean",
+      default: false,
     },
     order_id: {
       primary: true,
       type: "bigint",
       nullable: false,
+    },
+    backside_of_id: {
+      primary: true,
+      type: "bigint",
+      nullable: true,
     },
     count: {
       type: "int",

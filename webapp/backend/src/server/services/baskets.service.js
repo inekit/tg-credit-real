@@ -35,14 +35,14 @@ class BasketsService {
 
         const data = await queryRunner
           .query(
-            `insert into order_items (order_id, item_option_id, backside_of_id, count) values ($1,$2,$3,$4)
-          ON CONFLICT (order_id, item_option_id,backside_of_id) DO UPDATE SET count = order_items.count+$3;`,
-            [basket_id, item_option_id, backside_of_id, count]
+            `insert into order_items (order_id, item_option_id, is_backside, backside_of_id, count) values ($1,$2,$3,$4,$5)
+          ON CONFLICT (order_id, item_option_id, is_backside) DO UPDATE SET count = order_items.count+$3;`,
+            [basket_id, item_option_id, !!backside_of_id, backside_of_id, count]
           )
           .catch(async (e) => {
             return await queryRunner.query(
-              `update order_items set count = $3 where order_id=$1 and item_option_id=$2 and backside_of_id=$4;`,
-              [basket_id, item_option_id, count, backside_of_id]
+              `update order_items set count = $3 where order_id=$1 and item_option_id=$2 and is_backside=$4;`,
+              [basket_id, item_option_id, count, !!backside_of_id]
             );
           });
 
@@ -104,7 +104,7 @@ class BasketsService {
     });
   }
 
-  deleteFavorite({ user_id, item_option_id }) {
+  deleteFavorite({ user_id, item_option_id, backside_of_id }) {
     return new Promise(async (res, rej) => {
       const connection = await tOrmCon;
 
@@ -124,8 +124,8 @@ class BasketsService {
         console.log(orders, basket_id, user_id, item_option_id);
 
         const data = await queryRunner.query(
-          `delete from order_items where order_id=$1 and item_option_id=$2;`,
-          [basket_id, item_option_id]
+          `delete from order_items where order_id=$1 and item_option_id=$2 and (backside_of_id = $3 or $3 in NULL);`,
+          [basket_id, item_option_id, backside_of_id]
         );
 
         await queryRunner.commitTransaction();
