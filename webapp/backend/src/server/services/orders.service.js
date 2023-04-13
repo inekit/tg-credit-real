@@ -206,9 +206,10 @@ class UsersService {
             order.id,
           ])
           .then((data) => {
+            console.log(data);
             ctx.telegram
               .sendMessage(
-                order.user_id,
+                data.user_id,
                 ctx.getTitle("ORDER_NEW_STATUS_TITLE", [
                   data.id,
                   moment(data.creation_date).format("DD.MM.YYYY"),
