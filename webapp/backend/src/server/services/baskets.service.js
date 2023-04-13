@@ -77,7 +77,7 @@ class BasketsService {
         const basket_id = orders[0].id;
 
         let data;
-        if (count < 0) {
+        if (count < 1) {
           data = await queryRunner.query(
             `delete from order_items where order_id=$1 and item_option_id=$2;`,
             [basket_id, item_option_id]
@@ -153,7 +153,8 @@ class BasketsService {
           left join item_options io on oi.item_option_id = io.id
           left join items i on io.item_id = i.id
           where o.user_id = $1 and o.status='basket' and io.id is not NULL
-          and (io.id = $2 or $2 is NULL)  `,
+          and (io.id = $2 or $2 is NULL)  
+          order by io.id`,
           [user_id, item_option_id]
         )
         .then(async (data) => {
