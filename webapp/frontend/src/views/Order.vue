@@ -23,11 +23,11 @@
         </div>
         <h2>Получатель</h2>
         <div class="input-group">
-            <input type="text" id="name" name="name" placeholder="Имя">
-            <input type="text" id="surname" name="surname" placeholder="Фамилия">
-            <input type="text" id="patronymic" name="patronymic" placeholder="Отчество">
-            <input type="tel" id="phone" name="phone" placeholder="Телефон">
-            <input type="number" id="address" name="address" placeholder="Адрес доставки">
+            <input type="text" id="name" name="name" placeholder="Имя" v-model="basketData.name">
+            <input type="text" id="surname" name="surname" placeholder="Фамилия" v-model="basketData.surname">
+            <input type="text" id="patronymic" name="patronymic" placeholder="Отчество" v-model="basketData.patronymic">
+            <input type="tel" id="phone" name="phone" placeholder="Телефон" v-model="basketData.phone">
+            <input type="number" id="address" name="address" placeholder="Адрес доставки" v-model="basketData.address">
         </div>
         <h2 class="total">Итого</h2>
         <div class="pricing">Стоимость доставки<span>{{ deliveryPrice }} ₽</span></div>
@@ -74,6 +74,27 @@ export default {
     },
     methods: {
         order() {
+            if (!this.basketData.address || this.basketData.phone ||
+                this.basketData.name || this.basketData.surname || this.basketData.patronymic)
+                return alert("Пожалуйста, заполните все поля")
+
+            this.$store.state.myApi
+                .post(this.$store.state.restAddr + '/orders', {
+                    user_id: this.$store.state.userId,
+                    address: this.basketData.address,
+                    selected_dm: this.selected_dm,
+                    selected_po: this.selected_po,
+                    phone: this.basketData.phone,
+                    name: this.basketData.name,
+                    surname: this.basketData.surname,
+                    patronymic: this.basketData.patronymic,
+                })
+                .then(async (response) => {
+                    this.count = (await this.getBasketOption())?.count ?? 0;
+                })
+                .catch((e) => {
+                    alert("Эта позиция уже добавлена в корзину")
+                })
         },
         routeBack() {
             this.$router.go(-1)
@@ -100,7 +121,7 @@ export default {
 <style lang="scss">
 .order-block {
     color: #414141;
-    padding: 1rem;
+    padding: 0 1rem 1rem 1rem;
 
     input[type="radio"] {
         -webkit-appearance: none;
@@ -148,7 +169,7 @@ export default {
 
 .select-group {
     display: flex;
-    gap: 1rem;
+    gap: 10px;
 
     &>div {
         position: relative;
@@ -159,7 +180,7 @@ export default {
     label {
         display: block;
         position: absolute;
-        margin: 10px;
+        margin: 10px auto;
         line-height: 20px;
         z-index: 999;
         color: white;
@@ -187,8 +208,7 @@ export default {
         font-size: 1rem;
     }
 
-    margin-bottom: 20px;
-
+    margin-bottom: -10px
 }
 
 .total {}
