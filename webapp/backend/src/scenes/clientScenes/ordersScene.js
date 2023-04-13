@@ -64,6 +64,10 @@ scene.action(/^order\-([0-9]+)$/g, async (ctx) => {
     )
   )?.[0];
 
+  const orderStr = order.items
+    ?.map((el) => `📦 ${el.title} - ${el.count} (шт.)`)
+    ?.join("/n");
+
   ctx.replyWithKeyboard(
     "ORDER_INFO_TITLE",
     [
