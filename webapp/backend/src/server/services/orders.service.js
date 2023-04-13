@@ -203,6 +203,8 @@ class UsersService {
         connection
           .getRepository("Order")
           .update({ id: order.id }, order)
+          .returning("*")
+          .execute()
           .then((data) => {
             ctx.telegram
               .sendMessage(
