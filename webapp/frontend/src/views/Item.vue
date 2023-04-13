@@ -37,11 +37,11 @@
         <label>Описание</label>
         <div class="description">{{ item.description }}</div>
         <hr />
-        <label>Обратная сторона</label>
-        <div class="backside count-select" v-if="count">
+        <div class="backside count-select" v-if="count && !backsideof">
+            <label>Обратная сторона</label>
             <button v-if="!backside_id" type="button" @click="routeToBackSide">Выбрать</button>
             <div v-else>
-                <span>{{ "Названи" }}</span>
+                <span>{{ "Название" }}</span>
                 <button type="button" @click="routeToBackSideItem">Посмотреть</button>
                 <button type="button" @click="dropBackSideItem">Убрать</button>
             </div>
@@ -138,6 +138,10 @@ export default {
             document.body.classList.remove('stop-scrolling')
 
         }, 400)
+    },
+    async updated() {
+        this.getUriParams()
+        this.item = await this.getItem(this.$route.params.id);
     },
     async beforeUnmount() {
         window.Telegram?.WebApp.MainButton.offClick(this.routeToBasket);
