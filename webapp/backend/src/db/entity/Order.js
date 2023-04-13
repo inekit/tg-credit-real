@@ -21,6 +21,20 @@ module.exports = new EntitySchema({
       enum: ["basket", "created", "payed", "delivery", "delivered"],
       default: "created",
     },
+    total: {
+      type: "int",
+      nullable: true,
+    },
+    selected_dm: {
+      type: "enum",
+      enum: ["Я. Доставка", "CДЭК"],
+      nullable: true,
+    },
+    selected_po: {
+      type: "enum",
+      enum: ["yookassa"],
+      nullable: true,
+    },
   },
   relations: {
     user: {

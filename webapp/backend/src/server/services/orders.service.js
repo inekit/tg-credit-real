@@ -64,7 +64,17 @@ class UsersService {
     });
   }
 
-  add({ user_id }) {
+  add({
+    user_id,
+    address,
+    selected_dm,
+    selected_po,
+    phone,
+    name,
+    surname,
+    patronymic,
+    total,
+  }) {
     return new Promise(async (res, rej) => {
       if (!user_id) return rej(new NoInputDataError({ user_id }));
 
@@ -85,11 +95,16 @@ class UsersService {
 
         const { id: order_id } = await queryRunner.manager
           .getRepository("Order")
-          .save({ user_id });
+          .save({ user_id, total, selected_dm, selected_po });
 
         await queryRunner.query(
           `update order_items set order_id=$1, where order_id = $2`,
           [order_id, basket_id]
+        );
+
+        await queryRunner.query(
+          `update users set address=$2,phone=$3,name=$4,surname=$5,patronymic=$6 where id = $1`,
+          [user_id, address, phone, name, surname, patronymic]
         );
 
         await queryRunner.commitTransaction();

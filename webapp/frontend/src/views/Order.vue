@@ -27,7 +27,7 @@
             <input type="text" id="surname" name="surname" placeholder="Фамилия" v-model="basketData.surname">
             <input type="text" id="patronymic" name="patronymic" placeholder="Отчество" v-model="basketData.patronymic">
             <input type="tel" id="phone" name="phone" placeholder="Телефон" v-model="basketData.phone">
-            <input type="number" id="address" name="address" placeholder="Адрес доставки" v-model="basketData.address">
+            <input type="text" id="address" name="address" placeholder="Адрес доставки" v-model="basketData.address">
         </div>
         <h2 class="total">Итого</h2>
         <div class="pricing">Стоимость доставки<span>{{ deliveryPrice }} ₽</span></div>
@@ -74,8 +74,8 @@ export default {
     },
     methods: {
         order() {
-            if (!this.basketData.address || this.basketData.phone ||
-                this.basketData.name || this.basketData.surname || this.basketData.patronymic)
+            if (!this.basketData.address || !this.basketData.phone ||
+                !this.basketData.name || !this.basketData.surname || !this.basketData.patronymic)
                 return alert("Пожалуйста, заполните все поля")
 
             this.$store.state.myApi
@@ -88,6 +88,7 @@ export default {
                     name: this.basketData.name,
                     surname: this.basketData.surname,
                     patronymic: this.basketData.patronymic,
+                    total: this.basketData.total + this.deliveryPrice
                 })
                 .then(async (response) => {
                     this.count = (await this.getBasketOption())?.count ?? 0;
