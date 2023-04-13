@@ -242,7 +242,8 @@ export default {
                 .then(async (response) => {
                     if (this.backsideof) {
                         this.$router.push("/items/" + this.backsideof)
-                        updateUriParams()
+                        this.backFilters = {}
+                        this.backsideof = null;
                         this.item = await this.getItem(this.$route.params.id);
                     }
 
