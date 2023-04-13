@@ -6,9 +6,12 @@ const {
 const titles = require("telegraf-steps").titlesGetter(__dirname + "/Titles");
 const tOrmCon = require("./db/connection");
 
-const mainStage = new Stage([require("./scenes/mainScene")], {
-  default: "clientScene",
-});
+const mainStage = new Stage(
+  [require("./scenes/mainScene"), require("./scenes/clientScenes/ordersScene")],
+  {
+    default: "clientScene",
+  }
+);
 
 mainStage.start(async (ctx) => ctx.scene.enter("clientScene"));
 
