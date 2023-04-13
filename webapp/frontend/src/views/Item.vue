@@ -36,9 +36,15 @@
         <hr />
         <label>Описание</label>
         <div class="description">{{ item.description }}</div>
-        <div class="count-select" v-if="count">
-            <button v-if="!backside_id" type="button" @click="routeToBackSide">Обратная сторона</button>
-            <button v-else type="button" @click="routeToBackSideItem">Обратная сторона (оформлена)</button>
+        <hr />
+        <label>Обратная сторона</label>
+        <div class="backside count-select" v-if="count">
+            <button v-if="!backside_id" type="button" @click="routeToBackSide">Выбрать</button>
+            <div v-else>
+                <span>{{ "Названи" }}</span>
+                <button type="button" @click="routeToBackSideItem">Посмотреть</button>
+                <button type="button" @click="dropBackSideItem">Убрать</button>
+            </div>
         </div>
         <div class="order" v-if="backsideof">
             <button v-if="!is_favorite" type="button" @click.prevent="order">В корзину</button>
@@ -165,9 +171,17 @@ export default {
             this.$router.push(`/results/${this.$store.state.userId}?backsideof=
             ${this.selected_option.id}&size=${this.selected_size}&material=${this.selected_material}`)
         },
-        routeToBackSideItem() {
+        async routeToBackSideItem() {
             this.$router.push(`/items/${this.item.id}?backsideof=
-            ${this.selected_option.id}&size=${this.selected_size}&material=${this.selected_material}`)
+            ${this.selected_option.id}&size=${this.selected_size}&material=${this.selected_material}`);
+            getUriParams();
+            this.item = await this.getItem(this.$route.params.id);
+        },
+        async dropBackSideItem() {
+            this.$router.push(`/items/${this.item.id}?backsideof=
+            ${this.selected_option.id}&size=${this.selected_size}&material=${this.selected_material}`);
+            getUriParams();
+            this.item = await this.getItem(this.$route.params.id);
         },
         getItem(id) {
             return new Promise((res, rej) => {
