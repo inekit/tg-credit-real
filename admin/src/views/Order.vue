@@ -1,29 +1,33 @@
 <template>
     <div>
-        <div>
-            ID: {{ order.id }}
-        </div>
-        <div>
-            Создан: {{ dateFormatter(order.creation_date) }}
-        </div>
-        <div>
-            Доставка: {{ order.selected_dm }}
-        </div>
-        <div>
-            Адрес доставки: {{ order.address }}
-        </div>
-        <div>
-            ФИО получателя: {{ `${order.surname} ${order.name} ${order.patronymic}` }}
-        </div>
-        <div>
-            Метод оплаты: {{ order.selected_po }}
-        </div>
-        <div>
-            Сумма заказа: {{ order.total }}
-        </div>
-        <div>
-            Статус: {{ order.status }}
-            <button v-for="status in statuses" :key="status" @change="changeStatus(status)">{{ status }}</button>
+        <div class="card">
+            <div>
+                ID: {{ order.id }}
+            </div>
+            <div>
+                Создан: {{ dateFormatter(order.creation_date) }}
+            </div>
+            <div>
+                Доставка: {{ order.selected_dm }}
+            </div>
+            <div>
+                Адрес доставки: {{ order.address }}
+            </div>
+            <div>
+                ФИО получателя: {{ `${order.surname} ${order.name} ${order.patronymic}` }}
+            </div>
+            <div>
+                Метод оплаты: {{ order.selected_po }}
+            </div>
+            <div>
+                Сумма заказа: {{ order.total }}
+            </div>
+            <div>
+                Статус: {{ order.status }}
+            </div>
+            Изменить статус:
+            <button v-for="status in statuses" :key="status" class="btn btn-primary" @change="changeStatus(status)">{{
+                status }}</button>
         </div>
         <Table :fields="tableFieldNames" :postData="get" :actions="dataActions" :rows="rows" editMode="form"
             name="Позиции" />
@@ -56,7 +60,7 @@ export default {
             statuses: ["Новый", "Оплачен", "На доставке", "Доставлен"],
             tableFieldNames: [
                 {
-                    name: 'ID',
+                    name: 'id',
                     title: 'Артикул',
                 },
                 {
@@ -89,7 +93,16 @@ export default {
             this.formMode = 'edit'
         },
         dateFormatter,
-        changeStatus() { },
+        changeStatus(newStatus) {
+            this.$store.state.myApi.put(this.$store.state.restAddr + '/admin/orders', {
+                id: this.order.id,
+                status: newStatus,
+            })
+                .then(async () => {
+                    this.order.status = newStatus;
+                })
+                .catch(e => { eventBus.$emit('noresponse', e) })
+        },
         get(take, page) {
             console.log(this.tag)
             return myApi
