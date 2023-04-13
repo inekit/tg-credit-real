@@ -72,7 +72,7 @@ class UsersService {
               left join order_items oi on io.id = oi.item_option_id
               left join orders o on o.id = oi.order_id
               left join order_items oi2 on oi2.mainside_id = io.id
-              where oi2.mainside_id = $1
+              where oi2.id = $1
               group by p.id
               limit 1`,
             [backside_id]
