@@ -1,30 +1,35 @@
 <template>
-    <h1>Оформление заказа</h1>
-    <div class="payment">
-        <h2>Метод оплаты</h2>
-        <div v-for="po in paymentOptions" :key="po">
-            <input type="radio" :id="po" :value="po" v-model="selected_po">
-            <label :for="po">{{ po }}</label>
+    <div class="order-block">
+        <h1>Оформление заказа</h1>
+        <button class="" @click="order">Оформить заказ</button>
+
+        <div class="payment">
+            <h2>Метод оплаты</h2>
+            <div v-for="po in paymentOptions" :key="po">
+                <input type="radio" :id="po" :value="po" v-model="selected_po">
+                <label :for="po">{{ po }}</label>
+            </div>
         </div>
-    </div>
-    <div class="delivery">
-        <h2>Способ доставки</h2>
-        <div v-for="dm in deliveryMethods" :key="dm">
-            <input type="radio" :id="dm" :value="dm" v-model="selected_dm">
-            <label :for="dm">{{ dm }}</label>
+        <div class="delivery">
+            <h2>Способ доставки</h2>
+            <div v-for="dm in deliveryMethods" :key="dm">
+                <input type="radio" :id="dm" :value="dm" v-model="selected_dm">
+                <label :for="dm">{{ dm }}</label>
+            </div>
         </div>
+        <h2>Получатель</h2>
+        <div class="input-group">
+            <input type="text" id="name" name="name" placeholder="Имя">
+            <input type="text" id="surname" name="surname" placeholder="Фамилия">
+            <input type="text" id="patronymic" name="patronymic" placeholder="Отчество">
+            <input type="tel" id="phone" name="phone" placeholder="Телефон">
+            <label for="address">Адрес доставки *:</label>
+            <input type="number" id="address" name="address">
+        </div>
+        <h2 class="total">Итого</h2>
+        <div class="pricing">Стоимость доставки<span>{{ deliveryPrice }} ₽</span></div>
+        <div class="pricing">К оплате<span>{{ basketData.total + deliveryPrice }} ₽</span></div>
     </div>
-    <div class="input-group">
-        <label for="phone">Контактный телефон *:</label>
-        <input type="tel" id="phone" name="phone">
-    </div>
-    <div class="input-group">
-        <label for="address">Адрес доставки *:</label>
-        <input type="number" id="address" name="address">
-    </div>
-    <h2 class="total">Итого:</h2>
-    <div class="pricing">Стоимость доставки<span>{{ deliveryPrice }} ₽</span></div>
-    <div class="pricing">К оплате<span>{{ basketData.total + deliveryPrice }} ₽</span></div>
 </template>
 
 <script>
@@ -38,7 +43,7 @@ export default {
         return {
             basketData: {},
             paymentOptions: ["yookassa"],
-            selected_po: "1",
+            selected_po: "yookassa",
             deliveryMethods: ["Я. Доставка", "CДЭК"],
             selected_dm: "CДЭК",
             deliveryPrice: 1000,
@@ -55,7 +60,7 @@ export default {
         window.Telegram?.WebApp.MainButton.show();
         window.Telegram?.WebApp.MainButton.setText("Заказ подтверждаю");
 
-        const basketData = await getBasketSum()
+        this.basketData = await this.getBasketData()
 
     },
     async beforeUnmount() {
@@ -70,8 +75,8 @@ export default {
         routeBack() {
             this.$router.go(-1)
         },
-        async getBasketSum() {
-            const results = await this.$store.state.myApi.get(this.$store.state.restAddr + '/basket_total', {
+        async getBasketData() {
+            const results = await this.$store.state.myApi.get(this.$store.state.restAddr + '/basket_data', {
                 params: {
                     user_id: this.$store.state.userId,
                 }
@@ -90,14 +95,83 @@ export default {
   
 
 <style lang="scss">
+.order-block {
+    color: #414141;
+    padding: 1rem;
+
+    input[type="radio"] {
+        -webkit-appearance: none;
+        appearance: none;
+        background-color: transparent;
+        margin: 0;
+
+        font: inherit;
+        color: currentColor;
+        width: 1.15em;
+        height: 1.15em;
+        border: 0.15em solid #414141;
+        border-radius: 50%;
+        transform: translateY(-0.075em);
+
+        display: grid;
+        place-content: center;
+    }
+
+    input[type="radio"]::before {
+        content: "";
+        width: 0.65em;
+        height: 0.65em;
+        border-radius: 50%;
+        transform: scale(0);
+        transition: 120ms transform ease-in-out;
+        box-shadow: inset 1em 1em #414141;
+        /* Windows High Contrast Mode */
+        background-color: CanvasText;
+    }
+
+    input[type="radio"]:checked::before {
+        transform: scale(1);
+    }
+
+    input[type="radio"]:focus {
+        outline: max(2px, 0.15em) solid #414141;
+        outline-offset: max(2px, 0.15em);
+    }
+}
+
 .payment {}
 
-.delivery {}
+.delivery {
+    margin-bottom: 20px;
+}
 
-.input-group {}
+.input-group {
+    label {
+        display: block;
+    }
+
+    input {
+        background-color: #414141;
+        border-radius: 1rem;
+        border: none;
+        margin-bottom: 10px;
+    }
+
+    margin-bottom: 20px;
+
+}
 
 .total {}
 
-.pricing {}
+.pricing {
+    position: relative;
+
+    span {
+        display: block;
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+}
 </style>
   
