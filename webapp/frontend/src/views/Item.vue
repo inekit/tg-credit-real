@@ -172,17 +172,11 @@ export default {
                     }
                 })
                     .then(response => {
-                        try {
-                            console.log(el.backside_of_id, this.backsideof)
-                            const item = response.data?.filter(el => el.backside_of_id == this.backsideof)?.[0];
-                            if (this.backFilters) item.options_array?.filter(({ size, material }) =>
-                                size == this.backFilters.size && material == this.backFilters.material)
+                        const item = response.data?.[0];
+                        if (this.backFilters) item.options_array?.filter(({ size, material }) =>
+                            size == this.backFilters.size && material == this.backFilters.material)
 
-                            if (!this.backsideof) this.backside_id = response.data?.filter(el => el.backside_of_id)?.[0];
-
-                            res(item)
-                        }
-                        catch (e) { console.log(e); rej(e) }
+                        res(item)
                     })
                     .catch(e => { eventBus.$emit('noresponse', e); rej() })
             })
@@ -207,7 +201,16 @@ export default {
                     }
                 })
                 .then((response) => {
-                    return response.data?.[0];
+                    try {
+                        console.log(response.data, this.backsideof)
+                        const item = response.data?.filter(el => el.backside_of_id == this.backsideof)?.[0];
+
+
+                        if (!this.backsideof) this.backside_id = response.data?.filter(el => el.backside_of_id)?.[0];
+
+                        return item
+                    }
+                    catch (e) { console.log(e); rej(e) }
                 })
                 .catch((e) => {
                     eventBus.$emit('noresponse', e)
