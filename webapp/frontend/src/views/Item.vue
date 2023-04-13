@@ -172,13 +172,16 @@ export default {
                     }
                 })
                     .then(response => {
-                        const item = response.data?.filter(el => el.backside_of_id === this.backsideof)?.[0];
-                        if (this.backFilters) item.options_array?.filter(({ size, material }) =>
-                            size == this.backFilters.size && material == this.backFilters.material)
+                        try {
+                            const item = response.data?.filter(el => el.backside_of_id === this.backsideof)?.[0];
+                            if (this.backFilters) item.options_array?.filter(({ size, material }) =>
+                                size == this.backFilters.size && material == this.backFilters.material)
 
-                        if (!this.backsideof) this.backside_id = response.data?.filter(el => el.backside_of_id)?.[0];
+                            if (!this.backsideof) this.backside_id = response.data?.filter(el => el.backside_of_id)?.[0];
 
-                        res(item)
+                            res(item)
+                        }
+                        catch (e) { console.log(e); rej(e) }
                     })
                     .catch(e => { eventBus.$emit('noresponse', e); rej() })
             })
