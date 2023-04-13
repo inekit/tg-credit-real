@@ -51,8 +51,8 @@ class UsersService {
           and (o.status = 'basket' or o.status is NULL)  
           and (p.category_name = $2 or $2 is NULL)  
           and (p.id = $3 or $3 is NULL)  
-          and (io.size = $11::varchar or $11::varchar is NULL)
-          and (io.material = $12::varchar or $12::varchar is NULL)
+          and (io.size = $7::varchar or $7::varchar is NULL)
+          and (io.material = $8::varchar or $8::varchar is NULL)
           group by p.id
           order by ${orderQueryPart}
           LIMIT $4 OFFSET $5`
