@@ -100,10 +100,8 @@ export default {
             this.selected_option = to?.options_array?.find(el => el.size === this.selected_size && el.material === this.selected_material)
             this.price = this.selected_option?.price;
             this.count = (await this.getBasketOption())?.count ?? 0;
-            this.item.is_favorite = !!this.count
-            this.backside_item = await this.getItem(undefined, { mainside_id: this.selected_option?.id })
-            this.main_item = await this.getItem(undefined, { backside_id: this.selected_option?.id })
-
+            this.item.is_favorite = !!this.count;
+            await getReferencedItems()
         },
         "item.is_favorite"(is_favorite) {
             if (is_favorite) {
@@ -184,8 +182,8 @@ export default {
 
         },
         async routeToMainItem() {
-            console.log(this.main_item)
-            this.$router.push('/items/' + this.main_item.id)
+            console.log(this.mainside_item)
+            this.$router.push('/items/' + this.mainside_item.id)
         },
         async dropBackSideItem() {
             this.$store.state.myApi.delete(this.$store.state.restAddr + '/favorites', {
@@ -208,6 +206,7 @@ export default {
                         id,
                         item_option_id,
                         mainside_id,
+                        backside_id,
                         user_id: this.$store.state.userId,
                     }
                 })
@@ -222,15 +221,21 @@ export default {
                     .catch(e => { eventBus.$emit('noresponse', e); rej() })
             })
         },
+        async getReferencedItems() {
+            this.backside_item = await this.getItem(undefined, { mainside_id: this.selected_option?.id });
+            this.mainside_item = await this.getItem(undefined, { backside_id: this.selected_option?.id });
+        },
         async changeMaterial() {
             this.sizes = this.item.options_array?.filter(el => el.material === this.selected_material)?.map(({ size }) => size);
             this.selected_option = this.item.options_array?.find(el => el.size === this.selected_size && el.material === this.selected_material)
             this.count = (await this.getBasketOption())?.count ?? 0;
+            await getReferencedItems()
         },
         async changeSize() {
             this.materials = this.item.options_array?.filter(el => el.size === this.selected_size)?.map(({ material }) => material)
             this.selected_option = this.item.options_array?.find(el => el.size === this.selected_size && el.material === this.selected_material)
             this.count = (await this.getBasketOption())?.count ?? 0;
+            await getReferencedItems()
         },
         async getBasketOption() {
             return await this.$store.state.myApi
