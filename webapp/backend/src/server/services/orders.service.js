@@ -58,6 +58,7 @@ class UsersService {
           left join items i on io.item_id = i.id 
           where (user_id = $3 or $3 is NULL)  
           and status <> 'basket'
+          GROUP BY o.id, oi.count, io.size, io.material, io.price, i.title
           ORDER BY id DESC
           LIMIT $1 OFFSET $2`,
           [take, skip, user_id]

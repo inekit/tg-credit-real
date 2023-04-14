@@ -120,7 +120,7 @@ export default {
         let e = pair
         children?.forEach((c) => (e = e?.[c]))
 
-        if (f?.name === 'creation_date') e = dateFormatter(e)
+        if (f?.name === 'creation_date' || f?.name === 'publication_date') e = dateFormatter(e)
 
         if (f?.name === 'text') e = e.substr(0, 100)
 
