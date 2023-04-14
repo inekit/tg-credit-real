@@ -116,6 +116,10 @@ export default {
                     },
                 })
                 .then((res) => {
+                    res.data.items = res.data.items?.map(el => {
+                        if (el.mainside_id) el.title = `${el.title} (обр - ${el.mainside_id})`;
+                        return el
+                    })
                     if (res.data.items?.length > 0) this.rows = res.data.items
                     this.order = res.data
                 })
