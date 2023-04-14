@@ -10,7 +10,7 @@
                 <img :src="`/colorsserver/public/pics/${item.image_list?.[0]}`" />
             </div>
             <span class="title">
-                {{ item.title + item.mainside_id ? " (обр.)" : "" }}
+                {{ item.title + (item.mainside_id ? " (обр.)" : "") }}
             </span>
             <div v-if="!item.mainside_id" class="count-select">
                 <button type="button" @click="changeCount(item, item.count - 1)">-</button>
@@ -242,7 +242,6 @@ export default {
             padding: 15px 40px;
             font-size: 13px;
             border: none;
-            width: 50px;
         }
     }
 
