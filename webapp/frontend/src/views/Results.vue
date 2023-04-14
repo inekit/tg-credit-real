@@ -127,7 +127,9 @@ export default {
             window.onscroll = async () => {
                 let bottomwindow = window.scrollY + window.innerHeight + 1000 > document.documentElement.scrollHeight;
 
+                console.log(bottomwindow, !this.loadingUpdate, !this.isEnded)
                 if (bottomwindow && !this.loadingUpdate && !this.isEnded) {
+                    console.log("update")
                     this.loadingUpdate = true;
                     const update = await this.sendSearchRequest();
                     this.$store.state.results = [...this.$store.state.results, ...update];

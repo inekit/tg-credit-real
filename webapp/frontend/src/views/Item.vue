@@ -532,7 +532,7 @@ form {
         margin-top: 20px;
 
         &>span {
-            line-height: 35px;
+            line-height: 30px;
         }
     }
 
