@@ -216,7 +216,7 @@ export default {
                         const item = response.data?.[0];
 
                         if (this.mainside_id) {
-                            console.log(item.options_array, this.backFilters?.size, material == this.backFilters?.material)
+                            console.log(item.options_array, this.backFilters?.size, this.backFilters?.material)
 
                             item.options_array = item.options_array?.filter(({ size, material }) =>
                                 size == this.backFilters?.size && material == this.backFilters?.material)
