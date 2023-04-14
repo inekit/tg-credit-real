@@ -10,12 +10,15 @@
                 <img :src="`/colorsserver/public/pics/${item.image_list?.[0]}`" />
             </div>
             <span class="title">
-                {{ item.title }}
+                {{ item.title + item.mainside_id ? " (обр.)" : "" }}
             </span>
-            <div class="count-select">
-                <button type="button" @click="changeCount(item.id, item.count - 1)">-</button>
+            <div v-if="!item.mainside_id" class="count-select">
+                <button type="button" @click="changeCount(item, item.count - 1)">-</button>
                 <span>{{ item.count }}</span>
-                <button type="button" @click="changeCount(item.id, item.count + 1)">+</button>
+                <button type="button" @click="changeCount(item, item.count + 1)">+</button>
+            </div>
+            <div v-else class="delete">
+                <button type="button" @click="dropItem(item)">Удалить</button>
             </div>
             <span class="size">
                 Размер {{ item.size }}
@@ -95,7 +98,8 @@ export default {
             if (newCount > 100) return;
             this.$store.state.myApi.put(this.$store.state.restAddr + '/favorites', {
                 user_id: this.$store.state.userId,
-                item_option_id: id,
+                item_option_id: item.id,
+                mainside_id: item.mainside_id,
                 count: newCount,
             })
                 .then(async response => {
@@ -104,11 +108,12 @@ export default {
                 })
                 .catch(e => { eventBus.$emit('noresponse', e) })
         },
-        dropItem(id) {
+        dropItem(item) {
             this.$store.state.myApi.delete(this.$store.state.restAddr + '/favorites', {
                 data: {
                     user_id: this.$store.state.userId,
-                    item_option_id: id,
+                    item_option_id: item.id,
+                    mainside_id: item.mainside_id,
                 }
             })
                 .then(async response => {
@@ -224,6 +229,20 @@ export default {
                 left: 0;
                 border-radius: 1rem 0 0 1rem;
             }
+        }
+    }
+
+    .delete {
+        &>button {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            background-color: #E6E6E6;
+            border-radius: 1rem;
+            padding: 15px 40px;
+            font-size: 13px;
+            border: none;
+            width: 50px;
         }
     }
 
