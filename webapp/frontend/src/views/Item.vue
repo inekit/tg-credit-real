@@ -126,30 +126,36 @@ export default {
         }
     },
     async mounted() {
-        window.Telegram?.WebApp.BackButton.onClick(this.routeBack);
-        window.Telegram?.WebApp.BackButton.show();
+        try {
+            window.Telegram?.WebApp.BackButton.onClick(this.routeBack);
+            window.Telegram?.WebApp.BackButton.show();
 
-        this.getUriParams()
+            this.getUriParams()
 
-        this.item = await this.getItem(this.$route.params.id);
+            this.item = await this.getItem(this.$route.params.id);
 
 
 
-        this.$refs['results-block']?.classList.add("hidden")
-        document.body.classList.add('stop-scrolling')
+            this.$refs['results-block']?.classList.add("hidden")
+            document.body.classList.add('stop-scrolling')
 
-        setTimeout(() => {
-            const elements = document.getElementsByClassName('preloader')
+            setTimeout(() => {
+                const elements = document.getElementsByClassName('preloader')
 
-            console.log(elements)
+                console.log(elements)
 
-            for (let el of elements) {
-                el.classList.add("hidden")
-            }
-            this.$refs['results-block']?.classList.remove("hidden")
-            document.body.classList.remove('stop-scrolling')
+                for (let el of elements) {
+                    el.classList.add("hidden")
+                }
+                this.$refs['results-block']?.classList.remove("hidden")
+                document.body.classList.remove('stop-scrolling')
 
-        }, 400)
+            }, 400)
+
+        }
+        catch (e) {
+            console.log(e)
+        }
     },
     async beforeUnmount() {
         window.Telegram?.WebApp.MainButton.offClick(this.routeToBasket);
