@@ -104,7 +104,7 @@ export default {
             this.price = this.selected_option?.price;
             this.count = (await this.getBasketOption())?.count ?? 0;
             this.item.is_favorite = !!this.count;
-            await this.getReferencedItems()
+            //await this.getReferencedItems()
         },
         "item.is_favorite"(is_favorite) {
             if (is_favorite) {
@@ -216,8 +216,6 @@ export default {
                         const item = response.data?.[0];
 
                         if (this.mainside_id) {
-                            console.log(item.options_array, this.backFilters?.size, this.backFilters?.material)
-
                             item.options_array = item.options_array?.filter(({ size, material }) =>
                                 size == this.backFilters?.size && material == this.backFilters?.material)
                         }
@@ -256,8 +254,10 @@ export default {
                 })
                 .then((response) => {
                     try {
-                        console.log(response.data, this.mainside_id)
-                        const item = response.data?.filter(el => el.mainside_id == this.mainside_id || !this.mainside_id)?.[0];
+                        this.mainside_id
+                        const item = this.mainside_id ?
+                            response.data?.filter(el => el.mainside_id == this.mainside_id)?.[0] :
+                            response.data?.[0]
 
                         return item
                     }
