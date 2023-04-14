@@ -191,7 +191,6 @@ export default {
             this.$store.state.myApi.delete(this.$store.state.restAddr + '/favorites', {
                 data: {
                     user_id: this.$store.state.userId,
-                    item_option_id: id,
                     mainside_id: this.selected_option.id
                 }
             })
@@ -285,7 +284,7 @@ export default {
                 })
                 .then(async (response) => {
                     if (this.mainside_id) {
-                        await getReferencedItems()
+                        await this.getReferencedItems()
                         await this.routeToMainItem()
                     }
 
