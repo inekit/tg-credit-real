@@ -26,7 +26,7 @@ body {
   overflow-x: hidden;
 
   .h-100 {
-    height: 100%;
+    height: 100vh;
   }
 }
 
