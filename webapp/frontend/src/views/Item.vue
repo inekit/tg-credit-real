@@ -215,8 +215,13 @@ export default {
                     .then(response => {
                         const item = response.data?.[0];
 
-                        if (this.mainside_id) item.options_array = item.options_array?.filter(({ size, material }) =>
-                            size == this.backFilters?.size && material == this.backFilters?.material)
+                        if (this.mainside_id) {
+                            console.log(item.options_array, this.backFilters?.size, material == this.backFilters?.material)
+
+                            item.options_array = item.options_array?.filter(({ size, material }) =>
+                                size == this.backFilters?.size && material == this.backFilters?.material)
+                        }
+
 
                         res(item)
                     })
