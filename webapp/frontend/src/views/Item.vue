@@ -249,7 +249,7 @@ export default {
             this.price = this.selected_option?.price;
             await this.getReferencedItems()
         },
-        async getBasketOption() {
+        async getBasketOption(mainItem) {
             return await this.$store.state.myApi
                 .get(this.$store.state.restAddr + '/favorites', {
                     params: {
@@ -261,7 +261,8 @@ export default {
                 .then((response) => {
                     try {
                         const item = this.mainside_id ?
-                            response.data?.filter(el => el.mainside_id == this.mainside_id)?.[0] :
+                            mainItem ? response.data?.filter(el => el.mainside_id != this.mainside_id)?.[0] :
+                                response.data?.filter(el => el.mainside_id == this.mainside_id)?.[0] :
                             response.data?.[0]
 
                         return item
@@ -285,11 +286,12 @@ export default {
                 })
                 .catch(e => { eventBus.$emit('noresponse', e) })
         },
-        order() {
+        async order() {
+            const count = this.mainside_id ? (await this.getBasketOption(true))?.count : 1
             this.$store.state.myApi
                 .post(this.$store.state.restAddr + '/favorites', {
                     item_option_id: this.selected_option.id,
-                    count: this.count > 0 ? this.count : 1,
+                    count,
                     user_id: this.$store.state.userId,
                     mainside_id: this.mainside_id
                 })
