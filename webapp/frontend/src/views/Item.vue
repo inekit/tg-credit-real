@@ -104,7 +104,7 @@ export default {
             this.price = this.selected_option?.price;
             this.count = (await this.getBasketOption())?.count ?? 0;
             this.item.is_favorite = !!this.count;
-            //await this.getReferencedItems()
+            await this.getReferencedItems()
         },
         "item.is_favorite"(is_favorite) {
             if (is_favorite) {

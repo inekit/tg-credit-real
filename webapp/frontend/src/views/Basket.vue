@@ -6,29 +6,32 @@
     <button v-if="basketItems.length > 0" class="" @click="order">Оформить заказ</button>
     <div class="basket-items">
         <div class="basket-item" v-for="item, id in basketItems" :key="id">
-            <div class="img-container">
-                <img :src="`/colorsserver/public/pics/${item.image_list?.[0]}`" />
-            </div>
-            <span class="title">
-                {{ item.title + (item.mainside_id ? " (обр.)" : "") }}
-            </span>
-            <div v-if="!item.mainside_id" class="count-select">
-                <button type="button" @click="changeCount(item, item.count - 1)">-</button>
-                <span>{{ item.count }}</span>
-                <button type="button" @click="changeCount(item, item.count + 1)">+</button>
-            </div>
-            <div v-else class="delete">
-                <button type="button" @click="dropItem(item)">Удалить</button>
-            </div>
-            <span class="size">
-                Размер {{ item.size }}
-            </span>
-            <span class="material">
-                Материал {{ item.material }}
-            </span>
-            <span class="price">
-                {{ item.price }} ₽
-            </span>
+            <RouterLink :to="getItemLink(item)">
+                <div class="img-container">
+                    <img :src="`/colorsserver/public/pics/${item.image_list?.[0]}`" />
+                </div>
+                <span class="title">
+                    {{ item.title + (item.mainside_id ? " (обр.)" : "") }}
+                </span>
+                <div v-if="!item.mainside_id" class="count-select">
+                    <button type="button" @click="changeCount(item, item.count - 1)">-</button>
+                    <span>{{ item.count }}</span>
+                    <button type="button" @click="changeCount(item, item.count + 1)">+</button>
+                </div>
+                <div v-else class="delete">
+                    <button type="button" @click="dropItem(item)">Удалить</button>
+                </div>
+                <span class="size">
+                    Размер {{ item.size }}
+                </span>
+                <span class="material">
+                    Материал {{ item.material }}
+                </span>
+                <span class="price">
+                    {{ item.price }} ₽
+                </span>
+            </RouterLink>
+
         </div>
     </div>
     <div class="order">
@@ -94,6 +97,12 @@ export default {
         window.Telegram?.WebApp.BackButton.hide();
     },
     methods: {
+        getItemLink(item) {
+            return item.mainside_id ?
+                `/items/${item.id}?mainside_id=
+            ${item.mainside_id}&size=${item.size}&material=${item.material}` :
+                `/items/${item.id}`
+        },
         changeCount(item, newCount) {
             if (newCount > 100) return;
             this.$store.state.myApi.put(this.$store.state.restAddr + '/favorites', {

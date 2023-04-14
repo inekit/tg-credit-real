@@ -27,6 +27,7 @@ body {
 
   .h-100 {
     height: 100vh;
+    height: var(--tg-viewport-stable-height);
   }
 }
 

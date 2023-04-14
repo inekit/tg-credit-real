@@ -158,6 +158,7 @@ export default {
 
     .categories-list {
         height: 100vh;
+        height: var(--tg-viewport-stable-height);
         width: 50vw;
         position: fixed;
         top: 0;
@@ -204,6 +205,7 @@ export default {
                 content: "";
                 position: fixed;
                 height: 100vh;
+                height: var(--tg-viewport-stable-height);
                 width: 42vw;
                 right: 58vw;
                 top: 0;
@@ -263,6 +265,7 @@ export default {
                 content: "";
                 position: fixed;
                 height: 100vh;
+                height: var(--tg-viewport-stable-height);
                 width: 100vw;
                 z-index: 998;
                 background: transparent;
