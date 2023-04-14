@@ -218,8 +218,8 @@ export default {
                     .then(response => {
                         const item = response.data?.[0];
 
-                        if (this.mainside_id) {
-                            item.options_array = item?.options_array?.filter(({ size, material }) =>
+                        if (this.mainside_id && item) {
+                            item.options_array = item.options_array?.filter(({ size, material }) =>
                                 size == this.backFilters?.size && material == this.backFilters?.material)
                         }
 
@@ -257,7 +257,6 @@ export default {
                 })
                 .then((response) => {
                     try {
-                        this.mainside_id
                         const item = this.mainside_id ?
                             response.data?.filter(el => el.mainside_id == this.mainside_id)?.[0] :
                             response.data?.[0]
