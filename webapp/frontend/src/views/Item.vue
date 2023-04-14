@@ -240,8 +240,6 @@ export default {
             this.selected_option = this.item.options_array?.find(el => el.size === this.selected_size && el.material === this.selected_material)
             this.count = (await this.getBasketOption())?.count ?? 0;
             this.price = this.selected_option?.price;
-            console.log(this.selected_size, this.selected_material, this.selected_option?.price, this.item.options_array)
-
             await this.getReferencedItems()
         },
         async changeSize() {
@@ -249,7 +247,6 @@ export default {
             this.selected_option = this.item.options_array?.find(el => el.size === this.selected_size && el.material === this.selected_material)
             this.count = (await this.getBasketOption())?.count ?? 0;
             this.price = this.selected_option?.price;
-            console.log(this.selected_size, this.selected_material)
             await this.getReferencedItems()
         },
         async getBasketOption() {
@@ -284,7 +281,7 @@ export default {
             })
                 .then(async response => {
                     this.count = (await this.getBasketOption())?.count ?? 0;
-                    this.item = await this.getItem(this.$route.params.id);
+                    this.item.is_favorite = !!this.count;
                 })
                 .catch(e => { eventBus.$emit('noresponse', e) })
         },
