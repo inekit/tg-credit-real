@@ -531,18 +531,22 @@ form {
     &>div {
         margin-top: 20px;
 
-        &>button {
-            position: absolute;
-            right: 120px;
-            background-color: #E6E6E6;
-            border-radius: 4px;
-            padding: 15px 40px;
-            font-size: 13px;
-            border: none;
+        &>span {
+            line-height: 35px;
+        }
+    }
 
-            &:last-of-type {
-                right: 0;
-            }
+    button {
+        position: absolute;
+        right: 130px;
+        background-color: #E6E6E6;
+        border-radius: 4px;
+        padding: 10px 30px;
+        font-size: 13px;
+        border: none;
+
+        &:last-of-type {
+            right: 1rem;
         }
     }
 
