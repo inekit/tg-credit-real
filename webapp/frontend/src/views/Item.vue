@@ -105,7 +105,7 @@ export default {
                 this.price = this.selected_option?.price;
                 this.count = (await this.getBasketOption())?.count ?? 0;
                 this.item.is_favorite = !!this.count;
-                await this.getReferencedItems()
+                await this.getReferencedItems().catch(console.log)
             }
             catch (e) {
                 console.log(e)
@@ -260,7 +260,7 @@ export default {
                 .get(this.$store.state.restAddr + '/favorites', {
                     params: {
                         user_id: this.$store.state.userId,
-                        item_option_id: this.selected_option.id,
+                        item_option_id: this.selected_option?.id,
                         mainside_id: !isNaN(this.mainside_id) ? this.mainside_id : undefined
                     }
                 })
