@@ -125,7 +125,7 @@ class BasketsService {
         if (!item_option_id && !mainside_id) throw new Error("no data");
         const data = await queryRunner.query(
           `delete from order_items 
-          where order_id=$1 and (item_option_id=$2 or $2 in NULL) and (mainside_id = $3 or $3 in NULL);`,
+          where order_id=$1 and (item_option_id=$2 or $2 is NULL) and (mainside_id = $3 or $3 is NULL);`,
           [basket_id, item_option_id, mainside_id]
         );
 
