@@ -156,8 +156,8 @@ export default {
             let uri = window.location.search.substring(1);
             this.params = new URLSearchParams(uri)
             this.backFilters = {
-                size: this.params.get('size') === "null" ? null : this.params.get('size'),
-                material: this.params.get('material') === "null" ? null : this.params.get('material')
+                size: this.params.get('size'),
+                material: this.params.get('material')
             }
             this.mainside_id = this.params.get('mainside_id') === "null" ? null : parseInt(this.params.get('mainside_id'))
         },
