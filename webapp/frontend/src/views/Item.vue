@@ -96,21 +96,16 @@ export default {
             this.item = await this.getItem(this.$route.params.id).catch(e => console.log(e));
         },
         async item(to) {
-            try {
-                this.sizes = [...new Set(to?.options_array?.map(({ size }) => size))]
-                this.selected_size = this.sizes?.[0]
-                this.materials = [...new Set(to?.options_array?.map(({ material }) => material))]
-                this.selected_material = this.materials?.[0]
-                this.selected_option = to?.options_array?.find(el => el.size === this.selected_size && el.material === this.selected_material)
-                this.price = this.selected_option?.price;
-                this.count = (await this.getBasketOption())?.count ?? 0;
-                this.item.is_favorite = !!this.count;
-                await this.getReferencedItems().catch(console.log)
-            }
-            catch (e) {
-                console.log(e)
-            }
 
+            this.sizes = [...new Set(to?.options_array?.map(({ size }) => size))]
+            this.selected_size = this.sizes?.[0]
+            this.materials = [...new Set(to?.options_array?.map(({ material }) => material))]
+            this.selected_material = this.materials?.[0]
+            this.selected_option = to?.options_array?.find(el => el.size === this.selected_size && el.material === this.selected_material)
+            this.price = this.selected_option?.price;
+            this.count = (await this.getBasketOption())?.count ?? 0;
+            this.item.is_favorite = !!this.count;
+            await this.getReferencedItems()
         },
         "item.is_favorite"(is_favorite) {
             if (is_favorite) {
@@ -126,36 +121,32 @@ export default {
         }
     },
     async mounted() {
-        try {
-            window.Telegram?.WebApp.BackButton.onClick(this.routeBack);
-            window.Telegram?.WebApp.BackButton.show();
 
-            this.getUriParams()
+        window.Telegram?.WebApp.BackButton.onClick(this.routeBack);
+        window.Telegram?.WebApp.BackButton.show();
 
-            this.item = await this.getItem(this.$route.params.id);
+        this.getUriParams()
+
+        this.item = await this.getItem(this.$route.params.id);
 
 
 
-            this.$refs['results-block']?.classList.add("hidden")
-            document.body.classList.add('stop-scrolling')
+        this.$refs['results-block']?.classList.add("hidden")
+        document.body.classList.add('stop-scrolling')
 
-            setTimeout(() => {
-                const elements = document.getElementsByClassName('preloader')
+        setTimeout(() => {
+            const elements = document.getElementsByClassName('preloader')
 
-                console.log(elements)
+            console.log(elements)
 
-                for (let el of elements) {
-                    el.classList.add("hidden")
-                }
-                this.$refs['results-block']?.classList.remove("hidden")
-                document.body.classList.remove('stop-scrolling')
+            for (let el of elements) {
+                el.classList.add("hidden")
+            }
+            this.$refs['results-block']?.classList.remove("hidden")
+            document.body.classList.remove('stop-scrolling')
 
-            }, 400)
+        }, 400)
 
-        }
-        catch (e) {
-            console.log(e)
-        }
     },
     async beforeUnmount() {
         window.Telegram?.WebApp.MainButton.offClick(this.routeToBasket);
@@ -228,7 +219,7 @@ export default {
                         const item = response.data?.[0];
 
                         if (this.mainside_id) {
-                            item.options_array = item.options_array?.filter(({ size, material }) =>
+                            item.options_array = item?.options_array?.filter(({ size, material }) =>
                                 size == this.backFilters?.size && material == this.backFilters?.material)
                         }
 
