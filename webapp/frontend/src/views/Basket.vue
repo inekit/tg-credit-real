@@ -170,8 +170,11 @@ export default {
 .basket-item {
     margin: 1rem;
     position: relative;
-    text-decoration: none;
-    color: inherit;
+
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
 
     .img-container {
         position: relative;

@@ -125,7 +125,7 @@ class BasketsService {
         if (!item_option_id && !mainside_id) throw new Error("no data");
         const data = await queryRunner.query(
           `delete from order_items 
-          where order_id=$1 and (item_option_id=$2 or $2 is NULL) and (mainside_id = $3 or $3 is NULL);`,
+          where order_id=$1 and (item_option_id=$2 or mainside_id=$2 or $2 is NULL) and (mainside_id = $3 or $3 is NULL);`,
           [basket_id, item_option_id, mainside_id]
         );
 
@@ -149,7 +149,7 @@ class BasketsService {
 
       connection
         .query(
-          `select io.id, o.creation_date, i.title, i.image_list, count, size, material, price, mainside_id from 
+          `select io.id, i.id item_id, o.creation_date, i.title, i.image_list, count, size, material, price, mainside_id from 
           orders o 
           left join order_items oi on oi.order_id = o.id
           left join item_options io on oi.item_option_id = io.id
