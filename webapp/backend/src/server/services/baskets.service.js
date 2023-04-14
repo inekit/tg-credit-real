@@ -143,7 +143,7 @@ class BasketsService {
     });
   }
 
-  getFavorites({ user_id, item_option_id, mainside_id }) {
+  getFavorites({ user_id, item_option_id }) {
     return new Promise(async (res, rej) => {
       const connection = await tOrmCon;
 
