@@ -235,20 +235,20 @@ export default {
             else this.backside_item = await this.getItem(undefined, { mainside_id: this.selected_option?.id });
         },
         async changeMaterial() {
-            console.log(this.selected_size, this.selected_material)
-
             this.sizes = this.item.options_array?.filter(el => el.material === this.selected_material)?.map(({ size }) => size);
             this.selected_option = this.item.options_array?.find(el => el.size === this.selected_size && el.material === this.selected_material)
             this.count = (await this.getBasketOption())?.count ?? 0;
             this.price = this.selected_option?.price;
+            console.log(this.selected_size, this.selected_material, this.selected_option?.price, this.item.options_array)
+
             await this.getReferencedItems()
         },
         async changeSize() {
-            console.log(this.selected_size, this.selected_material)
             this.materials = this.item.options_array?.filter(el => el.size === this.selected_size)?.map(({ material }) => material)
             this.selected_option = this.item.options_array?.find(el => el.size === this.selected_size && el.material === this.selected_material)
             this.count = (await this.getBasketOption())?.count ?? 0;
             this.price = this.selected_option?.price;
+            console.log(this.selected_size, this.selected_material)
             await this.getReferencedItems()
         },
         async getBasketOption() {
