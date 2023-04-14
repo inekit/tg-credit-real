@@ -91,7 +91,7 @@ export default {
         window.Telegram?.WebApp.BackButton.hide();
     },
     methods: {
-        changeCount(id, newCount) {
+        changeCount(item, newCount) {
             if (newCount > 100) return;
             this.$store.state.myApi.put(this.$store.state.restAddr + '/favorites', {
                 user_id: this.$store.state.userId,

@@ -41,12 +41,13 @@
             <label>Обратная сторона</label>
             <button v-if="!backside_item?.id" type="button" @click="routeToBackSide">Выбрать</button>
             <div v-else>
-                <span>{{ "Название" }}</span>
+                <span>{{ backside_item.title }}</span>
                 <button type="button" @click="routeToBackSideItem">Посмотреть</button>
                 <button type="button" @click="dropBackSideItem">Убрать</button>
             </div>
         </div>
         <div class="order" v-if="mainside_id">
+            <span>{{ price }} ₽</span>
             <button v-if="!mainside_item?.id" type="button" @click.prevent="order">В корзину</button>
             <button v-else type="button" @click.prevent="routeToMainItem">К основной</button>
         </div>
@@ -167,7 +168,7 @@ export default {
             window.Telegram?.WebApp.close();
         },
         routeBack() {
-            this.$router.go(-1)
+            this.$router.push(`/results/${this.$store.state.userId}`)
         },
         routeToBasket() {
             this.$router.push("/basket")
@@ -223,9 +224,9 @@ export default {
             })
         },
         async getReferencedItems() {
-            this.backside_item = await this.getItem(undefined, { mainside_id: this.selected_option?.id });
-            this.mainside_item = await this.getItem(undefined, { backside_id: this.selected_option?.id });
-            console.log(this.mainside_item)
+            if (this.mainside_id)
+                this.mainside_item = await this.getItem(undefined, { backside_id: this.selected_option?.id });
+            else this.backside_item = await this.getItem(undefined, { mainside_id: this.selected_option?.id });
         },
         async changeMaterial() {
             this.sizes = this.item.options_array?.filter(el => el.material === this.selected_material)?.map(({ size }) => size);
@@ -524,6 +525,27 @@ form {
             border: none;
         }
     }
+}
+
+.backside {
+    &>div {
+        margin-top: 20px;
+
+        &>button {
+            position: absolute;
+            right: 120px;
+            background-color: #E6E6E6;
+            border-radius: 4px;
+            padding: 15px 40px;
+            font-size: 13px;
+            border: none;
+
+            &:last-of-type {
+                right: 0;
+            }
+        }
+    }
+
 }
 
 hr {
