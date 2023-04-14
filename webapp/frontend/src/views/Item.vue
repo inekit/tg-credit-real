@@ -87,7 +87,8 @@ export default {
             materials: [],
             count: 0,
             mainside_item: {},
-            backside_item: {}
+            backside_item: {},
+            price: 0
         }
     },
     watch: {
