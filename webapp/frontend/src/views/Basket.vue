@@ -13,14 +13,6 @@
                 <span class="title">
                     {{ item.title + (item.mainside_id ? " (обр.)" : "") }}
                 </span>
-                <div v-if="!item.mainside_id" class="count-select">
-                    <button type="button" @click="changeCount(item, item.count - 1)">-</button>
-                    <span>{{ item.count }}</span>
-                    <button type="button" @click="changeCount(item, item.count + 1)">+</button>
-                </div>
-                <div v-else class="delete">
-                    <button type="button" @click="dropItem(item)">Удалить</button>
-                </div>
                 <span class="size">
                     Размер {{ item.size }}
                 </span>
@@ -31,7 +23,14 @@
                     {{ item.price }} ₽
                 </span>
             </RouterLink>
-
+            <div v-if="!item.mainside_id" class="count-select">
+                <button type="button" @click="changeCount(item, item.count - 1)">-</button>
+                <span>{{ item.count }}</span>
+                <button type="button" @click="changeCount(item, item.count + 1)">+</button>
+            </div>
+            <div v-else class="delete">
+                <button type="button" @click="dropItem(item)">Удалить</button>
+            </div>
         </div>
     </div>
     <div class="order">
@@ -99,9 +98,9 @@ export default {
     methods: {
         getItemLink(item) {
             return item.mainside_id ?
-                `/items/${item.id}?mainside_id=
+                `/items/${item.item_id}?mainside_id=
             ${item.mainside_id}&size=${item.size}&material=${item.material}` :
-                `/items/${item.id}`
+                `/items/${item.item_id}`
         },
         changeCount(item, newCount) {
             if (newCount > 100) return;
@@ -171,6 +170,8 @@ export default {
 .basket-item {
     margin: 1rem;
     position: relative;
+    text-decoration: none;
+    color: inherit;
 
     .img-container {
         position: relative;

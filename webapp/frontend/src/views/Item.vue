@@ -93,18 +93,24 @@ export default {
     watch: {
         async $route(to, from) {
             this.getUriParams();
-            this.item = await this.getItem(this.$route.params.id);
+            this.item = await this.getItem(this.$route.params.id).catch(e => console.log(e));
         },
         async item(to) {
-            this.sizes = [...new Set(to?.options_array?.map(({ size }) => size))]
-            this.selected_size = this.sizes?.[0]
-            this.materials = [...new Set(to?.options_array?.map(({ material }) => material))]
-            this.selected_material = this.materials?.[0]
-            this.selected_option = to?.options_array?.find(el => el.size === this.selected_size && el.material === this.selected_material)
-            this.price = this.selected_option?.price;
-            this.count = (await this.getBasketOption())?.count ?? 0;
-            this.item.is_favorite = !!this.count;
-            await this.getReferencedItems()
+            try {
+                this.sizes = [...new Set(to?.options_array?.map(({ size }) => size))]
+                this.selected_size = this.sizes?.[0]
+                this.materials = [...new Set(to?.options_array?.map(({ material }) => material))]
+                this.selected_material = this.materials?.[0]
+                this.selected_option = to?.options_array?.find(el => el.size === this.selected_size && el.material === this.selected_material)
+                this.price = this.selected_option?.price;
+                this.count = (await this.getBasketOption())?.count ?? 0;
+                this.item.is_favorite = !!this.count;
+                await this.getReferencedItems()
+            }
+            catch (e) {
+                console.log(e)
+            }
+
         },
         "item.is_favorite"(is_favorite) {
             if (is_favorite) {
