@@ -22,12 +22,17 @@ export default {
 <style lang="scss">
 html,
 body {
-  height: 100%;
+  height: fit-content;
   overflow-x: hidden;
+
+  .h-100 {
+    height: 100%;
+  }
 }
 
 #app {
   width: 100%;
+  height: fit-content;
   top: 0;
   left: 0;
   -webkit-overflow-scrolling: touch;

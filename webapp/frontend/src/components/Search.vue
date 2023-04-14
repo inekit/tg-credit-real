@@ -72,9 +72,11 @@ export default {
         },
         toggleCategories() {
             this.$refs['categories-list'].classList.toggle("shown")
+            document.body.classList.toggle("h-100")
         },
         toggleSort() {
             this.$refs['sort-list'].classList.toggle("shown")
+            document.body.classList.toggle("h-100")
         },
         changeSort(e) {
             this.$store.state.filters = { category_name: this.$store.state.filters.category_name, sort_type: e.target.value }
