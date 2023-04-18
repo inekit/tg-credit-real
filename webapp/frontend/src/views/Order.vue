@@ -115,7 +115,7 @@ export default {
                 .then(response => {
                     this.deliveryPrice = response.data.price;
                 })
-                .catch(e => { eventBus.$emit('noresponse', e) })
+                .catch(e => { console.log(e); this.deliveryPrice = null })
 
             return results ?? {}
 
