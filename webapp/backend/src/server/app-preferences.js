@@ -21,7 +21,7 @@ app.use(
       "http://127.0.0.1:3040",
       "http://localhost:3040",
       "https://188.225.83.97",
-      "https://92.255.79.59",
+      "https://fotodesire.ru/",
     ],
     credentials: true,
   })

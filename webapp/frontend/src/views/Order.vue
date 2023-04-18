@@ -29,7 +29,7 @@
             <input type="tel" id="phone" name="phone" placeholder="Телефон" v-model="basketData.phone">
             <input type="text" id="address" name="address" placeholder="Адрес доставки" v-model="basketData.address"
                 @input="getDeliveryPrice">
-            <input type="text" id="text" pattern="[0-9]+" name="postal code" placeholder="Почтовый индекс"
+            <input type="number" id="text" pattern="[0-9]+" name="postal code" placeholder="Почтовый индекс"
                 v-model.number="basketData.postal_code" @input="getDeliveryPrice">
         </div>
         <h2 class="total">Итого</h2>

@@ -68,7 +68,7 @@ module.exports = (ctx) => {
         "http://127.0.0.1:8080",
         "http://localhost:8080",
         "http://192.168.0.102:8080",
-        "https://92.255.79.59",
+        "https://fotodesire.ru",
       ],
       credentials: true,
       methods: ["GET", "POST"],

@@ -26,7 +26,7 @@ exports.webapp_keyboard = (ctx, id) =>
     [
       webAppButton(
         ctx.getTitle("WEBAPP_BUTTON"),
-        "https://92.255.79.59/colorsfront/results/" + id
+        "https://fotodesire.ru/colorsfront/results/" + id
       ),
     ],
   ]);
