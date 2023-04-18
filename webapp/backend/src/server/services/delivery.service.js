@@ -15,7 +15,7 @@ class BasketsService {
     this.getPrice = this.getPrice.bind(this);
   }
 
-  getPrice({ operator, address, count }) {
+  getPrice({ operator, address, postal_code, count }) {
     return new Promise(async (res, rej) => {
       try {
         if (operator === "сдек") {
@@ -29,7 +29,7 @@ class BasketsService {
           const result = await cdek.getPrice({
             tariff_code: 136,
             from_location: { postal_code: "603065" },
-            to_location: { postal_code: "141986" },
+            to_location: { postal_code, address },
             packages: [
               {
                 weight: 1000,
@@ -49,7 +49,7 @@ class BasketsService {
               "y2_AgAAAAD0Wcn4AAAPeAAAAAACJXtV-u9qs8IzQzWzJ0Cdt9pv-Wh1YS8",
           });
           const result = await ya.getPrice({
-            address: "Дубна",
+            address,
             total_weight: 1000,
           });
           console.log(result);
