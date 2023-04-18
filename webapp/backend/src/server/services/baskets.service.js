@@ -28,15 +28,28 @@ class BasketsService {
 
       try {
         const orders = await queryRunner.query(
-          `select * from orders where user_id = $1 and status='basket' limit 1`,
+          `select * from orders where user_id = $1::int and status='basket' limit 1`,
           [user_id]
         );
         const basket_id = orders[0].id;
 
+        const mainside_oi = await queryRunner.query(
+          `select * from order_items where order_id = $1 and item_option_id = $2 and is_backside = false`,
+          [basket_id, item_option_id]
+        );
+
+        console.log(mainside_oi);
+
         const data = await queryRunner
           .query(
             `insert into order_items (order_id, item_option_id, is_backside, mainside_id, count) values ($1,$2,$3,$4,$5)`,
-            [basket_id, item_option_id, !!mainside_id, mainside_id, count]
+            [
+              basket_id,
+              item_option_id,
+              !!mainside_id,
+              mainside_id,
+              mainside_oi[0].count,
+            ]
           )
           .catch(async (e) => {
             return await queryRunner.query(
