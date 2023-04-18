@@ -21,8 +21,8 @@ module.exports = new EntitySchema({
     },
     mainside_id: {
       type: "bigint",
-      nullable: false,
       default: -1,
+      nullable: false,
     },
     count: {
       type: "int",
