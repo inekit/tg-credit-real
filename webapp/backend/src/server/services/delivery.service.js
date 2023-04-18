@@ -20,7 +20,7 @@ class BasketsService {
       try {
         if (operator === "сдек") {
           const cdek = new Cdek({
-            mode: process.env.MODE,
+            mode: "TEST",
             client_id: "EMscd6r9JnFiQ3bLoyjJY6eM78JrJceI",
             client_secret: "PjLZkKBHEiLK3YsjtNrt3TGNG0ahs3kG",
           });
