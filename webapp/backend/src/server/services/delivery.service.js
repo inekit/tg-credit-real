@@ -55,6 +55,8 @@ class BasketsService {
           console.log(result);
           res(result);
         }
+
+        rej("wrong operator");
       } catch (error) {
         rej(error);
       }
