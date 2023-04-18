@@ -18,6 +18,7 @@ class BasketsService {
   getPrice({ operator, address, postal_code, count }) {
     return new Promise(async (res, rej) => {
       try {
+        if (!address && !postal_code) rej("No addr data");
         if (operator === "CДЭК") {
           const cdek = new Cdek({
             test_mode: true,
