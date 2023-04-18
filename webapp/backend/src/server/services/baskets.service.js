@@ -88,7 +88,7 @@ class BasketsService {
         let data;
         if (count < 1) {
           data = await queryRunner.query(
-            `delete from order_items where order_id=$1 and item_option_id=$2 and is_backside = false;`,
+            `delete from order_items where order_id=$1 and ((item_option_id=$2 and is_backside = false) or mainside_id=$2);`,
             [basket_id, item_option_id]
           );
         } else if (count > 100) throw new Error();
