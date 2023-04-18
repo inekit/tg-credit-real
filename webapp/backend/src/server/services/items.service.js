@@ -83,7 +83,7 @@ class UsersService {
         connection
           .query(
             `select p.*,json_agg(json_build_object('id', io.id, 'size', io.size, 'material', io.material, 'price', io.price))  options_array
-            ,min(io.price) price, 
+            ,min(io.price) price
                 from public.items p
                 left join item_options io on p.id = io.item_id
                 where (title like $1 or $1 is NULL) 
