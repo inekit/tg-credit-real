@@ -2,9 +2,10 @@ const axios = require("axios");
 require("dotenv").config();
 
 class Cdek {
-  constructor({ mode, client_id, client_secret }) {
-    this.api_addr =
-      mode === "TEST" ? "https://api.edu.cdek.ru" : "https://api.cdek.ru";
+  constructor({ test_mode, client_id, client_secret }) {
+    this.api_addr = test_mode
+      ? "https://api.edu.cdek.ru"
+      : "https://api.cdek.ru";
 
     this.client_id = client_id;
     this.client_secret = client_secret;

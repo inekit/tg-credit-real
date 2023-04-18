@@ -20,7 +20,7 @@ class BasketsService {
       try {
         if (operator === "сдек") {
           const cdek = new Cdek({
-            mode: "TEST",
+            test_mode: true,
             client_id: "EMscd6r9JnFiQ3bLoyjJY6eM78JrJceI",
             client_secret: "PjLZkKBHEiLK3YsjtNrt3TGNG0ahs3kG",
           });
@@ -45,6 +45,7 @@ class BasketsService {
           res(result);
         } else if (operator === "Яндекс") {
           const ya = new Ya({
+            test_mode: true,
             access_token:
               "y2_AgAAAAD0Wcn4AAAPeAAAAAACJXtV-u9qs8IzQzWzJ0Cdt9pv-Wh1YS8",
           });

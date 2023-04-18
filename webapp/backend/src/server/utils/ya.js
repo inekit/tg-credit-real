@@ -2,7 +2,10 @@ const axios = require("axios");
 require("dotenv").config();
 
 class Ya {
-  constructor({ access_token }) {
+  constructor({ test_mode, access_token }) {
+    this.api_addr = test_mode
+      ? "https://b2b.taxi.tst.yandex.net"
+      : "https://b2b-authproxy.taxi.yandex.net";
     this.access_token = access_token;
   }
 
