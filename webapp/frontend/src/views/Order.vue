@@ -30,7 +30,7 @@
             <input type="text" id="address" name="address" placeholder="Адрес доставки" v-model="basketData.address"
                 @input="getDeliveryPrice">
             <input type="text" id="text" pattern="[0-9]+" name="postal code" placeholder="Почтовый индекс"
-                v-model="basketData.postal_code" @input="getDeliveryPrice">
+                v-model.number="basketData.postal_code" @input="getDeliveryPrice">
         </div>
         <h2 class="total">Итого</h2>
         <div class="pricing">Стоимость доставки<span>{{ deliveryPrice ? `${deliveryPrice} ₽` : "Не определена" }}</span>
