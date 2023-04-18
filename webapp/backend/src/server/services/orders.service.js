@@ -179,7 +179,7 @@ class UsersService {
                   [
                     {
                       text: "Оплатить",
-                      link,
+                      url: link,
                     },
                   ],
                 ],
