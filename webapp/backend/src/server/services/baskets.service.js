@@ -33,21 +33,19 @@ class BasketsService {
         );
         const basket_id = orders[0].id;
 
-        const mainside_oi = await queryRunner.query(
-          `select * from order_items where order_id = $1 and item_option_id = $2 and is_backside = false`,
-          [basket_id, mainside_id]
-        );
+        const count_final = mainside_id
+          ? (
+              await queryRunner.query(
+                `select * from order_items where order_id = $1 and item_option_id = $2 and is_backside = false`,
+                [basket_id, mainside_id]
+              )
+            )[0].count
+          : count ?? 1;
 
         const data = await queryRunner
           .query(
             `insert into order_items (order_id, item_option_id, is_backside, mainside_id, count) values ($1,$2,$3,$4,$5)`,
-            [
-              basket_id,
-              item_option_id,
-              !!mainside_id,
-              mainside_id,
-              mainside_oi[0].count ?? count ?? 1,
-            ]
+            [basket_id, item_option_id, !!mainside_id, mainside_id, count_final]
           )
           .catch(async (e) => {
             return await queryRunner.query(
