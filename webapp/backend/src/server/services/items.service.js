@@ -48,7 +48,7 @@ class UsersService {
         connection
           .query(
             `select p.*,
-          json_agg(json_build_object('id', io.id, 'size', io.size, 'material', io.material, 'price', io.price))  options_array
+          json_agg(DISTINCT json_build_object('id', io.id, 'size', io.size, 'material', io.material, 'price', io.price))  options_array
           ,min(io.price) price, case when count(o.id) > 0 then true else false end as is_favorite
               from public.items p
               left join item_options io on p.id = io.item_id
@@ -57,7 +57,7 @@ class UsersService {
               where oi.mainside_id = $1
               and o.user_id = $2
               and o.status = 'basket'
-              group by p.id, io.id
+              group by p.id
               limit 1`,
             [mainside_id, user_id]
           )
@@ -67,7 +67,7 @@ class UsersService {
         connection
           .query(
             `select p.*,
-          json_agg(json_build_object('id', io.id, 'size', io.size, 'material', io.material, 'price', io.price))  options_array
+          json_agg(DISTINCT json_build_object('id', io.id, 'size', io.size, 'material', io.material, 'price', io.price))  options_array
           ,min(io.price) price, case when count(o.id) > 0 then true else false end as is_favorite
               from public.items p
               left join item_options io on p.id = io.item_id
@@ -78,7 +78,7 @@ class UsersService {
               where oi2.item_option_id = $1
               and o2.user_id = $2
               and o2.status = 'basket'
-              group by p.id, io.id,io.size,io.material,io.price
+              group by p.id
               limit 1`,
             [backside_id, user_id]
           )
