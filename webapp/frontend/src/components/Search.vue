@@ -162,12 +162,13 @@ export default {
         width: 50vw;
         position: fixed;
         top: 0;
-        right: calc(-50% - 4rem);
+        right: 0;
+        transform: translateY(-100%);
         padding: 1rem;
         background-color: white;
         box-shadow: -1em 0 1em rgba(165, 165, 165, 0.404);
         z-index: 998;
-        transition: right linear 0.5s;
+        transition: all ease-out 0.3s;
         overflow: scroll;
 
         &>div {
@@ -195,7 +196,7 @@ export default {
         }
 
         &.shown {
-            right: 0;
+            transform: translateX(0);
 
             &>span {
                 opacity: 1;
@@ -220,12 +221,13 @@ export default {
         width: 100vw;
         position: fixed;
         left: 0;
-        top: -300px;
+        top: 0;
+        transform: translateY(-300px);
         padding: 1rem;
         background-color: white;
         box-shadow: 0 1rem 1rem rgba(165, 165, 165, 0.404);
         z-index: 999;
-        transition: top linear 0.5s;
+        transition: all ease-out 0.3s;
 
         &>div {
             position: relative;
@@ -259,7 +261,7 @@ export default {
         }
 
         &.shown {
-            top: 0;
+            transform: translateY(0);
 
             /*&::after {
                 content: "";
