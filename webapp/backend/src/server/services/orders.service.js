@@ -147,7 +147,7 @@ class UsersService {
 
         const orderStr = orders[0].items
           ?.map((el) => `📦 ${el.title} - ${el.count} (шт.)`)
-          ?.join("/n");
+          ?.join("\n");
 
         const robokassa = new Robokassa({
           MerchantLogin: "killjoy",

@@ -82,7 +82,8 @@ class UsersService {
       else {
         const query = user_id
           ? `select p.*,json_agg(json_build_object('id', io.id, 'size', io.size, 'material', io.material, 'price', io.price))  options_array
-            ,min(io.price) price, case when count(o.id) > 0 then true else false end as is_favorite
+            ,min(io.price) price, 
+            case when count(o.id) > 0 then true else false end as is_favorite
                 from public.items p
                 left join item_options io on p.id = io.item_id
                 left join order_items oi on io.id = oi.item_option_id
@@ -92,9 +93,9 @@ class UsersService {
                 and (o.status = 'basket' or o.status is NULL)  
                 and (p.category_name = $2 or $2 is NULL)  
                 and (p.id = $3 or $3 is NULL)  
-                and (io.size = $7::varchar or $7::varchar is NULL)
-                and (io.material = $8::varchar or $8::varchar is NULL)
-                and (oi.item_option_id = $9::int or $9::int is NULL)
+                and $7::varchar is NULL
+                    and $8::varchar is NULL
+                    and $9::int is NULL
                 group by p.id
                 order by ${orderQueryPart}
                 LIMIT $4 OFFSET $5`
