@@ -78,7 +78,7 @@ class UsersService {
               where oi2.item_option_id = $1
               and o2.user_id = $2
               and o2.status = 'basket'
-              group by p.id, io.id
+              group by p.id, io.id,io.size,io.material,io.price
               limit 1`,
             [backside_id, user_id]
           )
