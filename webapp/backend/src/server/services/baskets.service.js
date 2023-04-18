@@ -38,8 +38,6 @@ class BasketsService {
           [basket_id, mainside_id]
         );
 
-        console.log(mainside_oi);
-
         const data = await queryRunner
           .query(
             `insert into order_items (order_id, item_option_id, is_backside, mainside_id, count) values ($1,$2,$3,$4,$5)`,
@@ -48,7 +46,7 @@ class BasketsService {
               item_option_id,
               !!mainside_id,
               mainside_id,
-              mainside_oi[0].count,
+              mainside_oi[0].count ?? count ?? 1,
             ]
           )
           .catch(async (e) => {
