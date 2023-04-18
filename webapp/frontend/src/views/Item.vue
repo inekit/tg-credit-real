@@ -435,7 +435,7 @@ form {
             right: 0;
             top: 0;
             background-color: #E6E6E6;
-            border-radius: 1rem;
+            border-radius: 4px;
 
             select {
                 font-size: 1rem;
@@ -489,7 +489,7 @@ form {
             position: absolute;
             right: 1rem;
             background-color: #E6E6E6;
-            border-radius: 1rem;
+            border-radius: 4px;
             padding: 15px 40px;
             font-size: 13px;
             border: none;
@@ -513,11 +513,10 @@ form {
                 top: 0;
                 font-size: 25px;
                 width: 47px;
-                border-radius: 4px 1rem 1rem 4px;
+                border-radius: 4px;
 
                 &:first-child {
                     left: 0;
-                    border-radius: 1rem 4px 4px 1rem;
                 }
             }
         }
@@ -532,7 +531,7 @@ form {
             position: absolute;
             right: 1rem;
             background-color: #E6E6E6;
-            border-radius: 1rem;
+            border-radius: 4px;
             padding: 15px 40px;
             font-size: 13px;
             border: none;
@@ -553,7 +552,7 @@ form {
         position: absolute;
         right: 130px;
         background-color: #E6E6E6;
-        border-radius: 1rem;
+        border-radius: 4px;
         padding: 10px 30px;
         font-size: 13px;
         border: none;
