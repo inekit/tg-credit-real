@@ -16,7 +16,6 @@
                 <input :id="sort_key" :checked="sort_key === $store.state.filters.sort_type" @click="changeSort"
                     type="radio" name="project-name" :value="sort_key" />
             </div>
-            <div class="close-block" @click="toggleSort"></div>
         </div>
         <div ref="categories-list" class="categories-list">
             <span>Категория</span>
@@ -31,8 +30,9 @@
                     :label="category.name" />
                 <label :for="category.name">{{ category.name }}</label>
             </div>
-            <div class="close-block" @click="toggleCategories"></div>
         </div>
+        <div ref="close-block" class="close-block" @click="closeAll"></div>
+
     </div>
 </template>
   
@@ -74,10 +74,12 @@ export default {
         },
         toggleCategories() {
             this.$refs['categories-list'].classList.toggle("shown")
+            this.$refs['close-block'].classList.toggle("shown")
             document.body.classList.toggle("h-100")
         },
         toggleSort() {
             this.$refs['sort-list'].classList.toggle("shown")
+            this.$refs['close-block'].classList.toggle("shown")
             document.body.classList.toggle("h-100")
         },
         changeSort(e) {
@@ -197,10 +199,6 @@ export default {
             margin-bottom: 20px;
         }
 
-        .close-block {
-            display: none;
-        }
-
         &.shown {
             transform: translateX(0);
 
@@ -208,17 +206,6 @@ export default {
                 opacity: 1;
             }
 
-            .close-block {
-                display: block;
-                position: fixed;
-                height: 100vh;
-                height: var(--tg-viewport-stable-height);
-                width: 42vw;
-                right: 58vw;
-                top: 0;
-                z-index: 997;
-                background: transparent;
-            }
         }
     }
 
@@ -266,25 +253,32 @@ export default {
             margin-bottom: 10px;
         }
 
-        .close-block {
-            display: none;
-        }
 
         &.shown {
             transform: translateY(0);
 
-            .close-block {
-                display: block;
-                position: fixed;
-                height: 100vh;
-                left: 0;
-                height: var(--tg-viewport-stable-height);
-                width: 100vw;
-                z-index: 998;
-                background: transparent;
-            }
+
         }
     }
+
+    .close-block {
+        display: none;
+
+        &.shown {
+            display: block;
+            position: fixed;
+            height: 100vh;
+            left: 0;
+            top: 0;
+            height: var(--tg-viewport-stable-height);
+            width: 100vw;
+            z-index: 998;
+            background: transparent;
+
+        }
+    }
+
+
 
     .sort {
         height: 30px;
