@@ -167,7 +167,7 @@ export default {
         background-color: white;
         box-shadow: -1em 0 1em rgba(165, 165, 165, 0.404);
         z-index: 998;
-        transition: right linear 0.2s;
+        transition: right linear 0.5s;
         overflow: scroll;
 
         &>div {
@@ -201,7 +201,7 @@ export default {
                 opacity: 1;
             }
 
-            &::before {
+            /*&::before {
                 content: "";
                 position: fixed;
                 height: 100vh;
@@ -211,7 +211,7 @@ export default {
                 top: 0;
                 z-index: 997;
                 background: transparent;
-            }
+            }*/
         }
     }
 
@@ -225,7 +225,7 @@ export default {
         background-color: white;
         box-shadow: 0 1rem 1rem rgba(165, 165, 165, 0.404);
         z-index: 999;
-        transition: top linear 0.2s;
+        transition: top linear 0.5s;
 
         &>div {
             position: relative;
@@ -261,7 +261,7 @@ export default {
         &.shown {
             top: 0;
 
-            &::after {
+            /*&::after {
                 content: "";
                 position: fixed;
                 height: 100vh;
@@ -269,7 +269,7 @@ export default {
                 width: 100vw;
                 z-index: 998;
                 background: transparent;
-            }
+            }*/
         }
     }
 
