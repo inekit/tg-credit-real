@@ -48,7 +48,7 @@ class UsersService {
         connection
           .query(
             `select p.*,
-          json_agg(DISTINCT json_build_object('id', io.id, 'size', io.size, 'material', io.material, 'price', io.price))  options_array
+          json_agg(DISTINCT jsonb_build_object('id', io.id, 'size', io.size, 'material', io.material, 'price', io.price))  options_array
           ,min(io.price) price, case when count(o.id) > 0 then true else false end as is_favorite
               from public.items p
               left join item_options io on p.id = io.item_id
@@ -67,7 +67,7 @@ class UsersService {
         connection
           .query(
             `select p.*,
-          json_agg(DISTINCT json_build_object('id', io.id, 'size', io.size, 'material', io.material, 'price', io.price))  options_array
+          json_agg(DISTINCT jsonb_build_object('id', io.id, 'size', io.size, 'material', io.material, 'price', io.price))  options_array
           ,min(io.price) price, case when count(o.id) > 0 then true else false end as is_favorite
               from public.items p
               left join item_options io on p.id = io.item_id
