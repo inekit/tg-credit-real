@@ -37,6 +37,10 @@ module.exports = new EntitySchema({
       length: 255,
       nullable: true,
     },
+    postal_code: {
+      type: "int",
+      nullable: true,
+    },
     phone: {
       type: "varchar",
       length: 45,

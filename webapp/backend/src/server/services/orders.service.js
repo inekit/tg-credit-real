@@ -83,6 +83,7 @@ class UsersService {
       name,
       surname,
       patronymic,
+      postal_code,
       total,
     },
     ctx
@@ -124,6 +125,7 @@ class UsersService {
           address,
           name,
           surname,
+          postal_code,
           patronymic,
         });
 

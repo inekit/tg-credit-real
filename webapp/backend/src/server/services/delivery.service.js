@@ -18,7 +18,7 @@ class BasketsService {
   getPrice({ operator, address, postal_code, count }) {
     return new Promise(async (res, rej) => {
       try {
-        if (operator === "сдек") {
+        if (operator === "CДЭК") {
           const cdek = new Cdek({
             test_mode: true,
             client_id: "EMscd6r9JnFiQ3bLoyjJY6eM78JrJceI",
@@ -35,15 +35,15 @@ class BasketsService {
                 weight: count * 100,
                 length: 50,
                 width: 50,
-                height: count * 10,
+                height: 50,
               },
             ],
           });
 
-          console.log(result);
+          console.log({ price: result.total_sum });
 
           res(result);
-        } else if (operator === "Яндекс") {
+        } else if (operator === "Я. Доставка") {
           const ya = new Ya({
             test_mode: true,
             access_token:
@@ -54,7 +54,7 @@ class BasketsService {
             total_weight: count * 100,
           });
           console.log(result);
-          res(result);
+          res({ price: result.pricing_total });
         }
 
         rej("wrong operator");

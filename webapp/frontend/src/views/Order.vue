@@ -27,10 +27,14 @@
             <input type="text" id="surname" name="surname" placeholder="Фамилия" v-model="basketData.surname">
             <input type="text" id="patronymic" name="patronymic" placeholder="Отчество" v-model="basketData.patronymic">
             <input type="tel" id="phone" name="phone" placeholder="Телефон" v-model="basketData.phone">
-            <input type="text" id="address" name="address" placeholder="Адрес доставки" v-model="basketData.address">
+            <input type="text" id="address" name="address" placeholder="Адрес доставки" v-model="basketData.address"
+                @input="getDeliveryPrice">
+            <input type="text" id="text" pattern="[0-9]+" name="postal code" placeholder="Почтовый индекс"
+                v-model="basketData.postal_code" @input="getDeliveryPrice">
         </div>
         <h2 class="total">Итого</h2>
-        <div class="pricing">Стоимость доставки<span>{{ deliveryPrice }} ₽</span></div>
+        <div class="pricing">Стоимость доставки<span>{{ deliveryPrice ? `${deliveryPrice} ₽` : "Не определена" }}</span>
+        </div>
         <div class="pricing">К оплате<span>{{ basketData.total + deliveryPrice }} ₽</span></div>
     </div>
 </template>
@@ -49,7 +53,7 @@ export default {
             selected_po: "yookassa",
             deliveryMethods: ["Я. Доставка", "CДЭК"],
             selected_dm: "CДЭК",
-            deliveryPrice: 1000,
+            deliveryPrice: null,
         }
     },
     watch: {
@@ -64,6 +68,7 @@ export default {
         window.Telegram?.WebApp.MainButton.setText("Заказ подтверждаю");
 
         this.basketData = await this.getBasketData()
+        await this.getDeliveryPrice()
 
     },
     async beforeUnmount() {
@@ -77,6 +82,7 @@ export default {
             if (!this.basketData.address || !this.basketData.phone ||
                 !this.basketData.name || !this.basketData.surname || !this.basketData.patronymic)
                 return alert("Пожалуйста, заполните все поля")
+            if (!this.deliveryPrice) return alert("Пожалуйста, укажите верные данные для доставки")
 
             this.$store.state.myApi
                 .post(this.$store.state.restAddr + '/orders', {
@@ -87,6 +93,7 @@ export default {
                     phone: this.basketData.phone,
                     name: this.basketData.name,
                     surname: this.basketData.surname,
+                    postal_code: this.basketData.postal_code,
                     patronymic: this.basketData.patronymic,
                     total: this.basketData.total + this.deliveryPrice
                 })
@@ -95,6 +102,23 @@ export default {
                     window.Telegram?.WebApp.close();
                 })
                 .catch(e => { eventBus.$emit('noresponse', e) })
+        },
+        async getDeliveryPrice() {
+            const results = await this.$store.state.myApi.get(this.$store.state.restAddr + '/delivery_price', {
+                params: {
+                    operator: this.selected_dm,
+                    address: this.basketData.address,
+                    count: this.basketData.total_count,
+                    postal_code: this.basketData.postal_code,
+                }
+            })
+                .then(response => {
+                    this.deliveryPrice = response.data.price;
+                })
+                .catch(e => { eventBus.$emit('noresponse', e) })
+
+            return results ?? {}
+
         },
         routeBack() {
             this.$router.go(-1)
