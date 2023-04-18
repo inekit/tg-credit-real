@@ -78,9 +78,10 @@ class UsersService {
               where oi2.item_option_id = $1
               and o2.user_id = $2
               and o2.status = 'basket'
+              and io.id = $3
               group by p.id
               limit 1`,
-            [backside_id, user_id]
+            [backside_id, user_id, id]
           )
           .then((data) => res(data))
           .catch((error) => rej(new MySqlError(error)));
