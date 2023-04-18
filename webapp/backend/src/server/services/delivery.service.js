@@ -32,7 +32,7 @@ class BasketsService {
             to_location: { postal_code, address },
             packages: [
               {
-                weight: 1000,
+                weight: count * 100,
                 length: 50,
                 width: 50,
                 height: 50,
@@ -51,7 +51,7 @@ class BasketsService {
           });
           const result = await ya.getPrice({
             address,
-            total_weight: 1000,
+            total_weight: count * 100,
           });
           console.log(result);
           res(result);
