@@ -150,8 +150,8 @@ class UsersService {
           ?.join("\n");
 
         const robokassa = new Robokassa({
-          MerchantLogin: "killjoy",
-          Password: "byqCew-0tedko-wiswab",
+          MerchantLogin: "",
+          Password: "",
         });
 
         const link = await robokassa
