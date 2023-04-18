@@ -87,7 +87,7 @@ class UsersService {
           .catch((error) => rej(new MySqlError(error)));
       else {
         const query = user_id
-          ? `select p.*,json_agg(json_build_object('id', io.id, 'size', io.size, 'material', io.material, 'price', io.price))  options_array
+          ? `select p.*,json_agg(DISTINCT jsonb_build_object('id', io.id, 'size', io.size, 'material', io.material, 'price', io.price))  options_array
             ,min(io.price) price, 
             case when count(
               case when 
@@ -107,7 +107,7 @@ class UsersService {
                 group by p.id
                 order by ${orderQueryPart}
                 LIMIT $4 OFFSET $5`
-          : `select p.*,json_agg(json_build_object('id', io.id, 'size', io.size, 'material', io.material, 'price', io.price))  options_array
+          : `select p.*,json_agg(DISTINCT jsonb_build_object('id', io.id, 'size', io.size, 'material', io.material, 'price', io.price))  options_array
                 ,min(io.price) price
                     from public.items p
                     left join item_options io on p.id = io.item_id

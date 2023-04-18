@@ -70,7 +70,7 @@ export default {
 
         this.$store.state.userId = this.$route.params?.userId;
 
-        window.Telegram?.WebApp.onEvent('viewportChanged', () => window.Telegram?.WebApp.expand())
+        //window.Telegram?.WebApp.onEvent('viewportChanged', () => window.Telegram?.WebApp.expand())
         window.Telegram?.WebApp.enableClosingConfirmation()
 
         if ((await this.getBasket())?.length) {
