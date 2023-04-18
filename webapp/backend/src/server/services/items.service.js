@@ -55,9 +55,10 @@ class UsersService {
               left join order_items oi on io.id = oi.item_option_id
               left join orders o on o.id = oi.order_id
               where oi.mainside_id = $1
+              and o.user_id = $2
               group by p.id
               limit 1`,
-            [mainside_id]
+            [mainside_id, user_id]
           )
           .then((data) => res(data))
           .catch((error) => rej(new MySqlError(error)));
@@ -73,9 +74,10 @@ class UsersService {
               left join orders o on o.id = oi.order_id
               left join order_items oi2 on oi2.mainside_id = io.id
               where oi2.item_option_id = $1
+              and o.user_id = $2
               group by p.id
               limit 1`,
-            [backside_id]
+            [backside_id, user_id]
           )
           .then((data) => res(data))
           .catch((error) => rej(new MySqlError(error)));
