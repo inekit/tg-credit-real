@@ -19,10 +19,14 @@ module.exports = new EntitySchema({
       type: "bigint",
       nullable: false,
     },
+    id: {
+      primary: true,
+      type: "int",
+      generated: true,
+    },
     mainside_id: {
       type: "bigint",
-      default: -1,
-      nullable: false,
+      nullable: true,
     },
     count: {
       type: "int",
