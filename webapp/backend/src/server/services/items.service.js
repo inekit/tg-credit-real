@@ -90,12 +90,13 @@ class UsersService {
                 left join orders o on o.id = oi.order_id
                 where (title like $1 or $1 is NULL) 
                 and (o.user_id = $6 or o.user_id is NULL) 
+                and ($6 is not NULL)
                 and (o.status = 'basket' or o.status is NULL)  
                 and (p.category_name = $2 or $2 is NULL)  
                 and (p.id = $3 or $3 is NULL)  
-                    and $7::varchar is NULL
-                    and $8::varchar is NULL
-                    and $9::int is NULL
+                and (io.size = $7::varchar or $7::varchar is NULL)
+                and (io.material = $8::varchar or $8::varchar is NULL)
+                and (oi.item_option_id = $9::int or $9::int is NULL)
                 group by p.id
                 order by ${orderQueryPart}
                 LIMIT $4 OFFSET $5`
