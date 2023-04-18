@@ -301,6 +301,16 @@ exports.wa_keyboard = (ctx, id) => {
   return keyboard;
 };
 
+exports.payment_keyboard = (ctx, paymentLink) =>
+  inlineKeyboard(
+    paymentLink
+      ? [
+          [urlButton("Оплатить", paymentLink)],
+          [callbackButton(ctx.getTitle("BACK_BUTTON"), "go_back")],
+        ]
+      : [[callbackButton(ctx.getTitle("BACK_BUTTON"), "go_back")]]
+  );
+
 exports.go_back_keyboard = (ctx) =>
   inlineKeyboard([callbackButton(ctx.getTitle("BACK_BUTTON"), "go_back")]);
 

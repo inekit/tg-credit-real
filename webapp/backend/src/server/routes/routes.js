@@ -5,6 +5,7 @@ var CategoriesController = require("../controllers/categories.controller");
 var TagsController = require("../controllers/tags.controller");
 var BasketsController = require("../controllers/baskets.controller");
 var OrdersController = require("../controllers/orders.controller");
+var DeliveryController = require("../controllers/delivery.controller");
 
 module.exports = (ctx) => {
   router.get("/items", ItemsController.getAll);
@@ -16,6 +17,8 @@ module.exports = (ctx) => {
 
   router.get("/basket_data", BasketsController.getBasketData);
   router.post("/orders", OrdersController.addOne(ctx));
+
+  router.get("/delivery_price", DeliveryController.get);
 
   router.get("/categories", CategoriesController.getAll);
 

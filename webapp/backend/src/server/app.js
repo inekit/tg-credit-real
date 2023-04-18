@@ -1,5 +1,6 @@
 const express = require("express");
 const passport = require("passport");
+const setPayed = require("./utils/setPayed");
 
 const bodyParser = require("body-parser");
 
@@ -24,6 +25,22 @@ const { Server } = require("socket.io");
 module.exports = (ctx) => {
   app.use("/colorsserver/api", router(ctx));
   app.use("/colorsserver/api/admin", adminRouter(ctx));
+
+  app.post("/postback", async (req, res) => {
+    console.log(req.body);
+
+    if (!req.body) return res.send();
+
+    const { Fee, OutSum, IncCurrLabel, InvId } = req.body;
+
+    if (!InvId) return res.send();
+
+    console.log("success", req.body);
+
+    setPayed(InvId, ctx);
+
+    return res.send();
+  });
 
   app.use(function (req, res, next) {
     const err = new Error("Страница не найдена!");

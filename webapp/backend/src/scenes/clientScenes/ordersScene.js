@@ -68,7 +68,7 @@ scene.action(/^order\-([0-9]+)$/g, async (ctx) => {
     ?.map((el) => `📦 ${el.title} - ${el.count} (шт.)`)
     ?.join("/n");
 
-  ctx.editMenu("ORDER_INFO_TITLE", "go_back_keyboard", [
+  const orderInfoParams = [
     order_id,
     moment(order.creation_date).format("DD.MM.YYYY"),
     orderStr,
@@ -76,7 +76,28 @@ scene.action(/^order\-([0-9]+)$/g, async (ctx) => {
     order.selected_po,
     order.selected_dm,
     order.total,
-  ]);
+  ];
+
+  if (order.status === "Новый") {
+    const robokassa = new Robokassa({
+      MerchantLogin: "killjoy",
+      Password: "byqCew-0tedko-wiswab",
+    });
+
+    const link = await robokassa
+      .getInvoiceLink({
+        OutSum: 100,
+        InvId: 1,
+        Description: "Описание",
+      })
+      .catch(console.log);
+
+    ctx.editMenu(
+      "ORDER_INFO_TITLE",
+      { name: "payment_keyboard", args: [link] },
+      orderInfoParams
+    );
+  } else ctx.editMenu("ORDER_INFO_TITLE", "go_back_keyboard", orderInfoParams);
 });
 
 scene.action("go_back", async (ctx) => {

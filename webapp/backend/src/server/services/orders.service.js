@@ -5,6 +5,7 @@ const {
   NotFoundError,
   NoInputDataError,
 } = require("../utils/httpErrors");
+const Robokassa = require("../utils/robokassa");
 const moment = require("moment");
 class UsersService {
   constructor() {
@@ -146,6 +147,19 @@ class UsersService {
           ?.map((el) => `📦 ${el.title} - ${el.count} (шт.)`)
           ?.join("/n");
 
+        const robokassa = new Robokassa({
+          MerchantLogin: "killjoy",
+          Password: "byqCew-0tedko-wiswab",
+        });
+
+        const link = await robokassa
+          .getInvoiceLink({
+            OutSum: 100,
+            InvId: 1,
+            Description: "Описание",
+          })
+          .catch(console.log);
+
         ctx.telegram
           .sendMessage(
             user_id,
@@ -165,7 +179,7 @@ class UsersService {
                   [
                     {
                       text: "Оплатить",
-                      callback_data: "pay-" + order_id,
+                      link,
                     },
                   ],
                 ],
