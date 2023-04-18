@@ -16,8 +16,8 @@
             <h2>Способ доставки</h2>
             <div class="select-group">
                 <div v-for="dm in deliveryMethods" :key="dm">
-                    <input type="radio" :id="dm" :value="dm" v-model="selected_dm">
-                    <label :for="dm" @click="selected_dm = dm">{{ dm }}</label>
+                    <input type="radio" :id="dm" :value="dm" v-model="selected_dm" @change="getDeliveryPrice">
+                    <label :for="dm" @click="selected_dm = dm; getDeliveryPrice()">{{ dm }}</label>
                 </div>
             </div>
         </div>
