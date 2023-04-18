@@ -90,7 +90,7 @@ class UsersService {
             ,min(io.price) price, 
             case when count(
               case when 
-                o.user_id = $6 and o.status = 'basket'
+                o.user_id = $6 and o.status = 'basket' and oi.is_backside = false
               then 1 else NULL end
               ) > 0 then true else false end as is_favorite
                 from public.items p
