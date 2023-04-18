@@ -35,7 +35,7 @@ class BasketsService {
                 weight: count * 100,
                 length: 50,
                 width: 50,
-                height: 50,
+                height: count * 10,
               },
             ],
           });
