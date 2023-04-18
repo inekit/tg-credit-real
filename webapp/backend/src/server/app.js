@@ -26,7 +26,7 @@ module.exports = (ctx) => {
   app.use("/colorsserver/api", router(ctx));
   app.use("/colorsserver/api/admin", adminRouter(ctx));
 
-  app.post("/postback", async (req, res) => {
+  app.post("/colorsserver/api/postback", async (req, res) => {
     console.log(req.body);
 
     if (!req.body) return res.send();
