@@ -82,6 +82,11 @@ export default {
             this.$refs['close-block'].classList.toggle("shown")
             document.body.classList.toggle("h-100")
         },
+        closeAll() {
+            this.$refs['sort-list'].classList.remove("shown")
+            this.$refs['categories-list'].classList.remove("shown")
+            this.$refs['close-block'].classList.remove("shown")
+        },
         changeSort(e) {
             this.$store.state.filters = { category_name: this.$store.state.filters.category_name, sort_type: e.target.value }
             const searchURL = new URL(window.location);
@@ -272,7 +277,7 @@ export default {
             top: 0;
             height: var(--tg-viewport-stable-height);
             width: 100vw;
-            z-index: 998;
+            z-index: 997;
             background: transparent;
 
         }
