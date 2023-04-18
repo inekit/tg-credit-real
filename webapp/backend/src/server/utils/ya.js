@@ -15,7 +15,7 @@ class Ya {
             client_price: client_price ?? 0,
             destination: { address },
             payment_method: "already_paid",
-            source: { address: "Нижний Новгород улица Краснодонцев 23" },
+            source: { address },
             tariff: "self_pickup",
             total_assessed_price: client_price ?? 0,
             total_weight,
@@ -31,6 +31,8 @@ class Ya {
           resolve(response.data);
         })
         .catch((error) => {
+          console.log(error.response.data);
+
           reject(error);
         });
     });
