@@ -84,7 +84,7 @@ class UsersService {
           .query(
             `select p.*,json_agg(json_build_object('id', io.id, 'size', io.size, 'material', io.material, 'price', io.price))  options_array
             ,min(io.price) price, 
-            case when count(case when o.user_id = $6 then 1 else 0 end) > 0 then true else false end as is_favorite
+            case when count(case when o.user_id = $6 then 1 else NULL end) > 0 then true else false end as is_favorite
                 from public.items p
                 left join item_options io on p.id = io.item_id
                 left join order_items oi on io.id = oi.item_option_id
