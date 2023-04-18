@@ -16,6 +16,7 @@
                 <input :id="sort_key" :checked="sort_key === $store.state.filters.sort_type" @click="changeSort"
                     type="radio" name="project-name" :value="sort_key" />
             </div>
+            <div class="close-block" @click="toggleSort"></div>
         </div>
         <div ref="categories-list" class="categories-list">
             <span>Категория</span>
@@ -30,6 +31,7 @@
                     :label="category.name" />
                 <label :for="category.name">{{ category.name }}</label>
             </div>
+            <div class="close-block" @click="toggleCategories"></div>
         </div>
     </div>
 </template>
@@ -163,7 +165,7 @@ export default {
         position: fixed;
         top: 0;
         right: 0;
-        transform: translateY(-100%);
+        transform: translateX(calc(100% + 4rem));
         padding: 1rem;
         background-color: white;
         box-shadow: -1em 0 1em rgba(165, 165, 165, 0.404);
@@ -195,6 +197,10 @@ export default {
             margin-bottom: 20px;
         }
 
+        .close-block {
+            display: none;
+        }
+
         &.shown {
             transform: translateX(0);
 
@@ -202,8 +208,8 @@ export default {
                 opacity: 1;
             }
 
-            /*&::before {
-                content: "";
+            .close-block {
+                display: block;
                 position: fixed;
                 height: 100vh;
                 height: var(--tg-viewport-stable-height);
@@ -212,7 +218,7 @@ export default {
                 top: 0;
                 z-index: 997;
                 background: transparent;
-            }*/
+            }
         }
     }
 
@@ -260,18 +266,23 @@ export default {
             margin-bottom: 10px;
         }
 
+        .close-block {
+            display: none;
+        }
+
         &.shown {
             transform: translateY(0);
 
-            /*&::after {
-                content: "";
+            .close-block {
+                display: block;
                 position: fixed;
                 height: 100vh;
+                left: 0;
                 height: var(--tg-viewport-stable-height);
                 width: 100vw;
                 z-index: 998;
                 background: transparent;
-            }*/
+            }
         }
     }
 
