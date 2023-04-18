@@ -61,6 +61,7 @@ export default {
     async mounted() {
         this.scroll()
         window.Telegram?.WebApp.BackButton.hide()
+        window.Telegram?.WebApp.expand()
 
         let uri = window.location.search.substring(1);
         this.params = new URLSearchParams(uri)
@@ -68,6 +69,9 @@ export default {
         this.mainside_id = this.params.get('mainside_id') === "null" ? null : this.params.get('mainside_id')
 
         this.$store.state.userId = this.$route.params?.userId;
+
+        window.Telegram?.WebApp.onEvent('viewportChanged', () => window.Telegram?.WebApp.expand())
+        window.Telegram?.WebApp.enableClosingConfirmation()
 
         if ((await this.getBasket())?.length) {
             window.Telegram?.WebApp.MainButton.onClick(this.routeToBasket);

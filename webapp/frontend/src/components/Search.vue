@@ -167,7 +167,7 @@ export default {
         background-color: white;
         box-shadow: -1em 0 1em rgba(165, 165, 165, 0.404);
         z-index: 998;
-        transition: ease-out 0.4s;
+        transition: right ease-out 0.4s;
         overflow: scroll;
 
         &>div {
@@ -225,7 +225,7 @@ export default {
         background-color: white;
         box-shadow: 0 1rem 1rem rgba(165, 165, 165, 0.404);
         z-index: 999;
-        transition: ease-out 0.4s;
+        transition: top ease-out 0.4s;
 
         &>div {
             position: relative;
