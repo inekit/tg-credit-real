@@ -30,7 +30,7 @@ class Cdek {
     });
   }
 
-  getPrice(tariff_code, from_location, to_location, packages) {
+  getPrice({ tariff_code, from_location, to_location, packages }) {
     return new Promise((resolve, reject) => {
       axios
         .post(
