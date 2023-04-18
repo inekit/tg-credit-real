@@ -40,9 +40,9 @@ class BasketsService {
             ],
           });
 
-          console.log({ price: result.total_sum });
+          console.log(result);
 
-          res(result);
+          res({ price: result.total_sum });
         } else if (operator === "Я. Доставка") {
           const ya = new Ya({
             test_mode: true,
@@ -54,7 +54,7 @@ class BasketsService {
             total_weight: count * 100,
           });
           console.log(result);
-          res({ price: result.pricing_total });
+          res({ price: parseInt(result.pricing_total) });
         }
 
         rej("wrong operator");
