@@ -35,7 +35,7 @@ class BasketsService {
 
         const mainside_oi = await queryRunner.query(
           `select * from order_items where order_id = $1 and item_option_id = $2 and is_backside = false`,
-          [basket_id, item_option_id]
+          [basket_id, mainside_id]
         );
 
         console.log(mainside_oi);
