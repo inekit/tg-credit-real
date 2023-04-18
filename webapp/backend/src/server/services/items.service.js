@@ -91,7 +91,6 @@ class UsersService {
                 left join orders o on o.id = oi.order_id
                 where (title like $1 or $1 is NULL) 
                 and (o.user_id = $6 or o.user_id is NULL) 
-                and (o.status = 'basket' or o.status is NULL)  
                 and (p.category_name = $2 or $2 is NULL)  
                 and (p.id = $3 or $3 is NULL)  
                 group by p.id
