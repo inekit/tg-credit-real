@@ -90,12 +90,13 @@ class UsersService {
                 left join order_items oi on io.id = oi.item_option_id
                 left join orders o on o.id = oi.order_id
                 where (title like $1 or $1 is NULL) 
+                and (o.user_id = $6::int or o.user_id is NULL) 
                 and (p.category_name = $2 or $2 is NULL)  
                 and (p.id = $3 or $3 is NULL)  
                 group by p.id
                 order by ${orderQueryPart}
                 LIMIT $4 OFFSET $5`,
-            [searchQuery, category, id, take, skip]
+            [searchQuery, category, id, take, skip, user_id]
           )
           .then((data) => res(data))
           .catch((error) => rej(new MySqlError(error)));
