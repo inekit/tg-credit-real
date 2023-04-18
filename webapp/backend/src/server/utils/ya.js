@@ -13,7 +13,7 @@ class Ya {
     return new Promise((resolve, reject) => {
       axios
         .post(
-          `b2b-authproxy.taxi.yandex.net/api/b2b/platform/pricing-calculator`,
+          `${this.api_addr}/api/b2b/platform/pricing-calculator`,
           {
             client_price: client_price ?? 0,
             destination: { address },
