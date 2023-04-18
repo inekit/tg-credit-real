@@ -54,8 +54,10 @@ class UsersService {
               left join item_options io on p.id = io.item_id
               left join order_items oi on io.id = oi.item_option_id
               left join orders o on o.id = oi.order_id
+              left join order_items oi_mainside on oi.mainside_id = oi_mainside.item_option_id
+              left join orders o_mainside on o_mainside.id = oi_mainside.order_id
               where oi.mainside_id = $1
-              and o.user_id = $2
+              and o_mainside.user_id = $2
               group by p.id
               limit 1`,
             [mainside_id, user_id]
