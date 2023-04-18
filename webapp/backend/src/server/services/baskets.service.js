@@ -168,7 +168,7 @@ class BasketsService {
           left join item_options io on oi.item_option_id = io.id
           left join items i on io.item_id = i.id
           where o.user_id = $1 and o.status='basket' and io.id is not NULL
-          and (io.id = $2 or $2 is NULL)  
+          and ((io.id = $2 and oi.is_backside = false) or $2 is NULL)  
           order by io.id`,
           [user_id, item_option_id]
         )
