@@ -18,7 +18,7 @@ class Ya {
             client_price: client_price ?? 0,
             destination: { address },
             payment_method: "already_paid",
-            source: { address },
+            source: { address: "Нижний Новгород улица Краснодонцев 23" },
             tariff: "self_pickup",
             total_assessed_price: client_price ?? 0,
             total_weight,
