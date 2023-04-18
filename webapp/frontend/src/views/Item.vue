@@ -232,7 +232,7 @@ export default {
         },
         async getReferencedItems() {
             if (this.mainside_id)
-                this.mainside_item = await this.getItem(undefined, { backside_id: this.selected_option?.id });
+                this.mainside_item = await this.getItem(this.mainside_id, { backside_id: this.selected_option?.id });
             else this.backside_item = await this.getItem(undefined, { mainside_id: this.selected_option?.id });
         },
         async changeMaterial() {
