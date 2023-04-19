@@ -179,11 +179,14 @@ export default {
     },
     dropMaterial(name) {
       delete this.options_object[name]
+      this.distinct_materials = this.distinct_materials?.filter(el => el !== name)
+
     },
     dropSize(name) {
       for (let key in this.options_object) {
         delete this.options_object[key][name]
       }
+      this.distinct_sizes = this.distinct_sizes?.filter(el => el !== name)
     },
     async getProjects() {
       return await myApi
