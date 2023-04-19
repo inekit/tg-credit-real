@@ -204,10 +204,11 @@ class UsersService {
           for (let s in sizes) {
             const price = sizes[s];
             console.log(s, m, price);
-            await queryRunner.query(
-              "insert into item_options (item_id,size,material,price) values ($1,$2,$3,$4)",
-              [id, s, m, price]
-            );
+            if (price)
+              await queryRunner.query(
+                "insert into item_options (item_id,size,material,price) values ($1,$2,$3,$4)",
+                [id, s, m, price]
+              );
           }
         }
 
@@ -280,10 +281,11 @@ class UsersService {
           for (let s in sizes) {
             const price = sizes[s];
             console.log(s, m, price);
-            await queryRunner.query(
-              "insert into item_options (item_id,size,material,price) values ($1,$2,$3,$4)",
-              [id, s, m, price]
-            );
+            if (price)
+              await queryRunner.query(
+                "insert into item_options (item_id,size,material,price) values ($1,$2,$3,$4)",
+                [id, s, m, price]
+              );
           }
         }
 
