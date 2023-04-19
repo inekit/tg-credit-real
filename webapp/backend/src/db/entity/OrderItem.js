@@ -39,6 +39,7 @@ module.exports = new EntitySchema({
       type: "many-to-one",
       joinColumn: true,
       cascade: true,
+      onDelete: "cascade",
     },
     order: {
       target: "Order",
