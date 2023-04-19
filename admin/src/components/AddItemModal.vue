@@ -28,7 +28,7 @@
               <tr>
                 <td>Размер<br />
                   Материал</td>
-                <td v-for="price, sizeName in Object.values(options_object)?.[0]" :key="'sizeh-' + sizeName">
+                <td v-for="sizeName in distinct_sizes" :key="'sizeh-' + sizeName">
                   {{ sizeName }}
                   <CButton color="secondary" @click="dropSize(sizeName)">X</CButton>
                 </td>
@@ -42,12 +42,12 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="sizesObj, materialName in options_object" :key="'material-' + materialName">
+              <tr v-for="materialName in distinct_materials" :key="'material-' + materialName">
                 <td>
                   {{ materialName }}
                   <CButton color="secondary" @click="dropMaterial(materialName)">X</CButton>
                 </td>
-                <td v-for="price, sizeName in sizesObj" :key="'size-' + sizeName">
+                <td v-for="sizeName in distinct_sizes" :key="'size-' + sizeName">
                   <CFormInput type="text" v-model="options_object[materialName][sizeName]" />
                 </td>
                 <td>
@@ -131,6 +131,8 @@ export default {
           "Размер 2": 3000
         }
       },
+      distinct_materials: [],
+      distinct_sizes: [],
       tempSize: 0,
       tempMaterial: 0,
     }
@@ -138,6 +140,9 @@ export default {
   updated() {
 
     this.options_object = {};
+    this.distinct_materials = [...new Set(this.formData.options_array?.map(({ material }) => material))]
+    this.distinct_sizes = [...new Set(this.formData.options_array?.map(({ size }) => size))]
+
     for (let { size, material, price } of this.formData.options_array) {
       if (!material && !size && !price) continue;
       this.options_object[material] ? this.options_object[material][size] = price : this.options_object[material] = { size: price }
