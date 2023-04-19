@@ -39,7 +39,7 @@ module.exports = new EntitySchema({
       target: "Category",
       type: "many-to-one",
       joinColumn: true,
-      cascade: false,
+      cascade: true,
     },
     tags: {
       target: "Tag",

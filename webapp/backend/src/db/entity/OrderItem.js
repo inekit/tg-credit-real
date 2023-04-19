@@ -38,7 +38,7 @@ module.exports = new EntitySchema({
       target: "ItemOption",
       type: "many-to-one",
       joinColumn: true,
-      cascade: false,
+      cascade: true,
     },
     order: {
       target: "Order",

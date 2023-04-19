@@ -33,7 +33,7 @@ module.exports = new EntitySchema({
       target: "Item",
       type: "many-to-one",
       joinColumn: true,
-      cascade: false,
+      cascade: true,
     },
   },
 });
