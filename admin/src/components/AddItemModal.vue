@@ -166,12 +166,16 @@ export default {
 
       this.options_object[name] = size_template
 
+      this.distinct_materials.push(name)
+
       this.tempMaterial = ""
     },
     addSize(name) {
       const new_oo_entries = Object.entries(this.options_object)?.map(([key, value]) => [key, Object.assign(value ?? {}, { [name]: 0 })])
       this.options_object = Object.fromEntries(new_oo_entries)
       this.tempSize = ""
+      this.distinct_sizes.push(name)
+
     },
     dropMaterial(name) {
       delete this.options_object[name]
