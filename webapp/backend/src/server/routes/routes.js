@@ -26,6 +26,7 @@ module.exports = (ctx) => {
   router.get("/tags", TagsController.getAll);
 
   router.put("/promos", PromosController.use);
+  router.get("/promos", PromosController.test);
 
   return router;
 };

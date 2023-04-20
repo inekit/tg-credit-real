@@ -19,6 +19,13 @@ function use(req, res, next) {
     .catch((error) => next(error));
 }
 
+function test(req, res, next) {
+  promosService
+    .use(req.body, true)
+    .then((data) => res.send(data))
+    .catch((error) => next(error));
+}
+
 function add(req, res, next) {
   const { code, type, sum, count } = req.body;
 
@@ -56,6 +63,7 @@ module.exports = {
   get,
   use,
   add,
+  test,
   edit,
   drop,
 };

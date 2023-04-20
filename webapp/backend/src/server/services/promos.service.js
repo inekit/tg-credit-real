@@ -33,7 +33,7 @@ class UsersService {
     });
   }
 
-  use({ code }) {
+  use({ code }, test) {
     return new Promise(async (res, rej) => {
       const connection = await tOrmCon;
 
@@ -72,10 +72,11 @@ class UsersService {
 
         if (maxCount <= count_used) throw new Error("PROMO_USED");
 
-        await queryRunner.query(
-          "insert into users_promos (user_id, promo_code, used, use_date) values ($1,$2,$3, now())",
-          [ctx.from.id, code, used]
-        );
+        test &&
+          (await queryRunner.query(
+            "insert into users_promos (user_id, promo_code, used, use_date) values ($1,$2,$3, now())",
+            [ctx.from.id, code, used]
+          ));
 
         await queryRunner.commitTransaction();
 

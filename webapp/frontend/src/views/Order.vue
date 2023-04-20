@@ -34,7 +34,7 @@
         </div>
         <h2>Промокод</h2>
         <div class="input-group">
-            <input type="text" id="name" name="name" placeholder="Имя" v-model="basketData.promo_code"
+            <input type="text" id="name" name="name" placeholder="Введите промокод" v-model="basketData.promo_code"
                 @change="getPromoSale">
         </div>
         <h2 class="total">Итого</h2>
@@ -155,7 +155,7 @@ export default {
                 }
             })
                 .then(response => {
-                    return this.sale = response.data;
+                    return this.sale = response.data ?? this.sale;
                 })
                 .catch(e => { alert("Промокод недействителен") })
 
