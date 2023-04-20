@@ -34,7 +34,7 @@ function add(req, res, next) {
 function edit(req, res, next) {
   const { code, type, sum, count } = req.body;
 
-  servicePreset
+  promosService
     .edit({
       code,
       type,

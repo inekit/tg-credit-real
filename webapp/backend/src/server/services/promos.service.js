@@ -91,6 +91,34 @@ class UsersService {
       }
     });
   }
+
+  edit({ code, count, type, sum }) {
+    return new Promise(async (res, rej) => {
+      const connection = await tOrmCon;
+
+      try {
+        const data = await connection
+          .getRepository("Promo")
+          .createQueryBuilder()
+          .update({
+            code,
+            count,
+            type,
+            sum,
+          })
+          .where({
+            code,
+          })
+          .returning("*")
+          .execute();
+
+        res(data);
+      } catch (error) {
+        console.log(error);
+        rej(new MySqlError(error));
+      }
+    });
+  }
 }
 
 module.exports = new UsersService();
