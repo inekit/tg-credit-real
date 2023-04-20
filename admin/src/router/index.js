@@ -59,6 +59,13 @@ const routes = [
         children: [],
       },
       {
+        path: '/basket',
+        name: 'BasketItems',
+        props: true,
+        component: () => import('@/views/Basket.vue'),
+        children: [],
+      },
+      {
         path: '/categories',
         name: 'Categories',
         component: () => import('@/views/Categories.vue'),

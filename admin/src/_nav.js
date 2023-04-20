@@ -1,6 +1,12 @@
 export default [
   {
     component: 'CNavItem',
+    name: 'Корзины',
+    to: '/basket',
+    icon: 'cil-description',
+  },
+  {
+    component: 'CNavItem',
     name: 'Заказы',
     to: '/orders',
     icon: 'cil-description',
