@@ -1,7 +1,10 @@
 <template>
-    <CFormInput type="search" v-model="user_id" @change="get" />
-    <Table :fields="tableFieldNames" :postData="get" :actions="dataActions" :rows="rows" editMode="form" name="Позиции" />
-</div></template>
+    <div>
+        <CFormInput type="search" v-model="user_id" @change="get" />
+        <Table :fields="tableFieldNames" :postData="get" :actions="dataActions" :rows="rows" editMode="form"
+            name="Позиции" />
+    </div>
+</template>
   
 <script>
 import Table from '@/components/Table.vue'
