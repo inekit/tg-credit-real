@@ -29,6 +29,7 @@ export default {
       rows: [],
       dataActions: {
         Позиции: { action: this.routeToPosts, color: 'primary' },
+        Изменить: { action: this.change, color: 'warning' },
         Удалить: { action: this.delete, color: 'danger' },
       },
       tableFieldNames: [
