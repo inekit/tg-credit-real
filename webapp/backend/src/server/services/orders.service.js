@@ -13,7 +13,7 @@ class UsersService {
     this.getAll = this.getAll.bind(this);
   }
 
-  getOne({ id }) {
+  getOne({ id, user_id }) {
     return new Promise(async (res, rej) => {
       const connection = await tOrmCon;
 
@@ -27,10 +27,11 @@ class UsersService {
           left join order_items oi on o.id = oi.order_id  
           left join item_options io on oi.item_option_id = io.id  
           left join items i on io.item_id = i.id  
-          where o.id = $1 
+          where (o.id = $1 or $1::int is NULL)
+          and (o.user_id = $2 or $2::int is NULL)
           group by o.id
           limit 1`,
-          [id]
+          [id, user_id]
         )
         .then(async (postData) => {
           if (!postData?.[0]) rej(new NotFoundError());
