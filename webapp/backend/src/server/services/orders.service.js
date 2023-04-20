@@ -171,7 +171,7 @@ class UsersService {
         if (total < 0) throw new Error("PROMO_TO_LARGE");
         if (delivery_price <= 0) throw new Error("DELIVERY_WRONG");
 
-        total = total + delivery_price;
+        total = +total + +delivery_price;
 
         const data = await queryRunner.manager.getRepository("Order").save({
           user_id,
