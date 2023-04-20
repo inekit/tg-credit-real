@@ -7,7 +7,7 @@
         :column-width="bodyWidth / 6" :gap="12">
         <template #default="{ item, index }">
             <div class="result-item">
-                <router-link :to="`/results/${$store.state.userId}`">
+                <router-link :to="`/results/${$store.state.userId}?category=${item.name}`">
                     <div class="img-container">
                         <img :src="`/colorsserver/public/pics/${item.preview}`" />
                     </div>
