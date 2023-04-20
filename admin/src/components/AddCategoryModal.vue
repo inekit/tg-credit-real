@@ -15,11 +15,7 @@
         <CFormInput type="file" accept="image/*" ref="preview" @input="previewMultiImage" class="mb-3" label="Превью"
           placeholder="Превью" />
         <div class="border p-2 mt-3 preview-container">
-          <template v-if="preview_list?.length">
-            <div v-for="item, index in preview_list" :key="index">
-              <img :src="item" class="img-fluid" />
-            </div>
-          </template>
+          <img :src="preview" class="img-fluid" />
         </div>
         <CFormTextarea v-model="formData.description" placeholder="Описание" id="inputDescription"
           aria-describedby="inputGroupPrepend" required />
@@ -54,7 +50,7 @@ export default {
     },
   },
   data() {
-    return { formValid: false, }
+    return { formValid: false, preview: "" }
   },
   updated() {
     this.formValid = false
@@ -71,9 +67,7 @@ export default {
 
       var formData = new FormData()
 
-      this.formData.image_list?.forEach(v => {
-        formData.append('images[]', v);
-      });
+      formData.append('preview', this.formData.preview);
 
       formData.append('name', this.formData.name)
       formData.append('description', this.formData.description)
@@ -82,14 +76,13 @@ export default {
     },
     previewMultiImage(event) {
       var input = event.target;
-      this.formData.preview = input.files[0]
 
       if (input.files) {
         var reader = new FileReader();
         reader.onload = (e) => {
-          this.preview_list = [e.target.result];
+          this.preview = e.target.result;
         }
-        this.formData.image_list = [input.files[0]];
+        this.formData.preview = input.files[0];
         reader.readAsDataURL(input.files[0]);
       }
     },
