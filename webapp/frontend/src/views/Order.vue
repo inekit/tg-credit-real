@@ -127,7 +127,7 @@ export default {
                 .then(response => {
                     this.deliveryPrice = response.data?.price ?? 0;
                 })
-                .catch(e => { console.log(e); this.deliveryPrice = null })
+                .catch(e => { console.log(e); this.deliveryPrice = 0 })
 
             return results ?? {}
 
@@ -160,7 +160,7 @@ export default {
                 .then(response => {
                     return this.sale = response.data ?? { sum: 0 };
                 })
-                .catch(e => { alert("Промокод недействителен") })
+                .catch(e => { this.sale = { sum: 0 }; alert("Промокод недействителен") })
 
             return results ?? {}
 

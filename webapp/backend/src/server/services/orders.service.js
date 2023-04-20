@@ -11,6 +11,7 @@ class UsersService {
   constructor() {
     this.getOne = this.getOne.bind(this);
     this.getAll = this.getAll.bind(this);
+    this.dropItem = this.dropItem.bind(this);
   }
 
   getOne({ id }) {
@@ -265,6 +266,21 @@ class UsersService {
         connection
           .getRepository("Order")
           .delete({ id })
+          .then((data) => res(data))
+          .catch((error) => rej(new MySqlError(error)));
+      });
+    });
+  }
+
+  dropItem({ item_option_id, order_id, id }) {
+    return new Promise((res, rej) => {
+      if (!id || !item_option_id || !order_id)
+        return rej(new NoInputDataError({ id: id }));
+
+      tOrmCon.then((connection) => {
+        connection
+          .getRepository("OrderItem")
+          .delete({ item_option_id, order_id, id })
           .then((data) => res(data))
           .catch((error) => rej(new MySqlError(error)));
       });

@@ -31,6 +31,9 @@ module.exports = (ctx) => {
   router.put("/orders", auth, OrdersController.editOne(ctx));
   router.delete("/orders", auth, OrdersController.deleteOne);
 
+  router.put("/orders_items", auth, OrdersController.editItem);
+  router.delete("/orders_items", auth, OrdersController.dropItem);
+
   router.get("/promos", auth, PromosController.get);
   router.post("/promos", auth, PromosController.add);
   router.put("/promos", auth, PromosController.edit);

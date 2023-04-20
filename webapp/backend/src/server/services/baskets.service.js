@@ -158,7 +158,7 @@ class BasketsService {
 
       connection
         .query(
-          `select io.id, i.id item_id, o.creation_date, i.title, i.image_list, count, size, material, price, mainside_id from 
+          `select io.id, i.id item_id, o.id order_id, o.creation_date, i.title, i.image_list, count, size, material, price, mainside_id from 
           orders o 
           left join order_items oi on oi.order_id = o.id
           left join item_options io on oi.item_option_id = io.id
