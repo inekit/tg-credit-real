@@ -21,7 +21,7 @@ function use(req, res, next) {
 
 function test(req, res, next) {
   promosService
-    .use(req.body, true)
+    .use(req.query, true)
     .then((data) => res.send(data))
     .catch((error) => next(error));
 }

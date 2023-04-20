@@ -50,7 +50,7 @@ class UsersService {
           })
       )?.[0] ?? {};
 
-      if (!code) return rej(new Error("WRONG_PROMO"));
+      if (!sum) return rej(new Error("WRONG_PROMO"));
 
       const queryRunner = connection.createQueryRunner();
 
