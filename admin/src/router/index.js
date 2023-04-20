@@ -71,6 +71,12 @@ const routes = [
         component: () => import('@/views/Categories.vue'),
         children: [],
       },
+      {
+        path: '/promos',
+        name: 'Promos',
+        component: () => import('@/views/Promos.vue'),
+        children: [],
+      },
     ],
   },
   {

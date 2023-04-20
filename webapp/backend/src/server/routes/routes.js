@@ -6,6 +6,7 @@ var TagsController = require("../controllers/tags.controller");
 var BasketsController = require("../controllers/baskets.controller");
 var OrdersController = require("../controllers/orders.controller");
 var DeliveryController = require("../controllers/delivery.controller");
+var PromosController = require("../controllers/promos.controller");
 
 module.exports = (ctx) => {
   router.get("/items", ItemsController.getAll);
@@ -23,6 +24,8 @@ module.exports = (ctx) => {
   router.get("/categories", CategoriesController.getAll);
 
   router.get("/tags", TagsController.getAll);
+
+  router.put("/promos", auth, PromosController.use);
 
   return router;
 };

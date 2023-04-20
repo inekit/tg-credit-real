@@ -68,20 +68,10 @@ export default {
             this.formMode = 'edit'
         },
         dateFormatter,
-        changeStatus(newStatus) {
-            this.$store.state.myApi.put(this.$store.state.publicPath + '/api/admin/orders', {
-                id: this.order.id,
-                status: newStatus,
-            })
-                .then(async () => {
-                    this.order.status = newStatus;
-                })
-                .catch(e => { eventBus.$emit('noresponse', e) })
-        },
         get() {
             console.log(this.tag)
             return myApi
-                .get(this.$store.state.publicPath + '/api/admin/favorites/', {
+                .get(this.$store.state.publicPath + '/api/favorites/', {
                     params: {
                         user_id: this.user_id,
                     },

@@ -8,6 +8,7 @@ var {
 var UsersController = require("../controllers/user.controller");
 var ItemsController = require("../controllers/items.controller");
 var OrdersController = require("../controllers/orders.controller");
+var PromosController = require("../controllers/promos.controller");
 
 var TagsController = require("../controllers/tags.controller");
 var CategoriesController = require("../controllers/categories.controller");
@@ -29,6 +30,11 @@ module.exports = (ctx) => {
   router.post("/orders", auth, OrdersController.addOne(ctx));
   router.put("/orders", auth, OrdersController.editOne(ctx));
   router.delete("/orders", auth, OrdersController.deleteOne);
+
+  router.get("/promos", auth, PromosController.get);
+  router.post("/promos", auth, PromosController.add);
+  router.put("/promos", auth, PromosController.edit);
+  router.delete("/promos", auth, PromosController.drop);
 
   router.post("/tags", auth, TagsController.addOne);
   router.put("/tags", auth, TagsController.editOne);

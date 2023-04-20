@@ -1,13 +1,13 @@
 <template>
   <div>
-    <AddCategoryModal :visible="formVisible" :formData="formData" :mode="formMode" />
+    <AddPromoModal :visible="formVisible" :formData="formData" :mode="formMode" />
     <Table :fields="tableFieldNames" :postData="get" :actions="dataActions" :rows="rows" editMode="form"
-      name="Категории" />
+      name="Промокоды" />
   </div>
 </template>
 
 <script>
-import AddCategoryModal from '@/components/AddCategoryModal.vue'
+import AddPromoModal from '@/components/AddPromoModal.vue'
 import Table from '@/components/Table.vue'
 import eventBus from '../eventBus'
 
@@ -18,7 +18,7 @@ const myApi = axios.create({
 
 export default {
   components: {
-    AddCategoryModal,
+    AddPromoModal,
     Table,
   },
   data() {
@@ -28,7 +28,6 @@ export default {
       formData: {},
       rows: [],
       dataActions: {
-        Позиции: { action: this.routeToPosts, color: 'primary' },
         Изменить: { action: this.change, color: 'warning' },
         Удалить: { action: this.delete, color: 'danger' },
       },
@@ -45,7 +44,7 @@ export default {
     }
   },
   created() {
-    eventBus.$on('addNewProject', () => {
+    eventBus.$on('addNewPromo', () => {
       this.formMode = 'new'
       this.formVisible = true
     })
@@ -53,12 +52,12 @@ export default {
       this.formVisible = false
       this.formData = {}
     })
-    eventBus.$on('projectAdded', () => {
+    eventBus.$on('promoAdded', () => {
       this.formVisible = false
       this.get()
       this.formData = {}
     })
-    eventBus.$on('projectEdited', () => {
+    eventBus.$on('promoEdited', () => {
       this.formVisible = false
       this.get()
       this.formData = {}
@@ -72,7 +71,7 @@ export default {
     },
     get(take, page) {
       return myApi
-        .get(this.$store.state.publicPath + '/api/categories/', {
+        .get(this.$store.state.publicPath + '/api/admin/promos/', {
           params: {
             take: take ?? 10,
             page: page ?? 1,
@@ -88,24 +87,19 @@ export default {
         })
     },
     delete(item) {
-
-      const result = confirm('Вы действительно хотите удалить пользователя?')
+      const result = confirm('Вы действительно хотите удалить промокод?')
       if (result)
         return myApi
-          .delete(this.$store.state.publicPath + '/api/admin/categories/', {
+          .delete(this.$store.state.publicPath + '/api/admin/promos/', {
             data: { name: item.name },
           })
           .then(() => {
             this.get()
-            //this.rows = this.rows.filter((el) => el.id !== id)
-            eventBus.$emit('projectDeleted')
+            eventBus.$emit('promoDeleted')
           })
           .catch((error) => {
             eventBus.$emit('noresponse', error)
           })
-    },
-    routeToPosts(item) {
-      this.$router.push('/items/project/' + item.name)
     },
   },
 }
