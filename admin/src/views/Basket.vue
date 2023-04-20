@@ -1,6 +1,6 @@
 <template>
     <div>
-        <CFormInput type="search" v-model="user_id" @change="get" />
+        <CFormInput class="mb-4" type="search" v-model="user_id" @change="get" />
         <Table :fields="tableFieldNames" :postData="get" :actions="dataActions" :rows="rows" editMode="form"
             name="Позиции" />
     </div>
@@ -81,20 +81,13 @@ export default {
         get() {
             console.log(this.tag)
             return myApi
-                .get(this.$store.state.publicPath + '/api/admin/orders/', {
+                .get(this.$store.state.publicPath + '/api/admin/favorites/', {
                     params: {
                         user_id: this.user_id,
-                        is_basket: true
                     },
                 })
                 .then((res) => {
-                    res.data.items = res.data.items?.map(el => {
-                        if (el.mainside_id) el.title = `${el.title} (обр - ${el.mainside_id})`;
-                        return el
-                    })
-                    if (res.data.items?.length > 0 && res.data.items[0].id) this.rows = res.data.items
-
-                    this.order = res.data
+                    this.rows = res.data
                 })
                 .catch((error) => {
                     eventBus.$emit('noresponse', error)

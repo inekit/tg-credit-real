@@ -13,7 +13,7 @@ class UsersService {
     this.getAll = this.getAll.bind(this);
   }
 
-  getOne({ id, user_id }) {
+  getOne({ id }) {
     return new Promise(async (res, rej) => {
       const connection = await tOrmCon;
 
@@ -27,11 +27,10 @@ class UsersService {
           left join order_items oi on o.id = oi.order_id  
           left join item_options io on oi.item_option_id = io.id  
           left join items i on io.item_id = i.id  
-          where (o.id = $1 or $1::int is NULL)
-          and (o.user_id = $2 or $2::int is NULL)
+          where o.id = $1
           group by o.id
           limit 1`,
-          [id, user_id]
+          [id]
         )
         .then(async (postData) => {
           if (!postData?.[0]) rej(new NotFoundError());
@@ -42,9 +41,9 @@ class UsersService {
     });
   }
 
-  getAll({ id, page = 1, take = 10, user_id, is_basket }) {
+  getAll({ id, page = 1, take = 10, isBasket }) {
     return new Promise(async (res, rej) => {
-      if (id || (user_id && is_basket)) {
+      if (id) {
         this.getOne({ id, user_id })
           .then((data) => res(data))
           .catch((error) => rej(error));
@@ -61,7 +60,7 @@ class UsersService {
           left join item_options io on oi.item_option_id = io.id  
           left join items i on io.item_id = i.id 
           where (user_id = $3 or $3 is NULL)  
-          ${is_basket ? "" : `and status <> 'basket'`}
+          ${isBasket ? "" : `and status <> 'basket'`}
           GROUP BY o.id, oi.count, io.size, io.material, io.price, i.title
           ORDER BY id DESC
           LIMIT $1 OFFSET $2`,
