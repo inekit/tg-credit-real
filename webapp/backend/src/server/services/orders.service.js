@@ -282,7 +282,7 @@ class UsersService {
       tOrmCon.then((connection) => {
         connection
           .query(
-            `delete from orders_items 
+            `delete from order_items 
         where order_id=$1 and (item_option_id=$2 or mainside_id=$2 or $2 is NULL) and (mainside_id = $3 or $3 is NULL)`,
             [order_id, item_option_id, mainside_id]
           )
