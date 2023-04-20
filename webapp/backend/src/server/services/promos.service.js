@@ -19,7 +19,7 @@ class UsersService {
       const connection = await tOrmCon;
       connection
         .query(
-          `SELECT p.*, count(user_id) from promos p left join users_promos up on p.code = up.promo_code
+          `SELECT p.*, count(user_id) used_count from promos p left join users_promos up on p.code = up.promo_code
           WHERE code = $1 or $1 is null)
           GROUP BY p.code
           ORDER BY code DESC
