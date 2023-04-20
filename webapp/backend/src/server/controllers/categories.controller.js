@@ -2,6 +2,7 @@ const servicePreset = require("../services/crud.service").getService(
   "Category",
   ["name", "description"]
 );
+const categoriesService = require("../services/categories.service");
 
 function getAll(req, res, next) {
   console.log(req.query.category);
@@ -23,17 +24,26 @@ function getOne(req, res, next) {
 function addOne(req, res, next) {
   const { name, description } = req.body;
 
-  servicePreset
-    .add({ name, description })
+  categoriesService
+    .add({
+      name,
+      description,
+      image: req.body?.["preview"],
+      previewBinary: req.files?.["preview"],
+    })
     .then((data) => res.send(data))
     .catch((error) => next(error));
 }
 
 function editOne(req, res, next) {
-  servicePreset
+  categoriesService
     .edit({
       name: req.body.name,
       description: req.body.description,
+      name,
+      description,
+      image: req.body?.["preview"],
+      previewBinary: req.files?.["preview"],
       id: req.body.id,
     })
     .then((data) => res.send(data))
