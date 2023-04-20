@@ -69,7 +69,10 @@ class UsersService {
         .then(async (data) => {
           return res(data);
         })
-        .catch((error) => rej(new MySqlError(error)));
+        .catch((error) => {
+          console.log(error);
+          rej(new MySqlError(error));
+        });
     });
   }
 

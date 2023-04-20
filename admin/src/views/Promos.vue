@@ -56,7 +56,7 @@ export default {
     }
   },
   created() {
-    eventBus.$on('addNewPromo', () => {
+    eventBus.$on('addNewCode', () => {
       this.formMode = 'new'
       this.formVisible = true
     })
