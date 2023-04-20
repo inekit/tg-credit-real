@@ -276,7 +276,7 @@ class UsersService {
     return new Promise(async (res, rej) => {
       const connection = await tOrmCon;
 
-      if (mainside_id) return rej(new Error("Cant drop relative item"));
+      if (!!mainside_id) return rej(new Error("Cant drop relative item"));
 
       const queryRunner = connection.createQueryRunner();
 
