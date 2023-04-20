@@ -274,7 +274,7 @@ class UsersService {
 
   dropItem({ item_option_id, order_id, mainside_id }) {
     return new Promise((res, rej) => {
-      if (!mainside_id || !item_option_id || !order_id)
+      if (!item_option_id || !order_id)
         return rej(
           new NoInputDataError({ item_option_id, order_id, mainside_id })
         );
