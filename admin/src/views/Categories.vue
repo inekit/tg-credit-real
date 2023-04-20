@@ -58,6 +58,11 @@ export default {
       this.get()
       this.formData = {}
     })
+    eventBus.$on('projectEdited', () => {
+      this.formVisible = false
+      this.get()
+      this.formData = {}
+    })
   },
   methods: {
     change(elObj) {

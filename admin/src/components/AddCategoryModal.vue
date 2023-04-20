@@ -29,7 +29,8 @@
       ">
         Отменить
       </CButton>
-      <CButton color="primary" @click="mode === 'new' ? addCategory() : editCategory()">Добавить категорию</CButton>
+      <CButton color="primary" v-if="mode === 'new'" @click="addCategory">Добавить категорию</CButton>
+      <CButton color="primary" v-else @click="editCategory">Редактировать категорию</CButton>
     </CModalFooter>
   </CModal>
 </template>
@@ -56,6 +57,10 @@ export default {
   },
   data() {
     return { formValid: false, preview: "" }
+  },
+  mounted() {
+    this.preview = `${this.$store.state.publicPath}/public/pics/${this.formData.preview}`
+
   },
   updated() {
     this.formValid = false
@@ -124,7 +129,7 @@ export default {
             },
           })
           .then(() => {
-            eventBus.$emit('postEdited')
+            eventBus.$emit('projectEdited')
           })
           .catch((e) => {
             eventBus.$emit('noresponse', e)
