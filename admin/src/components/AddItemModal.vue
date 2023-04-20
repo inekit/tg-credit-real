@@ -101,7 +101,8 @@ const myApi = axios.create({
 import { QuillEditor } from '@vueup/vue-quill'
 import '@vueup/vue-quill/dist/vue-quill.snow.css'
 import TurndownService from 'turndown'
-
+import { marked } from 'marked'
+import * as DOMPurify from 'dompurify'
 import eventBus from '../eventBus'
 
 export default {
@@ -148,7 +149,10 @@ export default {
     this.options_object = {};
     this.distinct_materials = [...new Set(this.formData.options_array?.map(({ material }) => material))]
     this.distinct_sizes = [...new Set(this.formData.options_array?.map(({ size }) => size))]
-    this.formData.description && this.$refs.postTextEditor?.setHTML(this.formData.description)
+    this.formData.description && this.$refs.postTextEditor.setHTML(
+      DOMPurify.sanitize(marked.parse(this.formData.description)),
+    )
+
 
     for (let { size, material, price } of this.formData.options_array) {
       if (!material && !size && !price) continue;
