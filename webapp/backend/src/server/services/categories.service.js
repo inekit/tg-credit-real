@@ -40,7 +40,7 @@ class UsersService {
       try {
         const fNameFullPath = this.transformPreviewName(previewBinary);
 
-        const data = await queryRunner.manager.getRepository("Item").save({
+        const data = await queryRunner.manager.getRepository("Category").save({
           name,
           description,
           preview: fNameFullPath,
@@ -74,7 +74,7 @@ class UsersService {
 
       try {
         const data = await queryRunner.manager
-          .getRepository("Item")
+          .getRepository("Category")
           .createQueryBuilder()
           .update({
             name,
