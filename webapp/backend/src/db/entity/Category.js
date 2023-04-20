@@ -15,5 +15,10 @@ module.exports = new EntitySchema({
       type: "text",
       nullable: true,
     },
+    preview: {
+      type: "varchar",
+      length: 300,
+      nullable: true,
+    },
   },
 });
