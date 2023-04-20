@@ -106,6 +106,7 @@ export default {
                     postal_code: this.basketData.postal_code,
                     patronymic: this.basketData.patronymic,
                     promo_code: this.sale.code,
+                    delivery_price: this.deliveryPrice,
                     total: this.totalSum
                 })
                 .then(async (response) => {
@@ -170,7 +171,7 @@ export default {
             const basketTotal = (this.sale.type === 'money' ? (this.basketData.total - this.sale.sum) :
                 (+(100 - this.sale.sum) * this.basketData.total / 100).toFixed(0))
 
-            return basketTotal + (this.deliveryPrice ?? 0)
+            return basketTotal + (+this.deliveryPrice ?? 0)
         }
 
     }
