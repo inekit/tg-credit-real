@@ -173,6 +173,7 @@ class UsersService {
     optionsObject,
     categoryName,
     previewsBinary,
+    images,
     description,
   }) {
     return new Promise(async (res, rej) => {
@@ -185,9 +186,14 @@ class UsersService {
       await queryRunner.startTransaction();
 
       try {
-        const fNameFullPaths = Array.isArray(previewsBinary)
+        let fNameFullPaths = Array.isArray(previewsBinary)
           ? previewsBinary.map((preview) => this.transformPreviewName(preview))
           : [this.transformPreviewName(previewsBinary)];
+        const images_array = Array.isArray(images) ? images : [images];
+
+        fNameFullPaths = [
+          ...new Set([...fNameFullPaths, ...images_array]),
+        ]?.filter((el) => el);
 
         const data = await queryRunner.manager.getRepository("Item").save({
           title,

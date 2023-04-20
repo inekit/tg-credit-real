@@ -9,9 +9,10 @@
     <CModalBody>
       <CForm ref="add-file-form" novalidate :validated="formValid" @submit.prevent="addPromo" class="add-user"
         style="display: 'none'">
-        <CFormInput class="mb-3" v-model="formData.code" placeholder="Промокод" id="inputCode"
+        <CFormInput v-if="mode === 'new'" class="mb-3" v-model="formData.code" placeholder="Промокод" id="inputCode"
           aria-describedby="inputGroupPrepend" maxlength="255" required feedbackValid="Все ок"
           feedbackInvalid="Введите корректный промокод" />
+        <CFormInput v-else class="mb-3" v-model="formData.code" id="inputCode" required disabled />
         <div class="types-list">
           <span>Тип</span>
           <CFormCheck id="null-name" :checked="formData.type === 'money'" @input="this.formData.type = 'money'"
