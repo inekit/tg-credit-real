@@ -81,8 +81,8 @@ scene.action(/^order\-([0-9]+)$/g, async (ctx) => {
 
   if (order.status === "Новый") {
     const robokassa = new Robokassa({
-      MerchantLogin: "killjoy",
-      Password: "byqCew-0tedko-wiswab",
+      MerchantLogin: "",
+      Password: "",
     });
 
     const link = await robokassa
@@ -98,6 +98,9 @@ scene.action(/^order\-([0-9]+)$/g, async (ctx) => {
       { name: "payment_keyboard", args: [link] },
       orderInfoParams
     );
+  } else if (order.status === "basket") {
+    const total = order.items?.reduce((prev, cur) => prev + cur, 0) ?? 0;
+    ctx.editMenu("BASKET_INFO_TITLE", "go_back_keyboard", [orderStr, total]);
   } else ctx.editMenu("ORDER_INFO_TITLE", "go_back_keyboard", orderInfoParams);
 });
 
