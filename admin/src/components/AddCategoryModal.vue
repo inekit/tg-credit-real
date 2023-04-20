@@ -64,6 +64,7 @@ export default {
   },
   updated() {
     this.formValid = false
+    this.preview = `${this.$store.state.publicPath}/public/pics/${this.formData.preview}`
   },
   methods: {
     addNewProject() {
