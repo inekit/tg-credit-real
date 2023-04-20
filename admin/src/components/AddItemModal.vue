@@ -152,7 +152,8 @@ export default {
 
     for (let { size, material, price } of this.formData.options_array) {
       if (!material && !size && !price) continue;
-      this.options_object[material] ? this.options_object[material][size] = price : this.options_object[material] = { size: price }
+      this.options_object[material] ? this.options_object[material][size] = price :
+        this.options_object[material] = { [size]: price }
     }
 
 

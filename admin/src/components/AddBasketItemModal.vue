@@ -86,7 +86,7 @@ export default {
             },
           })
           .then(() => {
-            eventBus.$emit('projectEdited')
+            eventBus.$emit('orderItemEdited')
           })
           .catch((e) => {
             eventBus.$emit('noresponse', e)

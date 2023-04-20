@@ -1,6 +1,6 @@
 <template>
     <div>
-        <CFormInput class="mb-4" type="search" v-model="user_id" @change="get" />
+        <CFormInput class="mb-4" type="search" v-model="user_id" @change="get" placeholder="Поиск по UID" />
         <AddBasketItemModal :visible="formVisible" :formData="formData" :mode="formMode" />
         <Table :fields="tableFieldNames" :postData="get" :actions="dataActions" :rows="rows" editMode="form"
             name="Позиции" />
