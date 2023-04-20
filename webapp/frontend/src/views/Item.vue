@@ -69,6 +69,9 @@ import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
 import moment from "moment"
 import eventBus from '../eventBus'
 import { ListLoader, InstagramLoader } from 'vue-content-loader'
+import { marked } from 'marked'
+import * as DOMPurify from 'dompurify'
+
 export default {
     components: {
         InstagramLoader,
@@ -106,6 +109,8 @@ export default {
             this.price = this.selected_option?.price;
             this.count = (await this.getBasketOption())?.count ?? 0;
             this.item.is_favorite = !!this.count;
+            this.item.description = DOMPurify.sanitize(marked.parse(this.item.description));
+
             await this.getReferencedItems()
         },
         "item.is_favorite"(is_favorite) {
@@ -129,8 +134,6 @@ export default {
         this.getUriParams()
 
         this.item = await this.getItem(this.$route.params.id);
-
-
 
         this.$refs['results-block']?.classList.add("hidden")
         document.body.classList.add('stop-scrolling')

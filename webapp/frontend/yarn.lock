@@ -3840,10 +3840,10 @@
   "resolved" "https://registry.npmjs.org/domino/-/domino-2.1.6.tgz"
   "version" "2.1.6"
 
-"dompurify@^2.4.1":
-  "integrity" "sha512-ewwFzHzrrneRjxzmK6oVz/rZn9VWspGFRDb4/rRtIsM1n36t9AKma/ye8syCpcw+XJ25kOK/hOG7t1j2I2yBqA=="
-  "resolved" "https://registry.npmjs.org/dompurify/-/dompurify-2.4.1.tgz"
-  "version" "2.4.1"
+"dompurify@^2.4.5":
+  "integrity" "sha512-jggCCd+8Iqp4Tsz0nIvpcb22InKEBrGz5dw3EQJMs8HPJDsKbFIO3STYtAvCfDx26Muevn1MHVI0XxjgFfmiSA=="
+  "resolved" "https://registry.npmjs.org/dompurify/-/dompurify-2.4.5.tgz"
+  "version" "2.4.5"
 
 "domutils@^2.5.2", "domutils@^2.8.0":
   "integrity" "sha512-w96Cjofp72M5IIhpjgobBimYEfoPjx1Vx0BSX9P30WBdZW2WIKU0T1Bd0kz2eNZ9ikjKgHbEyKx8BB6H1L3h3A=="
@@ -6283,10 +6283,10 @@
   dependencies:
     "tmpl" "1.0.5"
 
-"marked@^4.2.3":
-  "integrity" "sha512-slWRdJkbTZ+PjkyJnE30Uid64eHwbwa1Q25INCAYfZlK4o6ylagBy/Le9eWntqJFoFT93ikUKMv47GZ4gTwHkw=="
-  "resolved" "https://registry.npmjs.org/marked/-/marked-4.2.3.tgz"
-  "version" "4.2.3"
+"marked@^4.3.0":
+  "integrity" "sha512-PRsaiG84bK+AMvxziE/lCFss8juXjNaWzVbN5tXAm4XjeaS9NAHhop+PjQxz2A9h8Q4M/xGmzP8vqNwy6JeK0A=="
+  "resolved" "https://registry.npmjs.org/marked/-/marked-4.3.0.tgz"
+  "version" "4.3.0"
 
 "masonry-layout@^4.2.2":
   "integrity" "sha512-iGtAlrpHNyxaR19CvKC3npnEcAwszXoyJiI8ARV2ePi7fmYhIud25MHK8Zx4P0LCC4d3TNO9+rFa1KoK1OEOaA=="

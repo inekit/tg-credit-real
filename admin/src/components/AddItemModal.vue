@@ -324,6 +324,10 @@ export default {
   display: none;
 }
 
+.ql-toolbar.ql-snow {
+  display: block !important;
+}
+
 .table {
   width: 100%;
   margin-bottom: 20px;
