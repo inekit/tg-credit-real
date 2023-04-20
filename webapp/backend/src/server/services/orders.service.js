@@ -87,7 +87,8 @@ class UsersService {
       surname,
       patronymic,
       postal_code,
-      total,
+      promo_code,
+      delivery_price,
     },
     ctx
   ) {
@@ -118,6 +119,59 @@ class UsersService {
         if (orders[0].count_items < 1) throw new Error("No items");
 
         const basket_id = orders[0].id;
+
+        let type,
+          sum = 0;
+
+        if (promo_code) {
+          const promoObj =
+            (
+              await connection
+                .query("select * from promos where code = $1 limit 1", [
+                  promo_code,
+                ])
+                .catch((e) => {
+                  console.log(e);
+                  ctx.replyWithTitle("DB_ERROR");
+                })
+            )?.[0] ?? {};
+
+          sum = promoObj.sum;
+          type = promoObj.type;
+          const maxCount = promoObj.count;
+
+          if (!sum) return rej(new Error("WRONG_PROMO"));
+
+          const count_used = (
+            await queryRunner.query(
+              "select count(*) count_used from users_promos where promo_code = $1",
+              [promo_code]
+            )
+          )[0].count_used;
+
+          console.log(maxCount, count_used);
+
+          if (maxCount <= count_used) throw new Error("PROMO_USED");
+
+          await queryRunner.query(
+            "insert into users_promos (user_id, promo_code, used, use_date) values ($1,$2,true, now())",
+            [user_id, promo_code]
+          );
+        }
+
+        let total = orders[0].items.reduce(
+          (prev, cur) => prev + cur.price * cur.count,
+          0
+        );
+        total =
+          type === "money"
+            ? items_sum - sum
+            : ((+(100 - sum) * items_sum) / 100).toFixed(0);
+
+        if (total < 0) throw new Error("PROMO_TO_LARGE");
+        if (delivery_price <= 0) throw new Error("DELIVERY_WRONG");
+
+        total = total + delivery_price;
 
         const data = await queryRunner.manager.getRepository("Order").save({
           user_id,

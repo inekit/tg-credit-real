@@ -74,8 +74,8 @@ class UsersService {
 
         !test &&
           (await queryRunner.query(
-            "insert into users_promos (user_id, promo_code, used, use_date) values ($1,$2,$3, now())",
-            [user_id, code, used]
+            "insert into users_promos (user_id, promo_code, used, use_date) values ($1,$2,true, now())",
+            [user_id, code]
           ));
 
         await queryRunner.commitTransaction();

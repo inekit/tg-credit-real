@@ -157,7 +157,7 @@ export default {
                 }
             })
                 .then(response => {
-                    return this.sale = response.data ?? this.sale;
+                    return this.sale = response.data ?? { sum: 0 };
                 })
                 .catch(e => { alert("Промокод недействителен") })
 
@@ -170,7 +170,7 @@ export default {
             const basketTotal = (this.sale.type === 'money' ? (this.basketData.total - this.sale.sum) :
                 (+(100 - this.sale.sum) * this.basketData.total / 100).toFixed(0))
 
-            return basketTotal + this.deliveryPrice
+            return basketTotal + (this.deliveryPrice ?? 0)
         }
 
     }
