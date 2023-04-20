@@ -72,7 +72,7 @@ class UsersService {
 
         if (maxCount <= count_used) throw new Error("PROMO_USED");
 
-        test &&
+        !test &&
           (await queryRunner.query(
             "insert into users_promos (user_id, promo_code, used, use_date) values ($1,$2,$3, now())",
             [user_id, code, used]
