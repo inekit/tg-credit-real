@@ -48,6 +48,8 @@ export default {
 
         this.$store.state.userId = this.$route.params?.userId;
 
+        this.updatePage(300);
+
         //window.Telegram?.WebApp.onEvent('viewportChanged', () => window.Telegram?.WebApp.expand())
         window.Telegram?.WebApp.enableClosingConfirmation()
 
@@ -82,7 +84,27 @@ export default {
             return results
 
         },
-        async getCategories(isReload) {
+        async updatePage(delay) {
+            this.$store.state.categories = await this.getCategories(true);
+
+            this.$refs['results-block']?.classList.add("hidden")
+            document.body.classList.add('stop-scrolling')
+
+
+            setTimeout(() => {
+                const elements = document.getElementsByClassName('preloader')
+
+                console.log(elements)
+
+                for (let el of elements) {
+                    el.classList.add("hidden")
+                }
+                this.$refs['results-block']?.classList.remove("hidden")
+                document.body.classList.remove('stop-scrolling')
+
+            }, delay)
+        },
+        async getCategories() {
             const subPath = '/categories'
 
             const results = await this.$store.state.myApi.get(this.$store.state.restAddr + subPath, {
