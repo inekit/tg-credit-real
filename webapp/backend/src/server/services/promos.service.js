@@ -5,7 +5,6 @@ const {
   NotFoundError,
   NoInputDataError,
 } = require("../utils/httpErrors");
-const Robokassa = require("../utils/robokassa");
 const moment = require("moment");
 class UsersService {
   constructor() {

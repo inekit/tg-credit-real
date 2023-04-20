@@ -6,10 +6,10 @@ const {
 } = require("telegraf-steps");
 const moment = require("moment");
 const Robokassa = require("../../server/utils/robokassa");
+require("dotenv").config();
+const tOrmCon = require("../../db/connection");
 
 const scene = new CustomWizardScene("ordersScene");
-
-const tOrmCon = require("../../db/connection");
 
 async function getOrders(userId) {
   const connection = await tOrmCon;
@@ -81,14 +81,14 @@ scene.action(/^order\-([0-9]+)$/g, async (ctx) => {
 
   if (order.status === "Новый") {
     const robokassa = new Robokassa({
-      MerchantLogin: "",
-      Password: "",
+      MerchantLogin: process.env.ROBO_MERCHANT_LOGIN,
+      Password: process.env.ROBO_PASSWORD,
     });
 
     const link = await robokassa
       .getInvoiceLink({
-        OutSum: 100,
-        InvId: 1,
+        OutSum: order.total,
+        InvId: order_id,
         Description: "Описание",
       })
       .catch(console.log);

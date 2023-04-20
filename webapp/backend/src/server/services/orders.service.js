@@ -5,6 +5,8 @@ const {
   NotFoundError,
   NoInputDataError,
 } = require("../utils/httpErrors");
+require("dotenv").config();
+
 const Robokassa = require("../utils/robokassa");
 const moment = require("moment");
 class UsersService {
@@ -208,14 +210,14 @@ class UsersService {
           ?.join("\n");
 
         const robokassa = new Robokassa({
-          MerchantLogin: "",
-          Password: "",
+          MerchantLogin: process.env.ROBO_MERCHANT_LOGIN,
+          Password: process.env.ROBO_PASSWORD,
         });
 
         const link = await robokassa
           .getInvoiceLink({
-            OutSum: 100,
-            InvId: 1,
+            OutSum: total,
+            InvId: order_id,
             Description: "Описание",
           })
           .catch(console.log);
