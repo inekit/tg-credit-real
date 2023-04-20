@@ -84,6 +84,7 @@ export default {
                 .get(this.$store.state.publicPath + '/api/admin/orders/', {
                     params: {
                         user_id: this.user_id,
+                        is_basket: true
                     },
                 })
                 .then((res) => {

@@ -42,10 +42,10 @@ class UsersService {
     });
   }
 
-  getAll({ id, page = 1, take = 10, user_id }) {
+  getAll({ id, page = 1, take = 10, user_id, is_basket }) {
     return new Promise(async (res, rej) => {
-      if (id) {
-        this.getOne({ id })
+      if (id || (user_id && is_basket)) {
+        this.getOne({ id, user_id })
           .then((data) => res(data))
           .catch((error) => rej(error));
       }
@@ -61,7 +61,7 @@ class UsersService {
           left join item_options io on oi.item_option_id = io.id  
           left join items i on io.item_id = i.id 
           where (user_id = $3 or $3 is NULL)  
-          and status <> 'basket'
+          ${is_basket ? "" : `and status <> 'basket'`}
           GROUP BY o.id, oi.count, io.size, io.material, io.price, i.title
           ORDER BY id DESC
           LIMIT $1 OFFSET $2`,
