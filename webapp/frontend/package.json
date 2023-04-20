@@ -24,7 +24,7 @@
   "dependencies": {
     "@json2csv/node": "^6.1.2",
     "@vuepic/vue-datepicker": "^3.6.3",
-    "@vueup/vue-quill": "^1.0.0-beta.10",
+    "@vueup/vue-quill": "^1.1.1",
     "@yeger/vue-masonry-wall": "^3.4.3",
     "axios": "^0.27.2",
     "core-js": "^3.19.0",
@@ -34,7 +34,7 @@
     "marked": "^4.2.3",
     "mitt": "^3.0.0",
     "moment": "^2.29.4",
-    "turndown": "^7.1.1",
+    "turndown": "^7.1.2",
     "vue": "^3.2.23",
     "vue-content-loader": "^2.0.1",
     "vue-masonry": "^0.16.0",

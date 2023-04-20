@@ -3,8 +3,8 @@
     <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 300 250"></InstagramLoader>
     <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 300 200"></InstagramLoader>
     <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 300 200"></InstagramLoader>
-    <MasonryWall class="categories-block" :items="$store.state.categories ?? []" :ssr-columns="2"
-        :column-width="bodyWidth / 6" :gap="12">
+    <MasonryWall class="categories-block" :items="$store.state.categories ?? []" :ssr-columns="2" :column-width="200"
+        :gap="12">
         <template #default="{ item, index }">
             <div class="result-item">
                 <router-link :to="`/results/${$store.state.userId}?category=${item.name}`">
@@ -35,7 +35,6 @@ export default {
     watch: {
     },
     beforeMount() {
-        this.bodyWidth = document.body.clientHeight
     },
     async mounted() {
         window.Telegram?.WebApp.BackButton.hide()

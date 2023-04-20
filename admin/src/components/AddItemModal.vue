@@ -81,6 +81,8 @@
         <CFormTextarea v-model="formData.description" label="Краткое описание" style="margin-bottom: 1rem"
           placeholder="Напишите что-нибудь" rows="5" maxlength="255" id="inputDescription"
           aria-describedby="inputGroupPrepend" required />
+        <QuillEditor theme="snow" toolbar="essential" ref="postTextEditor" id="postTextEditor"
+          placeholder="Краткое описание" />
       </CModalBody>
       <CModalFooter>
         <CButton color="secondary" @click="visible = false"> Отменить </CButton>
@@ -96,9 +98,14 @@ import axios from 'axios'
 const myApi = axios.create({
   withCredentials: true,
 })
+import { QuillEditor } from '@vueup/vue-quill'
+import '@vueup/vue-quill/dist/vue-quill.snow.css'
+import TurndownService from 'turndown'
+
 import eventBus from '../eventBus'
 
 export default {
+  components: { QuillEditor },
   props: {
     mode: {
       required: true,
@@ -138,10 +145,10 @@ export default {
     }
   },
   updated() {
-
     this.options_object = {};
     this.distinct_materials = [...new Set(this.formData.options_array?.map(({ material }) => material))]
     this.distinct_sizes = [...new Set(this.formData.options_array?.map(({ size }) => size))]
+    this.formData.description && this.$refs.postTextEditor?.setHTML(this.formData.description)
 
     for (let { size, material, price } of this.formData.options_array) {
       if (!material && !size && !price) continue;
@@ -237,18 +244,22 @@ export default {
       eventBus.$emit('closeModal')
     },
     constractFromData(isEdit) {
-      if (!this.formData.title || !this.formData.description)
+      if (!this.formData.title || !this.$refs.postTextEditor.getHTML())
         throw new Error()
 
       var formData = new FormData()
 
       formData.append('title', this.formData.title)
-      formData.append('description', this.formData.description)
+
+      const turndownService = new TurndownService()
+      formData.append(
+        'description',
+        turndownService.turndown(this.$refs.postTextEditor.getHTML()),
+      )
 
       this.formData.image_list?.forEach(v => {
         formData.append('images[]', v);
       });
-
 
       this.formData.category_name &&
         formData.append('categoryName', this.formData.category_name)

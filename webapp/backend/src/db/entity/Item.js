@@ -14,9 +14,9 @@ module.exports = new EntitySchema({
       nullable: false,
     },
     description: {
-      type: "varchar",
-      length: 255,
+      type: "text",
       nullable: false,
+      default: " ",
       default: "Описание",
     },
     image_list: {
