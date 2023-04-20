@@ -81,6 +81,7 @@ export default {
     },
     methods: {
         change(elObj) {
+            if (elObj.mainside_id) return alert("Нельзя изменить зависимую сторону")
             this.formVisible = true
             elObj.tags_array = new Set(elObj.tags_array)
             this.formData = elObj

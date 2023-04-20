@@ -272,6 +272,46 @@ class UsersService {
     });
   }
 
+  editItem({ order_id, item_option_id, count, mainside_id }) {
+    return new Promise(async (res, rej) => {
+      const connection = await tOrmCon;
+
+      if (mainside_id) return rej(new Error("Cant drop relative item"));
+
+      const queryRunner = connection.createQueryRunner();
+
+      await queryRunner.connect();
+
+      await queryRunner.startTransaction();
+
+      try {
+        let data;
+        if (count < 1) {
+          data = await queryRunner.query(
+            `delete from order_items where order_id=$1 and ((item_option_id=$2 and is_backside = false) or mainside_id=$2);`,
+            [order_id, item_option_id]
+          );
+        } else if (count > 100) throw new Error();
+        else
+          data = await queryRunner.query(
+            `update order_items set count = $3 where order_id=$1 and ((item_option_id=$2 and is_backside = false) or mainside_id=$2);`,
+            [order_id, item_option_id, count]
+          );
+
+        await queryRunner.commitTransaction();
+
+        res(data);
+      } catch (error) {
+        console.log(error);
+        await queryRunner.rollbackTransaction();
+
+        rej(new MySqlError(error));
+      } finally {
+        await queryRunner.release();
+      }
+    });
+  }
+
   dropItem({ item_option_id, order_id, mainside_id }) {
     return new Promise((res, rej) => {
       if (!item_option_id || !order_id)
