@@ -272,15 +272,17 @@ class UsersService {
     });
   }
 
-  dropItem({ item_option_id, order_id, id }) {
+  dropItem({ item_option_id, order_id, mainside_id }) {
     return new Promise((res, rej) => {
-      if (!id || !item_option_id || !order_id)
-        return rej(new NoInputDataError({ id: id }));
+      if (!mainside_id || !item_option_id || !order_id)
+        return rej(
+          new NoInputDataError({ item_option_id, order_id, mainside_id })
+        );
 
       tOrmCon.then((connection) => {
         connection
           .getRepository("OrderItem")
-          .delete({ item_option_id, order_id, id })
+          .delete({ item_option_id, order_id, mainside_id })
           .then((data) => res(data))
           .catch((error) => rej(new MySqlError(error)));
       });
