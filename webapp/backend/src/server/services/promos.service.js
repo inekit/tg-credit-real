@@ -20,11 +20,11 @@ class UsersService {
       connection
         .query(
           `SELECT p.*, count(user_id) used_count from promos p left join users_promos up on p.code = up.promo_code
-          WHERE code = $1 or $1 is null)
+          WHERE (code = $3 or $3 is null)
           GROUP BY p.code
           ORDER BY code DESC
           LIMIT $1 OFFSET $2`,
-          [take, skip, user_id]
+          [take, skip, code]
         )
         .then(async (data) => {
           return res(data);
@@ -38,13 +38,12 @@ class UsersService {
       const connection = await tOrmCon;
 
       const {
-        code,
         count: maxCount,
         type,
         sum,
       } = (
         await connection
-          .query("select * from promos where code = $1 limit 1", [text])
+          .query("select * from promos where code = $1 limit 1", [code])
           .catch((e) => {
             console.log(e);
             ctx.replyWithTitle("DB_ERROR");
