@@ -59,20 +59,21 @@ export default {
     eventBus.$on('addNewCode', () => {
       this.formMode = 'new'
       this.formVisible = true
+      this.formData = { type: 'money', }
     })
     eventBus.$on('closeModal', () => {
       this.formVisible = false
-      this.formData = {}
+      this.formData = { type: 'money', }
     })
     eventBus.$on('promoAdded', () => {
       this.formVisible = false
       this.get()
-      this.formData = {}
+      this.formData = { type: 'money', }
     })
     eventBus.$on('promoEdited', () => {
       this.formVisible = false
       this.get()
-      this.formData = {}
+      this.formData = { type: 'money', }
     })
   },
   methods: {
@@ -103,7 +104,7 @@ export default {
       if (result)
         return myApi
           .delete(this.$store.state.publicPath + '/api/admin/promos/', {
-            data: { name: item.name },
+            data: { code: item.code },
           })
           .then(() => {
             this.get()

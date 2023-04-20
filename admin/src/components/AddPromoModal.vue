@@ -14,9 +14,9 @@
           feedbackInvalid="Введите корректный промокод" />
         <div class="types-list">
           <span>Тип</span>
-          <CFormCheck id="null-name" :checked="formData.type === 'money'" @change="this.formData.type = 'money'"
+          <CFormCheck id="null-name" :checked="formData.type === 'money'" @input="this.formData.type = 'money'"
             type="radio" name="type-name" value="money" label="Число" />
-          <CFormCheck id="null-name" :checked="formData.type === 'procent'" @change="this.formData.type = 'procent'"
+          <CFormCheck id="null-name" :checked="formData.type === 'procent'" @input="this.formData.type = 'procent'"
             type="radio" name="type-name" value="procent" label="Процент" />
         </div>
         <CFormInput class="mb-3" v-model="formData.count" label="Количество использований" id="inputCount"
