@@ -65,7 +65,7 @@ export default {
     constractFromData() {
       if (!this.formData.count) throw new Error()
       var formData = new FormData()
-      formData.append('mainside_id', this.formData.mainside_id);
+      this.formData.mainside_id && formData.append('mainside_id', this.formData.mainside_id);
       formData.append('item_option_id', this.formData.id)
       formData.append('order_id', this.formData.order_id)
       formData.append('count', this.formData.count)
