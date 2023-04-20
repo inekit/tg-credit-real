@@ -125,7 +125,7 @@ export default {
                 }
             })
                 .then(response => {
-                    this.deliveryPrice = response.data?.price;
+                    this.deliveryPrice = response.data?.price ?? 0;
                 })
                 .catch(e => { console.log(e); this.deliveryPrice = null })
 
@@ -168,7 +168,7 @@ export default {
     },
     computed: {
         totalSum() {
-            const basketTotal = (this.sale.type === 'money' ? (this.basketData.total - this.sale.sum) :
+            const basketTotal = +(this.sale.type === 'money' ? (this.basketData.total - this.sale.sum) :
                 (+(100 - this.sale.sum) * this.basketData.total / 100).toFixed(0))
 
             return basketTotal + (+this.deliveryPrice ?? 0)
