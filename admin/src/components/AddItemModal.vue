@@ -77,10 +77,6 @@
             </div>
           </template>
         </div>
-
-        <CFormTextarea v-model="formData.description" label="Краткое описание" style="margin-bottom: 1rem"
-          placeholder="Напишите что-нибудь" rows="5" maxlength="255" id="inputDescription"
-          aria-describedby="inputGroupPrepend" required />
         <QuillEditor theme="snow" toolbar="essential" ref="postTextEditor" id="postTextEditor"
           placeholder="Краткое описание" />
       </CModalBody>
