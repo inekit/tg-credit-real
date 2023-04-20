@@ -1,6 +1,7 @@
 <template>
     <div>
         <CFormInput class="mb-4" type="search" v-model="user_id" @change="get" />
+        <AddBasketItemModal :visible="formVisible" :formData="formData" :mode="formMode" />
         <Table :fields="tableFieldNames" :postData="get" :actions="dataActions" :rows="rows" editMode="form"
             name="Позиции" />
     </div>
@@ -16,10 +17,11 @@ const myApi = axios.create({
     credentials: 'include'
 
 })
+import AddBasketItemModal from '@/components/AddBasketItemModal.vue'
 
 export default {
     components: {
-        Table,
+        Table, AddBasketItemModal
     },
     data() {
         return {
@@ -58,6 +60,24 @@ export default {
         }
     },
     created() {
+        eventBus.$on('addNewOrderItem', () => {
+            this.formMode = 'new'
+            this.formVisible = true
+        })
+        eventBus.$on('closeModal', () => {
+            this.formVisible = false
+            this.formData = {}
+        })
+        eventBus.$on('orderItemAdded', () => {
+            this.formVisible = false
+            this.get()
+            this.formData = {}
+        })
+        eventBus.$on('orderItemEdited', () => {
+            this.formVisible = false
+            this.get()
+            this.formData = {}
+        })
     },
     methods: {
         change(elObj) {
@@ -91,7 +111,11 @@ export default {
             if (result)
                 return myApi
                     .delete(this.$store.state.publicPath + '/api/admin/orders_items/', {
-                        data: { id: item.id },
+                        data: {
+                            mainside_id: item.mainside_id,
+                            item_option_id: item.id,
+                            order_id: item.order_id,
+                        },
                     })
                     .then(() => {
                         this.get()
