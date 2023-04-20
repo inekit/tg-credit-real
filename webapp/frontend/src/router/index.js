@@ -8,8 +8,13 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    redirect: '/results/1',
+    redirect: '/categories/1',
     children: [
+      {
+        path: '/categories/:userId',
+        name: 'Categories',
+        component: () => import('@/views/Categories.vue'),
+      },
       {
         path: '/results/:userId',
         name: 'Results',

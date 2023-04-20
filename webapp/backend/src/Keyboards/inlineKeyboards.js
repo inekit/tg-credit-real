@@ -26,9 +26,14 @@ exports.webapp_keyboard = (ctx, id) =>
     [
       webAppButton(
         ctx.getTitle("WEBAPP_BUTTON"),
-        "https://fotodesire.ru/colorsfront/results/" + id
+        "https://fotodesire.ru/colorsfront/categories/" + id
       ),
     ],
+  ]);
+
+exports.chat_keyboard = (ctx, id) =>
+  inlineKeyboard([
+    [webAppButton(ctx.getTitle("GO_TO_CHAT_BUTTON"), "t.me/nicklzx")],
   ]);
 
 exports.confirm_keyboard = (ctx) =>

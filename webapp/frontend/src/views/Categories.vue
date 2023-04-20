@@ -1,28 +1,20 @@
 <template>
-    <h1>Каталог</h1>
-    <searchBlock />
+    <h1>Категории</h1>
     <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 300 250"></InstagramLoader>
     <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 300 200"></InstagramLoader>
     <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 300 200"></InstagramLoader>
-    <button @click="routeToBasket">Корзина</button>
-    <MasonryWall class="results-block" :items="$store.state.results ?? []" :ssr-columns="2" :column-width="bodyWidth / 6"
-        :gap="12">
+    <MasonryWall class="categories-block" :items="$store.state.categories ?? []" :ssr-columns="2"
+        :column-width="bodyWidth / 6" :gap="12">
         <template #default="{ item, index }">
             <div class="result-item">
-                <router-link
-                    :to="`/items/${item.id}?mainside_id=${mainside_id}&size=${this.backFilters.size}&material=${this.backFilters.material}`">
+                <router-link :to="`/results/${$store.state.userId}`">
                     <div class="img-container">
                         <img :src="`/colorsserver/public/pics/${item.image_list?.[0]}`" />
                     </div>
                     <div class="text-container">
-                        <h2>{{ item.title }}</h2>
-                        <h3>От {{ getMinPrice(item.options_array) }} ₽</h3>
-
+                        <h2>{{ item.name }}</h2>
                     </div>
                 </router-link>
-                <div class="favorite-toggle" :class="item.is_favorite ? 'favorite-item' : ''">
-                    <img :src="require('@/assets/img/fav.svg')" />
-                </div>
             </div>
         </template>
     </MasonryWall>
@@ -38,38 +30,26 @@ export default {
     components: { searchBlock, InstagramLoader },
     data() {
         return {
-            page: 1,
-            perPage: 10,
-            backFilters: {}
         }
-
     },
     watch: {
-        "$store.state.searchQuery": async function () {
-            await this.updatePage(300)
-        },
-        "$store.state.filters": async function () {
-            await this.updatePage(300)
-        },
-        async $route(to, from) {
-            //await this.toggleButtons()
-        }
     },
     beforeMount() {
         this.bodyWidth = document.body.clientHeight
     },
     async mounted() {
-        this.scroll()
-        window.Telegram?.WebApp.BackButton.onClick(this.routeBack);
-        window.Telegram?.WebApp.BackButton.show();
+        window.Telegram?.WebApp.BackButton.hide()
+        window.Telegram?.WebApp.expand()
 
         let uri = window.location.search.substring(1);
         this.params = new URLSearchParams(uri)
         this.backFilters = { size: this.params.get('size'), material: this.params.get('material') }
         this.mainside_id = this.params.get('mainside_id') === "null" ? null : this.params.get('mainside_id')
 
-        this.$store.state.userId = this.$store.state.userId ?? this.$route.params?.userId;
+        this.$store.state.userId = this.$route.params?.userId;
 
+        //window.Telegram?.WebApp.onEvent('viewportChanged', () => window.Telegram?.WebApp.expand())
+        window.Telegram?.WebApp.enableClosingConfirmation()
 
         if ((await this.getBasket())?.length) {
             window.Telegram?.WebApp.MainButton.onClick(this.routeToBasket);
@@ -83,18 +63,10 @@ export default {
     async beforeUnmount() {
         window.Telegram?.WebApp.MainButton.offClick(this.routeToBasket);
         window.Telegram?.WebApp.MainButton.hide();
-        window.Telegram?.WebApp.BackButton.offClick(this.routeBack);
-        window.Telegram?.WebApp.BackButton.hide();
     },
     methods: {
         routeToBasket() {
             this.$router.push("/basket")
-        },
-        routeBack() {
-            this.$router.go(-1)
-        },
-        getMinPrice(options_array) {
-            return Math.min(...(options_array?.map(el => el.price) ?? [0]))
         },
         async getBasket() {
             const results = await this.$store.state.myApi.get(this.$store.state.restAddr + '/favorites', {
@@ -110,70 +82,17 @@ export default {
             return results
 
         },
-        async updatePage(delay) {
-            this.$store.state.results = await this.sendSearchRequest(true);
-
-            this.$refs['results-block']?.classList.add("hidden")
-            document.body.classList.add('stop-scrolling')
-
-
-            setTimeout(() => {
-                const elements = document.getElementsByClassName('preloader')
-
-                console.log(elements)
-
-                for (let el of elements) {
-                    el.classList.add("hidden")
-                }
-                this.$refs['results-block']?.classList.remove("hidden")
-                document.body.classList.remove('stop-scrolling')
-
-            }, delay)
-        },
-        scroll() {
-            window.onscroll = async () => {
-                let bottomwindow = window.scrollY + window.innerHeight + 1000 > document.documentElement.scrollHeight;
-
-                if (bottomwindow && !this.loadingUpdate && !this.isEnded) {
-                    this.loadingUpdate = true;
-                    const update = await this.sendSearchRequest();
-                    this.$store.state.results = [...this.$store.state.results, ...update];
-                }
-            };
-        },
-        async sendSearchRequest(isReload) {
-            if (isReload) {
-                this.isEnded = false
-                this.page = 1
-            }
-            const subPath = '/items'
+        async getCategories(isReload) {
+            const subPath = '/categories'
 
             const results = await this.$store.state.myApi.get(this.$store.state.restAddr + subPath, {
                 params: {
-                    searchQuery: this.$store.state.searchQuery,
-                    take: 10,
-                    page: this.page ?? 1,
-                    sort: this.$store.state.filters.sort_type,
-                    category: this.$store.state.filters.category_name,
-                    user_id: this.$store.state.userId,
-                    size: this.backFilters?.size,
-                    material: this.backFilters?.material
                 }
             })
                 .then(response => {
-                    const newsUpd = response.data;
-
-                    if (newsUpd.length < (this.perPage)) this.isEnded = true;
-                    else this.page++;
-
-                    this.loadingUpdate = false;
-
-
-                    return newsUpd;
+                    return response.data;
                 })
                 .catch(e => { eventBus.$emit('noresponse', e) })
-
-            console.log(results)
 
             return results
 
@@ -184,8 +103,7 @@ export default {
   
 
 <style lang="scss">
-.results-block {
-    // display: flex;
+.categories-block {
     width: calc(100% - 2rem);
     margin: 1rem;
     padding: 0;
@@ -199,15 +117,12 @@ export default {
 
     .result-item {
         width: 100%;
-        height: fit-content; //calc(70vw - 1.5rem);
-        //margin: 1rem;
-        //margin-bottom: 0;
+        height: fit-content;
         margin: 0;
 
         border-radius: 1rem;
         display: block;
         background: rgb(255, 255, 255);
-        // border: 1px solid rgb(169, 169, 169);
         box-shadow: 0px 1px 5px rgb(216, 216, 216);
         overflow: hidden;
         position: relative;
@@ -224,7 +139,6 @@ export default {
         }
 
         .img-container {
-            //position: absolute;
             background-color: #414141;
             width: 100%;
             height: 30vw;
@@ -232,22 +146,16 @@ export default {
             overflow: hidden;
         }
 
-
-
         a {
             display: block;
             text-decoration: none;
-            //position: absolute;
             height: calc(100% + 2rem);
             width: calc(100%);
 
-            //margin: 1rem;
             .text-container {
                 padding: 1rem;
-                //position: absolute;
                 top: 70%;
                 width: calc(100% - 2rem);
-
             }
 
             h2 {
