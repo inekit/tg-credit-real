@@ -15,9 +15,9 @@
         <CFormInput v-else class="mb-3" v-model="formData.code" id="inputCode" required disabled />
         <div class="types-list">
           <span>Тип</span>
-          <CFormCheck id="null-name" :checked="formData.type === 'money'" @input="this.formData.type = 'money'"
-            type="radio" name="type-name" value="money" label="Число" />
-          <CFormCheck id="null-name" :checked="formData.type === 'procent'" @input="this.formData.type = 'procent'"
+          <CFormCheck id="null-name" :checked="formData.type === 'money'" @input="formData.type = 'money'" type="radio"
+            name="type-name" value="money" label="Число" />
+          <CFormCheck id="null-name" :checked="formData.type === 'procent'" @input="formData.type = 'procent'"
             type="radio" name="type-name" value="procent" label="Процент" />
         </div>
         <CFormInput class="mb-3" v-model="formData.count" label="Количество использований" id="inputCount"
@@ -58,10 +58,6 @@ export default {
     },
     visible: false,
     formData: {
-      name: '',
-      type: 'money',
-      count: 1,
-      sum: 0,
     },
   },
   data() {
