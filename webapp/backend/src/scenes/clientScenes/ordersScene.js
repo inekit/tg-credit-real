@@ -17,7 +17,7 @@ async function getOrders(userId) {
   return await connection
     .query(
       `select id, creation_date, status
-      from orders where user_id = $1 and status <> 'basket'`,
+      from orders where user_id = $1 limit 20`,
       [userId]
     )
     .catch((e) => {

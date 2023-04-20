@@ -15,10 +15,10 @@
         <CFormInput v-else class="mb-3" v-model="formData.code" id="inputCode" required disabled />
         <div class="types-list">
           <span>Тип</span>
-          <CFormCheck id="null-name" :checked="formData.type === 'money'" @input="formData.type = 'money'" type="radio"
-            name="type-m" value="money" label="Число" />
-          <CFormCheck id="null-name" :checked="formData.type === 'procent'" @input="formData.type = 'procent'"
-            type="radio" name="type-p" value="procent" label="Процент" />
+          <CFormCheck id="type-money" :checked="formData.type === 'money'" @input="formData.type = 'money'" type="radio"
+            name="type-money" value="money" label="Число" />
+          <CFormCheck id="type-procent" :checked="formData.type === 'procent'" @input="formData.type = 'procent'"
+            type="radio" name="type-procent" value="procent" label="Процент" />
         </div>
         <CFormInput class="mb-3" v-model="formData.count" label="Количество использований" id="inputCount"
           aria-describedby="inputGroupPrepend" type="number" required feedbackValid="Все ок"

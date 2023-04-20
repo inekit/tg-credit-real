@@ -254,7 +254,9 @@ exports.orders_list_keyboard = (ctx, orders) => {
   const keyboard = inlineKeyboard(
     orders.map(({ id, creation_date, status }) =>
       callbackButton(
-        `${status} от ${moment(creation_date).format("DD.MM.YYYY")}`,
+        status === "basket"
+          ? "Корзина"
+          : `${status} от ${moment(creation_date).format("DD.MM.YYYY")}`,
         "order-" + id
       )
     ),
