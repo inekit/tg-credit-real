@@ -152,6 +152,8 @@ export default {
             const results = await this.$store.state.myApi.get(this.$store.state.restAddr + '/promos', {
                 params: {
                     code: this.basketData.promo_code,
+                    user_id: this.$store.state.userId,
+
                 }
             })
                 .then(response => {

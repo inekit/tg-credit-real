@@ -33,7 +33,7 @@ class UsersService {
     });
   }
 
-  use({ code }, test) {
+  use({ code, user_id }, test) {
     return new Promise(async (res, rej) => {
       const connection = await tOrmCon;
 
@@ -75,7 +75,7 @@ class UsersService {
         test &&
           (await queryRunner.query(
             "insert into users_promos (user_id, promo_code, used, use_date) values ($1,$2,$3, now())",
-            [ctx.from.id, code, used]
+            [user_id, code, used]
           ));
 
         await queryRunner.commitTransaction();
