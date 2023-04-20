@@ -13,6 +13,8 @@ const Favorite = require("./src/db/entity/Favorite");
 const Order = require("./src/db/entity/Order");
 const OrderItem = require("./src/db/entity/OrderItem");
 const ItemOption = require("./src/db/entity/ItemOption");
+const Promo = require("./src/db/entity/Promo");
+const UserPromo = require("./src/db/entity/UserPromo");
 
 const { DataSource } = require("typeorm");
 
@@ -37,6 +39,8 @@ const AppDataSource = new DataSource({
     Order,
     OrderItem,
     ItemOption,
+    Promo,
+    UserPromo,
   ],
   synchronize: true,
   migrationsTableName: "custom_migration_table",
