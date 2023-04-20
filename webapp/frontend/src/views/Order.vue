@@ -32,10 +32,17 @@
             <input type="number" id="text" pattern="[0-9]+" name="postal code" placeholder="Почтовый индекс"
                 v-model.number="basketData.postal_code" @input="getDeliveryPrice">
         </div>
+        <h2>Промокод</h2>
+        <div class="input-group">
+            <input type="text" id="name" name="name" placeholder="Имя" v-model="basketData.promo_code"
+                @change="getPromoSale">
+        </div>
         <h2 class="total">Итого</h2>
         <div class="pricing">Стоимость доставки<span>{{ deliveryPrice ? `${deliveryPrice} ₽` : "Не определена" }}</span>
         </div>
-        <div class="pricing">К оплате<span>{{ basketData.total + deliveryPrice }} ₽</span></div>
+        <div class="pricing" v-if="sale.sum > 0">Скидка<span>{{ sale.type === 'money' ? `${sale.sum} ₽` : `${sale.sum} %`
+        }}</span></div>
+        <div class="pricing">К оплате<span>{{ totalSum }} ₽</span></div>
     </div>
 </template>
 
@@ -54,6 +61,9 @@ export default {
             deliveryMethods: ["Я. Доставка", "CДЭК"],
             selected_dm: "CДЭК",
             deliveryPrice: null,
+            sale: {
+                sum: 0
+            }
         }
     },
     watch: {
@@ -95,7 +105,8 @@ export default {
                     surname: this.basketData.surname,
                     postal_code: this.basketData.postal_code,
                     patronymic: this.basketData.patronymic,
-                    total: this.basketData.total + this.deliveryPrice
+                    promo_code: this.sale.code,
+                    total: this.totalSum
                 })
                 .then(async (response) => {
                     window.Telegram?.WebApp.disableClosingConfirmation()
@@ -137,6 +148,29 @@ export default {
             return results ?? {}
 
         },
+        async getPromoSale() {
+            const results = await this.$store.state.myApi.get(this.$store.state.restAddr + '/promos', {
+                params: {
+                    code: this.basketData.promo_code,
+                }
+            })
+                .then(response => {
+                    return this.sale = response.data;
+                })
+                .catch(e => { alert("Промокод недействителен") })
+
+            return results ?? {}
+
+        },
+    },
+    computed: {
+        totalSum() {
+            const basketTotal = (this.sale.type === 'money' ? (this.basketData.total - this.sale.sum) :
+                (+(100 - this.sale.sum) * this.basketData.total / 100).toFixed(0))
+
+            return basketTotal + this.deliveryPrice
+        }
+
     }
 }
 </script>
