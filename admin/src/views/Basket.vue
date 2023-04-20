@@ -92,7 +92,8 @@ export default {
                         if (el.mainside_id) el.title = `${el.title} (обр - ${el.mainside_id})`;
                         return el
                     })
-                    if (res.data.items?.length > 0) this.rows = res.data.items
+                    if (res.data.items?.length > 0 && res.data.items[0].id) this.rows = res.data.items
+
                     this.order = res.data
                 })
                 .catch((error) => {
