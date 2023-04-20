@@ -24,12 +24,12 @@ class Robokassa {
           },
         })
         .then((response) => {
+          console.log(response.data);
           resolve(
             `https://auth.robokassa.ru/Merchant/Index/${response.data?.invoiceID}`
           );
         })
         .catch((error) => {
-          console.log(error);
           reject(error);
         });
     });
