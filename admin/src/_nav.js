@@ -1,18 +1,6 @@
 export default [
   {
     component: 'CNavItem',
-    name: 'Корзины',
-    to: '/basket',
-    icon: 'cil-description',
-  },
-  {
-    component: 'CNavItem',
-    name: 'Заказы',
-    to: '/orders',
-    icon: 'cil-description',
-  },
-  {
-    component: 'CNavItem',
     name: 'Позиции',
     to: '/items',
     icon: 'cil-description',
@@ -23,6 +11,25 @@ export default [
     to: '/categories',
     icon: 'cil-description',
   },
+  {
+    component: 'CNavItem',
+    name: 'Промокоды',
+    to: '/promos',
+    icon: 'cil-description',
+  },
+  {
+    component: 'CNavItem',
+    name: 'Корзины',
+    to: '/basket',
+    icon: 'cil-description',
+  },
+  {
+    component: 'CNavItem',
+    name: 'Заказы',
+    to: '/orders',
+    icon: 'cil-description',
+  },
+
   /*{
     component: 'CNavItem',
     name: 'Статические данные',

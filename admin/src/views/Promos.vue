@@ -33,12 +33,24 @@ export default {
       },
       tableFieldNames: [
         {
-          name: 'name',
-          title: 'Название',
+          name: 'code',
+          title: 'Промокод',
         },
         {
-          name: 'description',
-          title: 'Описание',
+          name: 'count',
+          title: 'Макс. использований',
+        },
+        {
+          name: 'used_count',
+          title: 'Использовано раз',
+        },
+        {
+          name: 'type',
+          title: 'Тип',
+        },
+        {
+          name: 'sum',
+          title: 'Сумма / %',
         },
       ],
     }

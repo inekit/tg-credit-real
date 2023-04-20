@@ -64,7 +64,6 @@ export default {
             this.formVisible = true
             elObj.tags_array = new Set(elObj.tags_array)
             this.formData = elObj
-            console.log(elObj)
             this.formMode = 'edit'
         },
         dateFormatter,
@@ -77,7 +76,10 @@ export default {
                     },
                 })
                 .then((res) => {
-                    this.rows = res.data
+                    this.rows = res.data?.map(el => {
+                        if (el.mainside_id) el.title = `${el.title} (обр - ${el.mainside_id})`;
+                        return el
+                    })
                 })
                 .catch((error) => {
                     eventBus.$emit('noresponse', error)

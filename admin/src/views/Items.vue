@@ -30,6 +30,7 @@ export default {
       formData: {},
       rows: [],
       dataActions: {
+        Дублировать: { action: this.duble, color: 'primary' },
         Изменить: { action: this.change, color: 'warning' },
         Удалить: { action: this.delete, color: 'danger' },
       },
@@ -80,6 +81,47 @@ export default {
       this.formData = elObj
       console.log(elObj)
       this.formMode = 'edit'
+    },
+    constractFromData(elObj) {
+      var formData = new FormData()
+
+      formData.append('title', elObj.title)
+      formData.append('description', elObj.description)
+      elObj.image_list?.forEach(v => {
+        formData.append('images[]', v);
+      });
+      elObj.category_name &&
+        formData.append('categoryName', elObj.category_name)
+
+      const options_object = {}
+
+      for (let { size, material, price } of elObj.options_array) {
+        if (!material && !size && !price) continue;
+        options_object[material] ? options_object[material][size] = price : options_object[material] = { size: price }
+      }
+      formData.append('optionsObject', JSON.stringify(options_object))
+
+      return formData
+    },
+    duble(elObj) {
+      try {
+        const formData = this.constractFromData(elObj)
+
+        myApi
+          .post(this.$store.state.publicPath + '/api/admin/items', formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          })
+          .then(() => {
+            eventBus.$emit('postAdded')
+          })
+          .catch((e) => {
+            eventBus.$emit('noresponse', e)
+          })
+      } catch (e) {
+        this.formValid = true
+      }
     },
     get(take, page) {
       console.log(this.tag)
