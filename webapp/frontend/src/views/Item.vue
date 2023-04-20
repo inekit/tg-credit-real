@@ -35,7 +35,7 @@
         </div>
         <hr />
         <label>Описание</label>
-        <div class="description">{{ item.description }}</div>
+        <div class="description" v-html="item.description"></div>
         <hr />
         <div class="backside count-select" v-if="count && !mainside_id">
             <label>Обратная сторона</label>
