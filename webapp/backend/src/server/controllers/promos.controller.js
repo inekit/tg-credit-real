@@ -20,22 +20,26 @@ function use(req, res, next) {
 }
 
 function add(req, res, next) {
-  const { code, type, sum } = req.body;
+  const { code, type, sum, count } = req.body;
 
   servicePreset
-    .add({ code, type, sum })
+    .add({ code, type, sum, count })
     .then((data) => res.send(data))
-    .catch((error) => next(error));
+    .catch((error) => {
+      console.log(error);
+      next(error);
+    });
 }
 
 function edit(req, res, next) {
-  const { code, type, sum } = req.body;
+  const { code, type, sum, count } = req.body;
 
   servicePreset
     .edit({
       code,
       type,
       sum,
+      count,
     })
     .then((data) => res.send(data))
     .catch((error) => next(error));
