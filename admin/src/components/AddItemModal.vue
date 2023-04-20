@@ -324,7 +324,7 @@ export default {
   display: none;
 }
 
-.ql-toolbar.ql-snow {
+::v-deep .ql-toolbar.ql-snow {
   display: block !important;
 }
 
