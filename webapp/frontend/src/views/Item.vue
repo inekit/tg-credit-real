@@ -416,7 +416,7 @@ form {
     margin: 1rem;
     margin-top: 0.5rem;
     font-size: 1rem;
-    margin-bottom: 90px;
+    margin-bottom: calc(90px + 0.5rem);
 
     label {
         font-size: 1.1rem;
@@ -603,6 +603,7 @@ form {
         padding: 10px 30px;
         font-size: 15px;
         border: none;
+        color: #414141 !important;
 
         &:last-of-type {
             right: 1rem;

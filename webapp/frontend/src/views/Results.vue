@@ -1,5 +1,5 @@
 <template>
-    <h1>Каталог</h1>
+    <h1>{{ mainside_id ? "Обратная сторона" : "Каталог" }}</h1>
     <searchBlock />
     <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 300 250"></InstagramLoader>
     <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 300 200"></InstagramLoader>
