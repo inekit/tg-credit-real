@@ -154,7 +154,7 @@ export default {
         border-radius: 13px;
         background-color: transparent;
         position: absolute;
-        top: calc(-1rem - 35px);
+        top: calc(-0.7rem - 35px);
         right: 0;
         z-index: 999;
 
@@ -291,7 +291,7 @@ export default {
         border-radius: 13px;
         background-color: transparent;
         position: absolute;
-        top: calc(-1rem - 35px);
+        top: calc(-0.7rem - 35px);
         right: 40px;
 
 
