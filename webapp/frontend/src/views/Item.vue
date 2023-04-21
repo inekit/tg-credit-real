@@ -322,7 +322,7 @@ export default {
 
 <style lang="scss">
 h1 {
-    font-weight: 400;
+    font-weight: 600;
     font-size: 1.7rem;
 }
 
@@ -413,12 +413,12 @@ h1 {
 
 form {
     margin: 1rem;
-    font-size: 1.1rem;
+    font-size: 1rem;
     margin-bottom: 90px;
 
     label {
-        font-size: 1.2rem;
-
+        font-size: 1.1rem;
+        font-weight: 600;
     }
 
     .option-select {
@@ -439,6 +439,7 @@ form {
             top: 0;
             background-color: #E6E6E6;
             border-radius: 4px;
+            color: #414141;
 
             select {
                 font-size: 1rem;
@@ -527,9 +528,10 @@ form {
             position: absolute;
             right: 1rem;
             background-color: #E6E6E6;
-            border-radius: 4px;
+            border-radius: 10px;
             padding: 15px 40px;
             font-size: 13px;
+            color: #414141;
             border: none;
             top: 12px;
             width: 50px;
@@ -551,7 +553,8 @@ form {
                 top: 0;
                 font-size: 25px;
                 width: 47px;
-                border-radius: 4px;
+                border-radius: 14px;
+                color: #414141;
 
                 &:first-child {
                     left: 0;
@@ -569,7 +572,8 @@ form {
             position: absolute;
             right: 1rem;
             background-color: #E6E6E6;
-            border-radius: 4px;
+            border-radius: 14px;
+            color: #414141;
             padding: 15px 40px;
             font-size: 13px;
             border: none;
@@ -590,7 +594,7 @@ form {
         position: absolute;
         right: 130px;
         background-color: #E6E6E6;
-        border-radius: 4px;
+        border-radius: 14px;
         padding: 10px 30px;
         font-size: 13px;
         border: none;

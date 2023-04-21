@@ -3,8 +3,8 @@
     <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 300 250"></InstagramLoader>
     <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 300 200"></InstagramLoader>
     <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 300 200"></InstagramLoader>
-    <MasonryWall class="categories-block" :items="$store.state.categories ?? []" :ssr-columns="2" :column-width="200"
-        :gap="12">
+    <MasonryWall class="categories-block" :items="$store.state.categories ?? []" :ssr-columns="2"
+        :column-width="bodyWidth / 2.2" :gap="12">
         <template #default="{ item, index }">
             <div class="result-item">
                 <router-link :to="`/results/${$store.state.userId}?category=${item.name}`">
@@ -35,6 +35,8 @@ export default {
     watch: {
     },
     beforeMount() {
+        this.bodyWidth = document.body.clientWidth
+
     },
     async mounted() {
         window.Telegram?.WebApp.BackButton.hide()
@@ -183,16 +185,9 @@ export default {
                 margin: 0;
                 width: 100%;
                 color: #414141;
-                font-weight: 200;
-                font-size: 1.2rem;
-                word-wrap: break-word;
-            }
-
-            h3 {
-                margin: 5px 0 -5px 0;
-                color: #414141;
                 font-weight: 400;
                 font-size: 1.3rem;
+                word-wrap: break-word;
             }
 
             img {
@@ -218,34 +213,6 @@ export default {
             margin-left: 0.5rem;
         }
 
-        .favorite-toggle {
-            content: '';
-            width: 40px;
-            height: 40px;
-            border-radius: 13px;
-            background-color: transparent;
-            border: 1px solid;
-            background-color: #6e6e6e;
-            border-color: #6e6e6e;
-            opacity: 0;
-            position: absolute;
-            top: 0.5rem;
-            right: 0.5rem;
-            transition: all 0.2s;
-
-            img {
-                height: 50%;
-                margin: 25%;
-            }
-
-            &.favorite-item {
-                opacity: 1;
-                z-index: 1;
-                border-color: rgb(197, 80, 105);
-                background-color: rgb(197, 80, 105);
-            }
-
-        }
     }
 }
 </style>
