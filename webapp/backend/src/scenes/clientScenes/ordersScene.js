@@ -66,7 +66,7 @@ scene.action(/^order\-([0-9]+)$/g, async (ctx) => {
   )?.[0];
 
   const orderStr = order.items?.[0].title
-    ? order.items?.map((el) => `📦 ${el.title} - ${el.count} (шт.)`)?.join("/n")
+    ? order.items?.map((el) => `📦 ${el.title} - ${el.count} (шт.)`)?.join("\n")
     : "Нет позиций";
 
   const orderInfoParams = [
