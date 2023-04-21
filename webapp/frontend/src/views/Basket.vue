@@ -53,7 +53,7 @@ export default {
     },
     watch: {
     },
-    async mounted() {
+    async beforeMount() {
         window.Telegram?.WebApp.MainButton.hide();
         window.Telegram?.WebApp.MainButton.disable();
         window.Telegram?.WebApp.BackButton.onClick(this.routeBack);

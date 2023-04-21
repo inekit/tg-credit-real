@@ -126,7 +126,7 @@ export default {
             }
         }
     },
-    async mounted() {
+    async beforeMount() {
 
         window.Telegram?.WebApp.BackButton.onClick(this.routeBack);
         window.Telegram?.WebApp.BackButton.show();
@@ -175,7 +175,8 @@ export default {
             window.Telegram?.WebApp.close();
         },
         routeBack() {
-            this.$router.push(`/results/${this.$store.state.userId}`)
+            //this.$router.push(`/results/${this.$store.state.userId}`)
+            this.$router.go(-1)
         },
         routeToBasket() {
             this.$router.push("/basket")
@@ -419,6 +420,7 @@ form {
     label {
         font-size: 1.1rem;
         font-weight: 600;
+        color: #414141;
     }
 
     .option-select {
@@ -486,6 +488,7 @@ form {
         p {
             margin: 0;
             font-weight: 400;
+            color: #414141;
         }
 
         p {

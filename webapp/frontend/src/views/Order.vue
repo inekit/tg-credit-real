@@ -68,7 +68,7 @@ export default {
     },
     watch: {
     },
-    async mounted() {
+    async beforeMount() {
         window.Telegram?.WebApp.BackButton.onClick(this.routeBack);
         window.Telegram?.WebApp.BackButton.show();
 
