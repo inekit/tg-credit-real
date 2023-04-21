@@ -438,7 +438,7 @@ form {
             right: 0;
             top: 0;
             background-color: #E6E6E6;
-            border-radius: 4px;
+            border-radius: 10px;
             color: #414141;
 
             select {
@@ -528,7 +528,7 @@ form {
             position: absolute;
             right: 1rem;
             background-color: #E6E6E6;
-            border-radius: 10px;
+            border-radius: 14px;
             padding: 15px 40px;
             font-size: 13px;
             color: #414141;
@@ -594,9 +594,9 @@ form {
         position: absolute;
         right: 130px;
         background-color: #E6E6E6;
-        border-radius: 14px;
+        border-radius: 10px;
         padding: 10px 30px;
-        font-size: 13px;
+        font-size: 15px;
         border: none;
 
         &:last-of-type {
