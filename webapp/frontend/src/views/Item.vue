@@ -425,7 +425,7 @@ form {
 
     .option-select {
         position: relative;
-        margin-bottom: 20px;
+        height: 35px;
 
         .select-dropdown,
         .select-dropdown * {
@@ -444,8 +444,8 @@ form {
             color: #414141;
 
             select {
-                font-size: 1rem;
-                font-weight: normal;
+                font-size: 15px;
+                font-weight: 400;
                 max-width: 100%;
                 padding: 10px 30px 10px 15px;
                 border: none;
@@ -453,6 +453,7 @@ form {
                 -webkit-appearance: none;
                 -moz-appearance: none;
                 appearance: none;
+                color: #414141 !important;
 
                 &:focus,
                 &:active {
