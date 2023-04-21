@@ -36,8 +36,8 @@
         <hr />
         <label>Описание</label>
         <div class="description" v-html="item.description"></div>
-        <hr />
         <div class="backside count-select" v-if="count && !mainside_id">
+            <hr />
             <label>Обратная сторона</label>
             <button v-if="!backside_item?.id" type="button" @click="routeToBackSide">Выбрать</button>
             <div v-else>
@@ -414,6 +414,7 @@ h1 {
 
 form {
     margin: 1rem;
+    margin-top: 0.5rem;
     font-size: 1rem;
     margin-bottom: 90px;
 
@@ -478,7 +479,7 @@ form {
     }
 
     .description {
-        margin-top: 10px;
+        margin-top: 0.5rem;
 
         h1,
         h2,
@@ -587,7 +588,7 @@ form {
 
 .backside {
     &>div {
-        margin-top: 20px;
+        margin-top: 0.5rem;
 
         &>span {
             line-height: 30px;

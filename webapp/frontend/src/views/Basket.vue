@@ -112,7 +112,6 @@ export default {
             })
                 .then(async response => {
                     this.basketItems = await this.getBasket();
-
                 })
                 .catch(e => { eventBus.$emit('noresponse', e) })
         },
@@ -126,7 +125,6 @@ export default {
             })
                 .then(async response => {
                     this.basketItems = await this.getBasket();
-
                 })
                 .catch(e => { eventBus.$emit('noresponse', e) })
         },
@@ -150,7 +148,10 @@ export default {
                 }
             })
                 .then(response => {
+                    if (response.data.length === 0) return this.$router.go(-1)
+
                     return response.data;
+
                 })
                 .catch(e => { eventBus.$emit('noresponse', e) })
 
