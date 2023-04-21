@@ -55,10 +55,8 @@ export default {
             //await this.toggleButtons()
         }
     },
-    beforeMount() {
+    async beforeMount() {
         this.bodyWidth = document.body.clientHeight
-    },
-    async mounted() {
         this.scroll()
         window.Telegram?.WebApp.BackButton.onClick(this.routeBack);
         window.Telegram?.WebApp.BackButton.show();
@@ -79,6 +77,9 @@ export default {
             window.Telegram?.WebApp.MainButton.offClick(this.routeToBasket);
             window.Telegram?.WebApp.MainButton.hide();
         }
+    },
+    async mounted() {
+
     },
     async beforeUnmount() {
         window.Telegram?.WebApp.MainButton.offClick(this.routeToBasket);
