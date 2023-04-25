@@ -9,6 +9,7 @@ var UsersController = require("../controllers/user.controller");
 var ItemsController = require("../controllers/items.controller");
 var OrdersController = require("../controllers/orders.controller");
 var PromosController = require("../controllers/promos.controller");
+var MessagesController = require("../controllers/messages.controller");
 
 var TagsController = require("../controllers/tags.controller");
 var CategoriesController = require("../controllers/categories.controller");
@@ -50,6 +51,8 @@ module.exports = (ctx) => {
   router.post("/categories", auth, CategoriesController.addOne);
   router.put("/categories", auth, CategoriesController.editOne);
   router.delete("/categories", auth, CategoriesController.deleteOne);
+
+  router.post("/messages", auth, MessagesController.addOne(ctx));
 
   router.get("/statics", auth, StaticsController.getOne);
   router.put("/statics", auth, StaticsController.editOne);

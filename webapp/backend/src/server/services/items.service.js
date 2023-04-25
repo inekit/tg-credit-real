@@ -98,7 +98,7 @@ class UsersService {
                 left join item_options io on p.id = io.item_id
                 left join order_items oi on io.id = oi.item_option_id
                 left join orders o on o.id = oi.order_id
-                where (title like $1 or $1 is NULL) 
+                where (lower(title) like lower($1) or $1 is NULL) 
                 and (p.category_name = $2 or $2 is NULL)  
                 and (p.id = $3 or $3 is NULL)  
                 and (io.size = $7::varchar or $7::varchar is NULL)
@@ -111,7 +111,7 @@ class UsersService {
                 ,min(io.price) price
                     from public.items p
                     left join item_options io on p.id = io.item_id
-                    where (title like $1 or $1 is NULL) 
+                    where (lower(title) like lower($1) or $1 is NULL) 
                     and $6::int is NULL
                     and $7::varchar is NULL
                     and $8::varchar is NULL

@@ -29,6 +29,13 @@
                 <span class="w-100 mb-2">Изменить статус</span>
                 <button v-for="status in statuses" :key="status" class="btn btn-primary" @click="changeStatus(status)">{{
                     status }}</button>
+                <CInputGroup class="mb-2">
+                    <CFormInput placeholder="Напишите сообщение" aria-label="Напишите сообщение"
+                        aria-describedby="button-sendmessage" v-model="messageTemplate" />
+                    <CButton type="button" color="primary" variant="outline" id="button-sendmessage" @click="sendMessage">
+                        Отправить сообщение
+                    </CButton>
+                </CInputGroup>
             </div>
         </div>
         <Table :fields="tableFieldNames" :postData="get" :actions="dataActions" :rows="rows" editMode="form"
@@ -59,7 +66,8 @@ export default {
             formData: {},
             order: {},
             rows: [],
-            statuses: ["Новый", "Оплачен", "На доставке", "Доставлен"],
+            statuses: ["Новый", "Оплачен"],
+            messageTemplate: null,
             tableFieldNames: [
                 {
                     name: 'id',
@@ -102,6 +110,16 @@ export default {
             })
                 .then(async () => {
                     this.order.status = newStatus;
+                })
+                .catch(e => { eventBus.$emit('noresponse', e) })
+        },
+        sendMessage() {
+            this.$store.state.myApi.post(this.$store.state.publicPath + '/api/admin/messages', {
+                user_id: this.order.user_id,
+                text: this.messageTemplate
+            })
+                .then(async () => {
+                    alert("Сообщение успешно отправлено")
                 })
                 .catch(e => { eventBus.$emit('noresponse', e) })
         },
