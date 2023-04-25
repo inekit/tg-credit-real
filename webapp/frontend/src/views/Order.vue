@@ -26,12 +26,10 @@
             <h2>Время досавки: </h2><span>{{ deliveryTime }} дней</span>
         </div>
         <h2>Промокод</h2>
-        <div class="input-group">
+        <div class="input-group one-line">
             <input type="text" id="name" name="name" class="form-control" placeholder="Введите промокод"
                 v-model="basketData.promo_code">
-            <div class="input-group-append">
-                <button class="btn btn-outline-secondary" type="button" @click="getPromoSale">Применить</button>
-            </div>
+            <button class="button-append" type="button" @click="getPromoSale">Применить</button>
         </div>
         <h2 class="total">Итого</h2>
         <div class="pricing" hidden>Стоимость доставки<span>{{ deliveryPrice ? `${deliveryPrice} ₽` : "Не определена"
@@ -233,11 +231,12 @@ export default {
 .select-group {
     display: flex;
     gap: 10px;
+    flex-wrap: wrap;
 
     &>div {
         position: relative;
         display: inline-block;
-        width: 120px;
+        width: calc(50vw - 1rem - 5px);
     }
 
     label {
@@ -250,13 +249,35 @@ export default {
         top: 0;
         left: 0;
         right: 0;
-        width: fit-content;
+        width: calc(50vw - 1rem - 5px);
     }
 }
 
 
 
 .input-group {
+
+    &.one-line {
+
+        input,
+        button {
+            display: inline-block;
+            background-color: #E6E6E6;
+            padding: 17px 20px;
+            border-radius: 1rem;
+            border: none;
+            margin-bottom: 10px;
+            font-size: 1rem;
+            width: calc(70% - 40px);
+        }
+
+        button {
+            width: 30%;
+            border: 1rem;
+            border-radius: 1rem 0 0 1rem;
+            border-color: #666;
+        }
+    }
 
 
     position: relative;
