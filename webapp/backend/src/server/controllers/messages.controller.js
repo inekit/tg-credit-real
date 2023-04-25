@@ -1,7 +1,7 @@
 const tOrmCon = require("../../db/connection");
 
 function addOne(ctx) {
-  (req, res, next) => {
+  return (req, res, next) => {
     const { text, user_id } = req.body;
 
     ctx.telegram
