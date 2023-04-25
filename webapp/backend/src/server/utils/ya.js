@@ -40,6 +40,33 @@ class Ya {
         });
     });
   }
+  getTime({ address }) {
+    return new Promise((resolve, reject) => {
+      axios
+        .get(
+          `${this.api_addr}/api/b2b/platform/offers/info`,
+          {
+            full_address: address,
+            send_unix: false,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${this.access_token}`,
+              "Content-Type": "application/json",
+            },
+            params: { full_address: address, send_unix: false },
+          }
+        )
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          console.log(error.response.data);
+
+          reject(error);
+        });
+    });
+  }
 }
 
 module.exports = Ya;

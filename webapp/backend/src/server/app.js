@@ -37,7 +37,7 @@ module.exports = (ctx) => {
 
     console.log("success", req.body);
 
-    setPayed(InvId, ctx);
+    setPayed(InvId, OutSum, SignatureValue, ctx);
 
     return res.send();
   });

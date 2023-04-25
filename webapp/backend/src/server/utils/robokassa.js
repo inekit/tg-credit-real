@@ -21,6 +21,7 @@ class Robokassa {
             InvId,
             Description,
             SignatureValue: signature,
+            Culture: "ru",
           },
         })
         .then((response) => {

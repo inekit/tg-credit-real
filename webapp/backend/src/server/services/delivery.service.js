@@ -43,7 +43,10 @@ class BasketsService {
 
           console.log(result);
 
-          res({ price: result.total_sum, time: null });
+          res({
+            price: result.total_sum,
+            time: `${result.period_min}-${result.period_max}`,
+          });
         } else if (operator === "Я. Доставка") {
           const ya = new Ya({
             test_mode: true,
@@ -54,8 +57,11 @@ class BasketsService {
             address,
             total_weight: count * 100,
           });
-          console.log(result);
-          res({ price: parseInt(result.pricing_total), time: null });
+          const time = await ya.getTime({
+            address,
+          });
+          console.log(time);
+          res({ price: parseInt(result.pricing_total), time: time });
         } else if (operator === "Почта РФ") {
           res({ price: null, time: null });
         }
