@@ -2,7 +2,7 @@ const axios = require("axios");
 require("dotenv").config();
 
 class Cdek {
-  constructor({ test_mode, client_id, client_secret }) {
+  constructor({ access_token, authorization_key }) {
     this.api_addr = test_mode
       ? "https://api.edu.cdek.ru"
       : "https://api.cdek.ru";
@@ -11,41 +11,28 @@ class Cdek {
     this.client_secret = client_secret;
   }
 
-  async auth() {
-    return new Promise((resolve, reject) => {
-      axios
-        .post(`${this.api_addr}/v2/oauth/token`, null, {
-          params: {
-            grant_type: "client_credentials",
-            client_id: this.client_id,
-            client_secret: this.client_secret,
-          },
-        })
-        .then((response) => {
-          this.access_token = response.data?.access_token;
-          resolve();
-        })
-        .catch((error) => {
-          reject(error);
-        });
-    });
-  }
-
-  getPrice({ tariff_code, from_location, to_location, packages }) {
+  getPrice({ sum = 0, from_index, to_index, mass = 1000 }) {
     return new Promise((resolve, reject) => {
       axios
         .post(
-          `${this.api_addr}/v2/calculator/tariff`,
+          `${this.api_addr}/1.0/tariff`,
           {
-            tariff_code,
-            from_location,
-            to_location,
-            packages,
+            "declared-value": sum,
+            "index-from": from_index,
+            "index-to": to_index,
+            "mail-category": "SIMPLE",
+            "mail-type": "UNDEFINED",
+            mass,
           },
           {
             headers: {
-              Authorization: `Bearer ${this.access_token}`,
-              "Content-Type": "application/json",
+              Authorization: `AccessToken ${
+                this.access_token ?? "sDBaa9XNfFargSyQ8KIEM40GB_ndPmLu"
+              }`,
+              "X-User-Authorization": `Basic ${
+                this.authorization_key ?? "bG9naW46cGFzc3dvcmQ="
+              }`,
+              "Content-Type": "application/json;charset=UTF-8",
             },
           }
         )
