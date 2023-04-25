@@ -48,7 +48,11 @@ class Ya {
             Authorization: `Bearer ${this.access_token}`,
             "Content-Type": "application/json",
           },
-          params: { full_address: address, send_unix: false },
+          params: {
+            station_id: "7c4054cd-d768-4062-8f8d-d0c9b3c8c4e8",
+            full_address: address,
+            send_unix: false,
+          },
         })
         .then((response) => {
           resolve(response.data);
