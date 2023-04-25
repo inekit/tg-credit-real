@@ -45,7 +45,9 @@ class BasketsService {
 
           res({
             price: result.total_sum,
-            time: `${result.period_min}-${result.period_max}`,
+            time: result.period_min
+              ? `${result.period_min}-${result.period_max}`
+              : null,
           });
         } else if (operator === "Я. Доставка") {
           const ya = new Ya({

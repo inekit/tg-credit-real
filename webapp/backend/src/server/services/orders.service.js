@@ -230,7 +230,6 @@ class UsersService {
               moment(orders[0].creation_date).format("DD.MM.YYYY"),
               orderStr,
               "Новый",
-              selected_po,
               selected_dm,
               total,
             ]),

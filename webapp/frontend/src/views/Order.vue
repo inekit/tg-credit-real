@@ -190,7 +190,7 @@ export default {
         background-color: #E6E6E6;
         margin: 0;
         font: inherit;
-        width: 120px;
+        width: 100%;
         height: 40px;
         border-radius: 1rem;
         border: none;
@@ -210,6 +210,8 @@ export default {
         transition: 120ms transform ease-in-out;
         box-shadow: none;
         background-color: #666666;
+        width: fit-content;
+
     }
 
     input[type="radio"]:checked::before {
@@ -262,20 +264,21 @@ export default {
         input,
         button {
             display: inline-block;
-            background-color: #E6E6E6;
+            background-color: #e6e6e6;
             padding: 17px 20px;
             border-radius: 1rem;
             border: none;
             margin-bottom: 10px;
             font-size: 1rem;
-            width: calc(70% - 40px);
+            width: calc(60% - 40px);
+            border-radius: 1rem 4px 4px 1rem;
         }
 
         button {
-            width: 30%;
-            border: 1rem;
-            border-radius: 1rem 0 0 1rem;
-            border-color: #666;
+            width: 40%;
+            border-left: 2px solid;
+            border-radius: 4px 1rem 1rem 4px;
+            border-color: white;
         }
     }
 
