@@ -191,7 +191,7 @@ export default {
         margin: 0;
         font: inherit;
         width: 100%;
-        height: 40px;
+        height: 45px;
         border-radius: 1rem;
         border: none;
         transform: translateY(-0.075em);
@@ -203,7 +203,7 @@ export default {
     input[type="radio"]::before {
         content: "";
         width: 120px;
-        height: 40px;
+        height: 45px;
         z-index: 999;
         border-radius: 1rem;
         transform: scale(0);
@@ -243,7 +243,7 @@ export default {
     label {
         display: block;
         position: absolute;
-        margin: 10px auto;
+        margin: 12.5px auto;
         line-height: 20px;
         z-index: 999;
         color: white;
@@ -251,7 +251,11 @@ export default {
         left: 0;
         right: 0;
         width: fit-content;
+        color: #414141
+    }
 
+    input[type="radio"]:checked+label {
+        color: white;
     }
 }
 
@@ -279,6 +283,8 @@ export default {
             border-left: 2px solid;
             border-radius: 4px 1rem 1rem 4px;
             border-color: white;
+            color: #414141 !important;
+
         }
     }
 

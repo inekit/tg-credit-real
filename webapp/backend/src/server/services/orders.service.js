@@ -172,7 +172,7 @@ class UsersService {
             : ((+(100 - sum) * total) / 100).toFixed(0);
 
         if (total < 0) throw new Error("PROMO_TO_LARGE");
-        if (delivery_price <= 0) throw new Error("DELIVERY_WRONG");
+        if (delivery_price < 0) throw new Error("DELIVERY_WRONG");
 
         total = +total + +delivery_price;
 
