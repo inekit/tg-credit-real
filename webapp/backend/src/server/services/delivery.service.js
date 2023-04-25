@@ -61,7 +61,12 @@ class BasketsService {
             address,
           });
           console.log(time);
-          res({ price: parseInt(result.pricing_total), time: time });
+          res({
+            price: parseInt(result.pricing_total),
+            time: time?.offers?.[0]
+              ? `${time.offers[0].from}-${timeoffers[0].to}`
+              : null,
+          });
         } else if (operator === "Почта РФ") {
           res({ price: null, time: null });
         }
