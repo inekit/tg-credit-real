@@ -29,11 +29,15 @@
                 <span class="w-100 mb-2">Изменить статус</span>
                 <button v-for="status in statuses" :key="status" class="btn btn-primary" @click="changeStatus(status)">{{
                     status }}</button>
+
+            </div>
+            <div class="send-message">
+                <span class="w-100 mb-2">Отправить сообщение клиенту</span>
                 <CInputGroup class="mb-2">
-                    <CFormInput placeholder="Напишите сообщение" aria-label="Напишите сообщение"
+                    <CFormInput class="custon-input-part" placeholder="Напишите сообщение" aria-label="Напишите сообщение"
                         aria-describedby="button-sendmessage" v-model="messageTemplate" />
                     <CButton type="button" color="primary" variant="outline" id="button-sendmessage" @click="sendMessage">
-                        Отправить сообщение
+                        Отправить
                     </CButton>
                 </CInputGroup>
             </div>
@@ -119,6 +123,7 @@ export default {
                 text: this.messageTemplate
             })
                 .then(async () => {
+                    this.messageTemplate = null;
                     alert("Сообщение успешно отправлено")
                 })
                 .catch(e => { eventBus.$emit('noresponse', e) })
@@ -168,6 +173,10 @@ button {
         width: 150px;
         margin-right: 20px;
     }
+}
+
+.custon-input-part {
+    height: 38px !important
 }
 </style>
   
