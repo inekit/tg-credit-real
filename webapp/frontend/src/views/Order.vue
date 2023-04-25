@@ -210,8 +210,7 @@ export default {
         transition: 120ms transform ease-in-out;
         box-shadow: none;
         background-color: #666666;
-        width: fit-content;
-
+        width: calc(50vw - 1rem - 5px);
     }
 
     input[type="radio"]:checked::before {
@@ -251,7 +250,8 @@ export default {
         top: 0;
         left: 0;
         right: 0;
-        width: calc(50vw - 1rem - 5px);
+        width: fit-content;
+
     }
 }
 
