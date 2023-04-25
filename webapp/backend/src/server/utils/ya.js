@@ -43,20 +43,13 @@ class Ya {
   getTime({ address }) {
     return new Promise((resolve, reject) => {
       axios
-        .get(
-          `${this.api_addr}/api/b2b/platform/offers/info`,
-          {
-            full_address: address,
-            send_unix: false,
+        .get(`${this.api_addr}/api/b2b/platform/offers/info`, {
+          headers: {
+            Authorization: `Bearer ${this.access_token}`,
+            "Content-Type": "application/json",
           },
-          {
-            headers: {
-              Authorization: `Bearer ${this.access_token}`,
-              "Content-Type": "application/json",
-            },
-            params: { full_address: address, send_unix: false },
-          }
-        )
+          params: { full_address: address, send_unix: false },
+        })
         .then((response) => {
           resolve(response.data);
         })
