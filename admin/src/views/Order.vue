@@ -163,6 +163,10 @@ button {
 .order-card {
     padding: 1rem;
     font-size: 1.2rem;
+
+    button {
+        margin-bottom: 0 !important;
+    }
 }
 
 .change-status {
