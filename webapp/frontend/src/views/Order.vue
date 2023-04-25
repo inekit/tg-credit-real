@@ -2,16 +2,6 @@
     <h1>Оформление заказа</h1>
     <div class="order-block">
         <button class="" @click="order">Оформить заказ</button>
-
-        <div class="payment">
-            <h2>Метод оплаты</h2>
-            <div class="select-group">
-                <div v-for="po in paymentOptions" :key="po">
-                    <input type="radio" :id="po" :value="po" v-model="selected_po">
-                    <label :for="po" @click="selected_po = po">{{ po }}</label>
-                </div>
-            </div>
-        </div>
         <div class="delivery">
             <h2>Способ доставки</h2>
             <div class="select-group">
@@ -32,13 +22,20 @@
             <input type="number" id="text" pattern="[0-9]+" name="postal code" placeholder="Почтовый индекс"
                 v-model.number="basketData.postal_code" @input="getDeliveryPrice">
         </div>
+        <div class="delivery-time" v-show="deliveryTime">
+            <h2>Время досавки: </h2><span>{{ deliveryTime }} дней</span>
+        </div>
         <h2>Промокод</h2>
         <div class="input-group">
-            <input type="text" id="name" name="name" placeholder="Введите промокод" v-model="basketData.promo_code"
-                @change="getPromoSale">
+            <input type="text" id="name" name="name" class="form-control" placeholder="Введите промокод"
+                v-model="basketData.promo_code">
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="button" @click="getPromoSale">Применить</button>
+            </div>
         </div>
         <h2 class="total">Итого</h2>
-        <div class="pricing">Стоимость доставки<span>{{ deliveryPrice ? `${deliveryPrice} ₽` : "Не определена" }}</span>
+        <div class="pricing" hidden>Стоимость доставки<span>{{ deliveryPrice ? `${deliveryPrice} ₽` : "Не определена"
+        }}</span>
         </div>
         <div class="pricing" v-if="sale.sum > 0">Скидка<span>{{ sale.type === 'money' ? `${sale.sum} ₽` : `${sale.sum} %`
         }}</span></div>
@@ -58,9 +55,10 @@ export default {
             basketData: {},
             paymentOptions: ["yookassa"],
             selected_po: "yookassa",
-            deliveryMethods: ["Я. Доставка", "CДЭК"],
+            deliveryMethods: ["Я. Доставка", "CДЭК", "Курьер", "Почта РФ"],
             selected_dm: "CДЭК",
             deliveryPrice: null,
+            deliveryTime: null,
             sale: {
                 sum: 0
             }
@@ -92,7 +90,7 @@ export default {
             if (!this.basketData.address || !this.basketData.phone ||
                 !this.basketData.name || !this.basketData.surname || !this.basketData.patronymic)
                 return alert("Пожалуйста, заполните все поля")
-            if (!this.deliveryPrice) return alert("Пожалуйста, укажите верные данные для доставки")
+            //if (!this.deliveryPrice) return alert("Пожалуйста, укажите верные данные для доставки")
 
             this.$store.state.myApi
                 .post(this.$store.state.restAddr + '/orders', {
@@ -106,7 +104,8 @@ export default {
                     postal_code: this.basketData.postal_code,
                     patronymic: this.basketData.patronymic,
                     promo_code: this.sale.code,
-                    delivery_price: this.deliveryPrice,
+                    delivery_price: 0,
+                    delivery_time: this.deliveryTime,
                     total: this.totalSum
                 })
                 .then(async (response) => {
@@ -126,6 +125,7 @@ export default {
             })
                 .then(response => {
                     this.deliveryPrice = response.data?.price ?? 0;
+                    this.deliveryTime = response.data?.time;
                 })
                 .catch(e => { console.log(e); this.deliveryPrice = 0 })
 
@@ -158,6 +158,8 @@ export default {
                 }
             })
                 .then(response => {
+                    const sale = response.data
+                    alert(`Промокод на ${sale.sum} ${sale.type === 'money' ? "рублей" : "%"} успешно активирован`)
                     return this.sale = response.data ?? { sum: 0 };
                 })
                 .catch(e => { this.sale = { sum: 0 }; alert("Промокод недействителен") })
@@ -171,7 +173,7 @@ export default {
             const basketTotal = +(this.sale.type === 'money' ? (this.basketData.total - this.sale.sum) :
                 (+(100 - this.sale.sum) * this.basketData.total / 100).toFixed(0))
 
-            return basketTotal + (+this.deliveryPrice ?? 0)
+            return basketTotal;// + (+this.deliveryPrice ?? 0)
         }
 
     }

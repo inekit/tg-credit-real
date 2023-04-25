@@ -19,7 +19,7 @@ class BasketsService {
     return new Promise(async (res, rej) => {
       try {
         if (!address && !postal_code) rej("No addr data");
-        if (operator === "CДЭК") {
+        if (operator === "CДЭК" || operator === "Курьер") {
           const cdek = new Cdek({
             test_mode: true,
             client_id: "EMscd6r9JnFiQ3bLoyjJY6eM78JrJceI",
@@ -28,7 +28,7 @@ class BasketsService {
 
           await cdek.auth();
           const result = await cdek.getPrice({
-            tariff_code: 136,
+            tariff_code: operator === "CДЭК" ? 136 : 137,
             from_location: { postal_code: "603065" },
             to_location: { postal_code, address },
             packages: [
@@ -43,7 +43,7 @@ class BasketsService {
 
           console.log(result);
 
-          res({ price: result.total_sum });
+          res({ price: result.total_sum, time: null });
         } else if (operator === "Я. Доставка") {
           const ya = new Ya({
             test_mode: true,
@@ -55,7 +55,9 @@ class BasketsService {
             total_weight: count * 100,
           });
           console.log(result);
-          res({ price: parseInt(result.pricing_total) });
+          res({ price: parseInt(result.pricing_total), time: null });
+        } else if (operator === "Почта РФ") {
+          res({ price: null, time: null });
         }
 
         rej("wrong operator");
