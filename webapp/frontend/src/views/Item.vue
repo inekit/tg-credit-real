@@ -109,7 +109,7 @@ export default {
             this.price = this.selected_option?.price;
             this.count = (await this.getBasketOption())?.count ?? 0;
             this.item.is_favorite = !!this.count;
-            this.item.description = DOMPurify.sanitize(marked.parse(this.item.description));
+            this.item.description = marked.parse(this.item.description);
 
             await this.getReferencedItems()
         },
