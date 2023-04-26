@@ -36,7 +36,7 @@ function addOne(req, res, next) {
 }
 
 function editOne(req, res, next) {
-  const { name, description } = req.body;
+  const { name, description, old_name } = req.body;
 
   categoriesService
     .edit({
