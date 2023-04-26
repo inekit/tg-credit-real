@@ -263,6 +263,7 @@ export default {
       formData.append('title', this.formData.title)
 
       const turndownService = new TurndownService({
+        headingStyle: "atx",
         //bulletListMarker: "-",
         //fence: "~~~",
         //emDelimiter: "*",
