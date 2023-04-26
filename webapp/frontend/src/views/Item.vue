@@ -115,7 +115,7 @@ export default {
                 xhtmlOut: true,
                 breaks: true,
             });
-            //this.item.description = md.render(this.item.description?.replaceAll("\n", "<br/>"));
+            this.item.description = md.render(this.item.description?.replaceAll("\r\n", "<br/>"));
             console.log(this.item.description)
 
             await this.getReferencedItems()
