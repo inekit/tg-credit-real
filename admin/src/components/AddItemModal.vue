@@ -164,6 +164,7 @@ export default {
     }
   },
   updated() {
+    console.log(1)
     this.options_object = {};
     this.options_object_backside = {};
     this.formData.options_array = this.formData.options_array?.
@@ -175,11 +176,21 @@ export default {
       marked.parse(this.formData.description?.replaceAll("\r\n\r\n", "<span><br/><span/>\r\n\r\n")))
 
     for (let { size, material, price, is_backside } of this.formData.options_array) {
-      if (!is_backside)
+      if (!is_backside) {
         this.options_object[material] ? this.options_object[material][size] = price :
           this.options_object[material] = { [size]: price }
-      else this.options_object_backside[material] ? this.options_object_backside[material][size] = price :
-        this.options_object_backside[material] = { [size]: price }
+
+        this.options_object_backside[material] ? this.options_object_backside[material][size] = null :
+          this.options_object_backside[material] = { [size]: null }
+      }
+      else {
+        this.options_object_backside[material] ? this.options_object_backside[material][size] = price :
+          this.options_object_backside[material] = { [size]: price }
+
+        this.options_object[material] ? this.options_object[material][size] = null :
+          this.options_object[material] = { [size]: null }
+
+      }
     }
 
     this.preview_list = this.formData.image_list?.filter(el => el)?.map(preview_name => `${this.$store.state.publicPath}/public/pics/${preview_name}`)
