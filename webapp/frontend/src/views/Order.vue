@@ -2,6 +2,13 @@
     <h1>Оформление заказа</h1>
     <div class="order-block">
         <button class="" @click="order">Оформить заказ</button>
+        <p>Расчет доставки
+            производится в ручную из-за индивидуальности
+            заказов. Средняя стоимость доставки не превышает
+            350р. После оплаты заказа, вы получите расчет стоимости
+            доставки, и сможете оплатить ее при получении.
+            Если Вы хотите, чтобы мы произвели расчет до оплаты заказа,
+            напишите нам из главного меню по кнопке «Чат с нами»</p>
         <div class="delivery">
             <h2>Способ доставки</h2>
             <div class="select-group">
@@ -23,7 +30,7 @@
                 v-model.number="basketData.postal_code" @input="getDeliveryPrice">
         </div>
         <div class="delivery-time" v-show="deliveryTime">
-            <h2>Время доставки: </h2><span>{{ deliveryTime }} дней</span>
+            <h2>Время доставки</h2><span>{{ deliveryTime }} дней</span>
         </div>
         <h2>Промокод</h2>
         <div class="input-group one-line">
