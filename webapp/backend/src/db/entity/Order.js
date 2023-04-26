@@ -11,7 +11,7 @@ module.exports = new EntitySchema({
     },
     user_id: {
       type: "bigint",
-      nullable: false,
+      nullable: true,
     },
     creation_date: {
       createDate: true,
@@ -67,6 +67,8 @@ module.exports = new EntitySchema({
       type: "many-to-one",
       joinColumn: true,
       cascade: true,
+      onDelete: "set null",
+      onUpdate: "cascade",
     },
   },
 });

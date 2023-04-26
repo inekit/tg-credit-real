@@ -41,7 +41,7 @@ module.exports = new EntitySchema({
       joinColumn: true,
       cascade: false,
       onDelete: "SET NULL",
-      onUpdate: "SET NULL",
+      onUpdate: "cascade",
     },
     tags: {
       target: "Tag",
@@ -49,7 +49,7 @@ module.exports = new EntitySchema({
       joinTable: true,
       cascade: false,
       onDelete: "SET NULL",
-      onUpdate: "SET NULL",
+      onUpdate: "cascade",
     },
   },
 });

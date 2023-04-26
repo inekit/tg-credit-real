@@ -40,18 +40,23 @@ module.exports = new EntitySchema({
       joinColumn: true,
       cascade: true,
       onDelete: "cascade",
+      onUpdate: "cascade",
     },
     order: {
       target: "Order",
       type: "many-to-one",
       joinColumn: true,
       cascade: true,
+      onDelete: "cascade",
+      onUpdate: "cascade",
     },
     mainside: {
       target: "ItemOption",
       type: "many-to-one",
       joinColumn: true,
       cascade: true,
+      onDelete: "cascade",
+      onUpdate: "cascade",
     },
   },
 });

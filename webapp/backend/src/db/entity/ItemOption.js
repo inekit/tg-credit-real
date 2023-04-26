@@ -35,6 +35,7 @@ module.exports = new EntitySchema({
       joinColumn: true,
       cascade: true,
       onDelete: "cascade",
+      onUpdate: "cascade",
     },
   },
 });
