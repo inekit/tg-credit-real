@@ -25,7 +25,7 @@ exports.webapp_keyboard = (ctx, id) =>
   inlineKeyboard([
     [
       webAppButton(
-        ctx.getTitle("WEBAPP_BUTTON"),
+        ctx.getTitle("WEBAPP_INLINE_BUTTON"),
         "https://fotodesire.ru/colorsfront/categories/" + id
       ),
     ],
