@@ -112,10 +112,10 @@ export default {
 
             const md = new Remarkable({
                 html: true,
-                xhtmlOut: false,
+                xhtmlOut: true,
                 breaks: false,
             });
-            this.item.description = md.render(this.item.description?.replaceAll("\r\n", "<br></br>"));
+            this.item.description = md.render(this.item.description?.replaceAll("\r\n", "<br>"));
             console.log(this.item.description)
 
             await this.getReferencedItems()
