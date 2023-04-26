@@ -113,7 +113,7 @@ export default {
             const md = new Remarkable({
                 html: true,
                 xhtmlOut: false,
-                breaks: true,
+                breaks: false,
             });
             this.item.description = md.render(this.item.description?.replaceAll("\r\n", "<br/>"));
             console.log(this.item.description)
