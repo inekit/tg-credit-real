@@ -110,7 +110,7 @@ export default {
             this.count = (await this.getBasketOption())?.count ?? 0;
             this.item.is_favorite = !!this.count;
 
-            this.item.description = marked.parse(this.formData.description?.replaceAll("\r\n\r\n", "<span><br/><span/>\r\n\r\n"))
+            this.item.description = marked.parse(this.item.description?.replaceAll("\r\n\r\n", "<span><br/><span/>\r\n\r\n"))
 
             await this.getReferencedItems()
         },
