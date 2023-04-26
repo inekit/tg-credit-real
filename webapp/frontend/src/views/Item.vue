@@ -218,6 +218,7 @@ export default {
                         item_option_id,
                         mainside_id: mainside_id ?? undefined,
                         backside_id,
+                        is_backside: this.mainside_id ? true : false,
                         user_id: this.$store.state.userId,
                     }
                 })

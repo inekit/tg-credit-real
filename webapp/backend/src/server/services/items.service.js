@@ -28,6 +28,7 @@ class UsersService {
     item_option_id,
     mainside_id,
     backside_id,
+    is_backside = null,
   }) {
     return new Promise(async (res, rej) => {
       const skip = (page - 1) * take;
@@ -48,7 +49,7 @@ class UsersService {
         connection
           .query(
             `select p.*,
-          json_agg(DISTINCT jsonb_build_object('id', io.id, 'size', io.size, 'material', io.material, 'price', io.price))  options_array
+          json_agg(DISTINCT jsonb_build_object('id', io.id, 'size', io.size, 'material', io.material, 'price', io.price, 'is_backside' io.is_backside))  options_array
           ,min(io.price) price, case when count(o.id) > 0 then true else false end as is_favorite
               from public.items p
               left join item_options io on p.id = io.item_id
@@ -67,7 +68,7 @@ class UsersService {
         connection
           .query(
             `select p.*,
-          json_agg(DISTINCT jsonb_build_object('id', io.id, 'size', io.size, 'material', io.material, 'price', io.price))  options_array
+          json_agg(DISTINCT jsonb_build_object('id', io.id, 'size', io.size, 'material', io.material, 'price', io.price, 'is_backside' io.is_backside))  options_array
           ,min(io.price) price, case when count(o.id) > 0 then true else false end as is_favorite
               from public.items p
               left join item_options io on p.id = io.item_id
@@ -87,7 +88,7 @@ class UsersService {
           .catch((error) => rej(new MySqlError(error)));
       else {
         const query = user_id
-          ? `select p.*,json_agg(DISTINCT jsonb_build_object('id', io.id, 'size', io.size, 'material', io.material, 'price', io.price))  options_array
+          ? `select p.*,json_agg(DISTINCT jsonb_build_object('id', io.id, 'size', io.size, 'material', io.material, 'price', io.price, 'is_backside' io.is_backside))  options_array
             ,min(io.price) price, 
             case when count(
               case when 
@@ -103,11 +104,12 @@ class UsersService {
                 and (p.id = $3 or $3 is NULL)  
                 and (io.size = $7::varchar or $7::varchar is NULL)
                 and (io.material = $8::varchar or $8::varchar is NULL)
+                and (io.is_backside = $10::boolean or $10::boolean is NULL)
                 and (oi.item_option_id = $9::int or $9::int is NULL)
                 group by p.id
                 order by ${orderQueryPart}
                 LIMIT $4 OFFSET $5`
-          : `select p.*,json_agg(DISTINCT jsonb_build_object('id', io.id, 'size', io.size, 'material', io.material, 'price', io.price))  options_array
+          : `select p.*,json_agg(DISTINCT jsonb_build_object('id', io.id, 'size', io.size, 'material', io.material, 'price', io.price, 'is_backside' io.is_backside))  options_array
                 ,min(io.price) price
                     from public.items p
                     left join item_options io on p.id = io.item_id
@@ -116,6 +118,7 @@ class UsersService {
                     and $7::varchar is NULL
                     and $8::varchar is NULL
                     and $9::int is NULL
+                    and $10::boolean is NULL
                     and (p.category_name = $2 or $2 is NULL)  
                     and (p.id = $3 or $3 is NULL)  
                     group by p.id
@@ -132,6 +135,7 @@ class UsersService {
             size,
             material,
             item_option_id,
+            is_backside,
           ])
           .then((data) => res(data))
           .catch((error) => rej(new MySqlError(error)));
@@ -171,6 +175,7 @@ class UsersService {
     title,
     text,
     optionsObject,
+    optionsObjectBackside,
     categoryName,
     previewsBinary,
     images,
@@ -209,10 +214,21 @@ class UsersService {
           const sizes = oo[m];
           for (let s in sizes) {
             const price = sizes[s];
-            console.log(s, m, price);
             if (price)
               await queryRunner.query(
                 "insert into item_options (item_id,size,material,price) values ($1,$2,$3,$4)",
+                [id, s, m, price]
+              );
+          }
+        }
+        const oob = JSON.parse(optionsObjectBackside);
+        for (let m in oob) {
+          const sizes = oo[m];
+          for (let s in sizes) {
+            const price = sizes[s];
+            if (price)
+              await queryRunner.query(
+                "insert into item_options (item_id,size,material,price, is_backside) values ($1,$2,$3,$4,true)",
                 [id, s, m, price]
               );
           }
@@ -240,6 +256,7 @@ class UsersService {
     images,
     previewsBinary,
     optionsObject,
+    optionsObjectBackside,
   }) {
     return new Promise(async (res, rej) => {
       let fNameFullPaths = Array.isArray(previewsBinary)
@@ -290,6 +307,18 @@ class UsersService {
             if (price)
               await queryRunner.query(
                 "insert into item_options (item_id,size,material,price) values ($1,$2,$3,$4)",
+                [id, s, m, price]
+              );
+          }
+        }
+        const oob = JSON.parse(optionsObjectBackside);
+        for (let m in oob) {
+          const sizes = oo[m];
+          for (let s in sizes) {
+            const price = sizes[s];
+            if (price)
+              await queryRunner.query(
+                "insert into item_options (item_id,size,material,price, is_backside) values ($1,$2,$3,$4,true)",
                 [id, s, m, price]
               );
           }

@@ -158,6 +158,7 @@ export default {
                     category: this.$store.state.filters.category_name,
                     user_id: this.$store.state.userId,
                     size: this.backFilters?.size,
+                    is_backside: this.backFilters?.size ? true : false,
                     material: this.backFilters?.material
                 }
             })

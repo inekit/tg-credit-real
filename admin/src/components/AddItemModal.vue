@@ -66,6 +66,34 @@
             </tbody>
           </table>
         </div>
+        <div class="options-shedle">
+          <span>Обратная сторона</span>
+          <table class="table">
+            <thead>
+              <tr>
+                <td>Размер<br />
+                  Материал</td>
+                <td v-for="sizeName in distinct_sizes" :key="'sizeh-' + sizeName">
+                  {{ sizeName }}
+                  <CButton color="secondary" @click="dropSize(sizeName)">X</CButton>
+                </td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="materialName in distinct_materials" :key="'material-' + materialName">
+                <td>
+                  {{ materialName }}
+                  <CButton color="secondary" @click="dropMaterial(materialName)">X</CButton>
+                </td>
+                <td v-for="sizeName in distinct_sizes" :key="'size-' + sizeName">
+                  <CFormInput type="text" v-model="options_object_backside[materialName][sizeName]" />
+                </td>
+                <td>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
         <CFormInput type="file" accept="image/*" multiple="multiple" ref="file" @change="previewMultiImage" class="mb-3"
           label="Превью" placeholder="Превью" />
@@ -129,12 +157,8 @@ export default {
       textEditMode: 'md2',
       formValid: false,
       preview_list: [],
-      options_object: {
-        "Материал": {
-          "Размер 1": 2000,
-          "Размер 2": 3000
-        }
-      },
+      options_object: {},
+      options_object_backside: {},
       distinct_materials: [],
       distinct_sizes: [],
       tempSize: 0,
@@ -143,6 +167,7 @@ export default {
   },
   updated() {
     this.options_object = {};
+    this.options_object_backside = {};
     this.formData.options_array = this.formData.options_array?.
       filter(({ material, price, size }) => !material && !size && !price ? false : true)
     this.distinct_materials = [...new Set(this.formData.options_array?.map(({ material }) => material))]
@@ -151,13 +176,13 @@ export default {
     this.formData.description && this.$refs.postTextEditor.pasteHTML(
       marked.parse(this.formData.description?.replaceAll("\r\n\r\n", "<span><br/><span/>\r\n\r\n")))
 
-    for (let { size, material, price } of this.formData.options_array) {
-      this.options_object[material] ? this.options_object[material][size] = price :
-        this.options_object[material] = { [size]: price }
+    for (let { size, material, price, is_backside } of this.formData.options_array) {
+      if (!is_backside)
+        this.options_object[material] ? this.options_object[material][size] = price :
+          this.options_object[material] = { [size]: price }
+      else this.options_object_backside[material] ? this.options_object_backside[material][size] = price :
+        this.options_object_backside[material] = { [size]: price }
     }
-
-    console.log(this.options_object)
-
 
     this.preview_list = this.formData.image_list?.filter(el => el)?.map(preview_name => `${this.$store.state.publicPath}/public/pics/${preview_name}`)
 
@@ -175,6 +200,7 @@ export default {
       console.log(size_template)
 
       this.options_object[name] = size_template
+      this.options_object_backside[name] = size_template
 
       this.distinct_materials.push(name)
 
@@ -183,18 +209,23 @@ export default {
     addSize(name) {
       const new_oo_entries = Object.entries(this.options_object)?.map(([key, value]) => [key, Object.assign(value ?? {}, { [name]: 0 })])
       this.options_object = Object.fromEntries(new_oo_entries)
+      const new_oob_entries = Object.entries(this.options_object_backside)?.map(([key, value]) => [key, Object.assign(value ?? {}, { [name]: 0 })])
+      this.options_object_backside = Object.fromEntries(new_oob_entries)
+
       this.tempSize = ""
       this.distinct_sizes.push(name)
 
     },
     dropMaterial(name) {
       delete this.options_object[name]
+      delete this.options_object_backside[name]
       this.distinct_materials = this.distinct_materials?.filter(el => el !== name)
 
     },
     dropSize(name) {
       for (let key in this.options_object) {
         delete this.options_object[key][name]
+        delete this.options_object_backside[key][name]
       }
       this.distinct_sizes = this.distinct_sizes?.filter(el => el !== name)
     },
@@ -274,6 +305,8 @@ export default {
 
 
       formData.append('optionsObject', JSON.stringify(this.options_object))
+      formData.append('optionsObjectBackside', JSON.stringify(this.options_object_backside))
+
 
       isEdit && formData.append('id', this.formData.id)
 

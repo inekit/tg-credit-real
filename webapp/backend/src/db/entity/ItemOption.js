@@ -13,6 +13,10 @@ module.exports = new EntitySchema({
       type: "bigint",
       nullable: false,
     },
+    is_backside: {
+      type: "boolean",
+      default: false,
+    },
     size: {
       type: "varchar",
       length: 255,
