@@ -178,14 +178,14 @@ export default {
         this.options_object[material] ? this.options_object[material][size] = price :
           this.options_object[material] = { [size]: price }
 
-        this.options_object_backside[material] ? this.options_object_backside[material][size] = null :
+        this.options_object_backside[material] ? this.options_object_backside[material][size] = this.options_object_backside[material][size] ?? null :
           this.options_object_backside[material] = { [size]: null }
       }
       else {
         this.options_object_backside[material] ? this.options_object_backside[material][size] = price :
           this.options_object_backside[material] = { [size]: price }
 
-        this.options_object[material] ? this.options_object[material][size] = null :
+        this.options_object[material] ? this.options_object[material][size] = this.options_object[material][size] ?? null :
           this.options_object[material] = { [size]: null }
 
       }
