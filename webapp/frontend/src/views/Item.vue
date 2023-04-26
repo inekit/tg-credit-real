@@ -112,7 +112,7 @@ export default {
 
             var md = new Remarkable({
                 html: false,
-                xhtmlOut: true,
+                xhtmlOut: false,
                 breaks: true,
             });
 
