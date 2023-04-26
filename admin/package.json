@@ -34,6 +34,7 @@
     "core-js": "^3.19.0",
     "dompurify": "^2.4.1",
     "marked": "^4.2.3",
+    "remarkable": "^2.0.1",
     "turndown": "^7.1.1",
     "vue": "^3.2.23",
     "vue-3-socket.io": "^1.0.5",
