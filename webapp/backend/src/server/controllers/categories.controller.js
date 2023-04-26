@@ -42,6 +42,7 @@ function editOne(req, res, next) {
     .edit({
       name,
       description,
+      old_name,
       image: req.body?.["preview"],
       previewBinary: req.files?.["preview"],
       id: req.body.id,
