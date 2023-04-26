@@ -97,7 +97,7 @@ const myApi = axios.create({
 import { QuillEditor } from '@vueup/vue-quill'
 import '@vueup/vue-quill/dist/vue-quill.snow.css'
 import TurndownService from 'turndown'
-//import { marked } from 'marked'
+import { marked } from 'marked'
 import { Remarkable } from 'remarkable';
 //import * as DOMPurify from 'dompurify'
 import eventBus from '../eventBus'
@@ -153,9 +153,11 @@ export default {
       xhtmlOut: false,
       breaks: false,
     });
-    this.formData.description && this.$refs.postTextEditor.pasteHTML(
-      md.render(this.formData.description?.replaceAll("\r\n\r\n", "<br/>")))
+    console.log(md.render(this.formData.description?.replaceAll("\r\n\r\n", "<br/>")))
+    console.log(marked.parse(this.formData.description?.replaceAll("\r\n\r\n", "<br/>")))
 
+    this.formData.description && this.$refs.postTextEditor.pasteHTML(
+      marked.parse(this.formData.description?.replaceAll("\r\n\r\n", "<br/>")))
 
     for (let { size, material, price } of this.formData.options_array) {
       this.options_object[material] ? this.options_object[material][size] = price :
