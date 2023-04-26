@@ -39,13 +39,17 @@ module.exports = new EntitySchema({
       target: "Category",
       type: "many-to-one",
       joinColumn: true,
-      cascade: true,
+      cascade: false,
+      onDelete: "SET NULL",
+      onUpdate: "SET NULL",
     },
     tags: {
       target: "Tag",
       type: "many-to-many",
       joinTable: true,
       cascade: false,
+      onDelete: "SET NULL",
+      onUpdate: "SET NULL",
     },
   },
 });
