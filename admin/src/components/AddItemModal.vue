@@ -156,6 +156,8 @@ export default {
         this.options_object[material] = { [size]: price }
     }
 
+    console.log(this.options_object)
+
 
     this.preview_list = this.formData.image_list?.filter(el => el)?.map(preview_name => `${this.$store.state.publicPath}/public/pics/${preview_name}`)
 
