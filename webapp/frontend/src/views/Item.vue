@@ -69,8 +69,8 @@ import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
 import moment from "moment"
 import eventBus from '../eventBus'
 import { ListLoader, InstagramLoader } from 'vue-content-loader'
-import { Remarkable } from 'remarkable';
-import * as DOMPurify from 'dompurify'
+import { marked } from 'marked'
+
 
 export default {
     components: {
@@ -110,12 +110,7 @@ export default {
             this.count = (await this.getBasketOption())?.count ?? 0;
             this.item.is_favorite = !!this.count;
 
-            const md = new Remarkable({
-                html: true,
-                xhtmlOut: false,
-                breaks: false,
-            });
-            this.item.description = md.render(this.item.description?.replaceAll("\r\n\r\n", "<br/>"));
+            this.item.description = marked.parse(this.formData.description?.replaceAll("\r\n\r\n", "<span><br/><span/>\r\n\r\n"))
 
             await this.getReferencedItems()
         },
