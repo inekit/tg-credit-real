@@ -81,7 +81,7 @@
           placeholder="Краткое описание" />
       </CModalBody>
       <CModalFooter>
-        <CButton color="secondary" @click="visible = false"> Отменить </CButton>
+        <CButton color="secondary" @click="closeModal"> Отменить </CButton>
         <CButton v-show="mode === 'new'" color="primary" type="submit">Добавить</CButton>
         <CButton v-show="mode === 'edit'" color="primary" type="submit">Редактировать</CButton>
       </CModalFooter>

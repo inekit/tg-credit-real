@@ -23,7 +23,7 @@
                 v-model.number="basketData.postal_code" @input="getDeliveryPrice">
         </div>
         <div class="delivery-time" v-show="deliveryTime">
-            <h2>Время досавки: </h2><span>{{ deliveryTime }} дней</span>
+            <h2>Время доставки: </h2><span>{{ deliveryTime }} дней</span>
         </div>
         <h2>Промокод</h2>
         <div class="input-group one-line">

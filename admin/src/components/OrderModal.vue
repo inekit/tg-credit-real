@@ -12,11 +12,7 @@
       </CForm>
     </CModalBody>
     <CModalFooter>
-      <CButton color="secondary" @click="
-        () => {
-          visible = false
-        }
-      ">
+      <CButton color="secondary" @click="closeModal">
         Отменить
       </CButton>
       <CButton color="primary" @click="addTag">Изменить заказ</CButton>

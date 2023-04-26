@@ -22,11 +22,7 @@
       </CForm>
     </CModalBody>
     <CModalFooter>
-      <CButton color="secondary" @click="
-        () => {
-          visible = false
-        }
-      ">
+      <CButton color="secondary" @click="closeModal">
         Отменить
       </CButton>
       <CButton color="primary" v-if="mode === 'new'" @click="addCategory">Добавить категорию</CButton>
@@ -60,11 +56,13 @@ export default {
   },
   mounted() {
     this.preview = `${this.$store.state.publicPath}/public/pics/${this.formData.preview}`
+    this.old_name = this.formData.name
 
   },
   updated() {
     this.formValid = false
     this.preview = `${this.$store.state.publicPath}/public/pics/${this.formData.preview}`
+    this.old_name = this.formData.name
   },
   methods: {
     addNewProject() {
@@ -80,7 +78,9 @@ export default {
 
       formData.append('preview', this.formData.preview);
 
-      formData.append('name', this.formData.name)
+      formData.append('name', this.formData.name);
+      formData.append('old_name', this.old_name)
+
       formData.append('description', this.formData.description)
 
       return formData

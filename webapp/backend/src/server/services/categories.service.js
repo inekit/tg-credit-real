@@ -60,7 +60,7 @@ class UsersService {
     });
   }
 
-  edit({ name, description, image, previewBinary }) {
+  edit({ name, old_name, description, image, previewBinary }) {
     return new Promise(async (res, rej) => {
       const fNameFullPath = this.transformPreviewName(previewBinary);
 
@@ -82,7 +82,7 @@ class UsersService {
             preview: fNameFullPath,
           })
           .where({
-            name: name,
+            name: old_name,
           })
           .returning("*")
           .execute();

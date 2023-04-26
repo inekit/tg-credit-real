@@ -29,11 +29,7 @@
       </CForm>
     </CModalBody>
     <CModalFooter>
-      <CButton color="secondary" @click="
-        () => {
-          visible = false
-        }
-      ">
+      <CButton color="secondary" @click="closeModal">
         Отменить
       </CButton>
       <CButton color="primary" v-if="mode === 'new'" @click="addPromo">Добавить промокод</CButton>
