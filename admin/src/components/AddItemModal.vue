@@ -143,7 +143,8 @@ export default {
   },
   updated() {
     this.options_object = {};
-    this.formData.options_array?.filter(({ material, price, size }) => !material && !size && !price ? false : true)
+    this.formData.options_array = this.formData.options_array?.
+      filter(({ material, price, size }) => !material && !size && !price ? false : true)
     this.distinct_materials = [...new Set(this.formData.options_array?.map(({ material }) => material))]
     this.distinct_sizes = [...new Set(this.formData.options_array?.map(({ size }) => size))]
     this.formData.description && this.$refs.postTextEditor.setHTML(
