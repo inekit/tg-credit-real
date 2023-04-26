@@ -34,6 +34,7 @@
     "marked": "^4.3.0",
     "mitt": "^3.0.0",
     "moment": "^2.29.4",
+    "remarkable": "^2.0.1",
     "turndown": "^7.1.2",
     "vue": "^3.2.23",
     "vue-content-loader": "^2.0.1",
