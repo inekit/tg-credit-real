@@ -86,7 +86,7 @@ export default {
                     title: 'Размер',
                 },
                 {
-                    name: 'size',
+                    name: 'material',
                     title: 'Материал',
                 },
                 {
