@@ -157,7 +157,7 @@ export default {
     console.log(marked.parse(this.formData.description?.replaceAll("\r\n\r\n", "<br/>")))
 
     this.formData.description && this.$refs.postTextEditor.pasteHTML(
-      marked.parse(this.formData.description?.replaceAll(" \r\n\r\n", "<p> <p/>\r\n\r\n")))
+      marked.parse(this.formData.description?.replaceAll(" \r\n\r\n", "<span> <span/>\r\n\r\n")))
 
     for (let { size, material, price } of this.formData.options_array) {
       this.options_object[material] ? this.options_object[material][size] = price :
