@@ -49,7 +49,7 @@ class UsersService {
         connection
           .query(
             `select p.*,
-          json_agg(DISTINCT jsonb_build_object('id', io.id, 'size', io.size, 'material', io.material, 'price', io.price, 'is_backside' io.is_backside))  options_array
+          json_agg(DISTINCT jsonb_build_object('id', io.id, 'size', io.size, 'material', io.material, 'price', io.price, 'is_backside', io.is_backside))  options_array
           ,min(io.price) price, case when count(o.id) > 0 then true else false end as is_favorite
               from public.items p
               left join item_options io on p.id = io.item_id
@@ -68,7 +68,7 @@ class UsersService {
         connection
           .query(
             `select p.*,
-          json_agg(DISTINCT jsonb_build_object('id', io.id, 'size', io.size, 'material', io.material, 'price', io.price, 'is_backside' io.is_backside))  options_array
+          json_agg(DISTINCT jsonb_build_object('id', io.id, 'size', io.size, 'material', io.material, 'price', io.price, 'is_backside', io.is_backside))  options_array
           ,min(io.price) price, case when count(o.id) > 0 then true else false end as is_favorite
               from public.items p
               left join item_options io on p.id = io.item_id
@@ -88,7 +88,7 @@ class UsersService {
           .catch((error) => rej(new MySqlError(error)));
       else {
         const query = user_id
-          ? `select p.*,json_agg(DISTINCT jsonb_build_object('id', io.id, 'size', io.size, 'material', io.material, 'price', io.price, 'is_backside' io.is_backside))  options_array
+          ? `select p.*,json_agg(DISTINCT jsonb_build_object('id', io.id, 'size', io.size, 'material', io.material, 'price', io.price, 'is_backside', io.is_backside))  options_array
             ,min(io.price) price, 
             case when count(
               case when 
@@ -109,7 +109,7 @@ class UsersService {
                 group by p.id
                 order by ${orderQueryPart}
                 LIMIT $4 OFFSET $5`
-          : `select p.*,json_agg(DISTINCT jsonb_build_object('id', io.id, 'size', io.size, 'material', io.material, 'price', io.price, 'is_backside' io.is_backside))  options_array
+          : `select p.*,json_agg(DISTINCT jsonb_build_object('id', io.id, 'size', io.size, 'material', io.material, 'price', io.price, 'is_backside', io.is_backside))  options_array
                 ,min(io.price) price
                     from public.items p
                     left join item_options io on p.id = io.item_id
