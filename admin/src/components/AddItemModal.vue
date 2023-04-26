@@ -86,8 +86,6 @@
                 <td v-for="sizeName in distinct_sizes" :key="'size-' + sizeName">
                   <CFormInput type="text" v-model="options_object_backside[materialName][sizeName]" />
                 </td>
-                <td>
-                </td>
               </tr>
             </tbody>
           </table>
@@ -192,6 +190,8 @@ export default {
 
       }
     }
+
+    console.log(this.options_object, this.options_object_backside)
 
     this.preview_list = this.formData.image_list?.filter(el => el)?.map(preview_name => `${this.$store.state.publicPath}/public/pics/${preview_name}`)
 
