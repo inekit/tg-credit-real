@@ -75,7 +75,6 @@
                   Материал</td>
                 <td v-for="sizeName in distinct_sizes" :key="'sizeh-' + sizeName">
                   {{ sizeName }}
-                  <CButton color="secondary" @click="dropSize(sizeName)">X</CButton>
                 </td>
               </tr>
             </thead>
@@ -83,7 +82,6 @@
               <tr v-for="materialName in distinct_materials" :key="'material-' + materialName">
                 <td>
                   {{ materialName }}
-                  <CButton color="secondary" @click="dropMaterial(materialName)">X</CButton>
                 </td>
                 <td v-for="sizeName in distinct_sizes" :key="'size-' + sizeName">
                   <CFormInput type="text" v-model="options_object_backside[materialName][sizeName]" />
