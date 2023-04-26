@@ -40,7 +40,7 @@ scene.enter(async (ctx) => {
 
   if (edit) return ctx.editMenu(title, keyboard);
 
-  await ctx.replyWithKeyboard("⚙️", "main_menu_back_keyboard");
+  await ctx.replyWithKeyboard("🛒", "main_menu_back_keyboard");
   ctx.replyWithKeyboard(title, keyboard);
 });
 
