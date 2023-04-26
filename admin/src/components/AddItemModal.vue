@@ -148,7 +148,7 @@ export default {
       filter(({ material, price, size }) => !material && !size && !price ? false : true)
     this.distinct_materials = [...new Set(this.formData.options_array?.map(({ material }) => material))]
     this.distinct_sizes = [...new Set(this.formData.options_array?.map(({ size }) => size))]
-    const md = new Remarkable({
+    const md = new Remarkable('full', {
       html: true,
       xhtmlOut: false,
       breaks: false,
@@ -261,10 +261,9 @@ export default {
       formData.append('title', this.formData.title)
 
       const turndownService = new TurndownService({
-        bulletListMarker: "-",
-        fence: "~~~",
-        emDelimiter: "*",
-
+        //bulletListMarker: "-",
+        //fence: "~~~",
+        //emDelimiter: "*",
       })
       formData.append(
         'description',
