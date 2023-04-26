@@ -110,14 +110,11 @@ export default {
             this.count = (await this.getBasketOption())?.count ?? 0;
             this.item.is_favorite = !!this.count;
 
-            var md = new Remarkable({
-                html: false,
-                xhtmlOut: false,
-                breaks: true,
-            });
+            const md = new Remarkable('commonmark');
 
 
             this.item.description = md.render(this.item.description);
+            console.log(this.item.description)
 
             await this.getReferencedItems()
         },
