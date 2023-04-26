@@ -153,7 +153,7 @@ export default {
       xhtmlOut: false,
       breaks: false,
     });
-    this.formData.description && this.$refs.postTextEditor.setHTML(
+    this.formData.description && this.$refs.postTextEditor.pasteHTML(
       md.render(this.formData.description?.replaceAll("\r\n\r\n", "<br/>")))
 
 
