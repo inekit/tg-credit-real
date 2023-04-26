@@ -115,6 +115,7 @@ export default {
                 xhtmlOut: true,
                 breaks: false,
             });
+            console.log(this.item.description?.replaceAll("\r\n", "<br>"))
             this.item.description = md.render(this.item.description?.replaceAll("\r\n", "<br>"));
             console.log(this.item.description)
 
