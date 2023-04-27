@@ -223,7 +223,7 @@ class UsersService {
         }
         const oob = JSON.parse(optionsObjectBackside);
         for (let m in oob) {
-          const sizes = oo[m];
+          const sizes = oob[m];
           for (let s in sizes) {
             const price = sizes[s];
             if (price)
@@ -306,14 +306,14 @@ class UsersService {
             console.log(s, m, price);
             if (price)
               await queryRunner.query(
-                "insert into item_options (item_id,size,material,price) values ($1,$2,$3,$4)",
+                "insert into item_options (item_id,size,material,price,is_backside) values ($1,$2,$3,$4, false)",
                 [id, s, m, price]
               );
           }
         }
         const oob = JSON.parse(optionsObjectBackside);
         for (let m in oob) {
-          const sizes = oo[m];
+          const sizes = oob[m];
           for (let s in sizes) {
             const price = sizes[s];
             if (price)
