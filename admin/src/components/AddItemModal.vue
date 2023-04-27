@@ -204,15 +204,14 @@ export default {
   methods: {
     addMaterial(name) {
       let size_template = Object.values(this.options_object)?.[0] ?? {}
-      console.log(size_template)
       size_template = Object.fromEntries(Object.entries(size_template)?.map(([key]) => [key, 0]))
-      console.log(size_template)
-
       this.options_object[name] = size_template
+
+      size_template = Object.values(this.options_object_backside)?.[0] ?? {}
+      size_template = Object.fromEntries(Object.entries(size_template)?.map(([key]) => [key, 0]))
       this.options_object_backside[name] = size_template
 
       this.distinct_materials.push(name)
-
       this.tempMaterial = ""
     },
     addSize(name) {
