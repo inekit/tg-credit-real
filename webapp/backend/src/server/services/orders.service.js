@@ -218,7 +218,7 @@ class UsersService {
           .getInvoiceLink({
             OutSum: total,
             InvId: order_id,
-            Description: orderStr.substr(0, 100),
+            Description: orderStr.substr(0, 10),
           })
           .catch(console.log);
 
