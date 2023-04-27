@@ -28,6 +28,7 @@ class BasketsService {
     return new Promise(async (res, rej) => {
       const connection = await tOrmCon;
 
+      console.log("ce", change_individual);
       if (change_individual) {
         const data = await queryRunner.query(
           `update orders set individual_text = $1, individual_price = $2 where user_id = $3 and status='basket'`,
