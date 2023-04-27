@@ -29,7 +29,7 @@ class BasketsService {
       const connection = await tOrmCon;
 
       console.log("ce", change_individual);
-      if (change_individual) {
+      if (individual_text && individual_price) {
         const data = await queryRunner.query(
           `update orders set individual_text = $1, individual_price = $2 where user_id = $3 and status='basket'`,
           [individual_text, individual_price, user_id]

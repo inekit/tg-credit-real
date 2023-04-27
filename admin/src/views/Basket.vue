@@ -115,9 +115,9 @@ export default {
     methods: {
         constractFromData() {
             var formData = new FormData()
-            formData.append('change_individual', true)
-            formData.append('individual_text', this.individual?.text)
-            formData.append('individual_price', this.individual?.price)
+            formData.append('change_individual', "true")
+            formData.append('individual_text', this.tempIndividualText)
+            formData.append('individual_price', this.tempIndividualPrice)
             return formData
         },
         addIndividual() {
