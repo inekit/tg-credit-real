@@ -88,7 +88,7 @@ scene.action(/^order\-([0-9]+)$/g, async (ctx) => {
       .getInvoiceLink({
         OutSum: order.total,
         InvId: order_id,
-        Description: orders[0].items
+        Description: order.items
           ?.map((el) => `${el.title} - ${el.count} (шт.)`)
           ?.join(";")
           .substr(0, 100),
