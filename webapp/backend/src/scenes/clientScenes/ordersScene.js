@@ -90,7 +90,7 @@ scene.action(/^order\-([0-9]+)$/g, async (ctx) => {
         InvId: order_id,
         Description: order.items
           ?.map((el) => `${el.title} - ${el.count} (шт.)`)
-          ?.join(";")
+          ?.join("\n")
           .substr(0, 100),
       })
       .catch(console.log);
