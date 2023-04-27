@@ -2,7 +2,7 @@
     <div>
         <CFormInput class="mb-4" type="search" v-model="user_id" @change="get" placeholder="Поиск по UID" />
         <AddBasketItemModal :visible="formVisible" :formData="formData" :mode="formMode" />
-        <div v-if="individual.text" class="user-iframe-container">
+        <div v-if="individual" class="user-individual-container">
             <p>{{ individual.text }}</p>
             <p>{{ individual.price }}</p>
         </div>
