@@ -12,7 +12,7 @@
             <p><span>Цена: </span>{{ individual.price }} руб.</p>
         </div>
         <div v-if="user_id" class="change-basket-buttons">
-            <button v-if="!individual" class="btn btn-primary" @click="showIndividual = true">Добавить
+            <button v-if="!individual" class="btn btn-primary" @click="showIndividual = !showIndividual">Добавить
                 индивидуальную
                 позицию</button>
             <button v-else class="btn btn-primary" @click="dropIndividual">Удалить
@@ -21,8 +21,9 @@
         </div>
         <div v-if="showIndividual && user_id" class="user-individual-input">
             <CInputGroup class="mb-3">
-                <CFormInput placeholder="Введите описание индивидуальной позицию" v-model="tempIndividualText" />
-                <CFormInput placeholder="Введите цену" v-model="tempIndividualPrice" />
+                <CFormInput class="w-75 h-38" placeholder="Введите описание индивидуальной позицию"
+                    v-model="tempIndividualText" />
+                <CFormInput class="h-38" placeholder="Введите цену" v-model="tempIndividualPrice" />
                 <CButton type="button" color="secondary" variant="outline" id="button-addon2" @click="addIndividual">
                     Добавить к заказу</CButton>
             </CInputGroup>
@@ -189,6 +190,10 @@ button {
         width: 150px;
         margin-right: 20px;
     }
+}
+
+.h-38 {
+    height: 38px !important
 }
 </style>
   

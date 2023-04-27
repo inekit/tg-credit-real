@@ -5,7 +5,7 @@
         </CModalHeader>
         <CModalBody v-if="visible">
             <div class="user-iframe-container">
-                <iframe :src="`https://fotodesire.ru/colorsfront/${subpath}/${user_id}`" width="480" height="800"
+                <iframe :src="`https://fotodesire.ru/colorsfront/${subpath}/${user_id}`" width="480" height="730"
                     align="left">
                     Ваш браузер не поддерживает плавающие фреймы!
                 </iframe>
