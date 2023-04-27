@@ -89,8 +89,8 @@ scene.action(/^order\-([0-9]+)$/g, async (ctx) => {
         OutSum: order.total,
         InvId: order_id,
         Description: order.items
-          ?.map((el) => `${el.title} - ${el.count} (шт.)`)
-          ?.join("\n")
+          ?.map((el) => `📦 ${el.title} - ${el.count} (шт.)`)
+          ?.join("; ")
           .substr(0, 100),
       })
       .catch(console.log);
