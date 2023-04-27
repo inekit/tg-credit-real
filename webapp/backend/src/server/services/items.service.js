@@ -296,7 +296,7 @@ class UsersService {
       const images_array = Array.isArray(images) ? images : [images];
 
       fNameFullPaths = [
-        ...new Set([...fNameFullPaths, ...images_array]),
+        ...new Set([...images_array, ...fNameFullPaths]),
       ]?.filter((el) => el);
 
       const connection = await tOrmCon;
