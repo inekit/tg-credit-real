@@ -16,19 +16,20 @@ class BasketsService {
     this.deleteFavorite = this.deleteFavorite.bind(this);
   }
 
-  addFavorite({
-    user_id,
-    item_option_id,
-    count,
-    mainside_id,
-    change_individual,
-    individual_price,
-    individual_text,
-  } = body) {
+  addFavorite(body) {
     return new Promise(async (res, rej) => {
       const connection = await tOrmCon;
 
       console.log("ce", body);
+      const {
+        user_id,
+        item_option_id,
+        count,
+        mainside_id,
+        change_individual,
+        individual_price,
+        individual_text,
+      } = body;
       if (individual_text && individual_price) {
         const data = await queryRunner.query(
           `update orders set individual_text = $1, individual_price = $2 where user_id = $3 and status='basket'`,
