@@ -2,13 +2,13 @@
     <div>
         <CFormInput class="mb-4" type="search" v-model="user_id" @change="get" placeholder="Поиск по UID" />
         <AddBasketItemModal :visible="formVisible" :formData="formData" :mode="formMode" />
-        <div v-if="individual" class="user-iframe-container">
+        <div v-if="individual.text" class="user-iframe-container">
             <p>{{ individual.text }}</p>
             <p>{{ individual.price }}</p>
         </div>
         <div v-if="user_id" class="change-basket-buttons">
             <button class="btn btn-primary" @click="showBasket = !showBasket">Сформировать заказ</button>
-            <button v-if="!individual" class="btn btn-primary" @click="showIndividual = !showIndividual">Добавить
+            <button v-if="!individual" class="btn btn-primary" @click="showIndividual = true">Добавить
                 индивидуальную
                 позицию</button>
             <button v-else class="btn btn-primary" @click="dropIndividual">Удалить
@@ -113,10 +113,11 @@ export default {
     },
     methods: {
         addIndividual() {
-            this.individual = { text: "", price: "" }
+            this.individual = { text: this.tempIndividualText, price: this.tempIndividualPrice }
         },
         dropIndividual() {
-            this.individual = null
+            this.individual = null;
+            this.showIndividual = false;
         },
         change(elObj) {
             if (elObj.mainside_id) return alert("Нельзя изменить зависимую сторону")
