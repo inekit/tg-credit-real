@@ -2,12 +2,16 @@
     <div>
         <CFormInput class="mb-4" type="search" v-model="user_id" @change="get" placeholder="Поиск по UID" />
         <AddBasketItemModal :visible="formVisible" :formData="formData" :mode="formMode" />
+        <div v-if="user_id" class="change-basket-buttons">
+            <button class="btn btn-primary" @click="showBasket = true">Сформировать заказ</button>
+        </div>
+        <FormBasketModal :visible="showBasket" :user_id="user_id" />
         <div v-if="individual" class="user-individual-container">
+            <h2>Индивидуальная позиция: </h2>
             <p>{{ individual.text }}</p>
-            <p>{{ individual.price }}</p>
+            <p><span>Цена: </span>{{ individual.price }} руб.</p>
         </div>
         <div v-if="user_id" class="change-basket-buttons">
-            <button class="btn btn-primary" @click="showBasket = !showBasket">Сформировать заказ</button>
             <button v-if="!individual" class="btn btn-primary" @click="showIndividual = true">Добавить
                 индивидуальную
                 позицию</button>
@@ -15,13 +19,7 @@
                 индивидуальную
                 позицию</button>
         </div>
-        <div v-if="showBasket && user_id" class="user-iframe-container">
-            <iframe :src="`https://fotodesire.ru/colorsfront/results/${user_id}`" width="480" height="800" align="left">
-                Ваш браузер не поддерживает плавающие фреймы!
-            </iframe>
-        </div>
-
-        <div v-if="showIndividual && user_id" class="user-iframe-container">
+        <div v-if="showIndividual && user_id" class="user-individual-input">
             <CInputGroup class="mb-3">
                 <CFormInput placeholder="Введите описание индивидуальной позицию" v-model="tempIndividualText" />
                 <CFormInput placeholder="Введите цену" v-model="tempIndividualPrice" />
@@ -45,10 +43,11 @@ const myApi = axios.create({
 
 })
 import AddBasketItemModal from '@/components/AddBasketItemModal.vue'
+import FormBasketModal from '@/components/FormBasketModal.vue'
 
 export default {
     components: {
-        Table, AddBasketItemModal
+        Table, AddBasketItemModal, FormBasketModal
     },
     data() {
         return {
@@ -97,7 +96,8 @@ export default {
             this.formVisible = true
         })
         eventBus.$on('closeModal', () => {
-            this.formVisible = false
+            this.formVisible = false;
+            this.showBasket = false;
             this.formData = {}
         })
         eventBus.$on('orderItemAdded', () => {
@@ -114,6 +114,7 @@ export default {
     methods: {
         addIndividual() {
             this.individual = { text: this.tempIndividualText, price: this.tempIndividualPrice }
+            this.showIndividual = false;
         },
         dropIndividual() {
             this.individual = null;
