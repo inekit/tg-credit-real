@@ -122,7 +122,7 @@ export default {
         },
         addIndividual() {
             myApi
-                .post(this.$store.state.publicPath + '/api/admin/orders_items', this.constractFromData(), {
+                .post(this.$store.state.publicPath + '/api/favorites/', this.constractFromData(), {
                     headers: {
                         'Content-Type': `multipart/form-data`,
                     },
@@ -137,7 +137,7 @@ export default {
         },
         dropIndividual() {
             myApi
-                .delete(this.$store.state.publicPath + '/api/admin/orders_items', {
+                .delete(this.$store.state.publicPath + '/api/favorites/', {
                     data: {
                         change_individual: true,
                     },

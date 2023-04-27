@@ -6,7 +6,6 @@ import store from './store'
 import CoreuiVue from '@coreui/vue'
 import CIcon from '@coreui/icons-vue'
 import { iconsSet as icons } from '@/assets/icons'
-import VueSocketIO from 'vue-3-socket.io'
 
 import axios from 'axios'
 const myApi = axios.create({
@@ -36,12 +35,6 @@ eventBus.$on('wrongInputData', () => {
 })
 
 const app = createApp(App)
-app.use(
-  new VueSocketIO({
-    debug: true,
-    connection: store?.state?.socketAddr ?? 'http://127.0.0.1:3031',
-  }),
-)
 app.use(store)
 app.use(router)
 app.use(CoreuiVue)
