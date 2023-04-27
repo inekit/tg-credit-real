@@ -61,7 +61,7 @@ class UsersService {
       await queryRunner.startTransaction();
 
       try {
-        const fNameFullPath = this.saveReturningFileName(previewBinary);
+        const fNameFullPath = await this.saveReturningFileName(previewBinary);
 
         const data = await queryRunner.manager.getRepository("Category").save({
           name,
@@ -85,7 +85,7 @@ class UsersService {
 
   edit({ name, old_name, description, image, previewBinary }) {
     return new Promise(async (res, rej) => {
-      const fNameFullPath = this.saveReturningFileName(previewBinary);
+      const fNameFullPath = await this.saveReturningFileName(previewBinary);
 
       const connection = await tOrmCon;
 

@@ -213,8 +213,10 @@ class UsersService {
 
       try {
         let fNameFullPaths = Array.isArray(previewsBinary)
-          ? previewsBinary.map((preview) => this.saveReturningFileName(preview))
-          : [this.saveReturningFileName(previewsBinary)];
+          ? previewsBinary.map(
+              async (preview) => await this.saveReturningFileName(preview)
+            )
+          : [await this.saveReturningFileName(previewsBinary)];
         const images_array = Array.isArray(images) ? images : [images];
 
         fNameFullPaths = [
@@ -281,8 +283,10 @@ class UsersService {
   }) {
     return new Promise(async (res, rej) => {
       let fNameFullPaths = Array.isArray(previewsBinary)
-        ? previewsBinary.map((preview) => this.saveReturningFileName(preview))
-        : [this.saveReturningFileName(previewsBinary)];
+        ? previewsBinary.map(
+            async (preview) => await this.saveReturningFileName(preview)
+          )
+        : [await this.saveReturningFileName(previewsBinary)];
 
       console.log(previewsBinary, images, fNameFullPaths);
       const images_array = Array.isArray(images) ? images : [images];
