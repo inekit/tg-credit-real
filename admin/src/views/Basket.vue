@@ -122,7 +122,11 @@ export default {
         },
         addIndividual() {
             myApi
-                .post(this.$store.state.publicPath + '/api/favorites/', this.constractFromData(), {
+                .post(this.$store.state.publicPath + '/api/favorites/', {
+                    change_individual: true,
+                    individual_text: this.tempIndividualText,
+                    individual_price: this.tempIndividualPrice
+                }, {
                     headers: {
                         'Content-Type': `multipart/form-data`,
                     },
