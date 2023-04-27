@@ -218,7 +218,10 @@ class UsersService {
           .getInvoiceLink({
             OutSum: total,
             InvId: order_id,
-            Description: orderStr.substr(0, 10),
+            Description: orders[0].items
+              ?.map((el) => `${el.title} - ${el.count} (шт.)`)
+              ?.join(";")
+              .substr(0, 100),
           })
           .catch(console.log);
 
