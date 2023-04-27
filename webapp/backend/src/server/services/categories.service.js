@@ -6,6 +6,9 @@ const {
   NotFoundError,
   NoInputDataError,
 } = require("../utils/httpErrors");
+const webp = require("webp-converter");
+webp.grant_permission();
+const fs = require("fs").promises;
 
 class UsersService {
   constructor() {
