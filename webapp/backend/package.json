@@ -51,7 +51,8 @@
     "telegraf": "^4.12.2",
     "telegraf-steps": "^1.0.68",
     "typeorm": "^0.3.6",
-    "typeorm-naming-strategies": "^4.1.0"
+    "typeorm-naming-strategies": "^4.1.0",
+    "webp-converter": "^2.3.3"
   },
   "devDependencies": {
     "@types/node": "^17.0.36"

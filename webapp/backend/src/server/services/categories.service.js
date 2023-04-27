@@ -9,20 +9,38 @@ const {
 
 class UsersService {
   constructor() {
-    this.transformPreviewName = this.transformPreviewName.bind(this);
+    this.saveReturningFileName = this.saveReturningFileName.bind(this);
     this.add = this.add.bind(this);
     this.edit = this.edit.bind(this);
   }
 
-  transformPreviewName(image) {
+  async saveReturningFileName(image) {
     if (typeof image === String) return image;
+
     let fName = image?.name;
+    console.log(image);
+
     let fNameFullPath;
     if (fName) {
       let fNameSplit = fName.split(".");
+      const fileFormat = fNameSplit[fNameSplit.length - 1];
+      fNameFullPath = image.md5 + "." + fileFormat;
+      await image?.mv("public/pics/" + fNameFullPath);
 
-      fNameFullPath = image?.md5 + "." + fNameSplit[fNameSplit.length - 1];
-      image?.mv("public/pics/" + fNameFullPath);
+      if (fileFormat !== "webp")
+        await webp
+          .cwebp(
+            `public/pics/${fNameFullPath}`,
+            `public/pics/${image.md5}.webp`,
+            "-q 80"
+          )
+          .then(async (r) => {
+            await fs.unlink(`public/pics/${fNameFullPath}`).catch((e) => {});
+            fNameFullPath = image.md5 + ".webp";
+          })
+          .catch((e) => {
+            console.log(e);
+          });
     }
     return fNameFullPath;
   }
@@ -38,7 +56,7 @@ class UsersService {
       await queryRunner.startTransaction();
 
       try {
-        const fNameFullPath = this.transformPreviewName(previewBinary);
+        const fNameFullPath = this.saveReturningFileName(previewBinary);
 
         const data = await queryRunner.manager.getRepository("Category").save({
           name,
@@ -62,7 +80,7 @@ class UsersService {
 
   edit({ name, old_name, description, image, previewBinary }) {
     return new Promise(async (res, rej) => {
-      const fNameFullPath = this.transformPreviewName(previewBinary);
+      const fNameFullPath = this.saveReturningFileName(previewBinary);
 
       const connection = await tOrmCon;
 

@@ -6,11 +6,14 @@ const {
   NotFoundError,
   NoInputDataError,
 } = require("../utils/httpErrors");
+const webp = require("webp-converter");
+webp.grant_permission();
+const fs = require("fs").promises;
 
 class UsersService {
   constructor() {
     this.getPosts = this.getPosts.bind(this);
-    this.transformPreviewName = this.transformPreviewName.bind(this);
+    this.saveReturningFileName = this.saveReturningFileName.bind(this);
     this.add = this.add.bind(this);
     this.editPost = this.editPost.bind(this);
   }
@@ -158,15 +161,33 @@ class UsersService {
     return tagObjs;
   }
 
-  transformPreviewName(image) {
+  async saveReturningFileName(image) {
     if (typeof image === String) return image;
+
     let fName = image?.name;
+    console.log(image);
+
     let fNameFullPath;
     if (fName) {
       let fNameSplit = fName.split(".");
+      const fileFormat = fNameSplit[fNameSplit.length - 1];
+      fNameFullPath = image.md5 + "." + fileFormat;
+      await image?.mv("public/pics/" + fNameFullPath);
 
-      fNameFullPath = image?.md5 + "." + fNameSplit[fNameSplit.length - 1];
-      image?.mv("public/pics/" + fNameFullPath);
+      if (fileFormat !== "webp")
+        await webp
+          .cwebp(
+            `public/pics/${fNameFullPath}`,
+            `public/pics/${image.md5}.webp`,
+            "-q 80"
+          )
+          .then(async (r) => {
+            await fs.unlink(`public/pics/${fNameFullPath}`).catch((e) => {});
+            fNameFullPath = image.md5 + ".webp";
+          })
+          .catch((e) => {
+            console.log(e);
+          });
     }
     return fNameFullPath;
   }
@@ -192,8 +213,8 @@ class UsersService {
 
       try {
         let fNameFullPaths = Array.isArray(previewsBinary)
-          ? previewsBinary.map((preview) => this.transformPreviewName(preview))
-          : [this.transformPreviewName(previewsBinary)];
+          ? previewsBinary.map((preview) => this.saveReturningFileName(preview))
+          : [this.saveReturningFileName(previewsBinary)];
         const images_array = Array.isArray(images) ? images : [images];
 
         fNameFullPaths = [
@@ -260,8 +281,8 @@ class UsersService {
   }) {
     return new Promise(async (res, rej) => {
       let fNameFullPaths = Array.isArray(previewsBinary)
-        ? previewsBinary.map((preview) => this.transformPreviewName(preview))
-        : [this.transformPreviewName(previewsBinary)];
+        ? previewsBinary.map((preview) => this.saveReturningFileName(preview))
+        : [this.saveReturningFileName(previewsBinary)];
 
       console.log(previewsBinary, images, fNameFullPaths);
       const images_array = Array.isArray(images) ? images : [images];
