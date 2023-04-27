@@ -2,6 +2,33 @@
     <div>
         <CFormInput class="mb-4" type="search" v-model="user_id" @change="get" placeholder="Поиск по UID" />
         <AddBasketItemModal :visible="formVisible" :formData="formData" :mode="formMode" />
+        <div v-if="individual" class="user-iframe-container">
+            <p>{{ individual.text }}</p>
+            <p>{{ individual.price }}</p>
+        </div>
+        <div v-if="user_id" class="change-basket-buttons">
+            <button class="btn btn-primary" @click="showBasket = !showBasket">Сформировать заказ</button>
+            <button v-if="!individual" class="btn btn-primary" @click="showIndividual = !showIndividual">Добавить
+                индивидуальную
+                позицию</button>
+            <button v-else class="btn btn-primary" @click="dropIndividual">Удалить
+                индивидуальную
+                позицию</button>
+        </div>
+        <div v-if="showBasket && user_id" class="user-iframe-container">
+            <iframe :src="`https://fotodesire.ru/colorsfront/results/${user_id}`" width="480" height="800" align="left">
+                Ваш браузер не поддерживает плавающие фреймы!
+            </iframe>
+        </div>
+
+        <div v-if="showIndividual && user_id" class="user-iframe-container">
+            <CInputGroup class="mb-3">
+                <CFormInput placeholder="Введите описание индивидуальной позицию" v-model="tempIndividualText" />
+                <CFormInput placeholder="Введите цену" v-model="tempIndividualPrice" />
+                <CButton type="button" color="secondary" variant="outline" id="button-addon2" @click="addIndividual">
+                    Добавить к заказу</CButton>
+            </CInputGroup>
+        </div>
         <Table :fields="tableFieldNames" :postData="get" :actions="dataActions" :rows="rows" editMode="form"
             name="Позиции" />
     </div>
@@ -31,10 +58,15 @@ export default {
             order: {},
             rows: [],
             user_id: null,
+            showIndividual: false,
+            showBasket: false,
+            tempIndividualText: null,
+            tempIndividualPrice: null,
             dataActions: {
                 Изменить: { action: this.change, color: 'warning' },
                 Удалить: { action: this.delete, color: 'danger' },
             },
+            individual: null,
             tableFieldNames: [
                 {
                     name: 'id',
@@ -80,6 +112,12 @@ export default {
         })
     },
     methods: {
+        addIndividual() {
+            this.individual = { text: "", price: "" }
+        },
+        dropIndividual() {
+            this.individual = null
+        },
         change(elObj) {
             if (elObj.mainside_id) return alert("Нельзя изменить зависимую сторону")
             this.formVisible = true
