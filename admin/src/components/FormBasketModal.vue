@@ -1,9 +1,9 @@
 <template>
-    <CModal v-if="visible" backdrop="static" alignment="center" :visible="visible" @close="closeModal">
+    <CModal backdrop="static" alignment="center" :visible="visible" @close="closeModal">
         <CModalHeader>
             <CModalTitle>Формирование корзины</CModalTitle>
         </CModalHeader>
-        <CModalBody>
+        <CModalBody v-if="visible">
             <div class="user-iframe-container">
                 <iframe :src="`https://fotodesire.ru/colorsfront/${subpath}/${user_id}`" width="480" height="800"
                     align="left">
@@ -30,7 +30,7 @@ export default {
             validator: (value) => ['new', 'edit'].includes(value.toLowerCase()),
         },
         user_id: Number,
-        visible: false,
+        visible: Boolean,
     },
     data() {
         return { subpath: "results" }
