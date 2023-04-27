@@ -15,7 +15,7 @@ function getBasketData(req, res, next) {
 
 function addFavorite(req, res, next) {
   basketsService
-    .addFavorite(req)
+    .addFavorite(req.body)
     .then((data) => res.send(data))
     .catch((error) => next(error));
 }

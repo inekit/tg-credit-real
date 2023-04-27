@@ -126,10 +126,6 @@ export default {
                     change_individual: true,
                     individual_text: this.tempIndividualText,
                     individual_price: this.tempIndividualPrice
-                }, {
-                    headers: {
-                        'Content-Type': `multipart/form-data`,
-                    },
                 })
                 .then(() => {
                     this.individual = { text: this.tempIndividualText, price: this.tempIndividualPrice }
