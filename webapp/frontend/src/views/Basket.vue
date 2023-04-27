@@ -59,6 +59,7 @@ export default {
         window.Telegram?.WebApp.BackButton.onClick(this.routeBack);
         window.Telegram?.WebApp.BackButton.show();
 
+        this.$store.state.userId = this.$store.state.userId ?? this.$route.params?.userId;
 
         this.basketItems = await this.getBasket();
 

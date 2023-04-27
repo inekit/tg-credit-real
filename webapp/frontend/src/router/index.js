@@ -26,6 +26,11 @@ const routes = [
         component: () => import('@/views/Basket.vue'),
       },
       {
+        path: '/basket/:userId',
+        name: 'BasketForId',
+        component: () => import('@/views/Basket.vue'),
+      },
+      {
         path: '/order',
         name: 'Order',
         component: () => import('@/views/Order.vue'),
