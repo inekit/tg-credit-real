@@ -88,7 +88,7 @@ scene.action(/^order\-([0-9]+)$/g, async (ctx) => {
       .getInvoiceLink({
         OutSum: order.total,
         InvId: order_id,
-        Description: "Описание",
+        Description: orderStr.substr(0, 100),
       })
       .catch(console.log);
 
