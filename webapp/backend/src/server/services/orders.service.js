@@ -219,7 +219,7 @@ class UsersService {
             OutSum: total,
             InvId: order_id,
             Description: orders[0].items
-              ?.map((el) => `📦 ${el.title} - ${el.count} (шт.)`)
+              ?.map((el) => `${el.title} - ${el.count} (шт.)`)
               ?.join("; ")
               .substr(0, 100),
           })
