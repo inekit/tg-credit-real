@@ -186,7 +186,8 @@ export default {
                 width: 100%;
                 color: #414141;
                 font-weight: 400;
-                font-size: 1.3rem;
+                font-size: 1.1rem;
+                text-align: center;
                 word-wrap: break-word;
             }
 
