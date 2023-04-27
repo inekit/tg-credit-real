@@ -12,10 +12,10 @@
             <p><span>Цена: </span>{{ individual.price }} руб.</p>
         </div>
         <div v-if="user_id" class="change-basket-buttons">
-            <button v-if="!individual" class="btn btn-primary" @click="showIndividual = !showIndividual">Добавить
+            <button v-if="!individual" class="btn btn-secondary" @click="showIndividual = !showIndividual">Добавить
                 индивидуальную
                 позицию</button>
-            <button v-else class="btn btn-primary" @click="dropIndividual">Удалить
+            <button v-else class="btn btn-secondary" @click="dropIndividual">Удалить
                 индивидуальную
                 позицию</button>
         </div>
@@ -23,7 +23,7 @@
             <CInputGroup class="mb-3">
                 <CFormInput class="w-75 h-38" placeholder="Введите описание индивидуальной позицию"
                     v-model="tempIndividualText" />
-                <CFormInput class="h-38" placeholder="Введите цену" v-model="tempIndividualPrice" />
+                <CFormInput class="h-38" type="number" placeholder="Введите цену" v-model="tempIndividualPrice" />
                 <CButton type="button" color="secondary" variant="outline" id="button-addon2" @click="addIndividual">
                     Добавить к заказу</CButton>
             </CInputGroup>
@@ -113,13 +113,42 @@ export default {
         })
     },
     methods: {
+        constractFromData() {
+            var formData = new FormData()
+            formData.append('change_individual', true)
+            formData.append('individual_text', this.individual?.text)
+            formData.append('individual_price', this.individual?.price)
+            return formData
+        },
         addIndividual() {
-            this.individual = { text: this.tempIndividualText, price: this.tempIndividualPrice }
-            this.showIndividual = false;
+            myApi
+                .post(this.$store.state.publicPath + '/api/admin/orders_items', this.constractFromData(), {
+                    headers: {
+                        'Content-Type': `multipart/form-data`,
+                    },
+                })
+                .then(() => {
+                    this.individual = { text: this.tempIndividualText, price: this.tempIndividualPrice }
+                    this.showIndividual = false;
+                })
+                .catch((e) => {
+                    eventBus.$emit('noresponse', e)
+                })
         },
         dropIndividual() {
-            this.individual = null;
-            this.showIndividual = false;
+            myApi
+                .delete(this.$store.state.publicPath + '/api/admin/orders_items', {
+                    data: {
+                        change_individual: true,
+                    },
+                })
+                .then(() => {
+                    this.individual = null;
+                    this.showIndividual = false;
+                })
+                .catch((e) => {
+                    eventBus.$emit('noresponse', e)
+                })
         },
         change(elObj) {
             if (elObj.mainside_id) return alert("Нельзя изменить зависимую сторону")

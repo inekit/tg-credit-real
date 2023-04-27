@@ -16,9 +16,25 @@ class BasketsService {
     this.deleteFavorite = this.deleteFavorite.bind(this);
   }
 
-  addFavorite({ user_id, item_option_id, count, mainside_id }) {
+  addFavorite({
+    user_id,
+    item_option_id,
+    count,
+    mainside_id,
+    change_individual,
+    individual_price,
+    individual_text,
+  }) {
     return new Promise(async (res, rej) => {
       const connection = await tOrmCon;
+
+      if (change_individual) {
+        const data = await queryRunner.query(
+          `update orders set individual_text = $1, individual_price = $2 where user_id = $3 and status='basket'`,
+          [individual_text, individual_price, user_id]
+        );
+        return res(data);
+      }
 
       const queryRunner = connection.createQueryRunner();
 
@@ -112,9 +128,17 @@ class BasketsService {
     });
   }
 
-  deleteFavorite({ user_id, item_option_id, mainside_id }) {
+  deleteFavorite({ user_id, item_option_id, mainside_id, change_individual }) {
     return new Promise(async (res, rej) => {
       const connection = await tOrmCon;
+
+      if (change_individual) {
+        const data = await queryRunner.query(
+          `update orders set individual_text = null, individual_price = null where user_id = $1 and status='basket'`,
+          [user_id]
+        );
+        return res(data);
+      }
 
       const queryRunner = connection.createQueryRunner();
 

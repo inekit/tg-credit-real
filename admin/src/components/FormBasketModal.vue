@@ -3,9 +3,9 @@
         <CModalHeader>
             <CModalTitle>Формирование корзины</CModalTitle>
         </CModalHeader>
-        <CModalBody v-if="visible">
+        <CModalBody v-if="visible" style="padding: 0 !important">
             <div class="user-iframe-container">
-                <iframe :src="`https://fotodesire.ru/colorsfront/${subpath}/${user_id}`" width="480" height="730"
+                <iframe :src="`https://fotodesire.ru/colorsfront/${subpath}/${user_id}`" width="495" height="730"
                     align="left">
                     Ваш браузер не поддерживает плавающие фреймы!
                 </iframe>
@@ -33,7 +33,7 @@ export default {
         visible: Boolean,
     },
     data() {
-        return { subpath: "results" }
+        return { subpath: "basket" }
     },
     mounted() {
     },
