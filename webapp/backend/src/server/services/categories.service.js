@@ -18,7 +18,7 @@ class UsersService {
     if (typeof image === String) return image;
 
     let fName = image?.name;
-    console.log(image);
+    console.log("1", image);
 
     let fNameFullPath;
     if (fName) {
@@ -37,9 +37,11 @@ class UsersService {
           .then(async (r) => {
             await fs.unlink(`public/pics/${fNameFullPath}`).catch((e) => {});
             fNameFullPath = image.md5 + ".webp";
+            console.log("1", fNameFullPath);
           })
           .catch((e) => {
             console.log(e);
+            console.log(22);
           });
     }
     return fNameFullPath;
