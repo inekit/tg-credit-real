@@ -174,7 +174,9 @@ class UsersService {
       fNameFullPath = image.md5 + "." + fileFormat;
       await image?.mv("public/pics/" + fNameFullPath);
 
-      if (fileFormat !== "webp")
+      console.log(image.mimetype.split("/")[0]);
+
+      if (fileFormat !== "webp" && image.mimetype.split("/")[0] === "image")
         await webp
           .cwebp(
             `public/pics/${fNameFullPath}`,
