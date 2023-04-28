@@ -184,6 +184,9 @@ export default {
                 })
                 .catch(() => {
                     //eventBus.$emit('noresponse', error)
+                    this.individual = null;
+                    this.rows = null;
+
                     return false
                 })
         },
