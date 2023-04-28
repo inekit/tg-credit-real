@@ -31,7 +31,7 @@
             <input type="number" id="text" pattern="[0-9]+" name="postal code" placeholder="Почтовый индекс"
                 v-model.number="basketData.postal_code" @input="getDeliveryPrice">
         </div>
-        <div class="delivery-time" v-show="deliveryTime && deliveryPrice">
+        <div class="delivery-time" v-show="deliveryTime">
             <h2>Время доставки</h2><span>{{ deliveryTime }} дней</span>
         </div>
         <h2>Промокод</h2>

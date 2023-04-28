@@ -210,8 +210,8 @@ class UsersService {
         );
 
         await queryRunner.query(
-          `update users set address=$2,phone=$3,name=$4,surname=$5,patronymic=$6 where id = $1`,
-          [user_id, address, phone, name, surname, patronymic]
+          `update users set address=$2,phone=$3,name=$4,surname=$5,patronymic=$6,postal_code=$7 where id = $1`,
+          [user_id, address, phone, name, surname, patronymic, postal_code]
         );
 
         await queryRunner.commitTransaction();
