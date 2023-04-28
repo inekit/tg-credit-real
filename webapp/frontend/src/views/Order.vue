@@ -31,7 +31,7 @@
             <input type="number" id="text" pattern="[0-9]+" name="postal code" placeholder="Почтовый индекс"
                 v-model.number="basketData.postal_code" @input="getDeliveryPrice">
         </div>
-        <div class="delivery-time" v-show="deliveryTime">
+        <div class="delivery-time" v-show="deliveryTime && deliveryPrice">
             <h2>Время доставки</h2><span>{{ deliveryTime }} дней</span>
         </div>
         <h2>Промокод</h2>
@@ -132,10 +132,10 @@ export default {
                 }
             })
                 .then(response => {
-                    this.deliveryPrice = response.data?.price ?? 0;
-                    this.deliveryTime = response.data?.time;
+                    this.deliveryPrice = response.data?.price ?? null;
+                    this.deliveryTime = response.data?.time ?? null;
                 })
-                .catch(e => { console.log(e); this.deliveryPrice = 0 })
+                .catch(e => { console.log(e); this.deliveryPrice = null; this.deliveryTime = null })
 
             return results ?? {}
 
