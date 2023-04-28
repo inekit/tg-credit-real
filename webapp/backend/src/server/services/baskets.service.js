@@ -199,7 +199,7 @@ class BasketsService {
     });
   }
 
-  getBasketData({ user_id }) {
+  getBasketData({ user_id, item_option_id }) {
     return new Promise(async (res, rej) => {
       const connection = await tOrmCon;
 
@@ -207,15 +207,20 @@ class BasketsService {
         .query(
           `select u.name, u.surname, u.patronymic, u.address, u.phone, sum(io.price * oi.count)::int+coalesce(individual_price,0)::int  total, 
           individual_text, individual_price,
-          sum(oi.count)::int  total_count
+          sum(oi.count)::int  total_count,
+          json_agg(DISTINCT 
+            jsonb_build_object('id', io.id, 'item_id', i.id, 'order_id', o.id, 'creation_date', o.creation_date, 
+            'title', i.title, 'image_list', i.image_list, 'count', count, 'size', size, 
+            'material', material, 'price', price, 'mainside_id', mainside_id))  favorites
           from users u 
           left join orders o on u.id = o.user_id
           left join order_items oi on oi.order_id = o.id
           left join item_options io on oi.item_option_id = io.id
           where u.id = $1 and status='basket' 
+          and ((io.id = $2 and oi.is_backside = false) or $2 is NULL)  
           group by u.id, o.individual_text, o.individual_price
-          limit 1`,
-          [user_id]
+          limit 1 order by io.id`,
+          [user_id, item_option_id]
         )
         .then(async (data) => {
           if (!data?.[0]) rej(new Error(data));
