@@ -91,14 +91,15 @@ class UsersService {
           .catch((error) => rej(new MySqlError(error)));
       else {
         const query = user_id
-          ? `select p.*,json_agg(DISTINCT jsonb_build_object('id', io.id, 'size', io.size, 'material', io.material, 'price', io.price, 'is_backside', io.is_backside))  options_array
-            ,min(io.price) price, 
+          ? `select p.*,json_agg(DISTINCT jsonb_build_object('id', io.id, 'size', io.size, 'material', io.material, 'price', io.price, 'is_backside', io.is_backside ))  options_array
+            ,min(io.price) price, backside_available
             case when count(
               case when 
                 o.user_id = $6 and o.status = 'basket' and oi.is_backside = false
               then 1 else NULL end
               ) > 0 then true else false end as is_favorite
                 from public.items p
+                left join categories c on c.name = p.category_name
                 left join item_options io on p.id = io.item_id
                 left join order_items oi on io.id = oi.item_option_id
                 left join orders o on o.id = oi.order_id
