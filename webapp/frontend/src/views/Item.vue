@@ -300,7 +300,7 @@ export default {
                     page: 1,
                     sort: "newing",
                     user_id: this.$store.state.userId,
-                    size: selected_size,
+                    size: this.selected_size,
                     is_backside: true,
                     material: this.selected_material
                 }
