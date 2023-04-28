@@ -236,7 +236,7 @@ class UsersService {
         });
 
         const { id } = data;
-        const oo = JSON.parse(optionsObject);
+        const oo = optionsObject && JSON.parse(optionsObject);
         for (let m in oo) {
           const sizes = oo[m];
           for (let s in sizes) {
@@ -248,7 +248,7 @@ class UsersService {
               );
           }
         }
-        const oob = JSON.parse(optionsObjectBackside);
+        const oob = optionsObjectBackside && JSON.parse(optionsObjectBackside);
         for (let m in oob) {
           const sizes = oob[m];
           for (let s in sizes) {
@@ -329,7 +329,7 @@ class UsersService {
           id,
         ]);
 
-        const oo = JSON.parse(optionsObject);
+        const oo = optionsObject && JSON.parse(optionsObject);
         for (let m in oo) {
           const sizes = oo[m];
           for (let s in sizes) {
@@ -342,7 +342,7 @@ class UsersService {
               );
           }
         }
-        const oob = JSON.parse(optionsObjectBackside);
+        const oob = optionsObjectBackside && JSON.parse(optionsObjectBackside);
         for (let m in oob) {
           const sizes = oob[m];
           for (let s in sizes) {
