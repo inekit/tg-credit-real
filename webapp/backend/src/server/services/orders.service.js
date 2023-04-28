@@ -200,6 +200,11 @@ class UsersService {
         const { id: order_id } = data;
 
         await queryRunner.query(
+          `update order set individual_price=null,individual_text=null where order_id = $1`,
+          [basket_id]
+        );
+
+        await queryRunner.query(
           `update order_items set order_id=$1 where order_id = $2`,
           [order_id, basket_id]
         );
@@ -218,9 +223,9 @@ class UsersService {
             ?.map((el) => `📦 ${el.title} - ${el.count} (шт.)`)
             ?.join("\n") ?? "";
         orderStr =
-          orderStr + orderStr && basket.individual_text
-            ? "\n"
-            : "" + (basket.individual_text ?? "");
+          orderStr +
+          (orderStr && basket.individual_text ? "\n" : "") +
+          (basket.individual_text ?? "");
 
         const robokassa = new Robokassa({
           MerchantLogin: process.env.ROBO_MERCHANT_LOGIN,
