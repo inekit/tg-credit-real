@@ -60,6 +60,14 @@ module.exports = new EntitySchema({
       length: 45,
       nullable: true,
     },
+    individual_text: {
+      type: "text",
+      nullable: true,
+    },
+    individual_price: {
+      type: "int",
+      nullable: true,
+    },
   },
   relations: {
     user: {

@@ -176,6 +176,8 @@ class UsersService {
 
         total = +total + +delivery_price;
 
+        total = total + (orders[0].individual_price ?? 0);
+
         const data = await queryRunner.manager.getRepository("Order").save({
           user_id,
           total,

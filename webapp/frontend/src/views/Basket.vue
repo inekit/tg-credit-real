@@ -32,6 +32,18 @@
                 <button type="button" @click="dropItem(item)">Удалить</button>
             </div>
         </div>
+        <div v-if="individual" class="basket-item">
+            <div>
+                <div class="img-container">
+                </div>
+                <span class="title">
+                    {{ individual.text }}
+                </span>
+                <span class="price">
+                    {{ individual.price }} ₽
+                </span>
+            </div>
+        </div>
     </div>
     <div class="order">
         <span class="label">Итого:</span>
@@ -48,7 +60,8 @@ export default {
     components: { InstagramLoader },
     data() {
         return {
-            basketItems: []
+            basketItems: [],
+            individual: null
         }
     },
     watch: {
@@ -157,6 +170,20 @@ export default {
                 .catch(e => { eventBus.$emit('noresponse', e) })
 
             return results
+
+        },
+        async getBasketData() {
+            const results = await this.$store.state.myApi.get(this.$store.state.restAddr + '/basket_data', {
+                params: {
+                    user_id: this.$store.state.userId,
+                }
+            })
+                .then(response => {
+                    return this.individual = { text: response.data.individual_text, price: response.data.individual_price }
+                })
+                .catch(e => { eventBus.$emit('noresponse', e) })
+
+            return results ?? {}
 
         },
     }

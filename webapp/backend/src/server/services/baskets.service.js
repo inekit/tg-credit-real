@@ -205,7 +205,8 @@ class BasketsService {
 
       connection
         .query(
-          `select u.name, u.surname, u.patronymic, u.address, u.phone, sum(io.price * oi.count)::int  total, 
+          `select u.name, u.surname, u.patronymic, u.address, u.phone, sum(io.price * oi.count)::int+individual_price  total, 
+          individual_text, individual_price,
           sum(oi.count)::int  total_count
           from users u 
           left join orders o on u.id = o.user_id
