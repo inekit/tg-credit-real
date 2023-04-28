@@ -76,7 +76,6 @@ export default {
         this.$store.state.userId = this.$store.state.userId ?? this.$route.params?.userId;
 
         this.basketItems = await this.getBasket();
-        await this.getBasketData();
 
         this.$refs['basket-items']?.classList.add("hidden")
         document.body.classList.add('stop-scrolling')
@@ -158,39 +157,26 @@ export default {
             window.Telegram?.WebApp.close();
         },
         async getBasket() {
-            const results = await this.$store.state.myApi.get(this.$store.state.restAddr + '/favorites', {
-                params: {
-                    user_id: this.$store.state.userId,
-                }
-            })
-                .then(response => {
-                    if (response.data.length === 0 && window.Telegram?.WebApp) return this.routeBack()
-
-                    return response.data;
-
-                })
-                .catch(e => { eventBus.$emit('noresponse', e) })
-
-            return results
-
-        },
-        async getBasketData() {
             const results = await this.$store.state.myApi.get(this.$store.state.restAddr + '/basket_data', {
                 params: {
                     user_id: this.$store.state.userId,
                 }
             })
                 .then(response => {
+                    //if (response.data.length === 0 && window.Telegram?.WebApp) return this.routeBack()
 
                     this.individual = response.data.individual_text ?
                         { text: response.data.individual_text, price: response.data.individual_price } :
                         null;
 
-                    this.total = response.data.total
+                    this.total = response.data.total;
+
+                    return response.data.favorites;
+
                 })
                 .catch(e => { eventBus.$emit('noresponse', e) })
 
-            return results ?? {}
+            return results
 
         },
     }
