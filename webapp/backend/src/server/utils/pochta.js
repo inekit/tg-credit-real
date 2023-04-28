@@ -11,14 +11,14 @@ class Pochta {
     this.authorization_key = authorization_key;
   }
 
-  getPrice({ sum = 0, from_index, to_index, mass = 1000 }) {
+  getPrice({ sum = 0, to_index, mass = 1000 }) {
     return new Promise((resolve, reject) => {
       axios
         .post(
           `${this.api_addr}/1.0/tariff`,
           {
             "declared-value": sum,
-            "index-from": from_index,
+            "index-from": 603000,
             "index-to": to_index,
             "mail-category": "ORDINARY",
             "mail-type": "ONLINE_PARCEL",

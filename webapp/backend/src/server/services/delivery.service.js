@@ -77,13 +77,11 @@ class BasketsService {
             authorization_key: "a2lsbGpveTgwQGluYm94LnJ1Ojg1NDM1MQ==",
           });
           const result = await pochta.getPrice({
-            address,
             total_weight: count * 100,
+            from_index: 603065,
+            to_index: postal_code,
           });
-          const time = await pochta.getTime({
-            address,
-          });
-          console.log(time);
+
           res({
             price: parseInt(result.pricing_total),
             time: time?.offers?.[0]
