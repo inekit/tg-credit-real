@@ -23,16 +23,6 @@ class Pochta {
             "mail-category": "ORDINARY",
             "mail-type": "PARCEL_CLASS_1",
             mass,
-
-            "completeness-checking": false,
-            "contents-checking": false,
-            courier: false,
-            "declared-value": 0,
-            dimension: {
-              height: 10,
-              length: 30,
-              width: 30,
-            },
           },
           {
             headers: {
