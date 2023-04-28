@@ -92,9 +92,6 @@ export default {
         }
     },
     watch: {
-        async user_id() {
-            await this.getBasketData()
-        }
     },
     created() {
         eventBus.$on('addNewOrderItem', () => {
@@ -167,38 +164,26 @@ export default {
             this.formMode = 'edit'
         },
         dateFormatter,
-        async getBasketData() {
-            const results = await this.$store.state.myApi.get(this.$store.state.publicPath + '/api/basket_data', {
-                params: {
-                    user_id: this.user_id,
-                }
-            })
-                .then(response => {
-                    return this.individual = response.data.individual_text ?
-                        { text: response.data.individual_text, price: response.data.individual_price } :
-                        null
-                })
-                .catch(e => { eventBus.$emit('noresponse', e) })
-
-            return results ?? {}
-
-        },
         get() {
             console.log(this.tag)
             return myApi
-                .get(this.$store.state.publicPath + '/api/favorites/', {
+                .get(this.$store.state.publicPath + '/api/basket_data/', {
                     params: {
                         user_id: this.user_id,
                     },
                 })
-                .then((res) => {
-                    this.rows = res.data?.map(el => {
+                .then((response) => {
+                    this.individual = response.data?.individual_text ?
+                        { text: response.data.individual_text, price: response.data.individual_price } :
+                        null
+
+                    this.rows = response.data?.favorites?.map(el => {
                         if (el.mainside_id) el.title = `${el.title} (обр - ${el.mainside_id})`;
                         return el
                     })
                 })
-                .catch((error) => {
-                    eventBus.$emit('noresponse', error)
+                .catch(() => {
+                    //eventBus.$emit('noresponse', error)
                     return false
                 })
         },
