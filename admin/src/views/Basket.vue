@@ -180,7 +180,7 @@ export default {
                     this.rows = response.data?.favorites?.map(el => {
                         if (el.mainside_id) el.title = `${el.title} (обр - ${el.mainside_id})`;
                         return el
-                    })?.sort((a, b) => { a.mainside_id ? b.id : false })
+                    })?.sort((a, b) => a.mainside_id ? a.mainside_id !== b.id ? true : false : false)
                 })
                 .catch(() => {
                     //eventBus.$emit('noresponse', error)
