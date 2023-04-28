@@ -75,6 +75,7 @@ export default {
         this.$store.state.userId = this.$store.state.userId ?? this.$route.params?.userId;
 
         this.basketItems = await this.getBasket();
+        await this.getBasketData();
 
         this.$refs['basket-items']?.classList.add("hidden")
         document.body.classList.add('stop-scrolling')

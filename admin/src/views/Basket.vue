@@ -91,6 +91,11 @@ export default {
             ],
         }
     },
+    watch: {
+        async user_id() {
+            await this.getBasketData()
+        }
+    },
     created() {
         eventBus.$on('addNewOrderItem', () => {
             this.formMode = 'new'
@@ -99,6 +104,8 @@ export default {
         eventBus.$on('closeModal', () => {
             this.formVisible = false;
             this.showBasket = false;
+            this.get()
+            this.getBasketData()
             this.formData = {}
         })
         eventBus.$on('orderItemAdded', () => {
@@ -125,7 +132,8 @@ export default {
                 .post(this.$store.state.publicPath + '/api/favorites/', {
                     change_individual: true,
                     individual_text: this.tempIndividualText,
-                    individual_price: this.tempIndividualPrice
+                    individual_price: this.tempIndividualPrice,
+                    user_id: this.user_id,
                 })
                 .then(() => {
                     this.individual = { text: this.tempIndividualText, price: this.tempIndividualPrice }
@@ -140,6 +148,7 @@ export default {
                 .delete(this.$store.state.publicPath + '/api/favorites/', {
                     data: {
                         change_individual: true,
+                        user_id: this.user_id,
                     },
                 })
                 .then(() => {
@@ -158,6 +167,20 @@ export default {
             this.formMode = 'edit'
         },
         dateFormatter,
+        async getBasketData() {
+            const results = await this.$store.state.myApi.get(this.$store.state.publicPath + '/api/basket_data', {
+                params: {
+                    user_id: this.$store.state.userId,
+                }
+            })
+                .then(response => {
+                    return this.individual = { text: response.data.individual_text, price: response.data.individual_price }
+                })
+                .catch(e => { eventBus.$emit('noresponse', e) })
+
+            return results ?? {}
+
+        },
         get() {
             console.log(this.tag)
             return myApi
