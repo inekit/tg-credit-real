@@ -82,6 +82,8 @@ class BasketsService {
             to_index: postal_code,
           });
 
+          console.log(result);
+
           res({
             price: parseInt(result.pricing_total),
             time: time?.offers?.[0]
