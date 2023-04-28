@@ -21,7 +21,7 @@ class Pochta {
             "index-from": from_index,
             "index-to": to_index,
             "mail-category": "SIMPLE",
-            "mail-type": "UNDEFINED",
+            "mail-type": "ONLINE_PARCEL",
             mass,
           },
           {
