@@ -205,7 +205,7 @@ class BasketsService {
 
       connection
         .query(
-          `select u.name, u.surname, u.patronymic, u.address, u.phone, sum(io.price * oi.count)::int+coalesce(individual_price,0)::int  total, 
+          `select u.name, u.surname, u.patronymic, u.address, u.phone, coalesce(sum(io.price * oi.count),0)::int+coalesce(individual_price,0)::int  total, 
           individual_text, individual_price,
           sum(oi.count)::int  total_count,
           json_agg(DISTINCT 
