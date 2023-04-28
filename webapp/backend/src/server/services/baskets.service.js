@@ -133,7 +133,7 @@ class BasketsService {
       const connection = await tOrmCon;
 
       if (change_individual) {
-        const data = await queryRunner.query(
+        const data = await connection.query(
           `update orders set individual_text = null, individual_price = null where user_id = $1 and status='basket'`,
           [user_id]
         );
