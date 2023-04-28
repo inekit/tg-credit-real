@@ -166,6 +166,7 @@ export default {
         dateFormatter,
         get() {
             console.log(this.tag)
+            const sortFunction = (a, b) => a.mainside_id ? a.mainside_id !== b.id ? -1 : 1 : 0
             return myApi
                 .get(this.$store.state.publicPath + '/api/basket_data/', {
                     params: {
@@ -180,7 +181,7 @@ export default {
                     this.rows = response.data?.favorites?.map(el => {
                         if (el.mainside_id) el.title = `${el.title} (обр - ${el.mainside_id})`;
                         return el
-                    })?.sort((a, b) => a.mainside_id ? a.mainside_id !== b.id ? -1 : 1 : 0)
+                    })?.sort(sortFunction)?.sort(sortFunction)
                 })
                 .catch(() => {
                     //eventBus.$emit('noresponse', error)
