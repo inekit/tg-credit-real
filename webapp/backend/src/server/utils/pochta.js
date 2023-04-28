@@ -4,7 +4,7 @@ require("dotenv").config();
 class Pochta {
   constructor({ access_token, authorization_key, test_mode }) {
     this.api_addr = test_mode
-      ? "https://otpravka-api.pochta.ru"
+      ? "https://test.otpravka-api.pochta.ru"
       : "https://otpravka-api.pochta.ru";
 
     this.access_token = access_token;
