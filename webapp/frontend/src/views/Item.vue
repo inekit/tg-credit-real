@@ -306,7 +306,7 @@ export default {
                 }
             })
                 .then(response => {
-                    return response.length;
+                    return response.data?.length;
                 })
                 .catch(e => { eventBus.$emit('noresponse', e) })
 
