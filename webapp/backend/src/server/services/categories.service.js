@@ -50,7 +50,7 @@ class UsersService {
     return fNameFullPath;
   }
 
-  add({ name, description, image, previewBinary }) {
+  add({ name, description, image, previewBinary, backside_available }) {
     return new Promise(async (res, rej) => {
       const connection = await tOrmCon;
 
@@ -66,6 +66,7 @@ class UsersService {
         const data = await queryRunner.manager.getRepository("Category").save({
           name,
           description,
+          backside_available,
           preview: fNameFullPath,
         });
 
@@ -83,7 +84,14 @@ class UsersService {
     });
   }
 
-  edit({ name, old_name, description, image, previewBinary }) {
+  edit({
+    name,
+    old_name,
+    description,
+    image,
+    previewBinary,
+    backside_available,
+  }) {
     return new Promise(async (res, rej) => {
       const fNameFullPath = await this.saveReturningFileName(previewBinary);
 
@@ -102,6 +110,7 @@ class UsersService {
           .update({
             name,
             description,
+            backside_available,
             preview: fNameFullPath,
           })
           .where({

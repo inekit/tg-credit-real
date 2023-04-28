@@ -22,12 +22,13 @@ function getOne(req, res, next) {
 }
 
 function addOne(req, res, next) {
-  const { name, description } = req.body;
+  const { name, description, backside_available } = req.body;
 
   categoriesService
     .add({
       name,
       description,
+      backside_available,
       image: req.body?.["preview"],
       previewBinary: req.files?.["preview"],
     })
@@ -42,6 +43,7 @@ function editOne(req, res, next) {
     .edit({
       name,
       description,
+      backside_available,
       old_name,
       image: req.body?.["preview"],
       previewBinary: req.files?.["preview"],
