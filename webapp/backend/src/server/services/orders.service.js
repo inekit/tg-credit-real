@@ -172,7 +172,7 @@ class UsersService {
         );
         total =
           type === "money"
-            ? total - sum
+            ? min(total - sum, 0)
             : ((+(100 - sum) * total) / 100).toFixed(0);
 
         if (total < 0) throw new Error("PROMO_TO_LARGE");
