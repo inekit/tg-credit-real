@@ -99,7 +99,7 @@ class UsersService {
               then 1 else NULL end
               ) > 0 then true else false end as is_favorite,
               backside_available
-              
+
                 from public.items p
                 left join categories c on c.name = p.category_name
                 left join item_options io on p.id = io.item_id
@@ -112,7 +112,7 @@ class UsersService {
                 and (io.material = $8::varchar or $8::varchar is NULL)
                 and (io.is_backside = $10::boolean or $10::boolean is NULL)
                 and (oi.item_option_id = $9::int or $9::int is NULL)
-                group by p.id
+                group by p.id,c.name
                 order by ${orderQueryPart}
                 LIMIT $4 OFFSET $5`
           : `select p.*,json_agg(DISTINCT jsonb_build_object('id', io.id, 'size', io.size, 'material', io.material, 'price', io.price, 'is_backside', io.is_backside))  options_array
