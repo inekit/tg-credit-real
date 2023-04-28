@@ -72,7 +72,7 @@ class BasketsService {
           });
         } else if (operator === "Почта РФ") {
           const pochta = new Pochta({
-            test_mode: true,
+            test_mode: false,
             access_token: "gHd4PN9uPGC7nEBt9BLPU77OXShxjsfA",
           });
           const result = await pochta.getPrice({
