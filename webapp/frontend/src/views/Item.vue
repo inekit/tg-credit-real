@@ -43,8 +43,8 @@
         <div class="backside count-select" v-if="count && !mainside_id">
             <hr />
             <label>Обратная сторона</label>
-            <button v-if="!backside_item?.id" type="button" @click="routeToBackSide">Выбрать</button>
-            <div v-else>
+            <button v-if="!backside_item?.id && canChooseBackside" type="button" @click="routeToBackSide">Выбрать</button>
+            <div v-if="backside_item?.id">
                 <span>{{ backside_item.title }}</span>
                 <button type="button" @click="routeToBackSideItem">Посмотреть</button>
                 <button type="button" @click="dropBackSideItem">Убрать</button>
@@ -95,7 +95,8 @@ export default {
             count: 0,
             mainside_item: {},
             backside_item: {},
-            price: 0
+            price: 0,
+            canChooseBackside: false,
         }
     },
     watch: {
@@ -113,7 +114,7 @@ export default {
             this.price = this.selected_option?.price;
             this.count = (await this.getBasketOption())?.count ?? 0;
             this.item.is_favorite = !!this.count;
-
+            this.canChooseBackside = this.getCanChooseBackside()
             this.item.description = marked.parse(this.item.description?.replaceAll("\r\n\r\n", "<span><br/><span/>\r\n\r\n"))
 
             await this.getReferencedItems()
@@ -253,6 +254,8 @@ export default {
             this.count = (await this.getBasketOption())?.count ?? 0;
             this.price = this.selected_option?.price;
             await this.getReferencedItems()
+            this.canChooseBackside = this.getCanChooseBackside()
+
         },
         async changeSize() {
             this.materials = this.item.options_array?.filter(el => el.size === this.selected_size)?.map(({ material }) => material)
@@ -263,6 +266,8 @@ export default {
             this.count = (await this.getBasketOption())?.count ?? 0;
             this.price = this.selected_option?.price;
             await this.getReferencedItems()
+            this.canChooseBackside = this.getCanChooseBackside()
+
         },
         async getBasketOption(mainItem) {
             return await this.$store.state.myApi
@@ -287,6 +292,28 @@ export default {
                 .catch((e) => {
                     eventBus.$emit('noresponse', e)
                 })
+        },
+        async getCanChooseBackside() {
+            const results = await this.$store.state.myApi.get(this.$store.state.restAddr + '/items', {
+                params: {
+                    take: 1,
+                    page: 1,
+                    sort: "newing",
+                    user_id: this.$store.state.userId,
+                    size: selected_size,
+                    is_backside: true,
+                    material: this.selected_material
+                }
+            })
+                .then(response => {
+                    return response.length;
+                })
+                .catch(e => { eventBus.$emit('noresponse', e) })
+
+            console.log(results)
+
+            return results
+
         },
         changeCount(newCount) {
             if (newCount > 100) return;
