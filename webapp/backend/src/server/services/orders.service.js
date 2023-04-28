@@ -172,7 +172,7 @@ class UsersService {
         );
         total =
           type === "money"
-            ? Math.min(total - sum, 0)
+            ? Math.max(total - sum, 0)
             : ((+(100 - sum) * total) / 100).toFixed(0);
 
         if (total < 0) throw new Error("PROMO_TO_LARGE");
@@ -213,10 +213,14 @@ class UsersService {
         global.io.emit("UPDATE_ORDERS");
         res(data);
 
-        const orderStr = basket.items
-          ?.push({ title: basket.individual_text })
-          ?.map((el) => `📦 ${el.title} - ${el.count} (шт.)`)
-          ?.join("\n");
+        let orderStr =
+          basket.items
+            ?.map((el) => `📦 ${el.title} - ${el.count} (шт.)`)
+            ?.join("\n") ?? "";
+        orderStr =
+          orderStr + orderStr && basket.individual_text
+            ? "\n"
+            : "" + (basket.individual_text ?? "");
 
         const robokassa = new Robokassa({
           MerchantLogin: process.env.ROBO_MERCHANT_LOGIN,
