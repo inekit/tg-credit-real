@@ -47,7 +47,7 @@
     </div>
     <div class="order">
         <span class="label">Итого:</span>
-        <span class="value">{{ basketItems?.reduce((prev, cur) => prev + cur.price * cur.count, 0) }} ₽</span>
+        <span class="value">{{ total }} ₽</span>
     </div>
 </template>
 
@@ -61,7 +61,8 @@ export default {
     data() {
         return {
             basketItems: [],
-            individual: null
+            individual: null,
+            total
         }
     },
     watch: {
@@ -163,7 +164,7 @@ export default {
                 }
             })
                 .then(response => {
-                    if (response.data.length === 0) return this.$router.go(-1)
+                    if (response.data.length === 0 && window.Telegram) return this.routeBack()
 
                     return response.data;
 
@@ -180,7 +181,12 @@ export default {
                 }
             })
                 .then(response => {
-                    return this.individual = { text: response.data.individual_text, price: response.data.individual_price }
+
+                    this.individual = response.data.individual_text ?
+                        { text: response.data.individual_text, price: response.data.individual_price } :
+                        null;
+
+                    this.total = response.data.total
                 })
                 .catch(e => { eventBus.$emit('noresponse', e) })
 
