@@ -86,7 +86,9 @@ class BasketsService {
 
           res({
             time: result["delivery-time"]
-              ? `${result["delivery-time"]["min-days"]}-${result["delivery-time"]["max-days"]}`
+              ? `${result["delivery-time"]["min-days"] ?? 0}-${
+                  result["delivery-time"]["max-days"]
+                }`
               : null,
           });
         }
