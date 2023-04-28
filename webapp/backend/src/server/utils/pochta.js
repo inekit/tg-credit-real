@@ -37,7 +37,7 @@ class Pochta {
             "dimension-type": "S",
             "entries-type": "GIFT",
             fragile: false,
-            inventory: true,
+            inventory: false,
             "mail-direct": 0,
             //"notice-payment-method": "CASHLESS",
             //"payment-method": "CASHLESS",
