@@ -52,7 +52,7 @@ scene.action(/^order\-([0-9]+)$/g, async (ctx) => {
 
   const order = (
     await connection.query(
-      `select o.*, individual_text, individual_price
+      `select o.*, individual_text, individual_price,
     json_agg(DISTINCT jsonb_build_object('title', i.title,'count',oi.count, 'id', io.id, 'size', io.size, 'material', io.material, 'price', io.price)) items 
     from orders o 
     left join order_items oi on o.id = oi.order_id  
