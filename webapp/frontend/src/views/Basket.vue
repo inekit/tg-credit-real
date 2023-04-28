@@ -164,7 +164,7 @@ export default {
                 }
             })
                 .then(response => {
-                    if (response.data.length === 0 && window.Telegram) return this.routeBack()
+                    if (response.data.length === 0 && window.Telegram?.WebApp) return this.routeBack()
 
                     return response.data;
 

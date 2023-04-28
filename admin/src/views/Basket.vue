@@ -174,7 +174,9 @@ export default {
                 }
             })
                 .then(response => {
-                    return this.individual = { text: response.data.individual_text, price: response.data.individual_price }
+                    return this.individual = response.data.individual_text ?
+                        { text: response.data.individual_text, price: response.data.individual_price } :
+                        null
                 })
                 .catch(e => { eventBus.$emit('noresponse', e) })
 
