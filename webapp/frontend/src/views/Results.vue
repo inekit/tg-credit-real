@@ -69,7 +69,7 @@ export default {
         this.$store.state.userId = this.$store.state.userId ?? this.$route.params?.userId;
 
 
-        if ((await this.getBasket())?.length) {
+        if (await this.haveBasketItems()) {
             window.Telegram?.WebApp.MainButton.onClick(this.routeToBasket);
             window.Telegram?.WebApp.MainButton.show();
             window.Telegram?.WebApp.MainButton.setText("Корзина");
@@ -97,14 +97,14 @@ export default {
         getMinPrice(options_array) {
             return Math.min(...(options_array?.map(el => el.price) ?? [0]))
         },
-        async getBasket() {
-            const results = await this.$store.state.myApi.get(this.$store.state.restAddr + '/favorites', {
+        async haveBasketItems() {
+            const results = await this.$store.state.myApi.get(this.$store.state.restAddr + '/basket_data', {
                 params: {
                     user_id: this.$store.state.userId,
                 }
             })
                 .then(response => {
-                    return response.data;
+                    return response.data.individual_text || response.data.favorites.length
                 })
                 .catch(e => { eventBus.$emit('noresponse', e) })
 
