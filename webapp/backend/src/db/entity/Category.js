@@ -23,7 +23,7 @@ module.exports = new EntitySchema({
     backside_available: {
       type: "boolean",
       nullable: false,
-      default: false,
+      default: true,
     },
   },
 });
