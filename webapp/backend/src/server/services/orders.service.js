@@ -220,7 +220,7 @@ class UsersService {
 
         let orderStr =
           basket.items
-            ?.map((el) => `📦 ${el.title} - ${el.count} (шт.)`)
+            ?.map((el) => (el.id ? `📦 ${el.title} - ${el.count} (шт.)` : ""))
             ?.join("\n") ?? "";
         orderStr =
           orderStr +
