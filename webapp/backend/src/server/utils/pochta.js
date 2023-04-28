@@ -21,7 +21,7 @@ class Pochta {
             "index-from": from_index,
             "index-to": to_index,
             "mail-category": "ORDINARY",
-            "mail-type": "ONLINE_PARCEL",
+            "mail-type": "PARCEL_CLASS_1",
             mass,
 
             "completeness-checking": false,
@@ -33,20 +33,6 @@ class Pochta {
               length: 30,
               width: 30,
             },
-
-            "dimension-type": "S",
-            "entries-type": "GIFT",
-            fragile: false,
-            inventory: false,
-            "mail-direct": 0,
-            //"notice-payment-method": "CASHLESS",
-            //"payment-method": "CASHLESS",
-            "sms-notice-recipient": 0,
-            "transport-type": "SURFACE",
-            vsd: true,
-            "with-electronic-notice": true,
-            "with-order-of-notice": true,
-            "with-simple-notice": true,
           },
           {
             headers: {
