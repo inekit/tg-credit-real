@@ -100,7 +100,7 @@ scene.action(/^order\-([0-9]+)$/g, async (ctx) => {
             ?.map((el) => `${el.title} - ${el.count} (шт.)`)
             ?.join("; ") +
             "; " +
-            orderStr.individual_text ?? ""
+            order.individual_text ?? ""
         ).substr(0, 100),
       })
       .catch(console.log);
