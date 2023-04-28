@@ -85,9 +85,8 @@ class BasketsService {
           console.log(result);
 
           res({
-            price: parseInt(result.pricing_total),
-            time: time?.offers?.[0]
-              ? `${time.offers[0].from}-${timeoffers[0].to}`
+            time: result["delivery-time"]
+              ? `${result["delivery-time"]["min-days"]}-${result["delivery-time"]["max-days"]}`
               : null,
           });
         }
