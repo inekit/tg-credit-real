@@ -1,11 +1,11 @@
 const axios = require("axios");
 require("dotenv").config();
 
-class Cdek {
+class Pochta {
   constructor({ access_token, authorization_key }) {
     this.api_addr = test_mode
-      ? "https://api.edu.cdek.ru"
-      : "https://api.cdek.ru";
+      ? "https://otpravka-api.pochta.ru"
+      : "https://otpravka-api.pochta.ru";
 
     this.client_id = client_id;
     this.client_secret = client_secret;
@@ -47,4 +47,4 @@ class Cdek {
   }
 }
 
-module.exports = Cdek;
+module.exports = Pochta;

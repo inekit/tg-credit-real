@@ -176,10 +176,8 @@ export default {
 
                     this.total = response.data.total;
 
-                    let rows = response.data?.favorites?.map(el => {
-                        if (el.mainside_id) el.title = `${el.title} (обр - ${el.mainside_id})`;
-                        return el
-                    })
+                    let rows = response.data?.favorites;
+
                     for (let i = 0; i < rows.length; i++) {
                         if (!rows[i].mainside_id || (i !== rows.length - 1 && rows[i].mainside_id === rows[i + 1].id)) continue;
                         console.log(i)

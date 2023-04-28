@@ -2,6 +2,7 @@ const tOrmCon = require("../../db/connection");
 const checkInputData = require("../utils/checkInputData");
 const Cdek = require("../utils/cdek");
 const Ya = require("../utils/ya");
+const Pochta = require("../utils/pochta");
 
 const {
   HttpError,
@@ -70,7 +71,24 @@ class BasketsService {
               : null,
           });
         } else if (operator === "Почта РФ") {
-          res({ price: null, time: null });
+          const pochta = new Pochta({
+            test_mode: true,
+            access_token: "gHd4PN9uPGC7nEBt9BLPU77OXShxjsfA",
+          });
+          const result = await pochta.getPrice({
+            address,
+            total_weight: count * 100,
+          });
+          const time = await pochta.getTime({
+            address,
+          });
+          console.log(time);
+          res({
+            price: parseInt(result.pricing_total),
+            time: time?.offers?.[0]
+              ? `${time.offers[0].from}-${timeoffers[0].to}`
+              : null,
+          });
         }
 
         rej("wrong operator");
