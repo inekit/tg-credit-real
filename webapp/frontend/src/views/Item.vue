@@ -247,6 +247,8 @@ export default {
         },
         async changeMaterial() {
             this.sizes = this.item.options_array?.filter(el => el.material === this.selected_material)?.map(({ size }) => size);
+            this.selected_size = this.sizes?.includes(this.selected_size) ? this.selected_size : this.sizes?.[0]
+
             this.selected_option = this.item.options_array?.find(el => el.size === this.selected_size && el.material === this.selected_material)
             this.count = (await this.getBasketOption())?.count ?? 0;
             this.price = this.selected_option?.price;
@@ -254,6 +256,9 @@ export default {
         },
         async changeSize() {
             this.materials = this.item.options_array?.filter(el => el.size === this.selected_size)?.map(({ material }) => material)
+            this.selected_material = this.materials?.includes(this.selected_material) ?
+                this.selected_material : this.materials?.[0]
+
             this.selected_option = this.item.options_array?.find(el => el.size === this.selected_size && el.material === this.selected_material)
             this.count = (await this.getBasketOption())?.count ?? 0;
             this.price = this.selected_option?.price;
