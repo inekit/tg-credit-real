@@ -40,11 +40,11 @@
         <hr />
         <label>Описание</label>
         <div class="description" v-html="item.description"></div>
-        <div class="backside count-select" v-if="count && !mainside_id">
+        <div class="backside count-select" v-if="count && !mainside_id && canChooseBackside">
             <hr />
             <label>Обратная сторона</label>
-            <button v-if="!backside_item?.id && canChooseBackside" type="button" @click="routeToBackSide">Выбрать</button>
-            <div v-if="backside_item?.id">
+            <button v-if="!backside_item?.id" type="button" @click="routeToBackSide">Выбрать</button>
+            <div v-else>
                 <span>{{ backside_item.title }}</span>
                 <button type="button" @click="routeToBackSideItem">Посмотреть</button>
                 <button type="button" @click="dropBackSideItem">Убрать</button>
