@@ -185,7 +185,7 @@ export default {
                             if (a.mainside_id && !b.mainside_id) {
                                 return a.mainside_id !== b.id ? -1 : 1
                             } else if (!b.mainside_id) return 0;
-                            else return b.mainside_id !== a.id ? 1 : -1;
+                            else return b.mainside_id !== a.id ? -1 : 1;
                         })
 
                 })
