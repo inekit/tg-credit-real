@@ -78,8 +78,8 @@ class BasketsService {
           });
           const result = await pochta.getPrice({
             total_weight: count * 100,
-            from_index: 603065,
-            to_index: postal_code,
+            from_index: "603065",
+            to_index: postal_code?.toString(),
           });
 
           console.log(result);
