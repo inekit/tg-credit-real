@@ -6,7 +6,7 @@
     <div class="img-container">
         <carousel>
             <slide class="carousel__item" v-for="img_link, img_id in item.image_list" :key="img_id">
-                <img v-if="['webp', 'jpg', 'jpeg', 'png'].includes(img_link.split('.').reverse()[0])"
+                <img v-if="['webp', 'jpg', 'jpeg', 'png'].includes(img_link?.split('.')?.reverse()[0]?.toLowerCase())"
                     :src="`/colorsserver/public/pics/${img_link}`" />
                 <video style="max-height: 100%;max-width: 100%;" v-else :src="`/colorsserver/public/pics/${img_link}`"
                     controls>
