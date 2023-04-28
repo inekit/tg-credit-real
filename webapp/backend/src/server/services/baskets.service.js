@@ -220,7 +220,6 @@ class BasketsService {
           where u.id = $1 and status='basket' 
           and ((io.id = $2 and oi.is_backside = false) or $2 is NULL)  
           group by u.id, o.individual_text, o.individual_price
-          order by io.id
           limit 1`,
           [user_id, item_option_id]
         )
