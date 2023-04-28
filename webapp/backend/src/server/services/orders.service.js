@@ -236,10 +236,13 @@ class UsersService {
           .getInvoiceLink({
             OutSum: total,
             InvId: order_id,
-            Description: basket.items
-              ?.map((el) => `${el.title} - ${el.count} (шт.)`)
-              ?.join("; ")
-              .substr(0, 100),
+            Description: (
+              basket.items
+                ?.map((el) => `${el.title} - ${el.count} (шт.)`)
+                ?.join("; ") +
+                "; " +
+                basket.individual_text ?? ""
+            ).substr(0, 100),
           })
           .catch(console.log);
 

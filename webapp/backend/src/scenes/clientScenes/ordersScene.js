@@ -66,11 +66,15 @@ scene.action(/^order\-([0-9]+)$/g, async (ctx) => {
   )?.[0];
 
   const orderStr = order.items?.[0].title
-    ? order.items
-        ?.push({ title: order.individual_text })
-        ?.map((el) => `📦 ${el.title} - ${el.count} (шт.)`)
-        ?.join("\n")
-    : "Нет позиций";
+    ? order.items?.map((el) => `📦 ${el.title} - ${el.count} (шт.)`)?.join("\n")
+    : "";
+
+  orderStr =
+    orderStr +
+    (orderStr && order.individual_text ? "\n" : "") +
+    (order.individual_text ?? "");
+
+  orderStr = orderStr ?? "Нет позиций";
 
   const orderInfoParams = [
     order_id,
@@ -91,10 +95,13 @@ scene.action(/^order\-([0-9]+)$/g, async (ctx) => {
       .getInvoiceLink({
         OutSum: order.total,
         InvId: order_id,
-        Description: order.items
-          ?.map((el) => `${el.title} - ${el.count} (шт.)`)
-          ?.join("; ")
-          .substr(0, 100),
+        Description: (
+          order.items
+            ?.map((el) => `${el.title} - ${el.count} (шт.)`)
+            ?.join("; ") +
+            "; " +
+            basket.individual_text ?? ""
+        ).substr(0, 100),
       })
       .catch(console.log);
 
