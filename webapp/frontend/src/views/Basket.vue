@@ -3,7 +3,7 @@
     <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 300 250"></InstagramLoader>
     <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 300 200"></InstagramLoader>
     <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 300 200"></InstagramLoader>
-    <button v-if="basketItems.length > 0" class="" @click="order">Оформить заказ</button>
+    <button v-if="basketItems.length > 0 || individual" class="" @click="order">Оформить заказ</button>
     <div class="basket-items">
         <div class="basket-item" v-for="item, id in basketItems" :key="id">
             <RouterLink :to="getItemLink(item)">
@@ -93,7 +93,7 @@ export default {
 
         }, 300)
 
-        if (this.basketItems?.length) {
+        if (this.basketItems?.length || this.individual) {
             window.Telegram?.WebApp.MainButton.onClick(this.order);
 
             window.Telegram?.WebApp.MainButton.enable();
@@ -163,7 +163,7 @@ export default {
                 }
             })
                 .then(response => {
-                    if (response.data.favorites.length === 0 && !response.data.individual_text && window.Telegram?.WebApp)
+                    if (response.data.favorites.length === 0 && !response.data.individual_text && window.Telegram.WebApp)
                         return this.routeBack()
 
                     this.individual = response.data.individual_text ?
