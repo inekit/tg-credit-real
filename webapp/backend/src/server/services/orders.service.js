@@ -107,8 +107,10 @@ class UsersService {
       await queryRunner.startTransaction();
 
       try {
-        const orders = await queryRunner.query(
-          `select o.*, count(oi.item_option_id) count_items,
+        const basket = (
+          await queryRunner.query(
+            `select o.*, count(oi.item_option_id) count_items,
+          individual_price,individual_text,
           json_agg(json_build_object('title', i.title,'count',oi.count, 'id', io.id, 'size', io.size, 'material', io.material, 'price', io.price)) items 
           from orders o 
           left join order_items oi on o.id = oi.order_id  
@@ -117,11 +119,13 @@ class UsersService {
           where user_id = $1 and status='basket' 
           group by o.id
           limit 1`,
-          [user_id]
-        );
-        if (orders[0].count_items < 1) throw new Error("No items");
+            [user_id]
+          )
+        )[0];
+        if (basket.count_items < 1 && !basket.individual_price)
+          throw new Error("No items");
 
-        const basket_id = orders[0].id;
+        const basket_id = basket.id;
 
         let type,
           sum = 0;
@@ -162,7 +166,7 @@ class UsersService {
           );
         }
 
-        let total = orders[0].items.reduce(
+        let total = basket.items.reduce(
           (prev, cur) => prev + cur.price * cur.count,
           0
         );
@@ -176,7 +180,7 @@ class UsersService {
 
         total = +total + +delivery_price;
 
-        total = total + (orders[0].individual_price ?? 0);
+        total = total + (basket.individual_price ?? 0);
 
         const data = await queryRunner.manager.getRepository("Order").save({
           user_id,
@@ -189,6 +193,8 @@ class UsersService {
           surname,
           postal_code,
           patronymic,
+          individual_price: basket.individual_price,
+          individual_text: basket.individual_text,
         });
 
         const { id: order_id } = data;
@@ -207,7 +213,8 @@ class UsersService {
         global.io.emit("UPDATE_ORDERS");
         res(data);
 
-        const orderStr = orders[0].items
+        const orderStr = basket.items
+          ?.push({ title: basket.individual_text })
           ?.map((el) => `📦 ${el.title} - ${el.count} (шт.)`)
           ?.join("\n");
 
@@ -220,7 +227,7 @@ class UsersService {
           .getInvoiceLink({
             OutSum: total,
             InvId: order_id,
-            Description: orders[0].items
+            Description: basket.items
               ?.map((el) => `${el.title} - ${el.count} (шт.)`)
               ?.join("; ")
               .substr(0, 100),
@@ -232,7 +239,7 @@ class UsersService {
             user_id,
             ctx.getTitle("ORDER_INFO_TITLE", [
               order_id,
-              moment(orders[0].creation_date).format("DD.MM.YYYY"),
+              moment(basket.creation_date).format("DD.MM.YYYY"),
               orderStr,
               "Новый",
               selected_dm,

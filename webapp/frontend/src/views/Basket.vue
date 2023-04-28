@@ -163,8 +163,8 @@ export default {
                 }
             })
                 .then(response => {
-                    if (response.data.favorites.length === 0 && !response.data.individual_text && window.Telegram.WebApp)
-                        return this.routeBack()
+                    //if (response.data.favorites.length === 0 && !response.data.individual_text && window.Telegram?.WebApp)
+                    //    return this.routeBack()
 
                     this.individual = response.data.individual_text ?
                         { text: response.data.individual_text, price: response.data.individual_price } :

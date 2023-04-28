@@ -52,7 +52,7 @@ scene.action(/^order\-([0-9]+)$/g, async (ctx) => {
 
   const order = (
     await connection.query(
-      `select o.*, 
+      `select o.*, individual_text, individual_price
     json_agg(DISTINCT jsonb_build_object('title', i.title,'count',oi.count, 'id', io.id, 'size', io.size, 'material', io.material, 'price', io.price)) items 
     from orders o 
     left join order_items oi on o.id = oi.order_id  
@@ -66,7 +66,10 @@ scene.action(/^order\-([0-9]+)$/g, async (ctx) => {
   )?.[0];
 
   const orderStr = order.items?.[0].title
-    ? order.items?.map((el) => `📦 ${el.title} - ${el.count} (шт.)`)?.join("\n")
+    ? order.items
+        ?.push({ title: order.individual_text })
+        ?.map((el) => `📦 ${el.title} - ${el.count} (шт.)`)
+        ?.join("\n")
     : "Нет позиций";
 
   const orderInfoParams = [
