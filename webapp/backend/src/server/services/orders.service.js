@@ -200,7 +200,7 @@ class UsersService {
         const { id: order_id } = data;
 
         await queryRunner.query(
-          `update order set individual_price=null,individual_text=null where order_id = $1`,
+          `update orders set individual_price=null,individual_text=null where order_id = $1`,
           [basket_id]
         );
 
