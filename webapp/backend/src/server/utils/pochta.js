@@ -21,7 +21,7 @@ class Pochta {
             "index-from": from_index,
             "index-to": to_index,
             "mail-category": "ORDINARY",
-            "mail-type": "PARCEL_CLASS_1",
+            "mail-type": "POSTAL_PARCEL",
             mass,
           },
           {
