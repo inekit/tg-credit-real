@@ -20,7 +20,7 @@ class Pochta {
             "declared-value": sum,
             "index-from": from_index,
             "index-to": to_index,
-            //"mail-category": "SIMPLE",
+            "mail-category": "ORDINARY",
             "mail-type": "ONLINE_PARCEL",
             mass,
           },
