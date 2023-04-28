@@ -165,7 +165,10 @@ export default {
         },
         dateFormatter,
         get() {
-            console.log(this.tag)
+            function moveElement(arr, from, to) {
+                arr.splice(to, 0, arr.splice(from, 1)[0]);
+                return arr;
+            };
             return myApi
                 .get(this.$store.state.publicPath + '/api/basket_data/', {
                     params: {
@@ -177,16 +180,29 @@ export default {
                         { text: response.data.individual_text, price: response.data.individual_price } :
                         null
 
-                    this.rows = response.data?.favorites?.map(el => {
+                    let rows = response.data?.favorites?.map(el => {
                         if (el.mainside_id) el.title = `${el.title} (обр - ${el.mainside_id})`;
                         return el
-                    })?.sort((a, b) => a.mainside_id ? 1 : b.mainside_id ? -1 : 0)
-                        ?.sort((a, b) => {
-                            if (a.mainside_id && !b.mainside_id) {
-                                return a.mainside_id !== b.id ? -1 : 1
-                            } else if (!b.mainside_id) return 0;
-                            else return b.mainside_id !== a.id ? -1 : 1;
-                        })
+                    })
+
+
+                    for (let i = 0; i < rows.length; i++) {
+                        if (!rows[i].mainside_id || (i !== rows.length - 1 && rows[i].mainside_id === rows[i + 1].id)) continue;
+                        console.log(i)
+                        jfor: for (let j in rows) {
+                            if (rows[i].mainside_id === rows[j].id) {
+                                console.log(rows.map(el => { return { id: el.id, mainside_id: el.mainside_id } }));
+                                rows = moveElement(rows, i, j)
+
+                                console.log(rows.map(el => { return { id: el.id, mainside_id: el.mainside_id } }));
+                                if (i < rows.length - 1) i = 0;
+                                break jfor;
+                            }
+                        }
+                    }
+                    rows = rows.reverse()
+
+                    this.rows = rows
 
                 })
                 .catch(() => {

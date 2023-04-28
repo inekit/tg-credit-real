@@ -157,6 +157,10 @@ export default {
             window.Telegram?.WebApp.close();
         },
         async getBasket() {
+            function moveElement(arr, from, to) {
+                arr.splice(to, 0, arr.splice(from, 1)[0]);
+                return arr;
+            };
             const results = await this.$store.state.myApi.get(this.$store.state.restAddr + '/basket_data', {
                 params: {
                     user_id: this.$store.state.userId,
@@ -171,6 +175,26 @@ export default {
                         null;
 
                     this.total = response.data.total;
+
+                    let rows = response.data?.favorites?.map(el => {
+                        if (el.mainside_id) el.title = `${el.title} (обр - ${el.mainside_id})`;
+                        return el
+                    })
+                    for (let i = 0; i < rows.length; i++) {
+                        if (!rows[i].mainside_id || (i !== rows.length - 1 && rows[i].mainside_id === rows[i + 1].id)) continue;
+                        console.log(i)
+                        jfor: for (let j in rows) {
+                            if (rows[i].mainside_id === rows[j].id) {
+                                console.log(rows.map(el => { return { id: el.id, mainside_id: el.mainside_id } }));
+                                rows = moveElement(rows, i, j)
+
+                                console.log(rows.map(el => { return { id: el.id, mainside_id: el.mainside_id } }));
+                                if (i < rows.length - 1) i = 0;
+                                break jfor;
+                            }
+                        }
+                    }
+                    rows = rows.reverse()
 
                     return response.data.favorites;
 
