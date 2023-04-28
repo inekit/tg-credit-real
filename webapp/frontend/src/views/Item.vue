@@ -114,7 +114,7 @@ export default {
             this.price = this.selected_option?.price;
             this.count = (await this.getBasketOption())?.count ?? 0;
             this.item.is_favorite = !!this.count;
-            this.canChooseBackside = this.getCanChooseBackside()
+            this.canChooseBackside = await this.getCanChooseBackside()
             this.item.description = marked.parse(this.item.description?.replaceAll("\r\n\r\n", "<span><br/><span/>\r\n\r\n"))
 
             await this.getReferencedItems()
@@ -254,7 +254,7 @@ export default {
             this.count = (await this.getBasketOption())?.count ?? 0;
             this.price = this.selected_option?.price;
             await this.getReferencedItems()
-            this.canChooseBackside = this.getCanChooseBackside()
+            this.canChooseBackside = await this.getCanChooseBackside()
 
         },
         async changeSize() {
@@ -266,7 +266,7 @@ export default {
             this.count = (await this.getBasketOption())?.count ?? 0;
             this.price = this.selected_option?.price;
             await this.getReferencedItems()
-            this.canChooseBackside = this.getCanChooseBackside()
+            this.canChooseBackside = await this.getCanChooseBackside()
 
         },
         async getBasketOption(mainItem) {
