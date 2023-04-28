@@ -182,7 +182,8 @@ export default {
                         return el
                     })?.sort((a, b) => a.mainside_id ? 1 : b.mainside_id ? -1 : 0)
                         ?.sort((a, b) => a.mainside_id ? a.mainside_id !== b.id ? -1 : 1
-                            : b.mainside_id !== a.id ? 1 : -1)
+                            : b.mainside_id ? b.mainside_id !== a.id ? 1 : -1
+                                : 0)
 
                 })
                 .catch(() => {
