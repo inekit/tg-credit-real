@@ -181,9 +181,12 @@ export default {
                         if (el.mainside_id) el.title = `${el.title} (обр - ${el.mainside_id})`;
                         return el
                     })?.sort((a, b) => a.mainside_id ? 1 : b.mainside_id ? -1 : 0)
-                        ?.sort((a, b) => a.mainside_id ?
-                            a.mainside_id !== b.id ? -1 : 1
-                            : 0)
+                        ?.sort((a, b) => {
+                            if (a.mainside_id && !b.mainside_id) {
+                                return a.mainside_id !== b.id ? -1 : 1
+                            } else if (!b.mainside_id) return 0;
+                            else return 0;
+                        })
 
                 })
                 .catch(() => {
