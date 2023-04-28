@@ -74,6 +74,7 @@ class BasketsService {
           const pochta = new Pochta({
             test_mode: false,
             access_token: "gHd4PN9uPGC7nEBt9BLPU77OXShxjsfA",
+            authorization_key: "a2lsbGpveTgwQGluYm94LnJ1Ojg1NDM1MQ==",
           });
           const result = await pochta.getPrice({
             address,
