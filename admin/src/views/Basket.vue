@@ -170,7 +170,7 @@ export default {
         async getBasketData() {
             const results = await this.$store.state.myApi.get(this.$store.state.publicPath + '/api/basket_data', {
                 params: {
-                    user_id: this.$store.state.userId,
+                    user_id: this.user_id,
                 }
             })
                 .then(response => {
