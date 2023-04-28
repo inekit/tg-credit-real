@@ -2,13 +2,13 @@ const axios = require("axios");
 require("dotenv").config();
 
 class Pochta {
-  constructor({ access_token, authorization_key }) {
+  constructor({ access_token, authorization_key, test_mode }) {
     this.api_addr = test_mode
       ? "https://otpravka-api.pochta.ru"
       : "https://otpravka-api.pochta.ru";
 
-    this.client_id = client_id;
-    this.client_secret = client_secret;
+    this.access_token = access_token;
+    this.authorization_key = authorization_key;
   }
 
   getPrice({ sum = 0, from_index, to_index, mass = 1000 }) {
