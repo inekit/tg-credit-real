@@ -216,6 +216,7 @@ class BasketsService {
           left join orders o on u.id = o.user_id
           left join order_items oi on oi.order_id = o.id
           left join item_options io on oi.item_option_id = io.id
+          left join items i on io.item_id = i.id
           where u.id = $1 and status='basket' 
           and ((io.id = $2 and oi.is_backside = false) or $2 is NULL)  
           group by u.id, o.individual_text, o.individual_price
