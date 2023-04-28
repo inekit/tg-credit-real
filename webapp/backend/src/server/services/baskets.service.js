@@ -225,6 +225,12 @@ class BasketsService {
         )
         .then(async (data) => {
           if (!data?.[0]) rej(new Error(data));
+
+          const basketData = data[0];
+
+          if (!basketData) rej("No basket");
+
+          if (!basketData.favorites[0]?.id) basketData.favorites = [];
           return res(data[0]);
         })
         .catch((error) => rej(new MySqlError(error)));
