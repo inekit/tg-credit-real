@@ -29,7 +29,7 @@
             <input type="text" id="address" name="address" placeholder="Адрес доставки" v-model="basketData.address"
                 @input="getDeliveryPrice">
             <input type="number" id="text" pattern="[0-9]+" name="postal code" placeholder="Почтовый индекс"
-                v-model.number="basketData.postal_code" @input="getDeliveryPrice">
+                v-model.number="basketData.postal_code" @input="getDeliveryPricePostal">
         </div>
         <div class="delivery-time" v-show="deliveryTime">
             <h2>Время доставки</h2><span>{{ deliveryTime }} дней</span>
@@ -140,6 +140,9 @@ export default {
 
             return results ?? {}
 
+        },
+        getDeliveryPricePostal() {
+            if ([0, 6].includes(this.basketData.postal_code?.toString()?.length ?? 0)) this.getDeliveryPrice()
         },
         routeBack() {
             this.$router.go(-1)
