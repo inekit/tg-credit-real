@@ -40,10 +40,9 @@ const scene = new CustomWizardScene("clientScene").enter(async (ctx) => {
     await connection.query(`select * from statics where id = 1;`)
   )?.[0];
 
-  const clearedGreeting = static.greeting?.replace(
-    /\<p\>(.+)\<\/p\>/g,
-    "$1\\n"
-  );
+  const clearedGreeting = static.greeting
+    ?.replace("<p>", "")
+    ?.replace("</p>", "\n");
 
   ctx.replyWithKeyboard(clearedGreeting, "main_menu_keyboard");
   //"START_TITLE"
