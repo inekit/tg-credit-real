@@ -1,6 +1,6 @@
 <template>
     <div>
-        <CFormInput class="mb-4" type="search" v-model.number="user_id" @change="get" placeholder="Поиск по UID" />
+        <CFormInput class="mb-4" type="number" v-model.number="user_id" @change="get" placeholder="Поиск по UID" />
         <AddBasketItemModal :visible="formVisible" :formData="formData" :mode="formMode" />
         <div v-if="user_id" class="change-basket-buttons">
             <button class="btn btn-primary" @click="showBasket = true">Сформировать заказ</button>
