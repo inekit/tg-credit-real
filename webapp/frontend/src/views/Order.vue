@@ -2,15 +2,18 @@
     <h1>Оформление заказа</h1>
     <div class="order-block">
         <button class="" @click="order">Оформить заказ</button>
-        <p>Расчет доставки
-            производится в ручную из-за индивидуальности
-            заказов.</p>
-        <p>Средняя стоимость доставки не превышает
-            350р. </p>
-        <p>После оплаты заказа, вы получите расчет стоимости
-            доставки, и сможете оплатить ее при получении.</p>
-        <p>Если Вы хотите, чтобы мы произвели расчет до оплаты заказа,
-            напишите нам из главного меню по кнопке «Чат с нами»</p>
+        <div v-html="orderText"></div>
+        <div v-if="false">
+            <p>Расчет доставки
+                производится в ручную из-за индивидуальности
+                заказов.</p>
+            <p>Средняя стоимость доставки не превышает
+                350р. </p>
+            <p>После оплаты заказа, вы получите расчет стоимости
+                доставки, и сможете оплатить ее при получении.</p>
+            <p>Если Вы хотите, чтобы мы произвели расчет до оплаты заказа,
+                напишите нам из главного меню по кнопке «Чат с нами»</p>
+        </div>
         <div class="delivery">
             <h2>Способ доставки</h2>
             <div class="select-group">
@@ -85,6 +88,7 @@ export default {
 
         this.basketData = await this.getBasketData()
         await this.getDeliveryPrice()
+        this.orderText = await this.getOrderText()
 
     },
     async beforeUnmount() {
@@ -179,6 +183,19 @@ export default {
 
             return results ?? {}
 
+        },
+        getOrderText() {
+            return myApi
+                .get(this.$store.state.publicPath + '/api/admin/statics/', {
+                    perPage: 0,
+                    page: 0,
+                })
+                .then((res) => {
+                    return res.data?.[0]?.order
+                })
+                .catch((error) => {
+                    eventBus.$emit('noresponse', error)
+                })
         },
     },
     computed: {
