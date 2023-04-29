@@ -72,7 +72,8 @@ export default {
             deliveryTime: null,
             sale: {
                 sum: 0
-            }
+            },
+            orderText: null,
         }
     },
     watch: {
