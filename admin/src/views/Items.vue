@@ -93,13 +93,31 @@ export default {
       elObj.category_name &&
         formData.append('categoryName', elObj.category_name)
 
-      const options_object = {}
+      const options_object = {};
+      const options_object_backside = {};
+      elObj.options_array = elObj.options_array?.
+        filter(({ material, price, size }) => !material && !size && !price ? false : true)
 
-      for (let { size, material, price } of elObj.options_array) {
-        if (!material && !size && !price) continue;
-        options_object[material] ? options_object[material][size] = price : options_object[material] = { size: price }
+      for (let { size, material, price, is_backside } of elObj.options_array) {
+        if (!is_backside) {
+          options_object[material] ? options_object[material][size] = price :
+            options_object[material] = { [size]: price }
+
+          options_object_backside[material] ? options_object_backside[material][size] = options_object_backside[material][size] ?? null :
+            options_object_backside[material] = { [size]: null }
+        }
+        else {
+          options_object_backside[material] ? options_object_backside[material][size] = price :
+            options_object_backside[material] = { [size]: price }
+
+          options_object[material] ? options_object[material][size] = options_object[material][size] ?? null :
+            options_object[material] = { [size]: null }
+
+        }
       }
+
       formData.append('optionsObject', JSON.stringify(options_object))
+      formData.append('optionsObjectBackside', JSON.stringify(options_object_backside))
 
       return formData
     },
