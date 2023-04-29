@@ -86,10 +86,9 @@ export default {
         window.Telegram?.WebApp.MainButton.enable();
         window.Telegram?.WebApp.MainButton.show();
         window.Telegram?.WebApp.MainButton.setText("Заказ подтверждаю");
-
+        this.orderText = await this.getOrderText()
         this.basketData = await this.getBasketData()
         await this.getDeliveryPrice()
-        this.orderText = await this.getOrderText()
 
     },
     async beforeUnmount() {
