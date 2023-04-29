@@ -60,6 +60,7 @@ scene.action(/^order\-([0-9]+)$/g, async (ctx) => {
     left join items i on io.item_id = i.id 
     where o.id = $1
     group by o.id
+    order by o..status, o.id
     limit 1`,
       [order_id]
     )
