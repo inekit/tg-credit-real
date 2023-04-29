@@ -31,7 +31,7 @@ class BasketsService {
           const result = await cdek.getPrice({
             tariff_code: operator === "CДЭК" ? 136 : 137,
             from_location: { postal_code: "603065" },
-            to_location: { postal_code, address },
+            to_location: { postal_code: postal_code?.toString(), address },
             packages: [
               {
                 weight: count * 100,
