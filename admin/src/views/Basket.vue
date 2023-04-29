@@ -1,6 +1,6 @@
 <template>
     <div>
-        <CFormInput class="mb-4" type="search" v-model="user_id" @change="get" placeholder="Поиск по UID" />
+        <CFormInput class="mb-4" type="search" v-model.number="user_id" @change="get" placeholder="Поиск по UID" />
         <AddBasketItemModal :visible="formVisible" :formData="formData" :mode="formMode" />
         <div v-if="user_id" class="change-basket-buttons">
             <button class="btn btn-primary" @click="showBasket = true">Сформировать заказ</button>
@@ -184,8 +184,6 @@ export default {
                         if (el.mainside_id) el.title = `${el.title} (обр - ${el.mainside_id})`;
                         return el
                     })
-
-
                     for (let i = 0; i < rows.length; i++) {
                         if (!rows[i].mainside_id || (i !== rows.length - 1 && rows[i].mainside_id === rows[i + 1].id)) continue;
                         console.log(i)

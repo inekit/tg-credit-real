@@ -20,10 +20,10 @@
           <CFormCheck id="type-procent" :checked="formData.type === 'procent'" @input="formData.type = 'procent'"
             type="radio" name="type-procent" value="procent" label="Процент" />
         </div>
-        <CFormInput class="mb-3" v-model="formData.count" label="Количество использований" id="inputCount"
+        <CFormInput class="mb-3" v-model.number="formData.count" label="Количество использований" id="inputCount"
           aria-describedby="inputGroupPrepend" type="number" required feedbackValid="Все ок"
           feedbackInvalid="Введите корректное число" />
-        <CFormInput class="mb-3" v-model="formData.sum" label="Сумма / %" id="inputSum"
+        <CFormInput class="mb-3" v-model.number="formData.sum" label="Сумма / %" id="inputSum"
           aria-describedby="inputGroupPrepend" type="number" required feedbackValid="Все ок"
           feedbackInvalid="Введите корректное число" />
       </CForm>
