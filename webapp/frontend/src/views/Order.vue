@@ -186,7 +186,7 @@ export default {
         },
         async getOrderText() {
             return await this.$store.state.myApi
-                .get(this.$store.state.publicPath + '/api/admin/statics/', {
+                .get(this.$store.state.restAddr + '/statics', {
                     perPage: 0,
                     page: 0,
                 })
