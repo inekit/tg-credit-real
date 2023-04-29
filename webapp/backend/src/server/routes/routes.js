@@ -7,6 +7,7 @@ var BasketsController = require("../controllers/baskets.controller");
 var OrdersController = require("../controllers/orders.controller");
 var DeliveryController = require("../controllers/delivery.controller");
 var PromosController = require("../controllers/promos.controller");
+var StaticsController = require("../controllers/statics.controller");
 
 module.exports = (ctx) => {
   router.get("/items", ItemsController.getAll);
@@ -27,6 +28,8 @@ module.exports = (ctx) => {
 
   router.put("/promos", PromosController.use);
   router.get("/promos", PromosController.test);
+
+  router.get("/statics", StaticsController.getOne);
 
   return router;
 };
