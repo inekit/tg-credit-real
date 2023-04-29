@@ -6,11 +6,9 @@
     <CModalBody>
       <form ref="add-file-form" novalidate :validated="formValid" @submit.prevent="addTag" class="add-user"
         style="display: 'none'">
-        <CFormInput class="mb-3" v-model="formData.gitHubLink" placeholder="Git" label="Git" maxlength="255"
-          feedbackValid="Все ок" feedbackInvalid="Введите корректную ссылку (до 255 символов)" />
-        <CFormInput class="mb-3" v-model="formData.linkedInLink" placeholder="Linked In" label="Linked In" maxlength="255"
-          feedbackValid="Все ок" feedbackInvalid="Введите корректную ссылку (до 255 символов)" />
-        <QuillEditor theme="snow" toolbar="essential" ref="aboutEditor" id="aboutEditor" placeholder="Текст обо мне" />
+        <QuillEditor theme="snow" toolbar="essential" ref="greetingEditor" id="greetingEditor"
+          placeholder="Текст приветствия" />
+        <QuillEditor theme="snow" toolbar="essential" ref="orderEditor" id="orderEditor" placeholder="Текст в корзине" />
       </form>
     </CModalBody>
     <CModalFooter>
@@ -54,13 +52,11 @@ export default {
       eventBus.$emit('closeModal')
     },
     constractFromData() {
-      if (!this.formData.gitHubLink || !this.formData.linkedInLink || !this.formData.about) throw new Error()
 
       var formData = new FormData()
 
-      formData.append('gitHubLink', this.formData.gitHubLink)
-      formData.append('linkedInLink', this.formData.linkedInLink)
-      formData.append('about', this.$refs.aboutEditor.getHTML())
+      formData.append('greeting', this.$refs.greetingEditor.getHTML())
+      formData.append('order', this.$refs.orderEditor.getHTML())
 
       return formData
     },

@@ -1,27 +1,23 @@
-var EntitySchema = require('typeorm').EntitySchema;
+var EntitySchema = require("typeorm").EntitySchema;
 
 module.exports = new EntitySchema({
-  name: 'Static',
-  tableName: 'statics',
+  name: "Static",
+  tableName: "statics",
   columns: {
     id: {
       primary: true,
-      type: 'int',
+      type: "int",
       default: 1,
     },
-    gitHubLink: {
-      type: 'varchar',
-      primary: true,
-      length: 255,
+    greeting: {
+      type: "varchar",
+      primary: false,
+      length: 4096,
     },
-    linkedInLink: {
-      type: 'varchar',
-      primary: true,
-      length: 255,
-    },
-    about: {
-      type: 'text',
-      nullable: true,
+    order: {
+      type: "varchar",
+      primary: false,
+      length: 1024,
     },
   },
 });
