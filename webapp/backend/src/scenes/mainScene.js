@@ -43,8 +43,7 @@ const scene = new CustomWizardScene("clientScene").enter(async (ctx) => {
   const clearedGreeting = static.greeting
     ?.replaceAll("<p>", "")
     ?.replaceAll("</p>", "\n")
-    ?.replaceAll("<br>", "")
-    ?.replaceAll("<br/>", "");
+    ?.replaceAll(/\<(br|ol|li|ul)(\/)?\>/, "");
 
   ctx.replyWithKeyboard(clearedGreeting, "main_menu_keyboard");
   //"START_TITLE"
