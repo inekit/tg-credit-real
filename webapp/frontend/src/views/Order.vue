@@ -143,6 +143,7 @@ export default {
         },
         getDeliveryPricePostal() {
             if ([0, 6].includes(this.basketData.postal_code?.toString()?.length ?? 0)) this.getDeliveryPrice()
+            else { this.deliveryPrice = null; this.deliveryTime = null }
         },
         routeBack() {
             this.$router.go(-1)
