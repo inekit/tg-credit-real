@@ -36,7 +36,11 @@ const scene = new CustomWizardScene("clientScene").enter(async (ctx) => {
       });
   }
 
-  ctx.replyWithKeyboard("START_TITLE", "main_menu_keyboard");
+  const static = (
+    await connection.query(`select * from statics where id = 1;`)
+  )?.[0];
+
+  ctx.replyWithKeyboard(static.greeting, "main_menu_keyboard");
 });
 
 scene.hears(titles.getValues("WEBAPP_BUTTON"), (ctx) => {
