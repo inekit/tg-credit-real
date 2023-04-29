@@ -34,7 +34,7 @@ class BasketsService {
             to_location: { postal_code: postal_code?.toString(), address },
             packages: [
               {
-                weight: count * 100,
+                weight: 1000,
                 length: 50,
                 width: 50,
                 height: 50,
