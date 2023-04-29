@@ -48,7 +48,7 @@
                   <CButton color="secondary" @click="dropMaterial(materialName)">X</CButton>
                 </td>
                 <td v-for="sizeName in distinct_sizes" :key="'size-' + sizeName">
-                  <CFormInput type="text" v-model.number="options_object[materialName][sizeName]" />
+                  <CFormInput type="number" v-model.number="options_object[materialName][sizeName]" />
                 </td>
                 <td>
                 </td>
@@ -84,7 +84,7 @@
                   {{ materialName }}
                 </td>
                 <td v-for="sizeName in distinct_sizes" :key="'size-' + sizeName">
-                  <CFormInput type="text" v-model.number="options_object_backside[materialName][sizeName]" />
+                  <CFormInput type="number" v-model.number="options_object_backside[materialName][sizeName]" />
                 </td>
               </tr>
             </tbody>
