@@ -33,15 +33,12 @@ export default {
       },
       tableFieldNames: [
         {
-          name: 'gitHubLink',
-          title: 'Git',
+          name: 'greeting',
+          title: 'Приветствие',
         },
         {
-          name: 'linkedInLink',
-          title: 'LinkedIn',
-        }, {
-          name: 'about',
-          title: 'Обо мне',
+          name: 'order',
+          title: 'Корзина',
         },
       ],
     }
