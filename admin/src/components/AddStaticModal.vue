@@ -7,8 +7,8 @@
       <form ref="add-file-form" novalidate :validated="formValid" @submit.prevent="addTag" class="add-user"
         style="display: 'none'">
         <span>Приветствие</span>
-        <QuillEditor theme="snow" toolbar="essential" ref="greetingEditor" id="greetingEditor"
-          placeholder="Текст приветствия" class="mb-3" />
+        <QuillEditor theme="snow" :toolbar="['bold', 'italic', 'underline', 'strike']" ref="greetingEditor"
+          id="greetingEditor" placeholder="Текст приветствия" class="mb-3" />
         <span>Корзина</span>
         <QuillEditor theme="snow" toolbar="essential" ref="orderEditor" id="orderEditor" placeholder="Текст в корзине" />
       </form>
