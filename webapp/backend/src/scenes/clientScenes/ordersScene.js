@@ -112,7 +112,7 @@ scene.action(/^order\-([0-9]+)$/g, async (ctx) => {
     );
   } else if (order.status === "basket") {
     const total = order.items?.reduce((prev, cur) => prev + cur.price, 0) ?? 0;
-    ctx.editMenu("BASKET_INFO_TITLE", "go_back_keyboard", [orderStr, total]);
+    ctx.editMenu("BASKET_INFO_TITLE", "basket_keyboard", [orderStr, total]);
   } else ctx.editMenu("ORDER_INFO_TITLE", "go_back_keyboard", orderInfoParams);
 });
 

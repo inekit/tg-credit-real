@@ -31,9 +31,20 @@ exports.webapp_keyboard = (ctx, id) =>
     ],
   ]);
 
+exports.basket_keyboard = (ctx, id) =>
+  inlineKeyboard([
+    [
+      webAppButton(
+        ctx.getTitle("BASKET_INLINE_BUTTON"),
+        "https://fotodesire.ru/colorsfront/basket/" + id
+      ),
+    ],
+    [callbackButton(ctx.getTitle("BACK_BUTTON"), "go_back")],
+  ]);
+
 exports.chat_keyboard = (ctx, id) =>
   inlineKeyboard([
-    [urlButton(ctx.getTitle("GO_TO_CHAT_BUTTON"), "t.me/nicklzx")],
+    [urlButton(ctx.getTitle("GO_TO_CHAT_BUTTON"), "t.me/foto_desire")],
   ]);
 
 exports.confirm_keyboard = (ctx) =>
