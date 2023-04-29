@@ -65,7 +65,7 @@ export default {
     getStatic(perPage, page) {
       if (page > 1) return false;
       return myApi
-        .get(this.$store.state.publicPath + '/api/statics/', {
+        .get(this.$store.state.publicPath + '/api/admin/statics/', {
           perPage: perPage ?? 0,
           page: page ?? 0,
         })
