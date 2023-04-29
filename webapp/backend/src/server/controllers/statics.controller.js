@@ -10,9 +10,8 @@ function getOne(req, res, next) {
 function editOne(req, res, next) {
   servicePreset
     .edit({
-      gitHubLink: req.body.gitHubLink,
-      linkedInLink: req.body.linkedInLink,
-      about: req.body.about,
+      order: req.body.order,
+      greeting: req.body.greeting,
       id: 1,
     })
     .then((data) => res.send(data))
