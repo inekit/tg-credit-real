@@ -3,7 +3,7 @@ const checkInputData = require("../utils/checkInputData");
 const Cdek = require("../utils/cdek");
 const Ya = require("../utils/ya");
 const Pochta = require("../utils/pochta");
-
+require("dotenv").config();
 const {
   HttpError,
   MySqlError,
@@ -22,9 +22,9 @@ class BasketsService {
         if (!address && !postal_code) rej("No addr data");
         if (operator === "CДЭК" || operator === "Курьер") {
           const cdek = new Cdek({
-            test_mode: true,
-            client_id: "EMscd6r9JnFiQ3bLoyjJY6eM78JrJceI",
-            client_secret: "PjLZkKBHEiLK3YsjtNrt3TGNG0ahs3kG",
+            test_mode: false,
+            client_id: process.env.CDEK_ID, //"EMscd6r9JnFiQ3bLoyjJY6eM78JrJceI",
+            client_secret: process.env.CDEK_SECRET, //"PjLZkKBHEiLK3YsjtNrt3TGNG0ahs3kG",
           });
 
           await cdek.auth();
@@ -73,8 +73,8 @@ class BasketsService {
         } else if (operator === "Почта РФ") {
           const pochta = new Pochta({
             test_mode: false,
-            access_token: "gHd4PN9uPGC7nEBt9BLPU77OXShxjsfA",
-            authorization_key: "a2lsbGpveTgwQGluYm94LnJ1Ojg1NDM1MQ==",
+            access_token: process.env.POCHTA_TOKEN,
+            authorization_key: process.env.POCHTA_KEY,
           });
           const result = await pochta.getPrice({
             total_weight: count * 100,
