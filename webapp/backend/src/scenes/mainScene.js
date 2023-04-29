@@ -40,7 +40,13 @@ const scene = new CustomWizardScene("clientScene").enter(async (ctx) => {
     await connection.query(`select * from statics where id = 1;`)
   )?.[0];
 
-  ctx.replyWithKeyboard(static.greeting, "main_menu_keyboard");
+  const clearedGreeting = static.greeting?.replace(
+    /\<p\>(.+)\<\/p\>/g,
+    "$1\\n"
+  );
+
+  ctx.replyWithKeyboard(clearedGreeting, "main_menu_keyboard");
+  //"START_TITLE"
 });
 
 scene.hears(titles.getValues("WEBAPP_BUTTON"), (ctx) => {
