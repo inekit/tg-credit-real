@@ -11,7 +11,7 @@
                     <img :src="`/colorsserver/public/pics/${item.image_list?.[0]}`" />
                 </div>
                 <span class="title">
-                    {{ item.title + (item.mainside_id ? " (обр.)" : "") }}
+                    {{ item.title + (item.mainside_id ? " (обратная)" : "") }}
                 </span>
                 <span class="size">
                     Размер {{ item.size }}
@@ -251,6 +251,11 @@ export default {
         left: 30vw;
         top: 0;
         font-size: 1.4rem;
+        display: block;
+        width: 45vw;
+        word-break: break-all;
+        height: 1.9rem;
+        overflow: hidden;
     }
 
     .count-select {

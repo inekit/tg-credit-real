@@ -96,7 +96,8 @@ export default {
     methods: {
         order() {
             if (!this.basketData.address || !this.basketData.phone ||
-                !this.basketData.name || !this.basketData.surname || !this.basketData.patronymic)
+                !this.basketData.name || !this.basketData.surname || !this.basketData.patronymic
+                || !this.basketData.postal_code)
                 return alert("Пожалуйста, заполните все поля")
             //if (!this.deliveryPrice) return alert("Пожалуйста, укажите верные данные для доставки")
 

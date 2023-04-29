@@ -20,7 +20,11 @@ class BasketsService {
     return new Promise(async (res, rej) => {
       try {
         if (!address && !postal_code) rej("No addr data");
-        if (operator === "CДЭК" || operator === "Курьер") {
+        if (
+          operator === "CДЭК" ||
+          operator === "Курьер" ||
+          operator === "Я. Доставка"
+        ) {
           const cdek = new Cdek({
             test_mode: false,
             client_id: process.env.CDEK_ID, //"EMscd6r9JnFiQ3bLoyjJY6eM78JrJceI",
@@ -77,7 +81,7 @@ class BasketsService {
             authorization_key: process.env.POCHTA_KEY,
           });
           const result = await pochta.getPrice({
-            total_weight: count * 100,
+            total_weight: 1000,
             from_index: "603065",
             to_index: postal_code?.toString(),
           });
