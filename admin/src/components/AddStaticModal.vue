@@ -45,7 +45,9 @@ export default {
   },
   updated() {
     this.formValid = false
-    this.formData.about && this.$refs.aboutEditor?.setHTML(this.formData.about)
+    this.formData.greeting && this.$refs.greetingEditor?.setHTML(this.formData.greeting)
+    this.formData.order && this.$refs.orderEditor?.setHTML(this.formData.order)
+
   },
   methods: {
     closeModal() {

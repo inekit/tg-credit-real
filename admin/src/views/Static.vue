@@ -50,7 +50,7 @@ export default {
     })
     eventBus.$on('staticEdited', () => {
       this.formVisible = false
-      this.get()
+      this.getStatic()
       this.formData = {}
     })
   },
