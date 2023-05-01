@@ -131,7 +131,7 @@ class UsersService {
     categoryName,
     previewsBinary,
     images,
-    options,
+    options = [],
     select_name,
     description,
   }) {
