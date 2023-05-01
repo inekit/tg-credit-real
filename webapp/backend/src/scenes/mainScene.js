@@ -36,20 +36,7 @@ const scene = new CustomWizardScene("clientScene").enter(async (ctx) => {
       });
   }
 
-  const static = (
-    await connection.query(`select * from statics where id = 1;`)
-  )?.[0];
-
-  const clearedGreeting = static.greeting
-    ?.replaceAll("<p>", "")
-    ?.replaceAll("</p>", "\n")
-    ?.replaceAll(
-      /\<\/?(br|ol|li|ul|blockquote|span|h1|h2|h3|h4|h5|h6)([^>]+)?\/?\>/g,
-      ""
-    );
-
-  ctx.replyWithKeyboard(clearedGreeting, "main_menu_keyboard");
-  //"START_TITLE"
+  ctx.replyWithKeyboard("START_TITLE", "main_menu_keyboard");
 });
 
 scene.hears(titles.getValues("WEBAPP_BUTTON"), (ctx) => {
