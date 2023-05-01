@@ -158,7 +158,7 @@ class BasketsService {
 
       connection
         .query(
-          `select io.id, i.id item_id, o.id order_id, o.creation_date, i.title, i.image_list, count, size, material, price, mainside_id from 
+          `select io.id, i.id item_id, o.id order_id, o.creation_date, i.title, io.photos, count, io.name, price from 
           orders o 
           left join order_items oi on oi.order_id = o.id
           left join item_options io on oi.item_option_id = io.id
@@ -185,8 +185,7 @@ class BasketsService {
           sum(oi.count)::int  total_count,
           json_agg(DISTINCT 
             jsonb_build_object('id', io.id, 'item_id', i.id, 'order_id', o.id, 'creation_date', o.creation_date, 
-            'title', i.title, 'image_list', i.image_list, 'count', count, 'size', size, 
-            'material', material, 'price', price, 'mainside_id', mainside_id))  favorites
+            'title', i.title, 'image_list', io.photos, 'count', count, 'option_name', io.name, 'price', price))  favorites
           from users u 
           left join orders o on u.id = o.user_id
           left join order_items oi on oi.order_id = o.id
