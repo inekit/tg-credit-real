@@ -20,10 +20,5 @@ module.exports = new EntitySchema({
       length: 300,
       nullable: true,
     },
-    backside_available: {
-      type: "boolean",
-      nullable: false,
-      default: true,
-    },
   },
 });
