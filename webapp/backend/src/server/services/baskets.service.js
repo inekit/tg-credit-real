@@ -201,7 +201,7 @@ class BasketsService {
 
           const basketData = data[0];
 
-          if (!basketData) rej("No basket");
+          if (!basketData) return rej("No basket");
 
           if (!basketData.favorites[0]?.id) basketData.favorites = [];
           return res(data[0]);
