@@ -30,6 +30,7 @@ module.exports = new EntitySchema({
     price: {
       type: "int",
       nullable: false,
+      default: 100,
     },
     select_name: {
       type: "varchar",
