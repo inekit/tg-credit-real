@@ -206,7 +206,10 @@ class BasketsService {
           if (!basketData.favorites[0]?.id) basketData.favorites = [];
           return res(data[0]);
         })
-        .catch((error) => rej(new MySqlError(error)));
+        .catch((error) => {
+          console.log(error);
+          rej(new MySqlError(error));
+        });
     });
   }
 }
