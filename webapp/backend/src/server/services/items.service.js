@@ -25,13 +25,8 @@ class UsersService {
     searchQuery,
     sort = "newing",
     category,
-    size,
-    material,
     user_id,
     item_option_id,
-    mainside_id,
-    backside_id,
-    is_backside = null,
   }) {
     return new Promise(async (res, rej) => {
       const skip = (page - 1) * take;
@@ -49,15 +44,14 @@ class UsersService {
       const connection = await tOrmCon;
       {
         const query = user_id
-          ? `select p.*,json_agg(DISTINCT jsonb_build_object('id', io.id, 'size', io.size, 'material', io.material, 'price', io.price, 'is_backside', io.is_backside))  options_array
-            ,min(io.price) price, 
+          ? `select p.*,json_agg(DISTINCT jsonb_build_object('id', io.id, 'name', io.name, 'photos', io.photos))  options_array,
+            price, select_name,
             case when count(
               case when 
                 o.user_id = $6 and o.status = 'basket' and oi.is_backside = false
               then 1 else NULL end
-              ) > 0 then true else false end as is_favorite,
-              backside_available
-
+              ) > 0 then true else false end as is_favorite
+      
                 from public.items p
                 left join categories c on c.name = p.category_name
                 left join item_options io on p.id = io.item_id
@@ -66,23 +60,17 @@ class UsersService {
                 where (lower(title) like lower($1) or $1 is NULL) 
                 and (p.category_name = $2 or $2 is NULL)  
                 and (p.id = $3 or $3 is NULL)  
-                and (io.size = $7::varchar or $7::varchar is NULL)
-                and (io.material = $8::varchar or $8::varchar is NULL)
-                and (io.is_backside = $10::boolean or $10::boolean is NULL)
-                and (oi.item_option_id = $9::int or $9::int is NULL)
+                and (oi.item_option_id = $7::int or $7::int is NULL)
                 group by p.id,c.name
                 order by ${orderQueryPart}
                 LIMIT $4 OFFSET $5`
-          : `select p.*,json_agg(DISTINCT jsonb_build_object('id', io.id, 'size', io.size, 'material', io.material, 'price', io.price, 'is_backside', io.is_backside))  options_array
-                ,min(io.price) price
+          : `select p.*,json_agg(DISTINCT jsonb_build_object('id', io.id, 'name', io.name, 'photos', io.photos))  options_array
+                 ,price, select_name
                     from public.items p
                     left join item_options io on p.id = io.item_id
                     where (lower(title) like lower($1) or $1 is NULL) 
                     and $6::int is NULL
-                    and $7::varchar is NULL
-                    and $8::varchar is NULL
-                    and $9::int is NULL
-                    and $10::boolean is NULL
+                    and $7::int is NULL
                     and (p.category_name = $2 or $2 is NULL)  
                     and (p.id = $3 or $3 is NULL)  
                     group by p.id
@@ -96,30 +84,12 @@ class UsersService {
             take,
             skip,
             user_id,
-            size,
-            material,
             item_option_id,
-            is_backside,
           ])
           .then((data) => res(data))
           .catch((error) => rej(new MySqlError(error)));
       }
     });
-  }
-
-  transformTagsArray(tagsArray) {
-    let tagObjs;
-    if (typeof tagsArray === "object") {
-      tagObjs = tagsArray?.map((name) => {
-        return {
-          name,
-        };
-      });
-    } else if (typeof tagsArray === "string") {
-      tagObjs = [{ name: tagsArray }];
-    } else tagObjs = [];
-
-    return tagObjs;
   }
 
   async saveReturningFileName(image) {
@@ -158,11 +128,10 @@ class UsersService {
   add({
     title,
     text,
-    optionsObject,
-    optionsObjectBackside,
     categoryName,
     previewsBinary,
-    images,
+    options,
+    select_name,
     description,
   }) {
     return new Promise(async (res, rej) => {
@@ -193,33 +162,16 @@ class UsersService {
           description,
           text,
           category_name: categoryName,
-          image_list: fNameFullPaths,
+          select_name,
+          //image_list: fNameFullPaths,
         });
 
         const { id } = data;
-        const oo = optionsObject && JSON.parse(optionsObject);
-        for (let m in oo) {
-          const sizes = oo[m];
-          for (let s in sizes) {
-            const price = sizes[s];
-            if (price)
-              await queryRunner.query(
-                "insert into item_options (item_id,size,material,price) values ($1,$2,$3,$4)",
-                [id, s, m, price]
-              );
-          }
-        }
-        const oob = optionsObjectBackside && JSON.parse(optionsObjectBackside);
-        for (let m in oob) {
-          const sizes = oob[m];
-          for (let s in sizes) {
-            const price = sizes[s];
-            if (price)
-              await queryRunner.query(
-                "insert into item_options (item_id,size,material,price, is_backside) values ($1,$2,$3,$4,true)",
-                [id, s, m, price]
-              );
-          }
+        for (let { name } of JSON.parse(options)) {
+          await queryRunner.query(
+            "insert into item_options (item_id,name) values ($1,$2)",
+            [id, name]
+          );
         }
 
         await queryRunner.commitTransaction();

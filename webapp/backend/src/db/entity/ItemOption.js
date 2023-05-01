@@ -18,6 +18,12 @@ module.exports = new EntitySchema({
       length: 255,
       nullable: true,
     },
+    photos: {
+      type: "varchar",
+      array: true,
+      length: 300,
+      nullable: true,
+    },
   },
   relations: {
     item: {

@@ -19,16 +19,15 @@ module.exports = new EntitySchema({
       default: " ",
       default: "Описание",
     },
-    image_list: {
-      type: "varchar",
-      array: true,
-      length: 300,
-      nullable: true,
-    },
     publication_date: {
       createDate: true,
     },
     category_name: {
+      type: "varchar",
+      length: 255,
+      nullable: true,
+    },
+    select_name: {
       type: "varchar",
       length: 255,
       nullable: true,
