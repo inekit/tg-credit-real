@@ -175,7 +175,7 @@ class BasketsService {
     });
   }
 
-  getBasketData({ user_id, item_option_id }) {
+  getBasketData({ user_id }) {
     return new Promise(async (res, rej) => {
       const connection = await tOrmCon;
 

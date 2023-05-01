@@ -48,7 +48,7 @@ class UsersService {
             price, select_name,
             case when count(
               case when 
-                o.user_id = $6 and o.status = 'basket' and oi.is_backside = false
+                o.user_id = $6 and o.status = 'basket'
               then 1 else NULL end
               ) > 0 then true else false end as is_favorite
       
