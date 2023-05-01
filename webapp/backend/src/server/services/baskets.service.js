@@ -197,7 +197,7 @@ class BasketsService {
           [user_id]
         )
         .then(async (data) => {
-          if (!data?.[0]) rej(new Error(data));
+          if (!data?.[0]) return rej(new Error(data));
 
           const basketData = data[0];
 
