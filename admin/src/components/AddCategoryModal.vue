@@ -20,13 +20,6 @@
         <CFormTextarea v-model="formData.description" placeholder="Описание" id="inputDescription"
           aria-describedby="inputGroupPrepend" required />
       </CForm>
-      <div class="types-list">
-        <span>Обратная сторона</span>
-        <CFormCheck id="type-money" :checked="formData.backside_available === true"
-          @input="formData.backside_available = true" type="radio" name="type-money" value="money" label="Да" />
-        <CFormCheck id="type-procent" :checked="formData.backside_available === false"
-          @input="formData.backside_available = false" type="radio" name="type-procent" value="procent" label="Нет" />
-      </div>
     </CModalBody>
     <CModalFooter>
       <CButton color="secondary" @click="closeModal">
@@ -87,8 +80,6 @@ export default {
 
       formData.append('name', this.formData.name);
       formData.append('old_name', this.old_name)
-
-      formData.append('backside_available', this.formData.backside_available)
 
       formData.append('description', this.formData.description)
 
