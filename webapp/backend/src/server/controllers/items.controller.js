@@ -12,12 +12,6 @@ function getAll(req, res, next) {
     .catch((error) => next(error));
 }
 
-function getRss(req, res, next) {
-  try {
-    res.redirect("/public/RSS.xml");
-  } catch (e) {}
-}
-
 function addOne(req, res, next) {
   add(
     Object.assign(req.body, {
@@ -49,7 +43,6 @@ function deleteOne(req, res, next) {
 
 module.exports = {
   getAll,
-  getRss,
   addOne,
   editOne,
   deleteOne,

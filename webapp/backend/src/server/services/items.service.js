@@ -47,49 +47,7 @@ class UsersService {
           : "price DESC";
 
       const connection = await tOrmCon;
-
-      if (mainside_id)
-        connection
-          .query(
-            `select p.*,
-          json_agg(DISTINCT jsonb_build_object('id', io.id, 'size', io.size, 'material', io.material, 'price', io.price, 'is_backside', io.is_backside))  options_array
-          ,min(io.price) price, case when count(o.id) > 0 then true else false end as is_favorite
-              from public.items p
-              left join item_options io on p.id = io.item_id
-              left join order_items oi on io.id = oi.item_option_id
-              left join orders o on o.id = oi.order_id
-              where oi.mainside_id = $1
-              and o.user_id = $2
-              and o.status = 'basket'
-              group by p.id
-              limit 1`,
-            [mainside_id, user_id]
-          )
-          .then((data) => res(data))
-          .catch((error) => rej(new MySqlError(error)));
-      else if (backside_id)
-        connection
-          .query(
-            `select p.*,
-          json_agg(DISTINCT jsonb_build_object('id', io.id, 'size', io.size, 'material', io.material, 'price', io.price, 'is_backside', io.is_backside))  options_array
-          ,min(io.price) price, case when count(o.id) > 0 then true else false end as is_favorite
-              from public.items p
-              left join item_options io on p.id = io.item_id
-              left join order_items oi on io.id = oi.item_option_id
-              left join orders o on o.id = oi.order_id
-              left join order_items oi2 on oi2.mainside_id = io.id
-              left join orders o2 on o2.id = oi2.order_id
-              where oi2.item_option_id = $1
-              and o2.user_id = $2
-              and o2.status = 'basket'
-              and io.id = $3
-              group by p.id
-              limit 1`,
-            [backside_id, user_id, id]
-          )
-          .then((data) => res(data))
-          .catch((error) => rej(new MySqlError(error)));
-      else {
+      {
         const query = user_id
           ? `select p.*,json_agg(DISTINCT jsonb_build_object('id', io.id, 'size', io.size, 'material', io.material, 'price', io.price, 'is_backside', io.is_backside))  options_array
             ,min(io.price) price, 

@@ -5,11 +5,9 @@ const { SnakeNamingStrategy } = require("typeorm-naming-strategies");
 const Item = require("./src/db/entity/Item");
 const Admin = require("./src/db/entity/Admin");
 const Category = require("./src/db/entity/Category");
-const Tag = require("./src/db/entity/Tag");
 const Static = require("./src/db/entity/Static");
 const Session = require("./src/db/entity/Session");
 const User = require("./src/db/entity/User");
-const Favorite = require("./src/db/entity/Favorite");
 const Order = require("./src/db/entity/Order");
 const OrderItem = require("./src/db/entity/OrderItem");
 const ItemOption = require("./src/db/entity/ItemOption");
@@ -32,9 +30,7 @@ const AppDataSource = new DataSource({
     Admin,
     Item,
     Session,
-    Favorite,
     Static,
-    Tag,
     Category,
     Order,
     OrderItem,

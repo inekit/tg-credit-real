@@ -43,13 +43,5 @@ module.exports = new EntitySchema({
       onDelete: "SET NULL",
       onUpdate: "cascade",
     },
-    tags: {
-      target: "Tag",
-      type: "many-to-many",
-      joinTable: true,
-      cascade: false,
-      onDelete: "SET NULL",
-      onUpdate: "cascade",
-    },
   },
 });

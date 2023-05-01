@@ -9,11 +9,6 @@ module.exports = new EntitySchema({
       type: "bigint",
       nullable: false,
     },
-    is_backside: {
-      primary: true,
-      type: "boolean",
-      default: false,
-    },
     order_id: {
       primary: true,
       type: "bigint",
@@ -23,10 +18,6 @@ module.exports = new EntitySchema({
       primary: true,
       type: "int",
       generated: true,
-    },
-    mainside_id: {
-      type: "bigint",
-      nullable: true,
     },
     count: {
       type: "int",
@@ -44,14 +35,6 @@ module.exports = new EntitySchema({
     },
     order: {
       target: "Order",
-      type: "many-to-one",
-      joinColumn: true,
-      cascade: true,
-      onDelete: "cascade",
-      onUpdate: "cascade",
-    },
-    mainside: {
-      target: "ItemOption",
       type: "many-to-one",
       joinColumn: true,
       cascade: true,

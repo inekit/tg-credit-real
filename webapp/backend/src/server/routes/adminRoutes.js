@@ -11,7 +11,6 @@ var OrdersController = require("../controllers/orders.controller");
 var PromosController = require("../controllers/promos.controller");
 var MessagesController = require("../controllers/messages.controller");
 
-var TagsController = require("../controllers/tags.controller");
 var CategoriesController = require("../controllers/categories.controller");
 var StaticsController = require("../controllers/statics.controller");
 
@@ -39,14 +38,6 @@ module.exports = (ctx) => {
   router.post("/promos", auth, PromosController.add);
   router.put("/promos", auth, PromosController.edit);
   router.delete("/promos", auth, PromosController.drop);
-
-  router.post("/tags", auth, TagsController.addOne);
-  router.put("/tags", auth, TagsController.editOne);
-  router.delete("/tags", auth, TagsController.deleteOne);
-
-  router.post("/categories", auth, CategoriesController.addOne);
-  router.put("/categories", auth, CategoriesController.editOne);
-  router.delete("/categories", auth, CategoriesController.deleteOne);
 
   router.post("/categories", auth, CategoriesController.addOne);
   router.put("/categories", auth, CategoriesController.editOne);
