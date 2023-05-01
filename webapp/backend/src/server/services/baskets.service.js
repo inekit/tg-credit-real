@@ -192,10 +192,9 @@ class BasketsService {
           left join item_options io on oi.item_option_id = io.id
           left join items i on io.item_id = i.id
           where u.id = $1 and status='basket' 
-          and ((io.id = $2 and oi.is_backside = false) or $2 is NULL)  
           group by u.id
           limit 1`,
-          [user_id, item_option_id]
+          [user_id]
         )
         .then(async (data) => {
           if (!data?.[0]) rej(new Error(data));
