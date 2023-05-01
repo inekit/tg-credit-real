@@ -16,25 +16,9 @@ class BasketsService {
     this.deleteFavorite = this.deleteFavorite.bind(this);
   }
 
-  addFavorite({
-    user_id,
-    item_option_id,
-    count,
-    mainside_id,
-    change_individual,
-    individual_price,
-    individual_text,
-  }) {
+  addFavorite({ user_id, item_option_id, count, mainside_id }) {
     return new Promise(async (res, rej) => {
       const connection = await tOrmCon;
-
-      if (change_individual && individual_text && individual_price) {
-        const data = await connection.query(
-          `update orders set individual_text = $1, individual_price = $2 where user_id = $3 and status='basket'`,
-          [individual_text, individual_price, user_id]
-        );
-        return res(data);
-      }
 
       const queryRunner = connection.createQueryRunner();
 
@@ -128,17 +112,9 @@ class BasketsService {
     });
   }
 
-  deleteFavorite({ user_id, item_option_id, mainside_id, change_individual }) {
+  deleteFavorite({ user_id, item_option_id, mainside_id }) {
     return new Promise(async (res, rej) => {
       const connection = await tOrmCon;
-
-      if (change_individual) {
-        const data = await connection.query(
-          `update orders set individual_text = null, individual_price = null where user_id = $1 and status='basket'`,
-          [user_id]
-        );
-        return res(data);
-      }
 
       const queryRunner = connection.createQueryRunner();
 
@@ -205,8 +181,7 @@ class BasketsService {
 
       connection
         .query(
-          `select u.name, u.surname, u.patronymic, u.address, u.phone, u.postal_code, coalesce(sum(io.price * oi.count),0)::int+coalesce(individual_price,0)::int  total, 
-          individual_text, individual_price,
+          `select u.name, u.surname, u.patronymic, u.address, u.phone, u.postal_code, coalesce(sum(i.price * oi.count),0)::int  total, 
           sum(oi.count)::int  total_count,
           json_agg(DISTINCT 
             jsonb_build_object('id', io.id, 'item_id', i.id, 'order_id', o.id, 'creation_date', o.creation_date, 
@@ -219,7 +194,7 @@ class BasketsService {
           left join items i on io.item_id = i.id
           where u.id = $1 and status='basket' 
           and ((io.id = $2 and oi.is_backside = false) or $2 is NULL)  
-          group by u.id, o.individual_text, o.individual_price
+          group by u.id
           limit 1`,
           [user_id, item_option_id]
         )
