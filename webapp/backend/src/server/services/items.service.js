@@ -168,7 +168,7 @@ class UsersService {
         });
 
         const { id } = data;
-        for (let { name } of JSON.parse(options)) {
+        for (let { name } of options) {
           await queryRunner.query(
             "insert into item_options (item_id,name) values ($1,$2)",
             [id, name]
