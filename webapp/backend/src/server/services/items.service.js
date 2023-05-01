@@ -130,6 +130,7 @@ class UsersService {
     text,
     categoryName,
     previewsBinary,
+    images,
     options,
     select_name,
     description,
