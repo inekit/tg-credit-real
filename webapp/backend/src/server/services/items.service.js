@@ -132,7 +132,7 @@ class UsersService {
     photosBinary,
     photos,
     price,
-    options = [],
+    options_array = [],
     select_name,
     description,
   }) {
@@ -156,8 +156,8 @@ class UsersService {
         });
 
         const { id } = data;
-        for (let optionIndex in options) {
-          const { name, stock } = options[optionIndex];
+        for (let optionIndex in options_array) {
+          const { name, stock } = options_array[optionIndex];
 
           let fNameFullPaths = Array.isArray(photosBinary[optionIndex])
             ? await Promise.all(
