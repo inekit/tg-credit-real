@@ -15,7 +15,7 @@ function getAll(req, res, next) {
 function addOne(req, res, next) {
   const photosBinary = [];
   for (let paramName in req.files) {
-    console.log(paramName.substring(0, 6));
+    console.log(paramName.substring(7, 8));
     if (paramName.substring(0, 6) !== "photos") continue;
     photosBinary.push(req.files[paramName]);
   }
@@ -24,7 +24,7 @@ function addOne(req, res, next) {
     if (paramName.substring(0, 6) !== "photos") continue;
     photos.push(req.body[paramName]);
   }
-  console.log(1212, photos);
+  console.log(1212, photos, photosBinary);
 
   add(
     Object.assign(req.body, {
