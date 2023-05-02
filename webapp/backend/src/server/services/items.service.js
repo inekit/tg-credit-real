@@ -156,9 +156,10 @@ class UsersService {
         });
 
         const { id } = data;
-        for (let optionIndex in options_array) {
-          console.log(options_array, options_array[optionIndex]);
-          const { name, stock } = options_array[optionIndex];
+        const oa_parsed = JSON.parse(options_array);
+        for (let optionIndex in oa_parsed) {
+          console.log(oa_parsed, oa_parsed[optionIndex]);
+          const { name, stock } = oa_parsed[optionIndex];
 
           let fNameFullPaths = Array.isArray(photosBinary[optionIndex])
             ? await Promise.all(
