@@ -16,7 +16,6 @@ function addOne(req, res, next) {
   const photosBinary = [];
   for (let paramName in req.files) {
     const index = parseInt(paramName.substring(7, 8));
-    console.log(index);
     if (paramName.substring(0, 6) !== "photos") continue;
     if (photosBinary[index]) photosBinary[index].push(req.files[paramName]);
     else photosBinary[index] = [req.files[paramName]];

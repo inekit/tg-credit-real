@@ -129,8 +129,8 @@ class UsersService {
     title,
     text,
     categoryName,
-    previewsBinary,
-    images,
+    photosBinary,
+    photos,
     price,
     options = [],
     select_name,
@@ -146,19 +146,6 @@ class UsersService {
       await queryRunner.startTransaction();
 
       try {
-        let fNameFullPaths = Array.isArray(previewsBinary)
-          ? await Promise.all(
-              previewsBinary.map(
-                async (preview) => await this.saveReturningFileName(preview)
-              )
-            )
-          : [await this.saveReturningFileName(previewsBinary)];
-        const images_array = Array.isArray(images) ? images : [images];
-
-        fNameFullPaths = [
-          ...new Set([...fNameFullPaths, ...images_array]),
-        ]?.filter((el) => el);
-
         const data = await queryRunner.manager.getRepository("Item").save({
           title,
           description,
@@ -166,14 +153,30 @@ class UsersService {
           price,
           category_name: categoryName,
           select_name,
-          //image_list: fNameFullPaths,
         });
 
         const { id } = data;
-        for (let { name } of options) {
+        for (let optionIndex in options) {
+          const { name, stock } = options[optionIndex];
+
+          let fNameFullPaths = Array.isArray(photosBinary[optionIndex])
+            ? await Promise.all(
+                photosBinary[optionIndex].map(
+                  async (preview) => await this.saveReturningFileName(preview)
+                )
+              )
+            : [await this.saveReturningFileName(photosBinary[optionIndex])];
+          const images_array = Array.isArray(photos[optionIndex])
+            ? photos[optionIndex]
+            : [photos[optionIndex]];
+
+          fNameFullPaths = [
+            ...new Set([...fNameFullPaths, ...images_array]),
+          ]?.filter((el) => el);
+
           await queryRunner.query(
-            "insert into item_options (item_id,name) values ($1,$2)",
-            [id, name]
+            "insert into item_options (item_id,name,stock,photos ) values ($1,$2,$3,$4)",
+            [id, name, stock, fNameFullPaths]
           );
         }
 
