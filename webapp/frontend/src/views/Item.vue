@@ -77,7 +77,7 @@ export default {
         },
         async item(to) {
 
-            this.selected_option = to?.options_array?.[0]?.[id]
+            this.selected_option = to?.options_array?.[0]?.id
             this.count = (await this.getBasketOption())?.count ?? 0;
             this.item.is_favorite = !!this.count;
             this.item.description = marked.parse(this.item.description?.replaceAll("\r\n\r\n", "<span><br/><span/>\r\n\r\n"))
