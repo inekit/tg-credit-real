@@ -30,10 +30,11 @@ export default [
     icon: 'cil-description',
   },
 
-  {
+  /* {
     component: 'CNavItem',
     name: 'Текста',
     to: '/static',
     icon: 'cil-description',
   },
+  */
 ]

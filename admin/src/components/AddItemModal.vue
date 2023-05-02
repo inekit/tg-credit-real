@@ -44,7 +44,7 @@
                 </div>
               </template>
             </div>
-            <CButton v-if="formData.options_array.length > 0" color="danger" type="button" @click="dropOption(id)">Удалить
+            <CButton v-if="id > 0" color="danger" type="button" @click="dropOption(id)">Удалить
               опцию
             </CButton>
           </div>

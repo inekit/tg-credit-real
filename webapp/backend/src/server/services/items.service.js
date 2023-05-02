@@ -60,6 +60,7 @@ class UsersService {
                 where (lower(title) like lower($1) or $1 is NULL) 
                 and (p.category_name = $2 or $2 is NULL)  
                 and (p.id = $3 or $3 is NULL)  
+                and io.stock > 0
                 and (oi.item_option_id = $7::int or $7::int is NULL)
                 group by p.id,c.name
                 order by ${orderQueryPart}
