@@ -17,15 +17,13 @@ function addOne(req, res, next) {
   for (let paramName in req.files) {
     const index = parseInt(paramName.substring(7, 8));
     if (paramName.substring(0, 6) !== "photos") continue;
-    if (photosBinary[index]) photosBinary[index].push(req.files[paramName]);
-    else photosBinary[index] = [req.files[paramName]];
+    photosBinary[index] = req.files[paramName];
   }
   const photos = [];
   for (let paramName in req.body) {
     const index = parseInt(paramName.substring(7, 8));
     if (paramName.substring(0, 6) !== "photos") continue;
-    if (photos[index]) photos[index].push(req.body[paramName]);
-    else photos[index] = [req.body[paramName]];
+    photos[index] = req.body[paramName];
   }
   console.log(1212, photos, photosBinary);
 
