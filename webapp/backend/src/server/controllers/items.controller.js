@@ -13,10 +13,23 @@ function getAll(req, res, next) {
 }
 
 function addOne(req, res, next) {
+  const photosBinary = [];
+  for (let paramName in req.files) {
+    console.log(paramName.substring(0, 6));
+    if (paramName.substring(0, 6) !== "photos") continue;
+    photosBinary.push(req.files[paramName]);
+  }
+  const photos = [];
+  for (let paramName in req.body) {
+    if (paramName.substring(0, 6) !== "photos") continue;
+    photos.push(req.body[paramName]);
+  }
+  console.log(photos);
+
   add(
     Object.assign(req.body, {
-      images: req.body?.["images[]"],
-      previewsBinary: req.files?.["images[]"],
+      photos,
+      photosBinary,
     })
   )
     .then((data) => res.send(data))
@@ -26,8 +39,8 @@ function addOne(req, res, next) {
 async function editOne(req, res, next) {
   editPost(
     Object.assign(req.body, {
-      images: req.body?.["images[]"],
-      previewsBinary: req.files?.["images[]"],
+      images: req.body?.["photos[]"],
+      previewsBinary: req.files?.["photos[]"],
     })
   )
     .then((data) => res.send(data))

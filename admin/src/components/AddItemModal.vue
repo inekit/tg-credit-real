@@ -45,7 +45,7 @@
               </template>
             </div>
           </div>
-          <CButton v-if="!!formData.select_name" color="primary" type="button" @click="addOption">Добавить опцию
+          <CButton v-if="formData.select_name != ''" color="primary" type="button" @click="addOption">Добавить опцию
           </CButton>
         </div>
 
