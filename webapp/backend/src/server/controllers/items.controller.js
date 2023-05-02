@@ -15,14 +15,18 @@ function getAll(req, res, next) {
 function addOne(req, res, next) {
   const photosBinary = [];
   for (let paramName in req.files) {
-    console.log(paramName.substring(7, 8));
+    const index = parseInt(paramName.substring(7, 8));
+    console.log(index);
     if (paramName.substring(0, 6) !== "photos") continue;
-    photosBinary.push(req.files[paramName]);
+    if (photosBinary[index]) photosBinary[index].push(req.files[paramName]);
+    else photosBinary[index] = [req.files[paramName]];
   }
   const photos = [];
   for (let paramName in req.body) {
+    const index = parseInt(paramName.substring(7, 8));
     if (paramName.substring(0, 6) !== "photos") continue;
-    photos.push(req.body[paramName]);
+    if (photos[index]) photos[index].push(req.body[paramName]);
+    else photos[index] = [req.body[paramName]];
   }
   console.log(1212, photos, photosBinary);
 
