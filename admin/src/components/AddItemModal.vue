@@ -23,12 +23,12 @@
         <CFormInput type="number" class="mb-3" label="Цена" placeholder="Введите цену" v-model.number="formData.price" />
         <div class="options-shedle">
           <span>Опции</span>
-          <CFormCheck id="select-taste" v-model="formData.select_name" type="radio" name="project-name" value="taste"
-            label="Вкус" />
-          <CFormCheck id="select-color" v-model="formData.select_name" type="radio" name="project-name" value="color"
-            label="Цвет" />
-          <CFormCheck id="select-none" @input="formData.options_array.length = preview_list.length = 1"
-            v-model="formData.select_name" type="radio" name="project-name" value="" label="Без опций" checked />
+          <CFormCheck id="select-taste" @change="formData.select_name = 'taste'" type="radio" name="project-name"
+            value="taste" label="Вкус" :checked="formData.select_name === 'taste'" />
+          <CFormCheck id="select-color" @change="formData.select_name = 'color'" type="radio" name="project-name"
+            value="color" label="Цвет" :checked="formData.select_name === 'color'" />
+          <CFormCheck id="select-none" @input="selectNone" @change="formData.select_name = null" type="radio"
+            name="project-name" value="" label="Без опций" :checked="!formData.select_name" />
           <div class="option-item" v-for="option, id in formData.options_array" :key="option.id">
             <CFormInput type="text" class="mb-3" label="Название" placeholder="Введите название"
               v-model="formData.options_array[id].name" />
@@ -45,7 +45,7 @@
               </template>
             </div>
           </div>
-          <CButton v-if="formData.select_name != ''" color="primary" type="button" @click="addOption">Добавить опцию
+          <CButton v-if="!!formData.select_name" color="primary" type="button" @click="addOption">Добавить опцию
           </CButton>
         </div>
 
@@ -109,7 +109,7 @@ export default {
     console.log(1)
 
     this.formData.options_array = this.formData.options_array?.
-      filter(({ material, price, size }) => !material && !size && !price ? false : true)
+      filter(({ id }) => !id ? false : true)
 
     this.formData.description && this.$refs.postTextEditor.pasteHTML(
       marked.parse(this.formData.description?.replaceAll("\r\n\r\n", "<span><br/><span/>\r\n\r\n")))
@@ -132,6 +132,9 @@ export default {
         .catch((error) => {
           eventBus.$emit('noresponse', error)
         })
+    },
+    selectNone() {
+      this.formData.options_array.length = this.preview_list.length = 1
     },
     addOption() {
       if (!this.formData.options_array) this.formData.options_array = []
