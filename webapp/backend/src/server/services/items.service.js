@@ -131,6 +131,7 @@ class UsersService {
     categoryName,
     previewsBinary,
     images,
+    price,
     options = [],
     select_name,
     description,
@@ -162,6 +163,7 @@ class UsersService {
           title,
           description,
           text,
+          price,
           category_name: categoryName,
           select_name,
           //image_list: fNameFullPaths,
@@ -192,12 +194,14 @@ class UsersService {
   editPost({
     id,
     title,
+    text,
     categoryName,
-    description,
-    images,
     previewsBinary,
-    optionsObject,
-    optionsObjectBackside,
+    images,
+    price,
+    options = [],
+    select_name,
+    description,
   }) {
     return new Promise(async (res, rej) => {
       let fNameFullPaths = Array.isArray(previewsBinary)
@@ -229,9 +233,11 @@ class UsersService {
           .createQueryBuilder()
           .update({
             title,
-            category_name: categoryName ?? null,
             description,
-            image_list: fNameFullPaths,
+            text,
+            price,
+            category_name: categoryName,
+            select_name,
           })
           .where({
             id: id,
@@ -243,30 +249,11 @@ class UsersService {
           id,
         ]);
 
-        const oo = optionsObject && JSON.parse(optionsObject);
-        for (let m in oo) {
-          const sizes = oo[m];
-          for (let s in sizes) {
-            const price = sizes[s];
-            console.log(s, m, price);
-            if (price)
-              await queryRunner.query(
-                "insert into item_options (item_id,size,material,price,is_backside) values ($1,$2,$3,$4, false)",
-                [id, s, m, price]
-              );
-          }
-        }
-        const oob = optionsObjectBackside && JSON.parse(optionsObjectBackside);
-        for (let m in oob) {
-          const sizes = oob[m];
-          for (let s in sizes) {
-            const price = sizes[s];
-            if (price)
-              await queryRunner.query(
-                "insert into item_options (item_id,size,material,price, is_backside) values ($1,$2,$3,$4,true)",
-                [id, s, m, price]
-              );
-          }
+        for (let { name } of options) {
+          await queryRunner.query(
+            "insert into item_options (item_id,name) values ($1,$2)",
+            [id, name]
+          );
         }
 
         await queryRunner.commitTransaction();
