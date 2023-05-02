@@ -157,6 +157,7 @@ class UsersService {
 
         const { id } = data;
         for (let optionIndex in options_array) {
+          console.log(options_array, options_array[optionIndex]);
           const { name, stock } = options_array[optionIndex];
 
           let fNameFullPaths = Array.isArray(photosBinary[optionIndex])
