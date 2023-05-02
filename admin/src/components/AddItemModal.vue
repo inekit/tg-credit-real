@@ -23,11 +23,11 @@
         <CFormInput type="number" class="mb-3" label="Цена" placeholder="Введите цену" v-model.number="formData.price" />
         <div class="options-shedle">
           <span>Опции</span>
-          <CFormCheck id="project.name" v-model="formData.select_name" type="radio" name="project-name" value="taste"
+          <CFormCheck id="select-taste" v-model="formData.select_name" type="radio" name="project-name" value="taste"
             label="Вкус" />
-          <CFormCheck id="project.name" v-model="formData.select_name" type="radio" name="project-name" value="color"
+          <CFormCheck id="select-color" v-model="formData.select_name" type="radio" name="project-name" value="color"
             label="Цвет" />
-          <CFormCheck id="project.name" v-model="formData.select_name" type="radio" name="project-name" value=""
+          <CFormCheck id="select-none" v-model="formData.select_name" type="radio" name="project-name" value=""
             label="Без опций" checked />
           <div class="option-item" v-for="option, id in formData.options_array" :key="option.id">
             <CFormInput type="text" class="mb-3" label="Название" placeholder="Введите цену"
@@ -45,7 +45,7 @@
               </template>
             </div>
           </div>
-          <CButton color="primary" type="button" @click="formData.options_array.push({})">Добавить опцию </CButton>
+          <CButton color="primary" type="button" @click="addOption">Добавить опцию </CButton>
         </div>
 
 
@@ -131,6 +131,11 @@ export default {
         .catch((error) => {
           eventBus.$emit('noresponse', error)
         })
+    },
+    addOption() {
+      if (!this.formData.options_array) this.formData.options_array = []
+      this.formData.options_array.push({})
+      //this.preview_list[id] = []
     },
     previewMultiImage(id, event) {
       var input = event.target;
