@@ -157,12 +157,12 @@ export default {
         async changeOption() {
             this.count = (await this.getBasketOption())?.count ?? 0;
         },
-        async getBasketOption(mainItem) {
+        async getBasketOption() {
             return await this.$store.state.myApi
                 .get(this.$store.state.restAddr + '/favorites', {
                     params: {
                         user_id: this.$store.state.userId,
-                        item_option_id: this.selected_option?.id,
+                        item_option_id: this.selected_option,
                     }
                 })
                 .then((response) => {
@@ -181,7 +181,7 @@ export default {
             if (newCount > 100) return;
             this.$store.state.myApi.put(this.$store.state.restAddr + '/favorites', {
                 user_id: this.$store.state.userId,
-                item_option_id: this.selected_option.id,
+                item_option_id: this.selected_option,
                 count: newCount,
             })
                 .then(async response => {
