@@ -143,7 +143,7 @@ class BasketsService {
     });
   }
 
-  getFavorites({ user_id }) {
+  getFavorites({ user_id, item_option_id }) {
     return new Promise(async (res, rej) => {
       const connection = await tOrmCon;
 
@@ -155,8 +155,9 @@ class BasketsService {
           left join item_options io on oi.item_option_id = io.id
           left join items i on io.item_id = i.id
           where o.user_id = $1 and o.status='basket' and io.id is not NULL
+          and (item_option_id=$2 or $2::int is null)
           order by io.id`,
-          [user_id]
+          [user_id, item_option_id]
         )
         .then(async (data) => {
           return res(data);
