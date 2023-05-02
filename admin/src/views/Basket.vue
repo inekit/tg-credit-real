@@ -6,28 +6,6 @@
             <button class="btn btn-primary" @click="showBasket = true">Сформировать заказ</button>
         </div>
         <FormBasketModal :visible="showBasket" :user_id="user_id" />
-        <div v-if="individual" class="user-individual-container">
-            <h2>Индивидуальная позиция: </h2>
-            <p>{{ individual.text }}</p>
-            <p><span>Цена: </span>{{ individual.price }} руб.</p>
-        </div>
-        <div v-if="user_id" class="change-basket-buttons">
-            <button v-if="!individual" class="btn btn-secondary" @click="showIndividual = !showIndividual">Добавить
-                индивидуальную
-                позицию</button>
-            <button v-else class="btn btn-secondary" @click="dropIndividual">Удалить
-                индивидуальную
-                позицию</button>
-        </div>
-        <div v-if="showIndividual && user_id" class="user-individual-input">
-            <CInputGroup class="mb-3">
-                <CFormInput class="w-75 h-38" placeholder="Введите описание индивидуальной позицию"
-                    v-model="tempIndividualText" />
-                <CFormInput class="h-38" type="number" placeholder="Введите цену" v-model="tempIndividualPrice" />
-                <CButton type="button" color="secondary" variant="outline" id="button-addon2" @click="addIndividual">
-                    Добавить к заказу</CButton>
-            </CInputGroup>
-        </div>
         <Table :fields="tableFieldNames" :postData="get" :actions="dataActions" :rows="rows" editMode="form"
             name="Позиции" />
     </div>
@@ -58,15 +36,11 @@ export default {
             order: {},
             rows: [],
             user_id: null,
-            showIndividual: false,
             showBasket: false,
-            tempIndividualText: null,
-            tempIndividualPrice: null,
             dataActions: {
                 Изменить: { action: this.change, color: 'warning' },
                 Удалить: { action: this.delete, color: 'danger' },
             },
-            individual: null,
             tableFieldNames: [
                 {
                     name: 'id',
@@ -117,45 +91,6 @@ export default {
         })
     },
     methods: {
-        constractFromData() {
-            var formData = new FormData()
-            formData.append('change_individual', "true")
-            formData.append('individual_text', this.tempIndividualText)
-            formData.append('individual_price', this.tempIndividualPrice)
-            return formData
-        },
-        addIndividual() {
-            myApi
-                .post(this.$store.state.publicPath + '/api/favorites/', {
-                    change_individual: true,
-                    individual_text: this.tempIndividualText,
-                    individual_price: this.tempIndividualPrice,
-                    user_id: this.user_id,
-                })
-                .then(() => {
-                    this.individual = { text: this.tempIndividualText, price: this.tempIndividualPrice }
-                    this.showIndividual = false;
-                })
-                .catch((e) => {
-                    eventBus.$emit('noresponse', e)
-                })
-        },
-        dropIndividual() {
-            myApi
-                .delete(this.$store.state.publicPath + '/api/favorites/', {
-                    data: {
-                        change_individual: true,
-                        user_id: this.user_id,
-                    },
-                })
-                .then(() => {
-                    this.individual = null;
-                    this.showIndividual = false;
-                })
-                .catch((e) => {
-                    eventBus.$emit('noresponse', e)
-                })
-        },
         change(elObj) {
             if (elObj.mainside_id) return alert("Нельзя изменить зависимую сторону")
             this.formVisible = true
@@ -176,9 +111,6 @@ export default {
                     },
                 })
                 .then((response) => {
-                    this.individual = response.data?.individual_text ?
-                        { text: response.data.individual_text, price: response.data.individual_price } :
-                        null
 
                     let rows = response.data?.favorites?.map(el => {
                         if (el.mainside_id) el.title = `${el.title} (обр - ${el.mainside_id})`;
@@ -205,7 +137,6 @@ export default {
                 })
                 .catch(() => {
                     //eventBus.$emit('noresponse', error)
-                    this.individual = null;
                     this.rows = null;
 
                     return false

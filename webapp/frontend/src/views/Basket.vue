@@ -3,7 +3,7 @@
     <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 300 250"></InstagramLoader>
     <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 300 200"></InstagramLoader>
     <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 300 200"></InstagramLoader>
-    <button v-if="basketItems.length > 0 || individual" class="" @click="order">Оформить заказ</button>
+    <button v-if="basketItems.length > 0" class="" @click="order">Оформить заказ</button>
     <div class="basket-items">
         <div class="basket-item" v-for="item, id in basketItems" :key="id">
             <RouterLink :to="getItemLink(item)">
@@ -32,18 +32,6 @@
                 <button type="button" @click="dropItem(item)">Удалить</button>
             </div>
         </div>
-        <div v-if="individual" class="basket-item">
-            <div>
-                <div class="img-container">
-                </div>
-                <span class="title">
-                    {{ individual.text }}
-                </span>
-                <span class="price">
-                    {{ individual.price }} ₽
-                </span>
-            </div>
-        </div>
     </div>
     <div class="order">
         <span class="label">Итого:</span>
@@ -61,7 +49,6 @@ export default {
     data() {
         return {
             basketItems: [],
-            individual: null,
             total: 0,
         }
     },
@@ -93,7 +80,7 @@ export default {
 
         }, 300)
 
-        if (this.basketItems?.length || this.individual) {
+        if (this.basketItems?.length) {
             window.Telegram?.WebApp.MainButton.onClick(this.order);
 
             window.Telegram?.WebApp.MainButton.enable();
@@ -167,12 +154,6 @@ export default {
                 }
             })
                 .then(response => {
-                    //if (response.data.favorites.length === 0 && !response.data.individual_text && window.Telegram?.WebApp)
-                    //    return this.routeBack()
-
-                    this.individual = response.data.individual_text ?
-                        { text: response.data.individual_text, price: response.data.individual_price } :
-                        null;
 
                     this.total = response.data.total;
 

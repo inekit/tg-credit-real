@@ -52,8 +52,8 @@ scene.action(/^order\-([0-9]+)$/g, async (ctx) => {
 
   const order = (
     await connection.query(
-      `select o.*, individual_text, individual_price,
-    json_agg(DISTINCT jsonb_build_object('title', i.title,'count',oi.count, 'id', io.id, 'size', io.size, 'material', io.material, 'price', io.price)) items 
+      `select o.*, 
+    json_agg(DISTINCT jsonb_build_object('title', i.title,'count',oi.count, 'id', io.id, 'price', i.price)) items 
     from orders o 
     left join order_items oi on o.id = oi.order_id  
     left join item_options io on oi.item_option_id = io.id  
@@ -69,11 +69,6 @@ scene.action(/^order\-([0-9]+)$/g, async (ctx) => {
   let orderStr = order.items?.[0].title
     ? order.items?.map((el) => `📦 ${el.title} - ${el.count} (шт.)`)?.join("\n")
     : "";
-
-  orderStr =
-    orderStr +
-    (orderStr && order.individual_text ? "\n" : "") +
-    (order.individual_text ?? "");
 
   orderStr = orderStr ?? "Нет позиций";
 
@@ -96,13 +91,10 @@ scene.action(/^order\-([0-9]+)$/g, async (ctx) => {
       .getInvoiceLink({
         OutSum: order.total,
         InvId: order_id,
-        Description: (
-          order.items
-            ?.map((el) => `${el.title} - ${el.count} (шт.)`)
-            ?.join("; ") +
-            "; " +
-            order.individual_text ?? ""
-        ).substr(0, 100),
+        Description: order.items
+          ?.map((el) => `${el.title} - ${el.count} (шт.)`)
+          ?.join("; ")
+          .substr(0, 100),
       })
       .catch(console.log);
 

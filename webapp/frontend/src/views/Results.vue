@@ -99,7 +99,7 @@ export default {
                 }
             })
                 .then(response => {
-                    return response.data.individual_text || response.data.favorites.length
+                    return response.data.favorites.length
                 })
                 .catch(e => { eventBus.$emit('noresponse', e) })
 

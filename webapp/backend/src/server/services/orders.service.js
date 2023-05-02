@@ -24,7 +24,7 @@ class UsersService {
         .query(
           `SELECT o.*,count(oi.item_option_id) count_items,
           json_agg(json_build_object(
-            'title', i.title,'count',oi.count, 'id', io.id, 'item_id', i.id, 'option_name', io.title, 'price', i.price)) items
+            'title', i.title,'count',oi.count, 'id', io.id, 'item_id', i.id, 'option_name', io.name, 'price', i.price)) items
           from orders o 
           left join order_items oi on o.id = oi.order_id  
           left join item_options io on oi.item_option_id = io.id  
@@ -57,7 +57,7 @@ class UsersService {
 
       connection
         .query(
-          `SELECT o.*,oi.count, io.id,io.title option_name, i.price, i.title from orders o 
+          `SELECT o.*,oi.count, io.id,io.name option_name, i.price, i.title from orders o 
           left join order_items oi on o.id = oi.order_id  
           left join item_options io on oi.item_option_id = io.id  
           left join items i on io.item_id = i.id 
