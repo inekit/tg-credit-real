@@ -22,41 +22,18 @@
     <hr class="my-1" />
     <form>
         <div class="option-select">
-            <label for="size-select">Размер</label>
+            <label for="size-select">{{ item.select_name }}</label>
             <div class="select-dropdown">
-                <select id="size-select" v-model="selected_size" @change="changeSize" required>
-                    <option v-for="size in sizes" :key="size" :value="size">{{ size }}</option>
-                </select>
-            </div>
-        </div>
-        <hr />
-        <div class="option-select">
-            <label for="material-select">Материал</label>
-            <div class="select-dropdown">
-                <select id="material-select" v-model="selected_material" @change="changeMaterial" required>
-                    <option v-for="material in materials" :key="material" :value="material">{{ material }}</option>
+                <select id="option-select" v-model="selected_option" @change="changeOption" required>
+                    <option v-for="option in item.options_array" :key="option.id" :value="option.id">{{ option.name }}
+                    </option>
                 </select>
             </div>
         </div>
         <hr />
         <label>Описание</label>
         <div class="description" v-html="item.description"></div>
-        <div class="backside count-select" v-if="count && !mainside_id && canChooseBackside && item.backside_available">
-            <hr />
-            <label>Обратная сторона</label>
-            <button v-if="!backside_item?.id" type="button" @click="routeToBackSide">Выбрать</button>
-            <div v-else>
-                <span>{{ backside_item.title }}</span>
-                <button type="button" @click="routeToBackSideItem">Посмотреть</button>
-                <button type="button" @click="dropBackSideItem">Убрать</button>
-            </div>
-        </div>
-        <div class="order" v-if="mainside_id">
-            <span>{{ price }} ₽</span>
-            <button v-if="!mainside_item?.id" type="button" @click.prevent="order">В корзину</button>
-            <button v-else type="button" @click.prevent="routeToMainItem">К основной</button>
-        </div>
-        <div class="order" v-else>
+        <div class="order">
             <span>{{ price }} ₽</span>
             <div class="count-select" v-if="count">
                 <button type="button" @click="changeCount(count - 1)">-</button>
@@ -89,36 +66,20 @@ export default {
         return {
             item: {},
             options_array: [],
-            selected_size: null,
-            sizes: [],
-            selected_material: null,
-            materials: [],
+            selected_option: null,
             count: 0,
-            mainside_item: {},
-            backside_item: {},
-            price: 0,
-            canChooseBackside: false,
         }
     },
     watch: {
         async $route(to, from) {
-            this.getUriParams();
             this.item = await this.getItem(this.$route.params.id).catch(e => console.log(e));
         },
         async item(to) {
 
-            this.sizes = [...new Set(to?.options_array?.map(({ size }) => size))]
-            this.selected_size = this.sizes?.[0]
-            this.materials = [...new Set(to?.options_array?.map(({ material }) => material))]
-            this.selected_material = this.materials?.[0]
-            this.selected_option = to?.options_array?.find(el => el.size === this.selected_size && el.material === this.selected_material)
-            this.price = this.selected_option?.price;
+            this.selected_option = to?.options_array?.[0]?.[id]
             this.count = (await this.getBasketOption())?.count ?? 0;
             this.item.is_favorite = !!this.count;
-            this.canChooseBackside = await this.getCanChooseBackside()
             this.item.description = marked.parse(this.item.description?.replaceAll("\r\n\r\n", "<span><br/><span/>\r\n\r\n"))
-
-            await this.getReferencedItems()
         },
         "item.is_favorite"(is_favorite) {
             if (is_favorite) {
@@ -137,8 +98,6 @@ export default {
 
         window.Telegram?.WebApp.BackButton.onClick(this.routeBack);
         window.Telegram?.WebApp.BackButton.show();
-
-        this.getUriParams()
 
         this.item = await this.getItem(this.$route.params.id);
 
@@ -166,15 +125,6 @@ export default {
         window.Telegram?.WebApp.BackButton.hide();
     },
     methods: {
-        getUriParams() {
-            let uri = window.location.search.substring(1);
-            this.params = new URLSearchParams(uri)
-            this.backFilters = {
-                size: this.params.get('size'),
-                material: this.params.get('material')
-            }
-            this.mainside_id = this.params.get('mainside_id') === "null" ? null : parseInt(this.params.get('mainside_id'))
-        },
         async finishWindow() {
             if (!this.$store.state.user_id) return alert("Ваша версия телеграм не поддерживается")
 
@@ -188,87 +138,24 @@ export default {
         routeToBasket() {
             this.$router.push("/basket")
         },
-        routeToBackSide() {
-            this.$router.push(`/results/${this.$store.state.userId}?mainside_id=
-            ${this.selected_option.id}&size=${this.selected_size}&material=${this.selected_material}`)
-        },
-        async routeToBackSideItem() {
-            console.log(this.backside_item)
-
-            this.$router.push(`/items/${this.backside_item?.id}?mainside_id=
-            ${this.selected_option.id}&size=${this.selected_size}&material=${this.selected_material}`);
-
-        },
-        async routeToMainItem() {
-
-            this.$router.push('/items/' + this.mainside_item?.id)
-        },
-        async dropBackSideItem() {
-            this.$store.state.myApi.delete(this.$store.state.restAddr + '/favorites', {
-                data: {
-                    user_id: this.$store.state.userId,
-                    mainside_id: this.selected_option.id
-                }
-            })
-                .then(async response => {
-                    this.item = await this.getItem(this.$route.params.id);
-
-                })
-                .catch(e => { eventBus.$emit('noresponse', e) })
-        },
-        getItem(id, { item_option_id, mainside_id, backside_id } = {}) {
+        getItem(id) {
             return new Promise((res, rej) => {
                 this.$store.state.myApi.get(this.$store.state.restAddr + '/items', {
                     params: {
                         id,
                         item_option_id,
-                        mainside_id: mainside_id ?? undefined,
-                        backside_id,
-                        is_backside: this.mainside_id ? true : false,
                         user_id: this.$store.state.userId,
                     }
                 })
                     .then(response => {
                         const item = response.data?.[0];
-
-                        if (this.mainside_id && item) {
-                            item.options_array = item.options_array?.filter(({ size, material }) =>
-                                size == this.backFilters?.size && material == this.backFilters?.material)
-                        }
-
-
                         res(item)
                     })
                     .catch(e => { eventBus.$emit('noresponse', e); rej() })
             })
         },
-        async getReferencedItems() {
-            if (this.mainside_id)
-                this.mainside_item = await this.getItem(this.mainside_id, { backside_id: this.selected_option?.id });
-            else this.backside_item = await this.getItem(undefined, { mainside_id: this.selected_option?.id });
-        },
-        async changeMaterial() {
-            this.sizes = this.item.options_array?.filter(el => el.material === this.selected_material)?.map(({ size }) => size);
-            this.selected_size = this.sizes?.includes(this.selected_size) ? this.selected_size : this.sizes?.[0]
-
-            this.selected_option = this.item.options_array?.find(el => el.size === this.selected_size && el.material === this.selected_material)
+        async changeOption() {
             this.count = (await this.getBasketOption())?.count ?? 0;
-            this.price = this.selected_option?.price;
-            await this.getReferencedItems()
-            this.canChooseBackside = await this.getCanChooseBackside()
-
-        },
-        async changeSize() {
-            this.materials = this.item.options_array?.filter(el => el.size === this.selected_size)?.map(({ material }) => material)
-            this.selected_material = this.materials?.includes(this.selected_material) ?
-                this.selected_material : this.materials?.[0]
-
-            this.selected_option = this.item.options_array?.find(el => el.size === this.selected_size && el.material === this.selected_material)
-            this.count = (await this.getBasketOption())?.count ?? 0;
-            this.price = this.selected_option?.price;
-            await this.getReferencedItems()
-            this.canChooseBackside = await this.getCanChooseBackside()
-
         },
         async getBasketOption(mainItem) {
             return await this.$store.state.myApi
@@ -276,15 +163,11 @@ export default {
                     params: {
                         user_id: this.$store.state.userId,
                         item_option_id: this.selected_option?.id,
-                        mainside_id: !isNaN(this.mainside_id) ? this.mainside_id : undefined
                     }
                 })
                 .then((response) => {
                     try {
-                        const item = this.mainside_id ?
-                            mainItem ? response.data?.filter(el => el.mainside_id != this.mainside_id)?.[0] :
-                                response.data?.filter(el => el.mainside_id == this.mainside_id)?.[0] :
-                            response.data?.[0]
+                        const item = response.data?.[0]
 
                         return item
                     }
@@ -293,28 +176,6 @@ export default {
                 .catch((e) => {
                     eventBus.$emit('noresponse', e)
                 })
-        },
-        async getCanChooseBackside() {
-            const results = await this.$store.state.myApi.get(this.$store.state.restAddr + '/items', {
-                params: {
-                    take: 1,
-                    page: 1,
-                    sort: "newing",
-                    user_id: this.$store.state.userId,
-                    size: this.selected_size,
-                    is_backside: true,
-                    material: this.selected_material
-                }
-            })
-                .then(response => {
-                    return response.data?.length;
-                })
-                .catch(e => { eventBus.$emit('noresponse', e) })
-
-            console.log(results)
-
-            return results
-
         },
         changeCount(newCount) {
             if (newCount > 100) return;
@@ -330,20 +191,14 @@ export default {
                 .catch(e => { eventBus.$emit('noresponse', e) })
         },
         async order() {
-            const count = this.mainside_id ? (await this.getBasketOption(true))?.count : 1
+            const count = 1
             this.$store.state.myApi
                 .post(this.$store.state.restAddr + '/favorites', {
                     item_option_id: this.selected_option.id,
                     count,
                     user_id: this.$store.state.userId,
-                    mainside_id: this.mainside_id
                 })
                 .then(async (response) => {
-                    if (this.mainside_id) {
-                        await this.getReferencedItems()
-                        await this.routeToMainItem()
-                    }
-
                     this.count = (await this.getBasketOption())?.count ?? 0;
                     this.item.is_favorite = true;
 
