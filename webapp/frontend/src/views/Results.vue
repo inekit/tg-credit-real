@@ -1,23 +1,21 @@
 <template>
     <h1>{{ mainside_id ? "Обратная сторона" : "Каталог" }}</h1>
-    <searchBlock />
+    <searchBlock hidden />
     <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 300 250"></InstagramLoader>
     <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 300 200"></InstagramLoader>
     <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 300 200"></InstagramLoader>
     <button @click="routeToBasket">Корзина</button>
-    <MasonryWall class="results-block" :items="$store.state.results ?? []" :ssr-columns="2" :column-width="bodyWidth / 6"
+    <MasonryWall class="results-block" :items="$store.state.results ?? []" :ssr-columns="3" :column-width="bodyWidth / 9"
         :gap="12">
         <template #default="{ item, index }">
             <div class="result-item">
-                <router-link
-                    :to="`/items/${item.id}?mainside_id=${mainside_id}&size=${this.backFilters.size}&material=${this.backFilters.material}`">
+                <router-link :to="`/items/${item.id}`">
                     <div class="img-container">
-                        <img :src="`/colorsserver/public/pics/${item.image_list?.[0]}`" />
+                        <img :src="`/colorsserver/public/pics/${item.options_array[0]?.photos?.[0]}`" />
                     </div>
                     <div class="text-container">
                         <h2>{{ item.title }}</h2>
-                        <h3>От {{ getMinPrice(item.options_array) }} ₽</h3>
-
+                        <h3>{{ item.price }} ₽</h3>
                     </div>
                 </router-link>
                 <div class="favorite-toggle" :class="item.is_favorite ? 'favorite-item' : ''">
@@ -93,9 +91,6 @@ export default {
         },
         routeBack() {
             this.$router.go(-1)
-        },
-        getMinPrice(options_array) {
-            return Math.min(...(options_array?.map(el => el.price) ?? [0]))
         },
         async haveBasketItems() {
             const results = await this.$store.state.myApi.get(this.$store.state.restAddr + '/basket_data', {
@@ -195,7 +190,7 @@ export default {
     flex-wrap: wrap;
 
     .masonry-column {
-        flex: 1 1 calc((100% / 2) - 2rem) !important;
+        flex: 1 1 calc((100% / 3) - 2rem) !important;
     }
 
 
