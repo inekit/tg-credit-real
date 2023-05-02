@@ -174,7 +174,7 @@ class UsersService {
           console.log(optionIndex, fNameFullPaths, photosBinary[optionIndex]);
 
           fNameFullPaths = [
-            ...new Set([...fNameFullPaths, ...images_array]),
+            ...new Set([...images_array, ...fNameFullPaths]),
           ]?.filter((el) => el);
 
           await queryRunner.query(
@@ -258,7 +258,7 @@ class UsersService {
           console.log(optionIndex, fNameFullPaths, photosBinary[optionIndex]);
 
           fNameFullPaths = [
-            ...new Set([...fNameFullPaths, ...images_array]),
+            ...new Set([...images_array, ...fNameFullPaths]),
           ]?.filter((el) => el);
 
           await queryRunner.query(
