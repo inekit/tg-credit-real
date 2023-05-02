@@ -158,7 +158,6 @@ class UsersService {
         const { id } = data;
         const oa_parsed = JSON.parse(options_array);
         for (let optionIndex in oa_parsed) {
-          console.log(oa_parsed, oa_parsed[optionIndex]);
           const { name, stock } = oa_parsed[optionIndex];
 
           let fNameFullPaths = Array.isArray(photosBinary[optionIndex])
@@ -203,29 +202,14 @@ class UsersService {
     title,
     text,
     categoryName,
-    previewsBinary,
-    images,
+    photosBinary,
+    photos,
     price,
-    options = [],
+    options_array = [],
     select_name,
     description,
   }) {
     return new Promise(async (res, rej) => {
-      let fNameFullPaths = Array.isArray(previewsBinary)
-        ? await Promise.all(
-            previewsBinary.map(
-              async (preview) => await this.saveReturningFileName(preview)
-            )
-          )
-        : [await this.saveReturningFileName(previewsBinary)];
-
-      console.log(previewsBinary, images, fNameFullPaths);
-      const images_array = Array.isArray(images) ? images : [images];
-
-      fNameFullPaths = [
-        ...new Set([...images_array, ...fNameFullPaths]),
-      ]?.filter((el) => el);
-
       const connection = await tOrmCon;
 
       const queryRunner = connection.createQueryRunner();
@@ -256,10 +240,30 @@ class UsersService {
           id,
         ]);
 
-        for (let { name } of options) {
+        const oa_parsed = JSON.parse(options_array);
+        for (let optionIndex in oa_parsed) {
+          const { name, stock } = oa_parsed[optionIndex];
+
+          let fNameFullPaths = Array.isArray(photosBinary[optionIndex])
+            ? await Promise.all(
+                photosBinary[optionIndex].map(
+                  async (preview) => await this.saveReturningFileName(preview)
+                )
+              )
+            : [await this.saveReturningFileName(photosBinary[optionIndex])];
+          const images_array = Array.isArray(photos[optionIndex])
+            ? photos[optionIndex]
+            : [photos[optionIndex]];
+
+          console.log(optionIndex, fNameFullPaths, photosBinary[optionIndex]);
+
+          fNameFullPaths = [
+            ...new Set([...fNameFullPaths, ...images_array]),
+          ]?.filter((el) => el);
+
           await queryRunner.query(
-            "insert into item_options (item_id,name) values ($1,$2)",
-            [id, name]
+            "insert into item_options (item_id,name,stock,photos ) values ($1,$2,$3,$4)",
+            [id, name, stock, fNameFullPaths]
           );
         }
 

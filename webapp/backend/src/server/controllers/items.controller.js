@@ -25,7 +25,6 @@ function addOne(req, res, next) {
     if (paramName.substring(0, 6) !== "photos") continue;
     photos[index] = req.body[paramName];
   }
-  console.log(1212, photos, photosBinary);
 
   add(
     Object.assign(req.body, {
@@ -38,10 +37,22 @@ function addOne(req, res, next) {
 }
 
 async function editOne(req, res, next) {
+  const photosBinary = [];
+  for (let paramName in req.files) {
+    const index = parseInt(paramName.substring(7, 8));
+    if (paramName.substring(0, 6) !== "photos") continue;
+    photosBinary[index] = req.files[paramName];
+  }
+  const photos = [];
+  for (let paramName in req.body) {
+    const index = parseInt(paramName.substring(7, 8));
+    if (paramName.substring(0, 6) !== "photos") continue;
+    photos[index] = req.body[paramName];
+  }
   editPost(
     Object.assign(req.body, {
-      images: req.body?.["photos[]"],
-      previewsBinary: req.files?.["photos[]"],
+      photos,
+      photosBinary,
     })
   )
     .then((data) => res.send(data))
