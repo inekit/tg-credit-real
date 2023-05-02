@@ -108,17 +108,11 @@ export default {
     }
   },
   updated() {
-    console.log(1)
-
-    this.formData.options_array = this.formData.options_array?.
-      filter(({ id }) => !id ? false : true)
-
     this.formData.description && this.$refs.postTextEditor.pasteHTML(
       marked.parse(this.formData.description?.replaceAll("\r\n\r\n", "<span><br/><span/>\r\n\r\n")))
 
     for (let optionIndex in this.formData.options_array) {
       this.preview_list[optionIndex] = this.formData.options_array[optionIndex].photos?.map(preview_name => `${this.$store.state.publicPath}/public/pics/${preview_name}`)
-
     }
   },
   async mounted() {
@@ -144,8 +138,8 @@ export default {
       //this.preview_list[id] = []
     },
     dropOption(id) {
-      this.formData.options_array = this.formData.options_array.splice(id, 1);
-      this.preview_list = this.preview_list.splice(id, 1);
+      this.formData.options_array.splice(id, 1);
+      this.preview_list.splice(id, 1);
     },
     previewMultiImage(id, event) {
       var input = event.target;
