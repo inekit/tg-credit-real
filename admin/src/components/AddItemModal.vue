@@ -27,10 +27,10 @@
             label="Вкус" />
           <CFormCheck id="select-color" v-model="formData.select_name" type="radio" name="project-name" value="color"
             label="Цвет" />
-          <CFormCheck id="select-none" v-model="formData.select_name" type="radio" name="project-name" value=""
-            label="Без опций" checked />
+          <CFormCheck id="select-none" @input="formData.options_array.length = preview_list.length = 1"
+            v-model="formData.select_name" type="radio" name="project-name" value="" label="Без опций" checked />
           <div class="option-item" v-for="option, id in formData.options_array" :key="option.id">
-            <CFormInput type="text" class="mb-3" label="Название" placeholder="Введите цену"
+            <CFormInput type="text" class="mb-3" label="Название" placeholder="Введите название"
               v-model="formData.options_array[id].name" />
             <CFormInput type="number" class="mb-3" label="Остаток" placeholder="Введите остаток"
               v-model="formData.options_array[id].stock" />
@@ -45,7 +45,8 @@
               </template>
             </div>
           </div>
-          <CButton color="primary" type="button" @click="addOption">Добавить опцию </CButton>
+          <CButton v-if="!!formData.select_name" color="primary" type="button" @click="addOption">Добавить опцию
+          </CButton>
         </div>
 
 
@@ -195,16 +196,17 @@ export default {
         turndownService.turndown(this.$refs.postTextEditor.getHTML()),
       )
 
-      this.formData.image_list?.forEach(v => {
-        formData.append('images[]', v);
+      this.formData.options_array?.forEach((option, index) => {
+        option.photos?.forEach(photo => {
+          formData.append(`photos[${index}][]`, photo);
+        })
+
       });
 
       this.formData.category_name &&
         formData.append('categoryName', this.formData.category_name)
 
-      formData.append('optionsObject', JSON.stringify(this.options_object))
-      formData.append('optionsObjectBackside', JSON.stringify(this.options_object_backside))
-
+      formData.append('options_array', JSON.stringify(this.formData.options_array))
 
       isEdit && formData.append('id', this.formData.id)
 
