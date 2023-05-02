@@ -63,7 +63,7 @@ class UsersService {
           left join items i on io.item_id = i.id 
           where (user_id = $3 or $3 is NULL)  
           ${isBasket ? "" : `and status <> 'basket'`}
-          GROUP BY o.id, oi.count,io.id, i.price, i.title
+          GROUP BY o.id, oi.count,io.id, i.price, i.title,i.id
           ORDER BY i.id, io.id DESC
           LIMIT $1 OFFSET $2`,
           [take, skip, user_id]
