@@ -33,24 +33,15 @@ class BasketsService {
         );
         const basket_id = orders[0].id;
 
-        const count_final = mainside_id
-          ? (
-              await queryRunner.query(
-                `select * from order_items where order_id = $1 and item_option_id = $2 and is_backside = false`,
-                [basket_id, mainside_id]
-              )
-            )[0].count
-          : count ?? 1;
-
         const data = await queryRunner
           .query(
-            `insert into order_items (order_id, item_option_id, is_backside, mainside_id, count) values ($1,$2,$3,$4,$5)`,
-            [basket_id, item_option_id, !!mainside_id, mainside_id, count_final]
+            `insert into order_items (order_id, item_option_id, count) values ($1,$2,1)`,
+            [basket_id, item_option_id]
           )
           .catch(async (e) => {
             return await queryRunner.query(
-              `update order_items set count = $3 where order_id=$1 and item_option_id=$2 and is_backside=$4;`,
-              [basket_id, item_option_id, count, !!mainside_id]
+              `update order_items set count = $3 where order_id=$1 and item_option_id=$2`,
+              [basket_id, item_option_id, 1]
             );
           });
 
@@ -88,13 +79,13 @@ class BasketsService {
         let data;
         if (count < 1) {
           data = await queryRunner.query(
-            `delete from order_items where order_id=$1 and ((item_option_id=$2 and is_backside = false) or mainside_id=$2);`,
+            `delete from order_items where order_id=$1 and item_option_id=$2`,
             [basket_id, item_option_id]
           );
         } else if (count > 100) throw new Error();
         else
           data = await queryRunner.query(
-            `update order_items set count = $3 where order_id=$1 and ((item_option_id=$2 and is_backside = false) or mainside_id=$2);`,
+            `update order_items set count = $3 where order_id=$1 and item_option_id=$2`,
             [basket_id, item_option_id, count]
           );
 
@@ -112,7 +103,7 @@ class BasketsService {
     });
   }
 
-  deleteFavorite({ user_id, item_option_id, mainside_id }) {
+  deleteFavorite({ user_id, item_option_id }) {
     return new Promise(async (res, rej) => {
       const connection = await tOrmCon;
 
@@ -131,11 +122,11 @@ class BasketsService {
 
         console.log(orders, basket_id, user_id, item_option_id);
 
-        if (!item_option_id && !mainside_id) throw new Error("no data");
+        if (!item_option_id) throw new Error("no data");
         const data = await queryRunner.query(
           `delete from order_items 
-          where order_id=$1 and (item_option_id=$2 or mainside_id=$2 or $2 is NULL) and (mainside_id = $3 or $3 is NULL);`,
-          [basket_id, item_option_id, mainside_id]
+          where order_id=$1 and item_option_id=$2;`,
+          [basket_id, item_option_id]
         );
 
         await queryRunner.commitTransaction();

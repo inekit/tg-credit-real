@@ -24,8 +24,7 @@ class UsersService {
         .query(
           `SELECT o.*,count(oi.item_option_id) count_items,
           json_agg(json_build_object(
-            'title', i.title,'count',oi.count, 'id', io.id, 'item_id', i.id, 'size', io.size, 'material', io.material, 'price', io.price,'mainside_id', oi.mainside_id
-            )) items
+            'title', i.title,'count',oi.count, 'id', io.id, 'item_id', i.id, 'option_name', io.title, 'price', i.price)) items
           from orders o 
           left join order_items oi on o.id = oi.order_id  
           left join item_options io on oi.item_option_id = io.id  
@@ -58,13 +57,13 @@ class UsersService {
 
       connection
         .query(
-          `SELECT o.*,oi.count, io.size, io.material, io.price, i.title from orders o 
+          `SELECT o.*,oi.count, io.id,io.title option_name, i.price, i.title from orders o 
           left join order_items oi on o.id = oi.order_id  
           left join item_options io on oi.item_option_id = io.id  
           left join items i on io.item_id = i.id 
           where (user_id = $3 or $3 is NULL)  
           ${isBasket ? "" : `and status <> 'basket'`}
-          GROUP BY o.id, oi.count, io.size, io.material, io.price, i.title
+          GROUP BY o.id, oi.count,io.id, i.price, i.title
           ORDER BY id DESC
           LIMIT $1 OFFSET $2`,
           [take, skip, user_id]
@@ -110,8 +109,7 @@ class UsersService {
         const basket = (
           await queryRunner.query(
             `select o.*, count(oi.item_option_id) count_items,
-          individual_price,individual_text,
-          json_agg(json_build_object('title', i.title,'count',oi.count, 'id', io.id, 'size', io.size, 'material', io.material, 'price', io.price)) items 
+          json_agg(json_build_object('title', i.title,'count',oi.count, 'id', io.id, 'price', i.price)) items 
           from orders o 
           left join order_items oi on o.id = oi.order_id  
           left join item_options io on oi.item_option_id = io.id  
@@ -122,8 +120,7 @@ class UsersService {
             [user_id]
           )
         )[0];
-        if (basket.count_items < 1 && !basket.individual_price)
-          throw new Error("No items");
+        if (basket.count_items < 1) throw new Error("No items");
 
         const basket_id = basket.id;
 
@@ -193,16 +190,9 @@ class UsersService {
           surname,
           postal_code,
           patronymic,
-          individual_price: basket.individual_price,
-          individual_text: basket.individual_text,
         });
 
         const { id: order_id } = data;
-
-        await queryRunner.query(
-          `update orders set individual_price=null,individual_text=null where id = $1`,
-          [basket_id]
-        );
 
         await queryRunner.query(
           `update order_items set order_id=$1 where order_id = $2`,
@@ -218,14 +208,10 @@ class UsersService {
         global.io.emit("UPDATE_ORDERS");
         res(data);
 
-        let orderStr =
+        const orderStr =
           basket.items
             ?.map((el) => (el.id ? `📦 ${el.title} - ${el.count} (шт.)` : ""))
             ?.join("\n") ?? "";
-        orderStr =
-          orderStr +
-          (orderStr && basket.individual_text ? "\n" : "") +
-          (basket.individual_text ?? "");
 
         const robokassa = new Robokassa({
           MerchantLogin: process.env.ROBO_MERCHANT_LOGIN,
@@ -236,13 +222,10 @@ class UsersService {
           .getInvoiceLink({
             OutSum: total,
             InvId: order_id,
-            Description: (
-              basket.items
-                ?.map((el) => `${el.title} - ${el.count} (шт.)`)
-                ?.join("; ") +
-                "; " +
-                basket.individual_text ?? ""
-            ).substr(0, 100),
+            Description: basket.items
+              ?.map((el) => `${el.title} - ${el.count} (шт.)`)
+              ?.join("; ")
+              .substr(0, 100),
           })
           .catch(console.log);
 
@@ -297,11 +280,9 @@ class UsersService {
     });
   }
 
-  editItem({ order_id, item_option_id, count, mainside_id }) {
+  editItem({ order_id, item_option_id, count }) {
     return new Promise(async (res, rej) => {
       const connection = await tOrmCon;
-
-      if (!!mainside_id) return rej(new Error("Cant drop relative item"));
 
       const queryRunner = connection.createQueryRunner();
 
@@ -313,13 +294,13 @@ class UsersService {
         let data;
         if (count < 1) {
           data = await queryRunner.query(
-            `delete from order_items where order_id=$1 and ((item_option_id=$2 and is_backside = false) or mainside_id=$2);`,
+            `delete from order_items where order_id=$1 and item_option_id=$2`,
             [order_id, item_option_id]
           );
         } else if (count > 100) throw new Error();
         else
           data = await queryRunner.query(
-            `update order_items set count = $3 where order_id=$1 and ((item_option_id=$2 and is_backside = false) or mainside_id=$2);`,
+            `update order_items set count = $3 where order_id=$1 and item_option_id=$2`,
             [order_id, item_option_id, count]
           );
 
@@ -337,19 +318,17 @@ class UsersService {
     });
   }
 
-  dropItem({ item_option_id, order_id, mainside_id }) {
+  dropItem({ item_option_id, order_id }) {
     return new Promise((res, rej) => {
       if (!item_option_id || !order_id)
-        return rej(
-          new NoInputDataError({ item_option_id, order_id, mainside_id })
-        );
+        return rej(new NoInputDataError({ item_option_id, order_id }));
 
       tOrmCon.then((connection) => {
         connection
           .query(
             `delete from order_items 
-        where order_id=$1 and (item_option_id=$2 or mainside_id=$2 or $2 is NULL) and (mainside_id = $3 or $3 is NULL)`,
-            [order_id, item_option_id, mainside_id]
+        where order_id=$1 and item_option_id=$2`,
+            [order_id, item_option_id]
           )
           .then((data) => res(data))
           .catch((error) => rej(new MySqlError(error)));
