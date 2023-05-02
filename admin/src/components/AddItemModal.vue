@@ -20,21 +20,36 @@
           <CFormCheck id="null-name" :checked="!formData.category_name" @change="changeP" type="radio" name="project-name"
             value="" label="Без категорий" />
         </div>
-
+        <CFormInput type="number" class="mb-3" label="Цена" placeholder="Введите цену" v-model.number="formData.price" />
         <div class="options-shedle">
           <span>Опции</span>
+          <CFormCheck id="project.name" v-model="formData.select_name" type="radio" name="project-name" value="taste"
+            label="Вкус" />
+          <CFormCheck id="project.name" v-model="formData.select_name" type="radio" name="project-name" value="color"
+            label="Цвет" />
+          <CFormCheck id="project.name" v-model="formData.select_name" type="radio" name="project-name" value=""
+            label="Без опций" checked />
+          <div class="option-item" v-for="option, id in formData.options_array" :key="option.id">
+            <CFormInput type="text" class="mb-3" label="Название" placeholder="Введите цену"
+              v-model="formData.options_array[id].name" />
+            <CFormInput type="number" class="mb-3" label="Остаток" placeholder="Введите остаток"
+              v-model="formData.options_array[id].stock" />
+            <CFormInput type="file" accept="image/*" multiple="multiple" ref="file"
+              @change="previewMultiImage(id, $event)" class="mb-3" label="Превью" placeholder="Превью" />
+            <div class="border p-2 mt-3 preview-container">
+              <template v-if="preview_list?.[id]?.length">
+                <div v-for="item, index in preview_list?.[id]" :key="index">
+                  <img :src="item" class="img-fluid" />
+                  <button @click.prevent="dropFile(id, index)">Х</button>
+                </div>
+              </template>
+            </div>
+          </div>
+          <CButton color="primary" type="button" @click="formData.options_array.push({})">Добавить опцию </CButton>
         </div>
 
-        <CFormInput type="file" accept="image/*" multiple="multiple" ref="file" @change="previewMultiImage" class="mb-3"
-          label="Превью" placeholder="Превью" />
-        <div class="border p-2 mt-3 preview-container">
-          <template v-if="preview_list?.length">
-            <div v-for="item, index in preview_list" :key="index">
-              <img :src="item" class="img-fluid" />
-              <button @click.prevent="dropFile(index)">Х</button>
-            </div>
-          </template>
-        </div>
+
+
         <QuillEditor theme="snow" toolbar="essential" ref="postTextEditor" id="postTextEditor"
           placeholder="Краткое описание" />
       </CModalBody>
@@ -73,104 +88,40 @@ export default {
       text: '',
       description: '',
       preview: '',
+      stock: 0,
+      price: null,
       category_name: '',
+      select_name: "",
       image_list: [],
       tags_array: new Set(),
-      options_object: {},
       options_array: [],
     },
 
   },
   data() {
     return {
-      textMd2: '',
-      textEditMode: 'md2',
       formValid: false,
       preview_list: [],
-      options_object: {},
-      options_object_backside: {},
-      distinct_materials: [],
-      distinct_sizes: [],
-      tempSize: 0,
-      tempMaterial: 0,
     }
   },
   updated() {
     console.log(1)
-    this.options_object = {};
-    this.options_object_backside = {};
+
     this.formData.options_array = this.formData.options_array?.
       filter(({ material, price, size }) => !material && !size && !price ? false : true)
-    this.distinct_materials = [...new Set(this.formData.options_array?.map(({ material }) => material))]
-    this.distinct_sizes = [...new Set(this.formData.options_array?.map(({ size }) => size))]
 
     this.formData.description && this.$refs.postTextEditor.pasteHTML(
       marked.parse(this.formData.description?.replaceAll("\r\n\r\n", "<span><br/><span/>\r\n\r\n")))
 
-    for (let { size, material, price, is_backside } of this.formData.options_array) {
-      if (!is_backside) {
-        this.options_object[material] ? this.options_object[material][size] = price :
-          this.options_object[material] = { [size]: price }
+    for (let optionIndex in this.formData.options_array) {
+      this.preview_list[optionIndex] = this.formData.options_array[optionIndex].photos?.map(preview_name => `${this.$store.state.publicPath}/public/pics/${preview_name}`)
 
-        this.options_object_backside[material] ? this.options_object_backside[material][size] = this.options_object_backside[material][size] ?? null :
-          this.options_object_backside[material] = { [size]: null }
-      }
-      else {
-        this.options_object_backside[material] ? this.options_object_backside[material][size] = price :
-          this.options_object_backside[material] = { [size]: price }
-
-        this.options_object[material] ? this.options_object[material][size] = this.options_object[material][size] ?? null :
-          this.options_object[material] = { [size]: null }
-
-      }
     }
-
-    console.log(this.options_object, this.options_object_backside)
-
-    this.preview_list = this.formData.image_list?.filter(el => el)?.map(preview_name => `${this.$store.state.publicPath}/public/pics/${preview_name}`)
-
-    document.getElementsByClassName('ql-toolbar')?.[0]?.classList.add('hidden')
   },
   async mounted() {
     this.projects = await this.getProjects()
-    console.log(this.tags, this.projects)
   },
   methods: {
-    addMaterial(name) {
-      let size_template = Object.values(this.options_object)?.[0] ?? {}
-      size_template = Object.fromEntries(Object.entries(size_template)?.map(([key]) => [key, 0]))
-      this.options_object[name] = size_template
-
-      size_template = Object.values(this.options_object_backside)?.[0] ?? {}
-      size_template = Object.fromEntries(Object.entries(size_template)?.map(([key]) => [key, 0]))
-      this.options_object_backside[name] = size_template
-
-      this.distinct_materials.push(name)
-      this.tempMaterial = ""
-    },
-    addSize(name) {
-      const new_oo_entries = Object.entries(this.options_object)?.map(([key, value]) => [key, Object.assign(value ?? {}, { [name]: 0 })])
-      this.options_object = Object.fromEntries(new_oo_entries)
-      const new_oob_entries = Object.entries(this.options_object_backside)?.map(([key, value]) => [key, Object.assign(value ?? {}, { [name]: 0 })])
-      this.options_object_backside = Object.fromEntries(new_oob_entries)
-
-      this.tempSize = ""
-      this.distinct_sizes.push(name)
-
-    },
-    dropMaterial(name) {
-      delete this.options_object[name]
-      delete this.options_object_backside[name]
-      this.distinct_materials = this.distinct_materials?.filter(el => el !== name)
-
-    },
-    dropSize(name) {
-      for (let key in this.options_object) {
-        delete this.options_object[key][name]
-        delete this.options_object_backside[key][name]
-      }
-      this.distinct_sizes = this.distinct_sizes?.filter(el => el !== name)
-    },
     async getProjects() {
       return await myApi
         .get(this.$store.state.publicPath + '/api/categories/')
@@ -181,33 +132,31 @@ export default {
           eventBus.$emit('noresponse', error)
         })
     },
-    previewMultiImage(event) {
+    previewMultiImage(id, event) {
       var input = event.target;
       var count = input.files.length;
       var index = 0;
       this.formData.preview = input.files[0]
       if (!this.preview_list) this.preview_list = []
-      if (!this.formData.image_list) this.formData.image_list = []
+      if (!this.preview_list[id]) this.preview_list[id] = []
+
+      if (!this.formData.options_array[id].photos) this.formData.options_array[id].photos = []
 
       if (input.files) {
         while (count--) {
           var reader = new FileReader();
           reader.onload = (e) => {
-            this.preview_list.push(e.target.result);
+            this.preview_list[id].push(e.target.result);
           }
-          this.formData.image_list.push(input.files[index]);
+          this.formData.options_array[id].photos.push(input.files[index]);
           reader.readAsDataURL(input.files[index]);
           index++;
         }
       }
     },
-    reset() {
-      this.formData.image_list = [];
-      this.preview_list = [];
-    },
-    dropFile(index) {
-      this.formData.image_list?.splice(index, 1);
-      this.preview_list?.splice(index, 1);
+    dropFile(id, index) {
+      this.formData.options_array[id].photos?.splice(index, 1);
+      this.preview_list[id]?.splice(index, 1);
 
     },
     addNewPost() {
@@ -226,6 +175,9 @@ export default {
       var formData = new FormData()
 
       formData.append('title', this.formData.title)
+      formData.append('price', this.formData.price)
+      formData.append('select_name', this.formData.select_name)
+
 
       const turndownService = new TurndownService({
         headingStyle: "atx",
@@ -244,7 +196,6 @@ export default {
 
       this.formData.category_name &&
         formData.append('categoryName', this.formData.category_name)
-
 
       formData.append('optionsObject', JSON.stringify(this.options_object))
       formData.append('optionsObjectBackside', JSON.stringify(this.options_object_backside))
