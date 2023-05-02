@@ -44,6 +44,8 @@
                 </div>
               </template>
             </div>
+            <CButton color="danger" type="button" @click="dropOption(id)">Удалить опцию
+            </CButton>
           </div>
           <CButton v-if="!!formData.select_name" color="primary" type="button" @click="addOption">Добавить опцию
           </CButton>
@@ -92,10 +94,10 @@ export default {
       stock: 0,
       price: null,
       category_name: '',
-      select_name: "",
+      select_name: null,
       image_list: [],
       tags_array: new Set(),
-      options_array: [],
+      options_array: [{}],
     },
 
   },
@@ -141,6 +143,10 @@ export default {
       this.formData.options_array.push({})
       //this.preview_list[id] = []
     },
+    dropOption(id) {
+      this.formData.options_array = this.formData.options_array.splice(id, 1);
+      this.preview_list = this.preview_list.splice(id, 1);
+    },
     previewMultiImage(id, event) {
       var input = event.target;
       var count = input.files.length;
@@ -185,7 +191,7 @@ export default {
 
       formData.append('title', this.formData.title)
       formData.append('price', this.formData.price)
-      formData.append('select_name', this.formData.select_name)
+      this.formData.select_name && formData.append('select_name', this.formData.select_name)
 
 
       const turndownService = new TurndownService({
