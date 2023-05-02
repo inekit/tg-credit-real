@@ -35,7 +35,7 @@
         <label>Описание</label>
         <div class="description" v-html="item.description"></div>
         <div class="order">
-            <span>{{ price }} ₽</span>
+            <span>{{ item.price }} ₽</span>
             <div class="count-select" v-if="count">
                 <button type="button" @click="changeCount(count - 1)">-</button>
                 <span>{{ count }}</span>
@@ -194,7 +194,7 @@ export default {
             const count = 1
             this.$store.state.myApi
                 .post(this.$store.state.restAddr + '/favorites', {
-                    item_option_id: this.selected_option.id,
+                    item_option_id: this.selected_option,
                     count,
                     user_id: this.$store.state.userId,
                 })
