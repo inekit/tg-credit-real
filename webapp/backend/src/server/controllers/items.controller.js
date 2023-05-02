@@ -24,7 +24,7 @@ function addOne(req, res, next) {
     if (paramName.substring(0, 6) !== "photos") continue;
     photos.push(req.body[paramName]);
   }
-  console.log(photos);
+  console.log(1212, photos);
 
   add(
     Object.assign(req.body, {
