@@ -44,7 +44,8 @@
                 </div>
               </template>
             </div>
-            <CButton color="danger" type="button" @click="dropOption(id)">Удалить опцию
+            <CButton v-if="formData.options_array.length > 0" color="danger" type="button" @click="dropOption(id)">Удалить
+              опцию
             </CButton>
           </div>
           <CButton v-if="!!formData.select_name" color="primary" type="button" @click="addOption">Добавить опцию
@@ -97,7 +98,7 @@ export default {
       select_name: null,
       image_list: [],
       tags_array: new Set(),
-      options_array: [{}],
+      options_array: [{ name: "Опция" }],
     },
 
   },
@@ -108,6 +109,8 @@ export default {
     }
   },
   updated() {
+    this.formData.options_array = this.formData.options_array ?? [{ name: "Опция" }];
+
     this.formData.description && this.$refs.postTextEditor.pasteHTML(
       marked.parse(this.formData.description?.replaceAll("\r\n\r\n", "<span><br/><span/>\r\n\r\n")))
 
