@@ -20,8 +20,9 @@
                         Перейти
                     </div>
                 </router-link>
-                <div class="favorite-toggle" :class="item.is_favorite ? 'favorite-item' : ''">
-                    <img :src="require('@/assets/img/fav.svg')" />
+                <div class="favorite-toggle" :class="item.count_favourites ? 'favorite-item' : ''">
+                    {{ item.count_favourites }}
+                    <img :src="require('@/assets/img/fav.svg')" hidden />
                 </div>
             </div>
         </template>
@@ -202,7 +203,6 @@ export default {
         margin: 0;
 
         display: block;
-        overflow: hidden;
         position: relative;
 
         &:nth-child(4n) {
@@ -212,7 +212,7 @@ export default {
         &:nth-child(4n+1),
         &:nth-child(4n) {
             .img-container {
-                height: 40vw;
+                height: 20vw;
             }
         }
 
@@ -296,8 +296,8 @@ export default {
 
         .favorite-toggle {
             content: '';
-            width: 40px;
-            height: 40px;
+            width: 25px;
+            height: 25px;
             border-radius: 13px;
             background-color: transparent;
             border: 1px solid;
@@ -305,8 +305,8 @@ export default {
             border-color: #6e6e6e;
             opacity: 0;
             position: absolute;
-            top: 0.5rem;
-            right: 0.5rem;
+            top: -12.5px;
+            right: calc(1rem - 12.5px);
             transition: all 0.2s;
 
             img {
@@ -317,8 +317,8 @@ export default {
             &.favorite-item {
                 opacity: 1;
                 z-index: 1;
-                border-color: rgb(197, 80, 105);
-                background-color: rgb(197, 80, 105);
+                border-color: #0071e3;
+                background-color: #0071e3;
             }
 
         }

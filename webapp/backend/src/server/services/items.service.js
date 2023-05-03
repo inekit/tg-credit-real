@@ -51,7 +51,11 @@ class UsersService {
                 o.user_id = $6 and o.status = 'basket'
               then 1 else NULL end
               ) > 0 then true else false end as is_favorite
-      
+              count(
+                case when 
+                  o.user_id = $6 and o.status = 'basket'
+                then 1 else NULL end
+                ) count_favourites
                 from public.items p
                 left join categories c on c.name = p.category_name
                 left join item_options io on p.id = io.item_id
