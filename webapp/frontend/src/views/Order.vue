@@ -71,7 +71,7 @@ export default {
         return {
             basketData: {},
             paymentOptions: ["Перевод", "Наличные курьеру"],
-            selected_po: "yookassa",
+            selected_po: "Перевод",
             deliveryMethods: ["Я. Доставка", "CДЭК", "Курьер", "Почта РФ"],
             selected_dm: "CДЭК",
             deliveryPrice: null,

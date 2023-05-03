@@ -110,7 +110,7 @@ class UsersService {
         const basket = (
           await queryRunner.query(
             `select o.*, count(oi.item_option_id) count_items,
-          json_agg(json_build_object('title', i.title,'count',oi.count, 'id', io.id, 'price', i.price)) items 
+          json_agg(json_build_object('title', i.title,'count',oi.count, 'id', io.id, 'price', i.price,'stock', io.stock)) items 
           from orders o 
           left join order_items oi on o.id = oi.order_id  
           left join item_options io on oi.item_option_id = io.id  
@@ -122,6 +122,15 @@ class UsersService {
           )
         )[0];
         if (basket.count_items < 1) throw new Error("No items");
+
+        for (let item of basket.items) {
+          if (item.stock < item.count) throw new Error("No stock");
+
+          await queryRunner.query(
+            `update order_items set stock = stock - $1 where order_id = $2`,
+            [item.count, basket_id]
+          );
+        }
 
         const basket_id = basket.id;
 
