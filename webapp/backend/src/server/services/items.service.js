@@ -241,13 +241,10 @@ class UsersService {
           .returning("*")
           .execute();
 
-        await queryRunner.query("delete from item_options where item_id = $1", [
-          id,
-        ]);
-
         const oa_parsed = JSON.parse(options_array);
+
         for (let optionIndex in oa_parsed) {
-          const { name, stock } = oa_parsed[optionIndex];
+          const { name, stock, id: editId } = oa_parsed[optionIndex];
 
           let fNameFullPaths = Array.isArray(photosBinary[optionIndex])
             ? await Promise.all(
@@ -266,10 +263,16 @@ class UsersService {
             ...new Set([...images_array, ...fNameFullPaths]),
           ]?.filter((el) => el);
 
-          await queryRunner.query(
-            "insert into item_options (item_id,name,stock,photos ) values ($1,$2,$3,$4)",
-            [id, name, stock, fNameFullPaths]
-          );
+          if (editId)
+            await queryRunner.query(
+              "update item_options set item_id = $1, name=$2,stock=$3,photos=$4 ) where id = $5",
+              [id, name, stock, fNameFullPaths, editId]
+            );
+          else
+            await queryRunner.query(
+              "insert into item_options (item_id,name,stock,photos ) values ($1,$2,$3,$4)",
+              [id, name, stock, fNameFullPaths]
+            );
         }
 
         await queryRunner.commitTransaction();
