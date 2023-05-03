@@ -3,8 +3,8 @@
     <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 300 250"></InstagramLoader>
     <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 300 200"></InstagramLoader>
     <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 300 200"></InstagramLoader>
-    <MasonryWall class="categories-block" :items="$store.state.categories ?? []" :ssr-columns="2"
-        :column-width="bodyWidth / 3" :gap="12">
+    <MasonryWall class="categories-block" :items="$store.state.categories ?? []" :ssr-columns="3"
+        :column-width="bodyWidth / 5" :gap="12">
         <template #default="{ item, index }">
             <div class="result-item">
                 <router-link :to="`/results/${$store.state.userId}?category=${item.name}`">
@@ -13,6 +13,9 @@
                     </div>
                     <div class="text-container">
                         <h2>{{ item.name }}</h2>
+                    </div>
+                    <div class="goto-button">
+                        Перейти
                     </div>
                 </router-link>
             </div>
@@ -134,7 +137,7 @@ export default {
     flex-wrap: wrap;
 
     .masonry-column {
-        flex: 1 1 calc((100% / 2) - 2rem) !important;
+        flex: 1 1 calc((100% / 3) - 2rem) !important;
     }
 
 
@@ -143,10 +146,7 @@ export default {
         height: fit-content;
         margin: 0;
 
-        border-radius: 1rem;
         display: block;
-        background: rgb(255, 255, 255);
-        box-shadow: 0px 1px 5px rgb(216, 216, 216);
         overflow: hidden;
         position: relative;
 
@@ -157,16 +157,24 @@ export default {
         &:nth-child(4n+1),
         &:nth-child(4n) {
             .img-container {
-                height: 40vw;
+                height: 20vw;
             }
         }
 
         .img-container {
             background-color: #414141;
-            width: 100%;
+            width: 20vw;
             height: 30vw;
             position: relative;
             overflow: hidden;
+            border-radius: 1rem;
+        }
+
+        .goto-button {
+            width: 20vw;
+            background-color: #0071e3;
+            color: white;
+            border-radius: 0.5rem;
         }
 
         a {
@@ -178,12 +186,11 @@ export default {
             .text-container {
                 padding: 1rem;
                 top: 70%;
-                width: calc(100% - 2rem);
+                width: fit-content;
             }
 
             h2 {
                 margin: 0;
-                width: 100%;
                 color: #414141;
                 font-weight: 400;
                 font-size: 1.1rem;
