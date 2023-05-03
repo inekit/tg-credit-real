@@ -217,7 +217,7 @@ export default {
         }
 
         .img-container {
-            background-color: #414141;
+            background-color: transparent;
             width: 20vw;
             margin: auto;
             height: 30vw;

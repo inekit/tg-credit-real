@@ -13,11 +13,8 @@
                 <span class="title">
                     {{ item.title + (item.mainside_id ? " (обратная)" : "") }}
                 </span>
-                <span class="size">
-                    Размер {{ item.size }}
-                </span>
-                <span class="material">
-                    Материал {{ item.material }}
+                <span class="option">
+                    {{ item.select_name }} {{ item.option_name }}
                 </span>
                 <span class="price">
                     {{ item.price }} ₽
@@ -99,10 +96,7 @@ export default {
     },
     methods: {
         getItemLink(item) {
-            return item.mainside_id ?
-                `/items/${item.item_id}?mainside_id=
-            ${item.mainside_id}&size=${item.size}&material=${item.material}` :
-                `/items/${item.item_id}`
+            return `/items/${item.item_id}`
         },
         changeCount(item, newCount) {
             if (newCount > 100) return;
@@ -289,17 +283,10 @@ export default {
         }
     }
 
-    .size {
+    .option {
         position: absolute;
         left: 30vw;
         top: 25%;
-        font-size: 1rem;
-    }
-
-    .material {
-        position: absolute;
-        left: 30vw;
-        top: 45%;
         font-size: 1rem;
     }
 
