@@ -342,6 +342,10 @@ form {
         position: relative;
         height: 35px;
 
+        label {
+            line-height: 35px;
+        }
+
         .select-dropdown,
         .select-dropdown * {
             margin: 0;
@@ -354,7 +358,7 @@ form {
             position: absolute;
             right: 0;
             top: 0;
-            background-color: #a5a5a5;
+            background-color: #e7e7e7;
             border-radius: 10px;
             color: white;
 
@@ -446,7 +450,7 @@ form {
         .count-select {
             position: absolute;
             right: 1rem;
-            background-color: #a5a5a5;
+            background-color: #e7e7e7;
             border-radius: 14px;
             padding: 15px 40px;
             font-size: 13px;
