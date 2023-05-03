@@ -1,5 +1,4 @@
 <template>
-    <h1>Категории</h1>
     <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 300 250"></InstagramLoader>
     <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 300 200"></InstagramLoader>
     <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 300 200"></InstagramLoader>
@@ -177,6 +176,11 @@ export default {
             background-color: #0071e3;
             color: white;
             border-radius: 0.5rem;
+            text-transform: uppercase;
+            text-align: center;
+            padding: 5px 0;
+            font-weight: 500;
+            font-size: 0.8rem;
         }
 
         a {
@@ -186,7 +190,7 @@ export default {
             width: calc(100%);
 
             .text-container {
-                margin: auto;
+                margin: 0.5rem auto;
                 top: 70%;
                 width: fit-content;
             }
@@ -195,7 +199,7 @@ export default {
                 margin: 0;
                 color: #414141;
                 font-weight: 400;
-                font-size: 1.1rem;
+                font-size: 0.9rem;
                 text-align: center;
                 word-wrap: break-word;
             }

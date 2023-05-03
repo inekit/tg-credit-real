@@ -1,5 +1,4 @@
 <template>
-    <h1>{{ mainside_id ? "Обратная сторона" : "Каталог" }}</h1>
     <searchBlock hidden />
     <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 300 250"></InstagramLoader>
     <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 300 200"></InstagramLoader>
@@ -16,6 +15,9 @@
                     <div class="text-container">
                         <h2>{{ item.title }}</h2>
                         <h3>{{ item.price }} ₽</h3>
+                    </div>
+                    <div class="goto-button">
+                        Перейти
                     </div>
                 </router-link>
                 <div class="favorite-toggle" :class="item.is_favorite ? 'favorite-item' : ''">
@@ -221,12 +223,26 @@ export default {
         }
 
         .img-container {
-            //position: absolute;
             background-color: #414141;
-            width: 100%;
+            width: 20vw;
+            margin: auto;
             height: 30vw;
             position: relative;
             overflow: hidden;
+            border-radius: 1rem;
+        }
+
+        .goto-button {
+            width: 20vw;
+            margin: auto;
+            background-color: #0071e3;
+            color: white;
+            border-radius: 0.5rem;
+            text-transform: uppercase;
+            text-align: center;
+            padding: 5px 0;
+            font-weight: 500;
+            font-size: 0.8rem;
         }
 
 
@@ -240,19 +256,17 @@ export default {
 
             //margin: 1rem;
             .text-container {
-                padding: 1rem;
-                //position: absolute;
+                margin: 0.5rem auto;
                 top: 70%;
-                width: calc(100% - 2rem);
-
+                width: fit-content;
             }
 
             h2 {
                 margin: 0;
-                width: 100%;
                 color: #414141;
                 font-weight: 400;
-                font-size: 1.1rem;
+                font-size: 0.9rem;
+                text-align: center;
                 word-wrap: break-word;
             }
 
