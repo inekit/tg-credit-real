@@ -243,6 +243,8 @@ class UsersService {
 
         const oa_parsed = JSON.parse(options_array);
 
+        let idArray = [];
+
         for (let optionIndex in oa_parsed) {
           const { name, stock, id: editId } = oa_parsed[optionIndex];
 
@@ -263,17 +265,27 @@ class UsersService {
             ...new Set([...images_array, ...fNameFullPaths]),
           ]?.filter((el) => el);
 
-          if (editId)
+          if (editId) {
+            idArray.push(editId);
             await queryRunner.query(
               "update item_options set item_id = $1, name=$2,stock=$3,photos=$4 where id = $5",
               [id, name, stock, fNameFullPaths, editId]
             );
-          else
-            await queryRunner.query(
-              "insert into item_options (item_id,name,stock,photos ) values ($1,$2,$3,$4)",
-              [id, name, stock, fNameFullPaths]
-            );
+          } else {
+            const newId = (
+              await queryRunner.query(
+                "insert into item_options (item_id,name,stock,photos ) values ($1,$2,$3,$4)",
+                [id, name, stock, fNameFullPaths]
+              )
+            )?.[0];
+
+            console.log(newId);
+
+            idArray.push(newId);
+          }
         }
+
+        console.log(idArray);
 
         await queryRunner.commitTransaction();
 
