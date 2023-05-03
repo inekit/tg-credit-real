@@ -200,7 +200,7 @@ export default {
         position: relative;
         background-color: #414141;
         width: 18vw;
-        height: 30vw;
+        height: 20vw;
         position: relative;
         overflow: hidden;
         padding: 1rem;
@@ -212,8 +212,8 @@ export default {
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            max-width: 200%;
-            max-height: 110%;
+            max-width: 130%;
+            max-height: 130%;
             min-width: 100%;
             min-height: 100%;
             width: auto;
@@ -286,7 +286,7 @@ export default {
     .option {
         position: absolute;
         left: 30vw;
-        top: 25%;
+        top: 30%;
         font-size: 1rem;
     }
 

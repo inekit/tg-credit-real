@@ -14,6 +14,15 @@
             <p>Если Вы хотите, чтобы мы произвели расчет до оплаты заказа,
                 напишите нам из главного меню по кнопке «Чат с нами»</p>
         </div>
+        <div class="payment">
+            <h2>Способ оплаты</h2>
+            <div class="select-group">
+                <div v-for="po in paymentOptions  " :key="po">
+                    <input type="radio" :id="po" :value="po" v-model="selected_po">
+                    <label :for="po" @click="selected_po = po">{{ po }}</label>
+                </div>
+            </div>
+        </div>
         <div class="delivery">
             <h2>Способ доставки</h2>
             <div class="select-group">
@@ -61,7 +70,7 @@ export default {
     data() {
         return {
             basketData: {},
-            paymentOptions: ["yookassa"],
+            paymentOptions: ["Перевод", "Наличные курьеру"],
             selected_po: "yookassa",
             deliveryMethods: ["Я. Доставка", "CДЭК", "Курьер", "Почта РФ"],
             selected_dm: "CДЭК",
