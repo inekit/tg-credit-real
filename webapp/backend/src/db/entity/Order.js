@@ -32,7 +32,7 @@ module.exports = new EntitySchema({
     },
     selected_po: {
       type: "enum",
-      enum: ["yookassa"],
+      enum: ["Перевод", "Наличные курьеру"],
       nullable: true,
     },
     name: {
