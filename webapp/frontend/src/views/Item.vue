@@ -20,6 +20,7 @@
         </carousel>
     </div>
     <h1>{{ item.title }}</h1>
+    <span class="stock" :class="[stock > 20 ? 'green' : stock > 10 ? 'yellow' : 'red']">{{ stock }} шт.</span>
     <hr class="my-1" />
     <form>
         <div class="option-select" v-if="item.select_name">
@@ -30,8 +31,8 @@
                     </option>
                 </select>
             </div>
+            <hr />
         </div>
-        <hr />
         <label>Описание</label>
         <div class="description" v-html="item.description"></div>
         <div class="order">
@@ -211,6 +212,11 @@ export default {
         getDate(date) {
             return moment(date).format("DD.MM.YYYY")
         },
+    },
+    computed: {
+        stock() {
+            return this.item.options_array?.find(el => el.id === selected_option)?.stock
+        }
     }
 }
 </script>
@@ -334,9 +340,9 @@ form {
             position: absolute;
             right: 0;
             top: 0;
-            background-color: #E6E6E6;
+            background-color: #0071e3;
             border-radius: 10px;
-            color: #414141;
+            color: white;
 
             select {
                 font-size: 15px;
@@ -426,7 +432,7 @@ form {
         .count-select {
             position: absolute;
             right: 1rem;
-            background-color: #E6E6E6;
+            background-color: #0071e3;
             border-radius: 14px;
             padding: 15px 40px;
             font-size: 13px;
@@ -470,7 +476,7 @@ form {
         &>button {
             position: absolute;
             right: 1rem;
-            background-color: #E6E6E6;
+            background-color: #0071e3;
             border-radius: 14px;
             color: #414141;
             padding: 15px 40px;
@@ -478,32 +484,6 @@ form {
             border: none;
         }
     }
-}
-
-.backside {
-    &>div {
-        margin-top: 0.5rem;
-
-        &>span {
-            line-height: 30px;
-        }
-    }
-
-    button {
-        position: absolute;
-        right: 130px;
-        background-color: #E6E6E6;
-        border-radius: 10px;
-        padding: 10px 30px;
-        font-size: 15px;
-        border: none;
-        color: #414141 !important;
-
-        &:last-of-type {
-            right: 1rem;
-        }
-    }
-
 }
 
 hr {
