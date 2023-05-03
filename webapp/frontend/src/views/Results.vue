@@ -20,8 +20,8 @@
                         Перейти
                     </div>
                 </router-link>
-                <div class="favorite-toggle" :class="item.count_favourites ? 'favorite-item' : ''">
-                    {{ item.count_favourites }}
+                <div class="favorite-toggle" :class="item.count_favourites > 0 ? 'favorite-item' : ''">
+                    <span>{{ item.count_favourites }}</span>
                     <img :src="require('@/assets/img/fav.svg')" hidden />
                 </div>
             </div>
@@ -308,6 +308,15 @@ export default {
             top: -12.5px;
             right: calc(1rem - 12.5px);
             transition: all 0.2s;
+
+            span {
+                color: white;
+                text-align: center;
+                font-weight: 500;
+                line-height: 23px;
+                margin-left: 3px;
+                display: block;
+            }
 
             img {
                 height: 50%;
