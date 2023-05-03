@@ -129,7 +129,7 @@ class UsersService {
           if (item.stock < item.count) throw new Error("No stock");
 
           await queryRunner.query(
-            `update items_options set stock = stock - $1 where id = $2`,
+            `update item_options set stock = stock - $1 where id = $2`,
             [item.count, item.id]
           );
         }
