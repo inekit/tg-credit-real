@@ -164,6 +164,7 @@ export default {
         .img-container {
             background-color: #414141;
             width: 20vw;
+            margin: auto;
             height: 30vw;
             position: relative;
             overflow: hidden;
@@ -172,6 +173,7 @@ export default {
 
         .goto-button {
             width: 20vw;
+            margin: auto;
             background-color: #0071e3;
             color: white;
             border-radius: 0.5rem;
@@ -184,7 +186,7 @@ export default {
             width: calc(100%);
 
             .text-container {
-                padding: 1rem;
+                margin: auto;
                 top: 70%;
                 width: fit-content;
             }
