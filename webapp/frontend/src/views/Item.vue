@@ -20,9 +20,13 @@
         </carousel>
     </div>
     <h1>{{ item.title }}</h1>
-    <span class="stock" :class="[stock > 20 ? 'green' : stock > 10 ? 'yellow' : 'red']">{{ stock }} шт.</span>
     <hr class="my-1" />
     <form>
+        <div class="stock-container">
+            <label>Наличие</label>
+            <span class="stock" :class="[stock > 20 ? 'green' : stock > 10 ? 'yellow' : 'red']">{{ stock }} шт.</span>
+            <hr />
+        </div>
         <div class="option-select" v-if="item.select_name">
             <label for="size-select">{{ item.select_name }}</label>
             <div class="select-dropdown">
@@ -42,7 +46,7 @@
                 <span>{{ count }}</span>
                 <button type="button" @click="changeCount(count + 1)">+</button>
             </div>
-            <button v-else type="button" @click.prevent="order">В корзину</button>
+            <button v-else type="button" @click.prevent="order">Добавить</button>
         </div>
     </form>
 </template>
@@ -432,7 +436,7 @@ form {
         .count-select {
             position: absolute;
             right: 1rem;
-            background-color: #0071e3;
+            //background-color: #0071e3;
             border-radius: 14px;
             padding: 15px 40px;
             font-size: 13px;
@@ -451,7 +455,6 @@ form {
 
             &>button {
                 border: none;
-                color: rgb(44, 44, 44);
                 height: 47px;
                 position: absolute;
                 right: 0;
@@ -459,7 +462,8 @@ form {
                 font-size: 25px;
                 width: 47px;
                 border-radius: 14px;
-                color: #414141;
+                color: white;
+                background-color: #0071e3;
 
                 &:first-child {
                     left: 0;
@@ -478,9 +482,11 @@ form {
             right: 1rem;
             background-color: #0071e3;
             border-radius: 14px;
-            color: #414141;
+            color: white;
+            font-weight: 500;
+            text-transform: uppercase;
+            font-size: 15px;
             padding: 15px 40px;
-            font-size: 13px;
             border: none;
         }
     }
