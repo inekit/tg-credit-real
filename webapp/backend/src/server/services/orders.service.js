@@ -123,6 +123,8 @@ class UsersService {
         )[0];
         if (basket.count_items < 1) throw new Error("No items");
 
+        const basket_id = basket.id;
+
         for (let item of basket.items) {
           if (item.stock < item.count) throw new Error("No stock");
 
@@ -131,8 +133,6 @@ class UsersService {
             [item.count, basket_id]
           );
         }
-
-        const basket_id = basket.id;
 
         let type,
           sum = 0;
