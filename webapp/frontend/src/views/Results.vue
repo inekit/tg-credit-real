@@ -198,16 +198,10 @@ export default {
 
     .result-item {
         width: 100%;
-        height: fit-content; //calc(70vw - 1.5rem);
-        //margin: 1rem;
-        //margin-bottom: 0;
+        height: fit-content;
         margin: 0;
 
-        border-radius: 1rem;
         display: block;
-        background: rgb(255, 255, 255);
-        // border: 1px solid rgb(169, 169, 169);
-        box-shadow: 0px 1px 5px rgb(216, 216, 216);
         overflow: hidden;
         position: relative;
 
