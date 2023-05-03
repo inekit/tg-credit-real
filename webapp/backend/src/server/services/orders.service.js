@@ -35,6 +35,7 @@ class UsersService {
           [id]
         )
         .then(async (postData) => {
+          console.log(postData);
           if (!postData?.[0]) rej(new NotFoundError());
 
           return res(postData?.[0]);
