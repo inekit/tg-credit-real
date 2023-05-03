@@ -176,7 +176,7 @@ class BasketsService {
           sum(oi.count)::int  total_count,
           json_agg(DISTINCT 
             jsonb_build_object('id', io.id, 'item_id', i.id, 'order_id', o.id, 'creation_date', o.creation_date, 
-            'title', i.title, 'image_list', io.photos, 'count', count, 'option_name', io.name, 'price', price,'select_name' i.select_name))  favorites
+            'title', i.title, 'image_list', io.photos, 'count', count, 'option_name', io.name, 'price', price,'select_name', i.select_name))  favorites
           from users u 
           left join orders o on u.id = o.user_id
           left join order_items oi on oi.order_id = o.id
