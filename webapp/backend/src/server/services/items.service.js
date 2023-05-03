@@ -265,7 +265,7 @@ class UsersService {
 
           if (editId)
             await queryRunner.query(
-              "update item_options set item_id = $1, name=$2,stock=$3,photos=$4 ) where id = $5",
+              "update item_options set item_id = $1, name=$2,stock=$3,photos=$4 where id = $5",
               [id, name, stock, fNameFullPaths, editId]
             );
           else
