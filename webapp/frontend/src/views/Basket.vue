@@ -99,11 +99,10 @@ export default {
             return `/items/${item.item_id}`
         },
         changeCount(item, newCount) {
-            if (newCount > 100) return;
+            if (newCount > 100 || newCount > item.stock) return;
             this.$store.state.myApi.put(this.$store.state.restAddr + '/favorites', {
                 user_id: this.$store.state.userId,
                 item_option_id: item.id,
-                mainside_id: item.mainside_id,
                 count: newCount,
             })
                 .then(async response => {
