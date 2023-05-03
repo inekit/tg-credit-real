@@ -14,7 +14,7 @@
                     </div>
                     <div class="text-container">
                         <h2>{{ item.title }}</h2>
-                        <h3>{{ item.price }} ₽</h3>
+                        <h3> · {{ item.price }}₽</h3>
                     </div>
                     <div class="goto-button">
                         Перейти
@@ -253,6 +253,8 @@ export default {
                 margin: 0.5rem auto;
                 top: 70%;
                 width: fit-content;
+                text-align: center;
+
             }
 
             h2 {
@@ -260,15 +262,17 @@ export default {
                 color: #414141;
                 font-weight: 400;
                 font-size: 0.9rem;
-                text-align: center;
                 word-wrap: break-word;
+                display: inline;
             }
 
             h3 {
                 margin: 5px 0 -5px 0;
                 color: #414141;
                 font-weight: 200;
-                font-size: 1rem;
+                font-size: 0.9rem;
+                font-weight: 600;
+                display: inline;
             }
 
             img {
@@ -314,7 +318,6 @@ export default {
                 text-align: center;
                 font-weight: 500;
                 line-height: 23px;
-                margin-left: 3px;
                 display: block;
             }
 
