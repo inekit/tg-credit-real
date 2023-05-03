@@ -26,7 +26,7 @@ exports.webapp_keyboard = (ctx, id) =>
     [
       webAppButton(
         ctx.getTitle("WEBAPP_INLINE_BUTTON"),
-        "https://fotodesire.ru/colorsfront/categories/" + id
+        "https://92.255.79.59/colorsfront/categories/" + id
       ),
     ],
   ]);
@@ -36,7 +36,7 @@ exports.basket_keyboard = (ctx, id) =>
     [
       webAppButton(
         ctx.getTitle("BASKET_INLINE_BUTTON"),
-        "https://fotodesire.ru/colorsfront/basket/" + id
+        "https://92.255.79.59/colorsfront/basket/" + id
       ),
     ],
     [callbackButton(ctx.getTitle("BACK_BUTTON"), "go_back")],

@@ -22,7 +22,7 @@
     <h1>{{ item.title }}</h1>
     <hr class="my-1" />
     <form>
-        <div class="option-select">
+        <div class="option-select" v-if="item.select_name">
             <label for="size-select">{{ item.select_name }}</label>
             <div class="select-dropdown">
                 <select id="option-select" v-model="selected_option" @change="changeOption" required>
