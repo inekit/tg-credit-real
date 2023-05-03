@@ -328,6 +328,16 @@ form {
         color: #414141;
     }
 
+    .stock-container {
+        position: relative;
+
+        span {
+            position: absolute;
+            right: 0;
+            top: 0;
+        }
+    }
+
     .option-select {
         position: relative;
         height: 35px;
@@ -344,7 +354,7 @@ form {
             position: absolute;
             right: 0;
             top: 0;
-            background-color: #0071e3;
+            background-color: #a5a5a5;
             border-radius: 10px;
             color: white;
 
@@ -436,7 +446,7 @@ form {
         .count-select {
             position: absolute;
             right: 1rem;
-            //background-color: #0071e3;
+            background-color: #a5a5a5;
             border-radius: 14px;
             padding: 15px 40px;
             font-size: 13px;
