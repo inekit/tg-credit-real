@@ -72,7 +72,7 @@ export default {
             basketData: {},
             paymentOptions: ["Перевод", "Наличные курьеру"],
             selected_po: "Перевод",
-            deliveryMethods: ["Я. Доставка", "CДЭК", "Курьер", "Почта РФ"],
+            deliveryMethods: ["CДЭК", "Курьер"],
             selected_dm: "CДЭК",
             deliveryPrice: null,
             deliveryTime: null,

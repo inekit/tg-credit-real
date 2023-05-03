@@ -3,7 +3,7 @@ const { Markup } = require("telegraf");
 exports.main_menu_keyboard = (ctx) => {
   const buttons = [
     [ctx.getTitle("WEBAPP_BUTTON"), ctx.getTitle("ORDERS_BUTTON")],
-    [ctx.getTitle("CHAT_BUTTON")],
+    //[ctx.getTitle("CHAT_BUTTON")],
     //[ctx.getTitle("ABOUT_BUTTON")],
   ];
 
