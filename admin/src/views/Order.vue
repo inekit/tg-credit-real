@@ -82,12 +82,8 @@ export default {
                     title: 'Название',
                 },
                 {
-                    name: 'size',
-                    title: 'Размер',
-                },
-                {
-                    name: 'material',
-                    title: 'Материал',
+                    name: 'option_name',
+                    title: 'Опция',
                 },
                 {
                     name: 'count',
