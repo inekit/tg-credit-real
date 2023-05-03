@@ -277,13 +277,18 @@ class UsersService {
                 "insert into item_options (item_id,name,stock,photos ) values ($1,$2,$3,$4) returning id",
                 [id, name, stock, fNameFullPaths]
               )
-            )?.[0];
+            )?.[0]?.id;
 
             console.log(newId);
 
             idArray.push(newId);
           }
         }
+
+        await queryRunner.query(
+          "delete from item_options where item_id = $1 and not (id = any($2))",
+          [id, idArray]
+        );
 
         console.log(idArray);
 
