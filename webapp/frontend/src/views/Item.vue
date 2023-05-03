@@ -215,7 +215,7 @@ export default {
     },
     computed: {
         stock() {
-            return this.item.options_array?.find(el => el.id === selected_option)?.stock
+            return this.item.options_array?.find(el => el.id === this.selected_option)?.stock
         }
     }
 }
