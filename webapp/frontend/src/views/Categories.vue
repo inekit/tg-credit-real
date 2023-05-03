@@ -3,7 +3,7 @@
     <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 300 200"></InstagramLoader>
     <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 300 200"></InstagramLoader>
     <MasonryWall class="categories-block" :items="$store.state.categories ?? []" :ssr-columns="3"
-        :column-width="bodyWidth / 5" :gap="12">
+        :column-width="bodyWidth / 9" :gap="12">
         <template #default="{ item, index }">
             <div class="result-item">
                 <router-link :to="`/results/${$store.state.userId}?category=${item.name}`">
@@ -37,7 +37,7 @@ export default {
     watch: {
     },
     beforeMount() {
-        this.bodyWidth = document.body.clientWidth
+        this.bodyWidth = document.body.clientHeight
 
     },
     async mounted() {

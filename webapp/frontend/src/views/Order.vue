@@ -17,9 +17,9 @@
         <div class="delivery">
             <h2>Способ доставки</h2>
             <div class="select-group">
-                <div v-for="dm in deliveryMethods" :key="dm">
-                    <input type="radio" :id="dm" :value="dm" v-model="selected_dm" @change="getDeliveryPrice">
-                    <label :for="dm" @click="selected_dm = dm; getDeliveryPrice()">{{ dm }}</label>
+                <div v-for="dm in   deliveryMethods  " :key="dm">
+                    <input type="radio" :id="dm" :value="dm" v-model="selected_dm">
+                    <label :for="dm" @click="selected_dm = dm">{{ dm }}</label>
                 </div>
             </div>
         </div>
@@ -29,13 +29,9 @@
             <input type="text" id="surname" name="surname" placeholder="Фамилия" v-model="basketData.surname">
             <input type="text" id="patronymic" name="patronymic" placeholder="Отчество" v-model="basketData.patronymic">
             <input type="tel" id="phone" name="phone" placeholder="Телефон" v-model="basketData.phone">
-            <input type="text" id="address" name="address" placeholder="Адрес доставки" v-model="basketData.address"
-                @input="getDeliveryPrice">
+            <input type="text" id="address" name="address" placeholder="Адрес доставки" v-model="basketData.address">
             <input type="number" id="text" pattern="[0-9]+" name="postal code" placeholder="Почтовый индекс"
-                v-model.number="basketData.postal_code" @input="getDeliveryPricePostal">
-        </div>
-        <div class="delivery-time" v-show="deliveryTime">
-            <h2>Время доставки</h2><span>{{ deliveryTime }} дней</span>
+                v-model.number="basketData.postal_code">
         </div>
         <h2>Промокод</h2>
         <div class="input-group one-line">
@@ -47,7 +43,8 @@
         <div class="pricing" hidden>Стоимость доставки<span>{{ deliveryPrice ? `${deliveryPrice} ₽` : "Не определена"
         }}</span>
         </div>
-        <div class="pricing" v-if="sale.sum > 0">Скидка<span>{{ sale.type === 'money' ? `${sale.sum} ₽` : `${sale.sum} %`
+        <div class="pricing" v-if="sale.sum > 0">Скидка<span>{{ sale.type === 'money' ? `${sale.sum} ₽` : `${sale.sum}
+                % `
         }}</span></div>
         <div class="pricing">К оплате<span>{{ totalSum }} ₽</span></div>
     </div>
@@ -88,7 +85,6 @@ export default {
         window.Telegram?.WebApp.MainButton.setText("Заказ подтверждаю");
         this.orderText = await this.getOrderText()
         this.basketData = await this.getBasketData()
-        await this.getDeliveryPrice()
 
     },
     async beforeUnmount() {
@@ -126,28 +122,6 @@ export default {
                     window.Telegram?.WebApp.close();
                 })
                 .catch(e => { eventBus.$emit('noresponse', e) })
-        },
-        async getDeliveryPrice() {
-            const results = await this.$store.state.myApi.get(this.$store.state.restAddr + '/delivery_price', {
-                params: {
-                    operator: this.selected_dm,
-                    address: this.basketData.address,
-                    count: this.basketData.total_count,
-                    postal_code: this.basketData.postal_code,
-                }
-            })
-                .then(response => {
-                    this.deliveryPrice = response.data?.price ?? null;
-                    this.deliveryTime = response.data?.time ?? null;
-                })
-                .catch(e => { console.log(e); this.deliveryPrice = null; this.deliveryTime = null })
-
-            return results ?? {}
-
-        },
-        getDeliveryPricePostal() {
-            if ([0, 6].includes(this.basketData.postal_code?.toString()?.length ?? 0)) this.getDeliveryPrice()
-            else { this.deliveryPrice = null; this.deliveryTime = null }
         },
         routeBack() {
             this.$router.go(-1)
@@ -241,7 +215,7 @@ export default {
         transform: scale(0);
         transition: 120ms transform ease-in-out;
         box-shadow: none;
-        background-color: #666666;
+        background-color: #0071e3;
         width: calc(50vw - 1rem - 5px);
     }
 

@@ -23,10 +23,10 @@
         <CFormInput type="number" class="mb-3" label="Цена" placeholder="Введите цену" v-model.number="formData.price" />
         <div class="options-shedle">
           <span>Опции</span>
-          <CFormCheck id="select-taste" @change="formData.select_name = 'taste'" type="radio" name="project-name"
-            value="taste" label="Вкус" :checked="formData.select_name === 'taste'" />
-          <CFormCheck id="select-color" @change="formData.select_name = 'color'" type="radio" name="project-name"
-            value="color" label="Цвет" :checked="formData.select_name === 'color'" />
+          <CFormCheck id="select-taste" @change="formData.select_name = 'Вкус'" type="radio" name="project-name"
+            value="Вкус" label="Вкус" :checked="formData.select_name === 'Вкус'" />
+          <CFormCheck id="select-color" @change="formData.select_name = 'Цвет'" type="radio" name="project-name"
+            value="Цвет" label="Цвет" :checked="formData.select_name === 'Цвет'" />
           <CFormCheck id="select-none" @input="selectNone" @change="formData.select_name = null" type="radio"
             name="project-name" value="" label="Без опций" :checked="!formData.select_name" />
           <div class="option-item" v-for="option, id in formData.options_array" :key="option.id">

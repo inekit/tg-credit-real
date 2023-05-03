@@ -335,12 +335,25 @@ form {
             position: absolute;
             right: 0;
             top: 0;
+
+            &.green {
+                color: rgb(40, 160, 40)
+            }
+
+            &.yellow {
+                color: rgb(202, 202, 39);
+            }
+
+            &.red {
+                color: rgb(190, 34, 34)
+            }
         }
     }
 
     .option-select {
         position: relative;
         height: 35px;
+        margin-bottom: 1rem;
 
         label {
             line-height: 35px;
@@ -450,7 +463,7 @@ form {
         .count-select {
             position: absolute;
             right: 1rem;
-            background-color: #e7e7e7;
+            background-color: #a6d2ff;
             border-radius: 14px;
             padding: 15px 40px;
             font-size: 13px;
