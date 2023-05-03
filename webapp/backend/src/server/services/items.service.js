@@ -274,7 +274,7 @@ class UsersService {
           } else {
             const newId = (
               await queryRunner.query(
-                "insert into item_options (item_id,name,stock,photos ) values ($1,$2,$3,$4)",
+                "insert into item_options (item_id,name,stock,photos ) values ($1,$2,$3,$4) returning id",
                 [id, name, stock, fNameFullPaths]
               )
             )?.[0];
