@@ -6,7 +6,7 @@ const {
 } = require("telegraf-steps");
 const tOrmCon = require("../../db/connection");
 
-const scene = new CustomWizardScene("getMoneyScene").enter((ctx) => {
+const scene = new CustomWizardScene("payScene").enter((ctx) => {
   ctx.scene.state.sent = false;
 
   ctx.replyWithKeyboard("ENTER_PHOTOS", "main_menu_back_keyboard");
