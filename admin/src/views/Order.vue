@@ -19,6 +19,9 @@
             <div>
                 Метод оплаты: {{ order.selected_po }}
             </div>
+            <div class="reciept-container" v-if="order.selected_po === 'Перевод'">
+                <img :src="order.reciept_photo_link" width="480" />
+            </div>
             <div>
                 Сумма заказа: {{ order.total }}
             </div>
