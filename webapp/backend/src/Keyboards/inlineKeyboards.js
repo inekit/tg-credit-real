@@ -319,11 +319,11 @@ exports.wa_keyboard = (ctx, id) => {
   return keyboard;
 };
 
-exports.payment_keyboard = (ctx, paymentLink) =>
+exports.payment_keyboard = (ctx, order_id) =>
   inlineKeyboard(
     paymentLink
       ? [
-          [urlButton("Оплатить", paymentLink)],
+          [callbackButton("Оплатить", "pay_" + order_id)],
           [callbackButton(ctx.getTitle("BACK_BUTTON"), "go_back")],
         ]
       : [[callbackButton(ctx.getTitle("BACK_BUTTON"), "go_back")]]

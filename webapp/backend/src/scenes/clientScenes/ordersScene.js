@@ -81,26 +81,14 @@ scene.action(/^order\-([0-9]+)$/g, async (ctx) => {
     order.total,
   ];
 
-  if (order.status === "Новый") {
-    const robokassa = new Robokassa({
-      MerchantLogin: process.env.ROBO_MERCHANT_LOGIN,
-      Password: process.env.ROBO_PASSWORD,
-    });
-
-    const link = await robokassa
-      .getInvoiceLink({
-        OutSum: order.total,
-        InvId: order_id,
-        Description: order.items
-          ?.map((el) => `${el.title} - ${el.count} (шт.)`)
-          ?.join("; ")
-          .substr(0, 100),
-      })
-      .catch(console.log);
-
+  if (
+    order.status === "Новый" &&
+    order.selected_po === "Перевод" &&
+    !order.reciept_photo_id
+  ) {
     ctx.editMenu(
       "ORDER_INFO_TITLE",
-      { name: "payment_keyboard", args: [link] },
+      { name: "payment_keyboard", args: [order_id] },
       orderInfoParams
     );
   } else if (order.status === "basket") {
