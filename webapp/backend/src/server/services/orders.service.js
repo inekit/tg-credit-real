@@ -16,7 +16,7 @@ class UsersService {
     this.dropItem = this.dropItem.bind(this);
   }
 
-  getOne({ id }) {
+  getOne({ id }, ctx) {
     return new Promise(async (res, rej) => {
       const connection = await tOrmCon;
 
@@ -38,16 +38,24 @@ class UsersService {
           console.log(postData);
           if (!postData?.[0]) rej(new NotFoundError());
 
-          return res(postData?.[0]);
+          let order = postData[0];
+
+          order.reciept_photo_link =
+            order.reciept_photo_id &&
+            (await ctx.telegram
+              .getFileLink(order.reciept_photo_id)
+              .catch(console.log));
+
+          return res(order);
         })
         .catch((error) => rej(new MySqlError(error)));
     });
   }
 
-  getAll({ id, page = 1, take = 10, isBasket, user_id }) {
+  getAll({ id, page = 1, take = 10, isBasket, user_id }, ctx) {
     return new Promise(async (res, rej) => {
       if (id) {
-        this.getOne({ id })
+        this.getOne({ id }, ctx)
           .then((data) => res(data))
           .catch((error) => rej(error));
       }
@@ -70,20 +78,7 @@ class UsersService {
           [take, skip, user_id]
         )
         .then(async (data) => {
-          let orders = data;
-
-          orders = await Promise.all(
-            orders?.map(
-              async (el) =>
-                (el.reciept_photo_link =
-                  el.reciept_photo_id &&
-                  (await ctx.telegram
-                    .getFileLink(reciept_photo_id)
-                    .catch(console.log)))
-            )
-          );
-
-          return orders;
+          return res(data);
         })
         .catch((error) => {
           console.log(error);

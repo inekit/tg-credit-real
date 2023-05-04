@@ -1,10 +1,12 @@
 const ordersService = require("../services/orders.service");
 
-function getAll(req, res, next) {
-  ordersService
-    .getAll(req.query)
-    .then((data) => res.send(data))
-    .catch((error) => next(error));
+function getAll(ctx) {
+  return (req, res, next) => {
+    ordersService
+      .getAll(req.query, ctx)
+      .then((data) => res.send(data))
+      .catch((error) => next(error));
+  };
 }
 
 function addOne(ctx) {
