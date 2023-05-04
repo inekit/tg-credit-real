@@ -253,14 +253,17 @@ class UsersService {
             {
               parse_mode: "HTML",
               reply_markup: {
-                inline_keyboard: [
-                  [
-                    {
-                      text: "Оплатить",
-                      url: link,
-                    },
-                  ],
-                ],
+                inline_keyboard:
+                  selected_po === "Перевод"
+                    ? [
+                        [
+                          {
+                            text: "Оплатить",
+                            callback_data: "pay_" + order_id,
+                          },
+                        ],
+                      ]
+                    : [],
               },
             }
           )
