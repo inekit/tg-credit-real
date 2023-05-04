@@ -65,12 +65,25 @@ class UsersService {
           where (user_id = $3 or $3 is NULL)  
           ${isBasket ? "" : `and status <> 'basket'`}
           GROUP BY o.id, oi.count,io.id, i.price, i.title,i.id
-          ORDER BY i.id, io.id DESC
+          ORDER BY status, o.id, io.id DESC
           LIMIT $1 OFFSET $2`,
           [take, skip, user_id]
         )
         .then(async (data) => {
-          return res(data);
+          let orders = data;
+
+          orders = await Promise.all(
+            orders?.map(
+              async (el) =>
+                (el.reciept_photo_link =
+                  el.reciept_photo_id &&
+                  (await ctx.telegram
+                    .getFileLink(reciept_photo_id)
+                    .catch(console.log)))
+            )
+          );
+
+          return orders;
         })
         .catch((error) => {
           console.log(error);
