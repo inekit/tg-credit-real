@@ -73,7 +73,7 @@ class UsersService {
           where (user_id = $3 or $3 is NULL)  
           ${isBasket ? "" : `and status <> 'basket'`}
           GROUP BY o.id, oi.count,io.id, i.price, i.title,i.id
-          ORDER BY status, o.id, io.id DESC
+          ORDER BY status, o.id DESC, io.id DESC
           LIMIT $1 OFFSET $2`,
           [take, skip, user_id]
         )
