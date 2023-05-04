@@ -60,6 +60,11 @@ module.exports = new EntitySchema({
       length: 45,
       nullable: true,
     },
+    reciept_photo_id: {
+      type: "varchar",
+      length: 255,
+      nullable: true,
+    },
   },
   relations: {
     user: {
