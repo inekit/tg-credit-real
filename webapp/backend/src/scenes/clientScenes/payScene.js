@@ -3,7 +3,7 @@ const {
   CustomWizardScene,
   titles,
   handlers: { FilesHandler },
-} = require("telegraf-steps-engine");
+} = require("telegraf-steps");
 const tOrmCon = require("../../db/connection");
 
 const scene = new CustomWizardScene("getMoneyScene").enter((ctx) => {
