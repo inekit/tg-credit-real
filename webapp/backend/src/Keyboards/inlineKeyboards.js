@@ -321,7 +321,7 @@ exports.wa_keyboard = (ctx, id) => {
 
 exports.payment_keyboard = (ctx, order_id) =>
   inlineKeyboard(
-    paymentLink
+    order_id
       ? [
           [callbackButton("Оплатить", "pay_" + order_id)],
           [callbackButton(ctx.getTitle("BACK_BUTTON"), "go_back")],
