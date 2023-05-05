@@ -51,7 +51,7 @@ class UsersService {
                 o.user_id = $6 and o.status = 'basket'
               then 1 else NULL end
               ) > 0 then true else false end as is_favorite,
-              count(
+              sum(
                 case when 
                   o.user_id = $6 and o.status = 'basket'
                 then oi.count else NULL end
