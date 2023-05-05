@@ -17,7 +17,7 @@
         <div class="delivery">
             <h2>Способ доставки</h2>
             <div class="select-group">
-                <div v-for="dm in                                      deliveryMethods                                     "
+                <div v-for="dm in                                                        deliveryMethods                                                       "
                     :key="dm">
                     <input type="radio" :id="dm" :value="dm" v-model="selected_dm" @change="getDeliveryPrice">
                     <label :for="dm" @click="selected_dm = dm; getDeliveryPrice()">{{ dm }}</label>
@@ -27,7 +27,7 @@
         <div class="payment">
             <h2>Способ оплаты</h2>
             <div class="select-group">
-                <div v-for="                                   po                                    in                                    paymentOptions                                     "
+                <div v-for="                                                     po                                                      in                                                      paymentOptions                                                       "
                     :key=" po ">
                     <input type="radio" :id=" po " :value=" po " v-model=" selected_po ">
                     <label :for=" po " @click=" selected_po = po ">{{ po }}</label>
@@ -75,7 +75,7 @@ export default {
             basketData: {},
             paymentOptions: ["Перевод"],
             selected_po: "Перевод",
-            deliveryMethods: ["CДЭК", "Курьер"],
+            deliveryMethods: ["CДЭК", 'Метро', 'Внутри МКАД', 'МО за МКАД'],
             selected_dm: "CДЭК",
             deliveryPrice: null,
             deliveryTime: null,
@@ -144,8 +144,17 @@ export default {
                 .catch(e => { eventBus.$emit('noresponse', e) })
         },
         async getDeliveryPrice() {
-            console.log(this.selected_dm === "CДЭК")
-            if (this.selected_dm !== "CДЭК") return this.deliveryPrice = null;
+            if (this.selected_dm !== "CДЭК") {
+                switch (this.selected_dm) {
+                    case ('Метро'):
+                        return this.deliveryPrice = this.totalSum >= 5000 ? 0 : 200;
+                    case ('Внутри МКАД'):
+                        return this.deliveryPrice = this.totalSum >= 5000 ? 0 : 350;
+                    case ('МО за МКАД'):
+                        return this.deliveryPrice = this.totalSum >= 7000 ? 0 : null;
+                }
+
+            }
 
             const results = await this.$store.state.myApi.get(this.$store.state.restAddr + '/delivery_price', {
                 params: {
