@@ -17,7 +17,7 @@
         <div class="delivery">
             <h2>Способ доставки</h2>
             <div class="select-group">
-                <div v-for="dm in                                                                 deliveryMethods                                                                "
+                <div v-for="dm in                                                                   deliveryMethods                                                                  "
                     :key="dm">
                     <input type="radio" :id="dm" :value="dm" v-model="selected_dm" @change="getDeliveryPrice">
                     <label :for="dm" @click="selected_dm = dm; getDeliveryPrice()">{{ dm }}</label>
@@ -27,7 +27,7 @@
         <div class="payment">
             <h2>Способ оплаты</h2>
             <div class="select-group">
-                <div v-for="                                                              po                                                               in                                                               paymentOptions                                                                "
+                <div v-for="                                                                po                                                                 in                                                                 paymentOptions                                                                  "
                     :key=" po ">
                     <input type="radio" :id=" po " :value=" po " v-model=" selected_po ">
                     <label :for=" po " @click=" selected_po = po ">{{ po }}</label>
@@ -133,7 +133,7 @@ export default {
                     postal_code: this.basketData.postal_code,
                     patronymic: this.basketData.patronymic,
                     promo_code: this.sale.code,
-                    delivery_price: 0,
+                    delivery_price: this.delivery_price,
                     delivery_time: this.deliveryTime,
                     total: this.totalSum
                 })
