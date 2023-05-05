@@ -55,7 +55,7 @@ class UsersService {
   getAll({ id, page = 1, take = 10, isBasket, user_id }, ctx) {
     return new Promise(async (res, rej) => {
       if (id) {
-        this.getOne({ id }, ctx)
+        return this.getOne({ id }, ctx)
           .then((data) => res(data))
           .catch((error) => rej(error));
       }
