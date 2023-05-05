@@ -17,7 +17,7 @@
         <div class="delivery">
             <h2>Способ доставки</h2>
             <div class="select-group">
-                <div v-for="dm in           deliveryMethods          " :key="dm">
+                <div v-for="dm in               deliveryMethods              " :key="dm">
                     <input type="radio" :id="dm" :value="dm" v-model="selected_dm" @change="getDeliveryPrice">
                     <label :for="dm" @click="selected_dm = dm; getDeliveryPrice()">{{ dm }}</label>
                 </div>
@@ -26,7 +26,7 @@
         <div class="payment">
             <h2>Способ оплаты</h2>
             <div class="select-group">
-                <div v-for="        po         in         paymentOptions          " :key=" po ">
+                <div v-for="            po             in             paymentOptions              " :key=" po ">
                     <input type="radio" :id=" po " :value=" po " v-model=" selected_po ">
                     <label :for=" po " @click=" selected_po = po ">{{ po }}</label>
                 </div>
@@ -86,8 +86,8 @@ export default {
     watch: {
         selected_dm(to) {
             if (to === 'CДЭК') {
-                this.selected_po = "Наличные курьеру";
-                this.paymentOptions = ["Наличные курьеру"];
+                this.selected_po = "Перевод";
+                this.paymentOptions = ["Перевод"];
             } else this.paymentOptions = ["Перевод", "Наличные курьеру"];
         }
     },
@@ -142,7 +142,7 @@ export default {
                 .catch(e => { eventBus.$emit('noresponse', e) })
         },
         async getDeliveryPrice() {
-            if (!selected_dm === "CДЭК") return this.deliveryPrice = null;
+            if (!this.selected_dm === "CДЭК") return this.deliveryPrice = null;
             const results = await this.$store.state.myApi.get(this.$store.state.restAddr + '/delivery_price', {
                 params: {
                     operator: this.selected_dm,
