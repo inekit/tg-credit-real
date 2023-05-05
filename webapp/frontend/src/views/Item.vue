@@ -500,6 +500,7 @@ form {
 
                     &.hidden {
                         transform: scale(0.7);
+                        display: block !important;
                     }
                 }
 
