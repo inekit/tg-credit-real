@@ -66,7 +66,7 @@ class UsersService {
 
       connection
         .query(
-          `SELECT o.*
+          `SELECT o.*,
           json_agg(DISTINCT jsonb_build_object('title', i.title,'count',oi.count, 
            'option_id', io.id, 'option_name', io.name, 'price', i.price)) items 
           from orders o 
