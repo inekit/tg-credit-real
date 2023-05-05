@@ -41,12 +41,13 @@
         <div class="description" v-html="item.description"></div>
         <div class="order">
             <span>{{ item.price }} ₽</span>
-            <div class="count-select" v-if="count">
-                <button type="button" @click="changeCount(count - 1)">-</button>
-                <span>{{ count }}</span>
-                <button type="button" @click="changeCount(count + 1)">+</button>
+            <div class="count-select">
+                <button v-show="count" type="button" @click="changeCount(count - 1)">-</button>
+                <span v-show="count">{{ count }}</span>
+                <button :class="[count ? '' : 'add-button']" type="button" @click.prevent="order(count + 1)">{{ count ? '+'
+                    :
+                    'Добавить' }}</button>
             </div>
-            <button v-else type="button" @click.prevent="order">Добавить</button>
         </div>
     </form>
 </template>
@@ -195,8 +196,8 @@ export default {
                 })
                 .catch(e => { eventBus.$emit('noresponse', e) })
         },
-        async order() {
-            const count = 1
+        async order(count) {
+            if (count > 1) return this.changeCount(count);
             if (this.stock < 1) return alert("Товар закончился")
             this.$store.state.myApi
                 .post(this.$store.state.restAddr + '/favorites', {
@@ -496,6 +497,19 @@ form {
                 &:first-child {
                     left: 0;
                 }
+
+                &.add-button {
+                    position: absolute;
+                    right: 0;
+                    background-color: #0071e3;
+                    border-radius: 14px;
+                    color: white;
+                    font-weight: 500;
+                    text-transform: uppercase;
+                    font-size: 15px;
+                    padding: 15px 40px;
+                    border: none;
+                }
             }
         }
 
@@ -505,18 +519,7 @@ form {
             line-height: 45px;
         }
 
-        &>button {
-            position: absolute;
-            right: 1rem;
-            background-color: #0071e3;
-            border-radius: 14px;
-            color: white;
-            font-weight: 500;
-            text-transform: uppercase;
-            font-size: 15px;
-            padding: 15px 40px;
-            border: none;
-        }
+        &>button {}
     }
 }
 
