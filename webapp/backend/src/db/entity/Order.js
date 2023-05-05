@@ -73,6 +73,10 @@ module.exports = new EntitySchema({
       length: 255,
       nullable: true,
     },
+    delivery_price: {
+      type: "int",
+      nullable: true,
+    },
   },
   relations: {
     user: {

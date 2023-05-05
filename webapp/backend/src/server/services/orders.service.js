@@ -211,6 +211,7 @@ class UsersService {
           surname,
           postal_code,
           patronymic,
+          delivery_price,
         });
 
         const { id: order_id } = data;
