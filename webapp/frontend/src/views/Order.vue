@@ -17,7 +17,7 @@
         <div class="delivery">
             <h2>Способ доставки</h2>
             <div class="select-group">
-                <div v-for="dm in                                                        deliveryMethods                                                       "
+                <div v-for="dm in                                                             deliveryMethods                                                            "
                     :key="dm">
                     <input type="radio" :id="dm" :value="dm" v-model="selected_dm" @change="getDeliveryPrice">
                     <label :for="dm" @click="selected_dm = dm; getDeliveryPrice()">{{ dm }}</label>
@@ -27,7 +27,7 @@
         <div class="payment">
             <h2>Способ оплаты</h2>
             <div class="select-group">
-                <div v-for="                                                     po                                                      in                                                      paymentOptions                                                       "
+                <div v-for="                                                          po                                                           in                                                           paymentOptions                                                            "
                     :key=" po ">
                     <input type="radio" :id=" po " :value=" po " v-model=" selected_po ">
                     <label :for=" po " @click=" selected_po = po ">{{ po }}</label>
@@ -52,7 +52,7 @@
             <button class="button-append" type="button" @click=" getPromoSale ">Применить</button>
         </div>
         <h2 class="total">Итого</h2>
-        <div class="pricing">Стоимость доставки<span>{{ deliveryPrice ? `${ deliveryPrice } ₽` : "Не определена"
+        <div class="pricing">Стоимость доставки<span>{{ deliveryPrice!==null ? `${ deliveryPrice } ₽` : "Не определена"
                 }}</span>
         </div>
         <div class="pricing" v-if=" sale.sum > 0 ">Скидка<span>{{ sale.type === 'money' ? `${ sale.sum } ₽` : `${ sale.sum }
