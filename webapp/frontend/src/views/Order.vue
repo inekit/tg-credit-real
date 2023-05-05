@@ -1,7 +1,7 @@
 <template>
     <h1>Оформление заказа</h1>
     <div class="order-block">
-        <button class="" @click="order" hidden>Оформить заказ</button>
+        <button class="" @click="order">Оформить заказ</button>
         <div v-html="orderText"></div>
         <div v-if="false">
             <p>Расчет доставки
@@ -17,7 +17,7 @@
         <div class="delivery">
             <h2>Способ доставки</h2>
             <div class="select-group">
-                <div v-for="dm in                                                                deliveryMethods                                                               "
+                <div v-for="dm in                                                                 deliveryMethods                                                                "
                     :key="dm">
                     <input type="radio" :id="dm" :value="dm" v-model="selected_dm" @change="getDeliveryPrice">
                     <label :for="dm" @click="selected_dm = dm; getDeliveryPrice()">{{ dm }}</label>
@@ -27,7 +27,7 @@
         <div class="payment">
             <h2>Способ оплаты</h2>
             <div class="select-group">
-                <div v-for="                                                             po                                                              in                                                              paymentOptions                                                               "
+                <div v-for="                                                              po                                                               in                                                               paymentOptions                                                                "
                     :key=" po ">
                     <input type="radio" :id=" po " :value=" po " v-model=" selected_po ">
                     <label :for=" po " @click=" selected_po = po ">{{ po }}</label>
