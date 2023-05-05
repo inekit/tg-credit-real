@@ -14,21 +14,21 @@
             <p>Если Вы хотите, чтобы мы произвели расчет до оплаты заказа,
                 напишите нам из главного меню по кнопке «Чат с нами»</p>
         </div>
-        <div class="payment">
-            <h2>Способ оплаты</h2>
-            <div class="select-group">
-                <div v-for="po in paymentOptions  " :key="po">
-                    <input type="radio" :id="po" :value="po" v-model="selected_po">
-                    <label :for="po" @click="selected_po = po">{{ po }}</label>
-                </div>
-            </div>
-        </div>
         <div class="delivery">
             <h2>Способ доставки</h2>
             <div class="select-group">
                 <div v-for="dm in   deliveryMethods  " :key="dm">
                     <input type="radio" :id="dm" :value="dm" v-model="selected_dm">
                     <label :for="dm" @click="selected_dm = dm">{{ dm }}</label>
+                </div>
+            </div>
+        </div>
+        <div class="payment">
+            <h2>Способ оплаты</h2>
+            <div class="select-group">
+                <div v-for="po in paymentOptions  " :key="po">
+                    <input type="radio" :id="po" :value="po" v-model="selected_po">
+                    <label :for="po" @click="selected_po = po">{{ po }}</label>
                 </div>
             </div>
         </div>
@@ -83,6 +83,12 @@ export default {
         }
     },
     watch: {
+        selected_dm(to) {
+            if (to === 'CДЭК') {
+                this.selected_po = "Наличные курьеру";
+                this.paymentOptions = ["Наличные курьеру"];
+            } else this.paymentOptions = ["Перевод", "Наличные курьеру"];
+        }
     },
     async beforeMount() {
         window.Telegram?.WebApp.BackButton.onClick(this.routeBack);
