@@ -17,44 +17,45 @@
         <div class="delivery">
             <h2>Способ доставки</h2>
             <div class="select-group">
-                <div v-for="dm in   deliveryMethods  " :key="dm">
-                    <input type="radio" :id="dm" :value="dm" v-model="selected_dm">
-                    <label :for="dm" @click="selected_dm = dm">{{ dm }}</label>
+                <div v-for="dm in           deliveryMethods          " :key="dm">
+                    <input type="radio" :id="dm" :value="dm" v-model="selected_dm" @change="getDeliveryPrice">
+                    <label :for="dm" @click="selected_dm = dm; getDeliveryPrice()">{{ dm }}</label>
                 </div>
             </div>
         </div>
         <div class="payment">
             <h2>Способ оплаты</h2>
             <div class="select-group">
-                <div v-for="po in paymentOptions  " :key="po">
-                    <input type="radio" :id="po" :value="po" v-model="selected_po">
-                    <label :for="po" @click="selected_po = po">{{ po }}</label>
+                <div v-for="        po         in         paymentOptions          " :key=" po ">
+                    <input type="radio" :id=" po " :value=" po " v-model=" selected_po ">
+                    <label :for=" po " @click=" selected_po = po ">{{ po }}</label>
                 </div>
             </div>
         </div>
         <h2>Получатель</h2>
         <div class="input-group">
-            <input type="text" id="name" name="name" placeholder="Имя" v-model="basketData.name">
-            <input type="text" id="surname" name="surname" placeholder="Фамилия" v-model="basketData.surname">
-            <input type="text" id="patronymic" name="patronymic" placeholder="Отчество" v-model="basketData.patronymic">
-            <input type="tel" id="phone" name="phone" placeholder="Телефон" v-model="basketData.phone">
-            <input type="text" id="address" name="address" placeholder="Адрес доставки" v-model="basketData.address">
+            <input type="text" id="name" name="name" placeholder="Имя" v-model=" basketData.name ">
+            <input type="text" id="surname" name="surname" placeholder="Фамилия" v-model=" basketData.surname ">
+            <input type="text" id="patronymic" name="patronymic" placeholder="Отчество" v-model=" basketData.patronymic ">
+            <input type="tel" id="phone" name="phone" placeholder="Телефон" v-model=" basketData.phone ">
+            <input type="text" id="address" name="address" placeholder="Адрес доставки" v-model=" basketData.address "
+                @input=" getDeliveryPrice ">
             <input type="number" id="text" pattern="[0-9]+" name="postal code" placeholder="Почтовый индекс"
-                v-model.number="basketData.postal_code">
+                v-model.number=" basketData.postal_code " @input=" getDeliveryPricePostal ">
         </div>
         <h2>Промокод</h2>
         <div class="input-group one-line">
             <input type="text" id="name" name="name" class="form-control" placeholder="Введите промокод"
-                v-model="basketData.promo_code">
-            <button class="button-append" type="button" @click="getPromoSale">Применить</button>
+                v-model=" basketData.promo_code ">
+            <button class="button-append" type="button" @click=" getPromoSale ">Применить</button>
         </div>
         <h2 class="total">Итого</h2>
-        <div class="pricing" hidden>Стоимость доставки<span>{{ deliveryPrice ? `${deliveryPrice} ₽` : "Не определена"
-        }}</span>
+        <div class="pricing">Стоимость доставки<span>{{ deliveryPrice ? `${ deliveryPrice } ₽` : "Не определена"
+                }}</span>
         </div>
-        <div class="pricing" v-if="sale.sum > 0">Скидка<span>{{ sale.type === 'money' ? `${sale.sum} ₽` : `${sale.sum}
-                % `
-        }}</span></div>
+        <div class="pricing" v-if=" sale.sum > 0 ">Скидка<span>{{ sale.type === 'money' ? `${ sale.sum } ₽` : `${ sale.sum }
+                        % `
+                }}</span></div>
         <div class="pricing">К оплате<span>{{ totalSum }} ₽</span></div>
     </div>
 </template>
@@ -70,7 +71,7 @@ export default {
     data() {
         return {
             basketData: {},
-            paymentOptions: ["Перевод", "Наличные курьеру"],
+            paymentOptions: ["Перевод"],
             selected_po: "Перевод",
             deliveryMethods: ["CДЭК", "Курьер"],
             selected_dm: "CДЭК",
@@ -100,6 +101,8 @@ export default {
         window.Telegram?.WebApp.MainButton.setText("Заказ подтверждаю");
         this.orderText = await this.getOrderText()
         this.basketData = await this.getBasketData()
+        await this.getDeliveryPrice()
+
 
     },
     async beforeUnmount() {
@@ -137,6 +140,29 @@ export default {
                     window.Telegram?.WebApp.close();
                 })
                 .catch(e => { eventBus.$emit('noresponse', e) })
+        },
+        async getDeliveryPrice() {
+            if (!selected_dm === "CДЭК") return this.deliveryPrice = null;
+            const results = await this.$store.state.myApi.get(this.$store.state.restAddr + '/delivery_price', {
+                params: {
+                    operator: this.selected_dm,
+                    address: this.basketData.address,
+                    count: this.basketData.total_count,
+                    postal_code: this.basketData.postal_code,
+                }
+            })
+                .then(response => {
+                    this.deliveryPrice = response.data?.price ?? null;
+                    this.deliveryTime = response.data?.time ?? null;
+                })
+                .catch(e => { console.log(e); this.deliveryPrice = null; this.deliveryTime = null })
+
+            return results ?? {}
+
+        },
+        getDeliveryPricePostal() {
+            if ([0, 6].includes(this.basketData.postal_code?.toString()?.length ?? 0)) this.getDeliveryPrice()
+            else { this.deliveryPrice = null; this.deliveryTime = null }
         },
         routeBack() {
             this.$router.go(-1)
