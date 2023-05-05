@@ -43,7 +43,7 @@
             <span>{{ item.price }} ₽</span>
             <div class="count-select">
                 <button :class="[!count ? 'hidden' : '']" type="button" @click="changeCount(count - 1)">-</button>
-                <span>{{ count ?? "" }}</span>
+                <span>{{ count ? count : 1 }}</span>
                 <button :class="[count ? '' : 'add-button']" type="button" @click.prevent="order(count + 1)">{{ count ? '+'
                     :
                     'Добавить' }}</button>
