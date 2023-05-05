@@ -66,13 +66,16 @@ class UsersService {
 
       connection
         .query(
-          `SELECT o.*,oi.count, io.id option_id,io.name option_name, i.price, i.title from orders o 
+          `SELECT o.*
+          json_agg(DISTINCT jsonb_build_object('title', i.title,'count',oi.count, 
+           'option_id', io.id, 'option_name', io.name, 'price', i.price)) items 
+          from orders o 
           left join order_items oi on o.id = oi.order_id  
           left join item_options io on oi.item_option_id = io.id  
           left join items i on io.item_id = i.id 
           where (user_id = $3 or $3 is NULL)  
           ${isBasket ? "" : `and status <> 'basket'`}
-          GROUP BY o.id, oi.count,io.id, i.price, i.title,i.id
+          GROUP BY o.id
           ORDER BY status, o.id DESC, io.id DESC
           LIMIT $1 OFFSET $2`,
           [take, skip, user_id]
