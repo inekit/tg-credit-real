@@ -183,7 +183,7 @@ export default {
                 })
         },
         changeCount(newCount) {
-            if (newCount > 100 || newCount > this.stock) return;
+            if (newCount > 100 || newCount > this.stock) return alert("Выбрано максимальное доступное количество товара")
             this.$store.state.myApi.put(this.$store.state.restAddr + '/favorites', {
                 user_id: this.$store.state.userId,
                 item_option_id: this.selected_option,
@@ -197,6 +197,7 @@ export default {
         },
         async order() {
             const count = 1
+            if (this.stock < 1) return alert("Товар закончился")
             this.$store.state.myApi
                 .post(this.$store.state.restAddr + '/favorites', {
                     item_option_id: this.selected_option,
