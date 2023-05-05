@@ -42,7 +42,7 @@
         <div class="order">
             <span>{{ item.price }} ₽</span>
             <div class="count-select">
-                <button v-show="count" type="button" @click="changeCount(count - 1)">-</button>
+                <button :class="[!count ? 'hidden' : '']" type="button" @click="changeCount(count - 1)">-</button>
                 <span>{{ count ?? "" }}</span>
                 <button :class="[count ? '' : 'add-button']" type="button" @click.prevent="order(count + 1)">{{ count ? '+'
                     :
@@ -496,6 +496,11 @@ form {
 
                 &:first-child {
                     left: 0;
+                    transition: transform 0.2s;
+
+                    &.hidden {
+                        transform: scale(0.7);
+                    }
                 }
 
                 &:last-child {
