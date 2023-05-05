@@ -3,7 +3,7 @@
     <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 300 250"></InstagramLoader>
     <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 300 200"></InstagramLoader>
     <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 300 200"></InstagramLoader>
-    <button @click="routeToBasket">Корзина</button>
+    <button @click="routeToBasket" hidden>Корзина</button>
     <MasonryWall class="results-block" :items="$store.state.results ?? []" :ssr-columns="3" :column-width="bodyWidth / 9"
         :gap="12">
         <template #default="{ item, index }">
@@ -15,9 +15,6 @@
                     <div class="text-container">
                         <h2>{{ item.title }}</h2>
                         <h3> · {{ item.price }}₽</h3>
-                    </div>
-                    <div class="goto-button">
-                        Перейти
                     </div>
                 </router-link>
                 <div class="favorite-toggle" :class="item.count_favourites > 0 ? 'favorite-item' : ''">

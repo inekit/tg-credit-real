@@ -54,7 +54,7 @@ class UsersService {
               count(
                 case when 
                   o.user_id = $6 and o.status = 'basket'
-                then 1 else NULL end
+                then oi.count else NULL end
                 ) count_favourites
                 from public.items p
                 left join categories c on c.name = p.category_name

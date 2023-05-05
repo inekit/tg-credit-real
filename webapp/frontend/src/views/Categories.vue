@@ -13,9 +13,6 @@
                     <div class="text-container">
                         <h2>{{ item.name }}</h2>
                     </div>
-                    <div class="goto-button">
-                        Перейти
-                    </div>
                 </router-link>
             </div>
         </template>
