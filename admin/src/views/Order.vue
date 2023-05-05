@@ -23,6 +23,9 @@
                 <img :src="order.reciept_photo_link" width="480" />
             </div>
             <div>
+                Стоимость доставки: {{ order.delivery_price !== null ? order.delivery_price : "Не учтена" }}
+            </div>
+            <div>
                 Сумма заказа: {{ order.total }}
             </div>
             <div>
