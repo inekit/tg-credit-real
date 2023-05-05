@@ -20,11 +20,7 @@ class BasketsService {
     return new Promise(async (res, rej) => {
       try {
         if (!address && !postal_code) rej("No addr data");
-        if (
-          operator === "CДЭК" ||
-          operator === "Курьер" ||
-          operator === "Я. Доставка"
-        ) {
+        if (operator === "CДЭК") {
           const cdek = new Cdek({
             test_mode: false,
             client_id: process.env.CDEK_ID, //"EMscd6r9JnFiQ3bLoyjJY6eM78JrJceI",

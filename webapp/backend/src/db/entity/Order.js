@@ -27,7 +27,15 @@ module.exports = new EntitySchema({
     },
     selected_dm: {
       type: "enum",
-      enum: ["Я. Доставка", "CДЭК", "Курьер", "Почта РФ"],
+      enum: [
+        "Я. Доставка",
+        "CДЭК",
+        "Курьер",
+        "Почта РФ",
+        "Метро",
+        "Внутри МКАД",
+        "МО за МКАД",
+      ],
       nullable: true,
     },
     selected_po: {
