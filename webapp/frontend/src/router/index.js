@@ -11,6 +11,11 @@ const routes = [
     redirect: '/categories/1',
     children: [
       {
+        path: '/categories',
+        name: 'CategoriesFromWAButton',
+        component: () => import('@/views/Categories.vue'),
+      },
+      {
         path: '/categories/:userId',
         name: 'Categories',
         component: () => import('@/views/Categories.vue'),

@@ -40,13 +40,14 @@ export default {
     async mounted() {
         window.Telegram?.WebApp.BackButton.hide()
         window.Telegram?.WebApp.expand()
+        const buttonUserId = window.Telegram?.WebApp.initDataUnsafe.user.id
 
         let uri = window.location.search.substring(1);
         this.params = new URLSearchParams(uri)
         this.backFilters = { size: this.params.get('size'), material: this.params.get('material') }
         this.mainside_id = this.params.get('mainside_id') === "null" ? null : this.params.get('mainside_id')
 
-        this.$store.state.userId = this.$route.params?.userId;
+        this.$store.state.userId = buttonUserId ?? this.$route.params?.userId;
 
         this.updatePage(300);
 
