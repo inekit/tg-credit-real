@@ -3,7 +3,7 @@
     <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 300 250"></InstagramLoader>
     <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 300 200"></InstagramLoader>
     <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 300 200"></InstagramLoader>
-    <button v-if="basketItems.length > 0" class="" @click="order">Оформить заказ</button>
+
     <div class="basket-items">
         <div class="basket-item" v-for="item, id in basketItems" :key="id">
             <RouterLink :to="getItemLink(item)">
@@ -40,7 +40,7 @@
 import eventBus from '../eventBus'
 import { ListLoader, InstagramLoader } from 'vue-content-loader'
 
-
+//<button v-if="basketItems.length > 0" class="" @click="order">Оформить заказ</button>
 export default {
     components: { InstagramLoader },
     data() {

@@ -40,7 +40,7 @@ export default {
     async mounted() {
         window.Telegram?.WebApp.BackButton.hide()
         window.Telegram?.WebApp.expand()
-        const buttonUserId = window.Telegram?.WebApp.initDataUnsafe.user.id
+        const buttonUserId = window.Telegram?.WebApp.initDataUnsafe?.user?.id
 
         let uri = window.location.search.substring(1);
         this.params = new URLSearchParams(uri)
