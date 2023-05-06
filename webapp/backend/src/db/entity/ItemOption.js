@@ -12,6 +12,7 @@ module.exports = new EntitySchema({
     item_id: {
       type: "bigint",
       nullable: false,
+      default: 1,
     },
     name: {
       type: "varchar",
