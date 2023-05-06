@@ -28,7 +28,7 @@ class BasketsService {
 
       try {
         const orders = await queryRunner.query(
-          `select * from orders where user_id = $1::int and status='basket' limit 1`,
+          `select * from orders where user_id = $1::bigint and status='basket' limit 1`,
           [user_id]
         );
         const basket_id = orders[0].id;
@@ -71,7 +71,7 @@ class BasketsService {
 
       try {
         const orders = await queryRunner.query(
-          `select * from orders where user_id = $1::int and status='basket' limit 1`,
+          `select * from orders where user_id = $1::bigint and status='basket' limit 1`,
           [user_id]
         );
         const basket_id = orders[0].id;
@@ -155,7 +155,7 @@ class BasketsService {
           left join item_options io on oi.item_option_id = io.id
           left join items i on io.item_id = i.id
           where o.user_id = $1 and o.status='basket' and io.id is not NULL
-          and (item_option_id=$2 or $2::int is null)
+          and (item_option_id=$2 or $2::bigint is null)
           order by io.id`,
           [user_id, item_option_id]
         )

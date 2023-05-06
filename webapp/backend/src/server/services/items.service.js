@@ -65,7 +65,7 @@ class UsersService {
                 and (p.category_name = $2 or $2 is NULL)  
                 and (p.id = $3 or $3 is NULL)  
                 and io.stock > 0
-                and (oi.item_option_id = $7::int or $7::int is NULL)
+                and (oi.item_option_id = $7::bigint or $7::bigint is NULL)
                 group by p.id,c.name
                 order by ${orderQueryPart}
                 LIMIT $4 OFFSET $5`
@@ -74,8 +74,8 @@ class UsersService {
                     from public.items p
                     left join item_options io on p.id = io.item_id
                     where (lower(title) like lower($1) or $1 is NULL) 
-                    and $6::int is NULL
-                    and $7::int is NULL
+                    and $6::bigint is NULL
+                    and $7::bigint is NULL
                     and (p.category_name = $2 or $2 is NULL)  
                     and (p.id = $3 or $3 is NULL)  
                     group by p.id
