@@ -12,6 +12,15 @@
         <CFormInput class="mb-3" v-model="formData.title" placeholder="Заголовок" id="inputHeader"
           aria-describedby="inputGroupPrepend" feedbackValid="Все ок" feedbackInvalid="Введите корректный заголовок"
           required />
+        <CFormInput type="number" class="mb-3" label="Количество затяжек" placeholder="Введите количество затяжек"
+          v-model="formData.puffs_count" />
+        <CFormInput type="file" accept="image/*" ref="file" @change="previewImage" class="mb-3" label="Превью"
+          placeholder="Превью" />
+        <div class="border p-2 mt-3 preview-container">
+          <template v-if="preview">
+            <img :src="preview" class="img-fluid" />
+          </template>
+        </div>
         <div class="projects-list">
           <span>Категория</span>
           <CFormCheck v-for="project in projects" :key="project.name" :id="project.name"
@@ -106,6 +115,7 @@ export default {
     return {
       formValid: false,
       preview_list: [],
+      preview: null,
     }
   },
   updated() {
@@ -145,11 +155,23 @@ export default {
       this.formData.options_array.splice(id, 1);
       this.preview_list.splice(id, 1);
     },
+    previewImage(event) {
+      var input = event.target;
+      this.formData.preview = input.files[0]
+
+      if (input.files) {
+        var reader = new FileReader();
+        reader.onload = (e) => {
+          this.preview = e.target.result;
+        }
+        reader.readAsDataURL(input.files[0]);
+      }
+    },
     previewMultiImage(id, event) {
       var input = event.target;
       var count = input.files.length;
       var index = 0;
-      this.formData.preview = input.files[0]
+      //this.formData.preview = input.files[0]
       if (!this.preview_list) this.preview_list = []
       if (!this.preview_list[id]) this.preview_list[id] = []
 
@@ -191,6 +213,8 @@ export default {
       formData.append('price', this.formData.price)
       this.formData.select_name && formData.append('select_name', this.formData.select_name)
 
+
+      this.formData.preview && formData.append(`preview`, this.formData.preview);
 
       const turndownService = new TurndownService({
         headingStyle: "atx",
