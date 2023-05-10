@@ -18,7 +18,7 @@
           placeholder="Превью" />
         <div class="border p-2 mt-3 preview-container">
           <template v-if="preview">
-            <img :src="preview" class="img-fluid" />
+            <img :src="preview" width="480" class="img-fluid" />
           </template>
         </div>
         <div class="projects-list">
@@ -124,7 +124,7 @@ export default {
     this.formData.description && this.$refs.postTextEditor.pasteHTML(
       marked.parse(this.formData.description?.replaceAll("\r\n\r\n", "<span><br/><span/>\r\n\r\n")))
 
-    this.preview = this.formData.preview ?? null;
+    this.preview = this.formData.preview ? `${this.$store.state.publicPath}/public/pics/${this.formData.preview}` : null;
     this.preview_list = [];
     for (let optionIndex in this.formData.options_array) {
       this.preview_list[optionIndex] = this.formData.options_array[optionIndex].photos?.map(preview_name => `${this.$store.state.publicPath}/public/pics/${preview_name}`)
