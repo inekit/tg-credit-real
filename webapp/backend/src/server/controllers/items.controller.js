@@ -30,6 +30,7 @@ function addOne(req, res, next) {
     Object.assign(req.body, {
       photos,
       photosBinary,
+      previewBinary: req.files?.preview,
     })
   )
     .then((data) => res.send(data))
@@ -53,6 +54,7 @@ async function editOne(req, res, next) {
     Object.assign(req.body, {
       photos,
       photosBinary,
+      previewBinary: req.files?.preview,
     })
   )
     .then((data) => res.send(data))

@@ -97,7 +97,7 @@ class UsersService {
     });
   }
 
-  async saveReturningFileName(image) {
+  async saveReturningFileName(image, isPreview) {
     if (typeof image === String) return image;
 
     let fName = image?.name;
@@ -120,6 +120,14 @@ class UsersService {
             "-q 80"
           )
           .then(async (r) => {
+            if (isPreview) {
+              await webp
+                .cwebp(
+                  `public/pics/${fNameFullPath}`,
+                  `public/pics/${image.md5}_preview.webp`,
+                  "-q 90 -resize 480 0"
+                )
+                .catch((e) => console.log(e));
             await fs.unlink(`public/pics/${fNameFullPath}`).catch((e) => {});
             fNameFullPath = image.md5 + ".webp";
           })
@@ -140,6 +148,8 @@ class UsersService {
     options_array = [],
     select_name,
     description,
+    previewBinary,
+    puffs_count,
   }) {
     return new Promise(async (res, rej) => {
       const connection = await tOrmCon;
@@ -151,6 +161,11 @@ class UsersService {
       await queryRunner.startTransaction();
 
       try {
+        const previewName = await this.saveReturningFileName(
+          previewBinary,
+          true
+        );
+
         const data = await queryRunner.manager.getRepository("Item").save({
           title,
           description,
@@ -158,6 +173,8 @@ class UsersService {
           price,
           category_name: categoryName,
           select_name,
+          puffs_count,
+          preview: previewName,
         });
 
         const { id } = data;
@@ -213,6 +230,9 @@ class UsersService {
     options_array = [],
     select_name,
     description,
+    previewBinary,
+    preview,
+    puffs_count,
   }) {
     return new Promise(async (res, rej) => {
       const connection = await tOrmCon;
@@ -224,6 +244,11 @@ class UsersService {
       await queryRunner.startTransaction();
 
       try {
+        const previewName = previewBinary ? await this.saveReturningFileName(
+          previewBinary,
+          true
+        ) : preview;
+
         const data = await queryRunner.manager
           .getRepository("Item")
           .createQueryBuilder()
@@ -234,6 +259,8 @@ class UsersService {
             price,
             category_name: categoryName,
             select_name,
+            preview: previewName,
+            puffs_count
           })
           .where({
             id: id,

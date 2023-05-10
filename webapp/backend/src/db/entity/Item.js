@@ -32,6 +32,16 @@ module.exports = new EntitySchema({
       nullable: false,
       default: 100,
     },
+    preview: {
+      type: "varchar",
+      length: 300,
+      nullable: true,
+    },
+    puffs_count: {
+      type: "int",
+      nullable: false,
+      default: 100,
+    },
     select_name: {
       type: "varchar",
       length: 255,

@@ -217,6 +217,8 @@ export default {
 
       this.formData.preview && formData.append(`preview`, this.formData.preview);
 
+      formData.append(`puffs_count`, this.formData.puffs_count);
+
       const turndownService = new TurndownService({
         headingStyle: "atx",
         //bulletListMarker: "-",
