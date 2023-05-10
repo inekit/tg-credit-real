@@ -128,6 +128,7 @@ class UsersService {
                   "-q 90 -resize 480 0"
                 )
                 .catch((e) => console.log(e));
+            }
             await fs.unlink(`public/pics/${fNameFullPath}`).catch((e) => {});
             fNameFullPath = image.md5 + ".webp";
           })
@@ -244,10 +245,9 @@ class UsersService {
       await queryRunner.startTransaction();
 
       try {
-        const previewName = previewBinary ? await this.saveReturningFileName(
-          previewBinary,
-          true
-        ) : preview;
+        const previewName = previewBinary
+          ? await this.saveReturningFileName(previewBinary, true)
+          : preview;
 
         const data = await queryRunner.manager
           .getRepository("Item")
@@ -260,7 +260,7 @@ class UsersService {
             category_name: categoryName,
             select_name,
             preview: previewName,
-            puffs_count
+            puffs_count,
           })
           .where({
             id: id,
