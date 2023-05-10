@@ -15,13 +15,13 @@ function getAll(req, res, next) {
 function addOne(req, res, next) {
   const photosBinary = [];
   for (let paramName in req.files) {
-    const index = parseInt(paramName.substring(7, 8));
+    const index = parseInt(paramName.substring(7, 9));
     if (paramName.substring(0, 6) !== "photos") continue;
     photosBinary[index] = req.files[paramName];
   }
   const photos = [];
   for (let paramName in req.body) {
-    const index = parseInt(paramName.substring(7, 8));
+    const index = parseInt(paramName.substring(7, 9));
     if (paramName.substring(0, 6) !== "photos") continue;
     photos[index] = req.body[paramName];
   }
@@ -39,13 +39,13 @@ function addOne(req, res, next) {
 async function editOne(req, res, next) {
   const photosBinary = [];
   for (let paramName in req.files) {
-    const index = parseInt(paramName.substring(7, 8));
+    const index = parseInt(paramName.substring(7, 9));
     if (paramName.substring(0, 6) !== "photos") continue;
     photosBinary[index] = req.files[paramName];
   }
   const photos = [];
   for (let paramName in req.body) {
-    const index = parseInt(paramName.substring(7, 8));
+    const index = parseInt(paramName.substring(7, 9));
     if (paramName.substring(0, 6) !== "photos") continue;
     photos[index] = req.body[paramName];
   }
