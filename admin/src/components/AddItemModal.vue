@@ -18,7 +18,7 @@
           placeholder="Превью" />
         <div class="border p-2 mt-3 preview-container">
           <template v-if="preview">
-            <img :src="preview" width="480" class="img-fluid" />
+            <img :src="preview" class="img-fluid w-25" />
           </template>
         </div>
         <div class="projects-list">
