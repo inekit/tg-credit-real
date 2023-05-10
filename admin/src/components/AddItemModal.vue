@@ -124,6 +124,7 @@ export default {
     this.formData.description && this.$refs.postTextEditor.pasteHTML(
       marked.parse(this.formData.description?.replaceAll("\r\n\r\n", "<span><br/><span/>\r\n\r\n")))
 
+    this.preview = null;
     this.preview_list = [];
     for (let optionIndex in this.formData.options_array) {
       this.preview_list[optionIndex] = this.formData.options_array[optionIndex].photos?.map(preview_name => `${this.$store.state.publicPath}/public/pics/${preview_name}`)
