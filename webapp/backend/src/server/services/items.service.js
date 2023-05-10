@@ -150,6 +150,7 @@ class UsersService {
     select_name,
     description,
     previewBinary,
+    preview,
     puffs_count,
   }) {
     return new Promise(async (res, rej) => {
@@ -162,10 +163,9 @@ class UsersService {
       await queryRunner.startTransaction();
 
       try {
-        const previewName = await this.saveReturningFileName(
-          previewBinary,
-          true
-        );
+        const previewName = previewBinary
+          ? await this.saveReturningFileName(previewBinary, true)
+          : preview;
 
         const data = await queryRunner.manager.getRepository("Item").save({
           title,
