@@ -211,8 +211,8 @@ export default {
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            max-width: 130%;
-            max-height: 130%;
+            max-width: 120%;
+            max-height: 120%;
             min-width: 100%;
             min-height: 100%;
             width: auto;

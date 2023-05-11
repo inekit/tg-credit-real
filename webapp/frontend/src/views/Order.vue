@@ -54,7 +54,7 @@
         <div class="pricing">Стоимость доставки<span>{{ deliveryPrice !== null ? `${deliveryPrice} ₽` : "Не определена"
         }}</span>
         </div>
-        <div class="pricing">Стоимость товаров<span>{{ basketData?.total }}</span>
+        <div class="pricing">Стоимость товаров<span>{{ basketData?.total }} ₽</span>
         </div>
         <div class="pricing" v-if="sale.sum > 0">Скидка<span>{{ sale.type === 'money' ? `${sale.sum} ₽` : `${sale.sum}
                 % `
