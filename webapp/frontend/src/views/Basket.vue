@@ -197,7 +197,7 @@ export default {
 
     .img-container {
         position: relative;
-        background-color: #414141;
+        background-color: transparent;
         width: 18vw;
         height: 20vw;
         position: relative;

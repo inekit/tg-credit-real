@@ -27,36 +27,38 @@
             <h2>Способ оплаты</h2>
             <div class="select-group">
                 <div v-for="                                                                        po                                                                         in                                                                         paymentOptions                                                                          "
-                    :key=" po ">
-                    <input type="radio" :id=" po " :value=" po " v-model=" selected_po ">
-                    <label :for=" po " @click=" selected_po = po ">{{ po }}</label>
+                    :key="po">
+                    <input type="radio" :id="po" :value="po" v-model="selected_po">
+                    <label :for="po" @click=" selected_po = po">{{ po }}</label>
                 </div>
             </div>
         </div>
         <h2>Получатель</h2>
         <div class="input-group">
-            <input type="text" id="name" name="name" placeholder="Имя" v-model=" basketData.name ">
-            <input type="text" id="surname" name="surname" placeholder="Фамилия" v-model=" basketData.surname ">
-            <input type="text" id="patronymic" name="patronymic" placeholder="Отчество" v-model=" basketData.patronymic ">
-            <input type="tel" id="phone" name="phone" placeholder="Телефон" v-model=" basketData.phone ">
-            <input type="text" id="address" name="address" placeholder="Адрес доставки" v-model=" basketData.address "
-                @input=" getDeliveryPrice ">
+            <input type="text" id="name" name="name" placeholder="Имя" v-model="basketData.name">
+            <input type="text" id="surname" name="surname" placeholder="Фамилия" v-model="basketData.surname">
+            <input type="text" id="patronymic" name="patronymic" placeholder="Отчество" v-model="basketData.patronymic">
+            <input type="tel" id="phone" name="phone" placeholder="Телефон" v-model="basketData.phone">
+            <input type="text" id="address" name="address" placeholder="Адрес доставки" v-model="basketData.address"
+                @input="getDeliveryPrice">
             <input type="number" id="text" pattern="[0-9]+" name="postal code" placeholder="Почтовый индекс"
-                v-model.number=" basketData.postal_code " @input=" getDeliveryPricePostal ">
+                v-model.number="basketData.postal_code" @input="getDeliveryPricePostal">
         </div>
         <h2>Промокод</h2>
         <div class="input-group one-line">
             <input type="text" id="name" name="name" class="form-control" placeholder="Введите промокод"
-                v-model=" basketData.promo_code ">
-            <button class="button-append" type="button" @click=" getPromoSale ">Применить</button>
+                v-model="basketData.promo_code">
+            <button class="button-append" type="button" @click="getPromoSale">Применить</button>
         </div>
         <h2 class="total">Итого</h2>
-        <div class="pricing">Стоимость доставки<span>{{ deliveryPrice!==null ? `${ deliveryPrice } ₽` : "Не определена"
-                }}</span>
+        <div class="pricing">Стоимость доставки<span>{{ deliveryPrice !== null ? `${deliveryPrice} ₽` : "Не определена"
+        }}</span>
         </div>
-        <div class="pricing" v-if=" sale.sum > 0 ">Скидка<span>{{ sale.type === 'money' ? `${ sale.sum } ₽` : `${ sale.sum }
-                        % `
-                }}</span></div>
+        <div class="pricing">Стоимость товаров<span>{{ basketData?.total }}</span>
+        </div>
+        <div class="pricing" v-if="sale.sum > 0">Скидка<span>{{ sale.type === 'money' ? `${sale.sum} ₽` : `${sale.sum}
+                % `
+        }}</span></div>
         <div class="pricing">К оплате<span>{{ totalSum }} ₽</span></div>
     </div>
 </template>
@@ -230,7 +232,7 @@ export default {
             const basketTotal = +(this.sale.type === 'money' ? Math.max((this.basketData.total - this.sale.sum), 0) :
                 (+(100 - this.sale.sum) * this.basketData.total / 100).toFixed(0))
 
-            return basketTotal;// + (+this.deliveryPrice ?? 0)
+            return basketTotal + (+this.deliveryPrice ?? 0)
         }
 
     }

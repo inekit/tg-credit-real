@@ -94,7 +94,7 @@ export default {
             this.$router.go(-1)
         },
         getPreviewLink(link) {
-            const parts = link.match(/\.([^.]+)$|$/)
+            const parts = link?.match(/\.([^.]+)$|$/)
             if (!parts?.[1]) return;
             return link?.split('.').slice(0, -1).join('.') + '_preview.' + parts[1]
 
