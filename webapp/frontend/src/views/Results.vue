@@ -10,7 +10,8 @@
             <div class="result-item">
                 <router-link :to="`/items/${item.id}`">
                     <div class="img-container">
-                        <img :src="`/colorsserver/public/pics/${item.options_array[0]?.photos?.[0]}`" />
+                        <img :src="`/colorsserver/public/pics/${getPreviewLink(item.preview)}`"
+                            :onerror="`javascript:this.onerror=null;this.src='/pics/${item.preview}';`" />
                     </div>
                     <div class="text-container">
                         <h2>{{ item.title }}</h2>
@@ -91,6 +92,12 @@ export default {
         },
         routeBack() {
             this.$router.go(-1)
+        },
+        getPreviewLink(link) {
+            const parts = link.match(/\.([^.]+)$|$/)
+            if (!parts?.[1]) return;
+            return link?.split('.').slice(0, -1).join('.') + '_preview.' + parts[1]
+
         },
         async haveBasketItems() {
             const results = await this.$store.state.myApi.get(this.$store.state.restAddr + '/basket_data', {
