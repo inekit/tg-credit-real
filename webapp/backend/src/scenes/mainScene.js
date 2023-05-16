@@ -34,7 +34,21 @@ const scene = new CustomWizardScene("clientScene").enter(async (ctx) => {
         console.log(e);
         ctx.replyWithTitle("DB_ERROR");
       });
-  }
+  } else
+    await connection
+      .getRepository("User")
+      .update({
+        username: ctx.from.username,
+      })
+      .where({
+        id: ctx.from.id,
+      })
+      .returning("*")
+      .execute()
+      .catch(async (e) => {
+        console.log(e);
+        ctx.replyWithTitle("DB_ERROR");
+      });
 
   ctx.replyWithKeyboard("START_TITLE", "main_menu_keyboard");
 });
