@@ -37,8 +37,7 @@ body {
   top: 0;
   left: 0;
   -webkit-overflow-scrolling: touch;
-  background-color: white;
-  background-color: var(--tg-theme-bg-color);
+
 }
 
 body {
@@ -48,7 +47,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
+  background-color: white;
+  background-color: var(--tg-theme-bg-color);
 }
 
 h1 {
