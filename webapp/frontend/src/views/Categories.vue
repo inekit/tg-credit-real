@@ -50,11 +50,21 @@ export default {
         const buttonUserId = window.Telegram?.WebApp?.initDataUnsafe?.user?.id
         this.$store.state.userId = buttonUserId ?? this.$route.params?.userId;
 
-        alert(window.Telegram?.WebApp?.initDataUnsafe?.user?.id)
 
         //window.Telegram?.WebApp.onEvent('viewportChanged', () => window.Telegram?.WebApp.expand())
         window.Telegram?.WebApp.enableClosingConfirmation()
 
+        alert(this.$store.state.userId)
+
+
+        if (await this.haveBasketItems()) {
+            window.Telegram?.WebApp.MainButton.onClick(this.routeToBasket);
+            window.Telegram?.WebApp.MainButton.show();
+            window.Telegram?.WebApp.MainButton.setText("Корзина");
+        } else {
+            window.Telegram?.WebApp.MainButton.offClick(this.routeToBasket);
+            window.Telegram?.WebApp.MainButton.hide();
+        }
     },
     async beforeUnmount() {
         window.Telegram?.WebApp.MainButton.offClick(this.routeToBasket);
@@ -73,7 +83,10 @@ export default {
                 .then(response => {
                     return response.data.favorites.length
                 })
-                .catch(e => { eventBus.$emit('noresponse', e) })
+                .catch(e => {
+                    alert(e)
+                    eventBus.$emit('noresponse', e)
+                })
 
             return results
 
