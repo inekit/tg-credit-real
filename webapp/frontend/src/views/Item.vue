@@ -259,6 +259,7 @@ h1 {
     width: 100%;
     min-height: 100px;
     background-color: #ffffff;
+    background-color: var(--tg-theme-bg-color);
     color: var(--vc-clr-white);
     font-size: 20px;
     //border-radius: 8px;
