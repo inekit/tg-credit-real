@@ -37,6 +37,8 @@ body {
   top: 0;
   left: 0;
   -webkit-overflow-scrolling: touch;
+  background-color: white;
+  background-color: var(--tg-theme-bg-color);
 }
 
 body {
