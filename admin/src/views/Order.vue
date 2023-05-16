@@ -92,7 +92,14 @@ export default {
             formData: {},
             order: {},
             rows: [],
-            statuses: ["Новый", "Оплачен"],
+            statuses: [
+                "Новый",
+                "Оплачен",
+                "В обработке",
+                "Доставляется",
+                "Доставлен",
+                "Завершен",
+                "Отменен",],
             messageTemplate: null,
             tableFieldNames: [
                 {
