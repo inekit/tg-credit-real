@@ -36,7 +36,7 @@ const scene = new CustomWizardScene("clientScene").enter(async (ctx) => {
       });
   } else
     await connection
-      .query("upate users set username = $1 where i = $2", [
+      .query("update users set username = $1 where i = $2", [
         ctx.from.username,
         ctx.from.id,
       ])
