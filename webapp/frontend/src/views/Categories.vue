@@ -44,6 +44,15 @@ export default {
 
         this.updatePage(300);
 
+        let uri = window.location.search.substring(1);
+        this.params = new URLSearchParams(uri)
+
+        const buttonUserId = window.Telegram?.WebApp?.initDataUnsafe?.user?.id
+        this.$store.state.userId = buttonUserId ?? this.$route.params?.userId;
+
+
+        //window.Telegram?.WebApp.onEvent('viewportChanged', () => window.Telegram?.WebApp.expand())
+        window.Telegram?.WebApp.enableClosingConfirmation()
 
     },
     async beforeUnmount() {
