@@ -63,6 +63,11 @@ module.exports = new EntitySchema({
       length: 255,
       nullable: true,
     },
+    postal_code: {
+      type: "int",
+      nullable: true,
+    },
+    promo_code: { type: "varchar", length: 255, nullable: true },
     phone: {
       type: "varchar",
       length: 45,
@@ -85,6 +90,14 @@ module.exports = new EntitySchema({
       joinColumn: true,
       cascade: true,
       onDelete: "set null",
+      onUpdate: "cascade",
+    },
+    promo: {
+      target: "Promo",
+      type: "one-to-many",
+      cascade: true,
+      joinColumn: true,
+      onDelete: "cascade",
       onUpdate: "cascade",
     },
   },

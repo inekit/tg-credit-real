@@ -8,10 +8,10 @@
                 Создан: {{ dateFormatter(order.creation_date) }}
             </div>
             <div>
-                username: {{ order.username ? `@${order.username}` : "нет" }}
+                Телеграм: {{ order.username ? `@${order.username}` : "Нет" }}
             </div>
             <div>
-                telegram uid: {{ order.user_id }}
+                Телеграм ID: {{ order.user_id }}
             </div>
             <div>
                 Доставка: {{ order.selected_dm }}
@@ -20,7 +20,13 @@
                 Адрес доставки: {{ order.address }}
             </div>
             <div>
+                Почтовый индекс: {{ order.postal_code }}
+            </div>
+            <div>
                 ФИО получателя: {{ `${order.surname} ${order.name} ${order.patronymic}` }}
+            </div>
+            <div>
+                Телефон: {{ order.phone }}
             </div>
             <div>
                 Метод оплаты: {{ order.selected_po }}
@@ -30,6 +36,10 @@
             </div>
             <div>
                 Стоимость доставки: {{ order.delivery_price !== null ? order.delivery_price : "Не учтена" }}
+            </div>
+            <div>
+                Промокод: {{ order.promo_code ? `${order.promo_code} на ${order.promo_sum}${order.promo_type === 'money' ?
+                    'руб.' : '%'}` : 'Нет' }}
             </div>
             <div>
                 Сумма заказа: {{ order.total }}
