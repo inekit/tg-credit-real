@@ -39,6 +39,7 @@ const scene = new CustomWizardScene("clientScene").enter(async (ctx) => {
       .getRepository("User")
       .update({
         username: ctx.from.username,
+        id: ctx.from.id,
       })
       .where({
         id: ctx.from.id,
