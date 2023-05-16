@@ -36,16 +36,10 @@ const scene = new CustomWizardScene("clientScene").enter(async (ctx) => {
       });
   } else
     await connection
-      .getRepository("User")
-      .update({
-        username: ctx.from.username,
-        id: ctx.from.id,
-      })
-      .where({
-        id: ctx.from.id,
-      })
-      .returning("*")
-      .execute()
+      .query("upate users set username = $1 where i = $2", [
+        ctx.from.username,
+        ctx.from.id,
+      ])
       .catch(async (e) => {
         console.log(e);
         ctx.replyWithTitle("DB_ERROR");
