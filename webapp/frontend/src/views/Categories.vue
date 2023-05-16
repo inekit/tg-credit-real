@@ -54,9 +54,6 @@ export default {
         //window.Telegram?.WebApp.onEvent('viewportChanged', () => window.Telegram?.WebApp.expand())
         window.Telegram?.WebApp.enableClosingConfirmation()
 
-        alert(this.$store.state.userId)
-
-
         if (await this.haveBasketItems()) {
             window.Telegram?.WebApp.MainButton.onClick(this.routeToBasket);
             window.Telegram?.WebApp.MainButton.show();
@@ -81,7 +78,7 @@ export default {
                 }
             })
                 .then(response => {
-                    return response.data.favorites.length
+                    return response.data?.favorites?.length
                 })
                 .catch(e => {
                     alert(e)
