@@ -8,6 +8,11 @@
                 Создан: {{ dateFormatter(order.creation_date) }}
             </div>
             <div>
+                Клиент:
+                username: {{ order.username ? `@${order.username}` : "нет" }}
+                telegram uid: {{ order.user_id }}
+            </div>
+            <div>
                 Доставка: {{ order.selected_dm }}
             </div>
             <div>
