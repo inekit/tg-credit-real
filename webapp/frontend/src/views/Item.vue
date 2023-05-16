@@ -328,6 +328,7 @@ form {
         font-size: 1.1rem;
         font-weight: 600;
         color: #414141;
+        color: var(--tg-theme-text-color);
     }
 
     .stock-container {
@@ -420,10 +421,13 @@ form {
         h4,
         h5,
         h6,
+        ul,
+        li,
         p {
             margin: 0;
             font-weight: 400;
             color: #414141;
+            color: var(--tg-theme-text-color);
         }
 
         p {
@@ -461,6 +465,7 @@ form {
         padding: 12px 1rem;
         border-top: 1px rgba(192, 192, 192, 0.363) solid;
         background-color: white;
+        background-color: var(--tg-theme-bg-color);
 
         .count-select {
             position: absolute;

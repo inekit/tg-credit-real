@@ -189,6 +189,8 @@ export default {
 .basket-item {
     margin: 1rem;
     position: relative;
+    color: #414141;
+    color: var(--tg-theme-text-color);
 
     a {
         text-decoration: none;
@@ -310,6 +312,9 @@ export default {
     padding: 12px 1rem;
     border-top: 1px rgba(192, 192, 192, 0.363) solid;
     background-color: white;
+    background-color: var(--tg-theme-bg-color);
+    color: #414141;
+    color: var(--tg-theme-text-color);
 
     .label {
         display: block;

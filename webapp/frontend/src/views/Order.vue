@@ -243,6 +243,7 @@ export default {
 <style lang="scss">
 .order-block {
     color: #414141;
+    color: var(--tg-theme-text-color);
     padding: 0 1rem 1rem 1rem;
 
     input[type="radio"] {
@@ -343,7 +344,7 @@ export default {
             width: 40%;
             border-left: 2px solid;
             border-radius: 4px 1rem 1rem 4px;
-            border-color: white;
+            border-color: transparent;
             color: #414141 !important;
 
         }

@@ -53,6 +53,7 @@ h1 {
   margin: auto 1rem;
   margin-top: 1rem;
   color: #414141;
+  color: var(--tg-theme-text-color);
   font-weight: 600;
 
 }

@@ -199,6 +199,7 @@ export default {
             h2 {
                 margin: 0;
                 color: #414141;
+                color: var(--tg-theme-text-color);
                 font-weight: 400;
                 font-size: 0.9rem;
                 text-align: center;
