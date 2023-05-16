@@ -466,6 +466,8 @@ form {
         border-top: 1px rgba(192, 192, 192, 0.363) solid;
         background-color: white;
         background-color: var(--tg-theme-bg-color);
+        color: #414141;
+        color: var(--tg-theme-text-color);
 
         .count-select {
             position: absolute;

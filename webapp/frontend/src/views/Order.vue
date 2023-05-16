@@ -344,7 +344,8 @@ export default {
             width: 40%;
             border-left: 2px solid;
             border-radius: 4px 1rem 1rem 4px;
-            border-color: transparent;
+            border-color: white;
+            border-color: var(--tg-theme-bg-color);
             color: #414141 !important;
 
         }
