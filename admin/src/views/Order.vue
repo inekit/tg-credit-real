@@ -201,6 +201,7 @@ button {
     button {
         width: 150px;
         margin-right: 20px;
+        margin-bottom: 20px !important;
     }
 }
 
