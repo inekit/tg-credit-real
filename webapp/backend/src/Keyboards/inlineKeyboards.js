@@ -267,7 +267,9 @@ exports.orders_list_keyboard = (ctx, orders) => {
       callbackButton(
         status === "basket"
           ? "Корзина"
-          : `${status} от ${moment(creation_date).format("DD.MM.YYYY")}`,
+          : `№ ${id} (${status}) от ${moment(creation_date).format(
+              "DD.MM.YYYY"
+            )}`,
         "order-" + id
       )
     ),
