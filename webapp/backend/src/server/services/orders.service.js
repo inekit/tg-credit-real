@@ -29,7 +29,7 @@ class UsersService {
           left join order_items oi on o.id = oi.order_id  
           left join item_options io on oi.item_option_id = io.id  
           left join items i on io.item_id = i.id  
-          left join users u on o.user_id = i.id
+          left join users u on o.user_id = u.id
           where o.id = $1
           group by o.id, u.username
           limit 1`,
