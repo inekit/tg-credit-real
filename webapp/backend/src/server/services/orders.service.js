@@ -31,7 +31,7 @@ class UsersService {
           left join items i on io.item_id = i.id  
           left join users u on o.user_id = i.id
           where o.id = $1
-          group by o.id
+          group by o.id, u.username
           limit 1`,
           [id]
         )
