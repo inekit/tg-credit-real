@@ -22,7 +22,7 @@ class UsersService {
 
       connection
         .query(
-          `SELECT o.*,count(oi.item_option_id) count_items,
+          `SELECT o.*,count(oi.item_option_id) count_items, u.username,
           json_agg(json_build_object(
             'title', i.title,'count',oi.count, 'id', io.id, 'item_id', i.id, 'option_name', io.name, 'price', i.price)) items
           from orders o 
