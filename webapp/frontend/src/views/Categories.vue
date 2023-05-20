@@ -53,8 +53,8 @@ export default {
 
             if (await haveBasketItems()) {
                 window.Telegram?.WebApp.MainButton.onClick(this.routeToBasket);
-                window.Telegram?.WebApp.MainButton.show();
                 window.Telegram?.WebApp.MainButton.setText("Корзина");
+                window.Telegram?.WebApp.MainButton.show();
             } else {
                 window.Telegram?.WebApp.MainButton.offClick(this.routeToBasket);
                 window.Telegram?.WebApp.MainButton.hide();
