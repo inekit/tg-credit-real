@@ -44,7 +44,7 @@ exports.basket_keyboard = (ctx, id) =>
 
 exports.chat_keyboard = (ctx, id) =>
   inlineKeyboard([
-    [urlButton(ctx.getTitle("GO_TO_CHAT_BUTTON"), "t.me/foto_desire")],
+    [urlButton(ctx.getTitle("GO_TO_CHAT_BUTTON"), "t.me/Armen97")],
   ]);
 
 exports.confirm_keyboard = (ctx) =>

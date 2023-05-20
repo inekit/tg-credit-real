@@ -39,6 +39,7 @@ module.exports = new EntitySchema({
       type: "enum",
       enum: [
         "Я. Доставка",
+        "Яндекс Доставка",
         "CДЭК",
         "Курьер",
         "Почта РФ",
