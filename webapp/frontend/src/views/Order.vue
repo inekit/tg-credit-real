@@ -88,7 +88,7 @@ export default {
     },
     watch: {
         selected_dm(to) {
-            if (to === 'CДЭК') {
+            if (to === 'CДЭК' || to === "Яндекс Доставка") {
                 this.selected_po = "Перевод";
                 this.paymentOptions = ["Перевод"];
             } else this.paymentOptions = ["Перевод", "Наличные курьеру"];
