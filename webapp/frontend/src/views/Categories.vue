@@ -34,14 +34,12 @@ export default {
     watch: {
         "$store.state.userId": async function (to) {
             const haveBasketItems = async () => {
-                alert(to)
                 const results = await this.$store.state.myApi.get(this.$store.state.restAddr + '/basket_data', {
                     params: {
                         user_id: to,
                     }
                 })
                     .then(response => {
-                        console.log(response.data)
                         return response.data?.favorites?.length
                     })
                     .catch(e => {
