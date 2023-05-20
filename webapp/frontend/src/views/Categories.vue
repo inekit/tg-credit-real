@@ -34,7 +34,7 @@ export default {
     watch: {
         "$store.state.userId": async (to) => {
             alert(to)
-
+            alert(to)
             if (await this.haveBasketItems(to)) {
                 window.Telegram?.WebApp.MainButton.onClick(this.routeToBasket);
                 window.Telegram?.WebApp.MainButton.show();
