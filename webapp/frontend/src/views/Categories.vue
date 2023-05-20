@@ -35,13 +35,13 @@ export default {
         "$store.state.userId": async (to) => {
             alert(to)
             alert(to)
-            async function haveBasketItems(user_id) {
+            const haveBasketItems = async (user_id) => {
                 alert(1)
 
-                alert(user_id)
+                alert(to)
                 const results = await this.$store.state.myApi.get(this.$store.state.restAddr + '/basket_data', {
                     params: {
-                        user_id: user_id,
+                        user_id: to,
                     }
                 })
                     .then(response => {
@@ -56,7 +56,7 @@ export default {
 
             }
 
-            if (await haveBasketItems(to)) {
+            if (await haveBasketItems()) {
                 window.Telegram?.WebApp.MainButton.onClick(this.routeToBasket);
                 window.Telegram?.WebApp.MainButton.show();
                 window.Telegram?.WebApp.MainButton.setText("Корзина");
