@@ -33,11 +33,7 @@ export default {
     },
     watch: {
         "$store.state.userId": async (to) => {
-            alert(to)
-            alert(to)
-            const haveBasketItems = async (user_id) => {
-                alert(1)
-
+            const haveBasketItems = async () => {
                 alert(to)
                 const results = await this.$store.state.myApi.get(this.$store.state.restAddr + '/basket_data', {
                     params: {
@@ -45,6 +41,7 @@ export default {
                     }
                 })
                     .then(response => {
+                        console.log(response.data)
                         return response.data?.favorites?.length
                     })
                     .catch(e => {
