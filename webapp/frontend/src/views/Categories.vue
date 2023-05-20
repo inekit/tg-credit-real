@@ -32,6 +32,18 @@ export default {
         }
     },
     watch: {
+        "$store.state.userId": async (to) => {
+            alert(to)
+
+            if (await this.haveBasketItems(to)) {
+                window.Telegram?.WebApp.MainButton.onClick(this.routeToBasket);
+                window.Telegram?.WebApp.MainButton.show();
+                window.Telegram?.WebApp.MainButton.setText("Корзина");
+            } else {
+                window.Telegram?.WebApp.MainButton.offClick(this.routeToBasket);
+                window.Telegram?.WebApp.MainButton.hide();
+            }
+        }
     },
     beforeMount() {
         this.bodyWidth = document.body.clientHeight
@@ -49,21 +61,12 @@ export default {
 
         const buttonUserId = window.Telegram?.WebApp?.initDataUnsafe?.user?.id
         this.$store.state.userId = buttonUserId ?? this.$route.params?.userId;
+        window.Telegram?.WebApp.enableClosingConfirmation()
 
-        alert(this.$store.state.userId)
 
 
         //window.Telegram?.WebApp.onEvent('viewportChanged', () => window.Telegram?.WebApp.expand())
-        window.Telegram?.WebApp.enableClosingConfirmation()
 
-        if (await this.haveBasketItems()) {
-            window.Telegram?.WebApp.MainButton.onClick(this.routeToBasket);
-            window.Telegram?.WebApp.MainButton.show();
-            window.Telegram?.WebApp.MainButton.setText("Корзина");
-        } else {
-            window.Telegram?.WebApp.MainButton.offClick(this.routeToBasket);
-            window.Telegram?.WebApp.MainButton.hide();
-        }
     },
     async beforeUnmount() {
         window.Telegram?.WebApp.MainButton.offClick(this.routeToBasket);
@@ -73,10 +76,10 @@ export default {
         routeToBasket() {
             this.$router.push("/basket")
         },
-        async haveBasketItems() {
+        async haveBasketItems(user_id) {
             const results = await this.$store.state.myApi.get(this.$store.state.restAddr + '/basket_data', {
                 params: {
-                    user_id: this.$store.state.userId,
+                    user_id,
                 }
             })
                 .then(response => {
