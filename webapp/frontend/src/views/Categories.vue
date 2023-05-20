@@ -50,6 +50,8 @@ export default {
         const buttonUserId = window.Telegram?.WebApp?.initDataUnsafe?.user?.id
         this.$store.state.userId = buttonUserId ?? this.$route.params?.userId;
 
+        alert(this.$store.state.userId)
+
 
         //window.Telegram?.WebApp.onEvent('viewportChanged', () => window.Telegram?.WebApp.expand())
         window.Telegram?.WebApp.enableClosingConfirmation()
