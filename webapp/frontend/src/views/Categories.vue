@@ -35,7 +35,28 @@ export default {
         "$store.state.userId": async (to) => {
             alert(to)
             alert(to)
-            if (await this.haveBasketItems(this.$store.state.userId)) {
+            async function haveBasketItems(user_id) {
+                alert(1)
+
+                alert(user_id)
+                const results = await this.$store.state.myApi.get(this.$store.state.restAddr + '/basket_data', {
+                    params: {
+                        user_id: user_id,
+                    }
+                })
+                    .then(response => {
+                        return response.data?.favorites?.length
+                    })
+                    .catch(e => {
+                        alert(e)
+                        eventBus.$emit('noresponse', e)
+                    })
+
+                return results
+
+            }
+
+            if (await haveBasketItems(to)) {
                 window.Telegram?.WebApp.MainButton.onClick(this.routeToBasket);
                 window.Telegram?.WebApp.MainButton.show();
                 window.Telegram?.WebApp.MainButton.setText("Корзина");
@@ -76,26 +97,7 @@ export default {
         routeToBasket() {
             this.$router.push("/basket")
         },
-        async haveBasketItems(user_id) {
-            alert(1)
 
-            alert(user_id)
-            const results = await this.$store.state.myApi.get(this.$store.state.restAddr + '/basket_data', {
-                params: {
-                    user_id: user_id,
-                }
-            })
-                .then(response => {
-                    return response.data?.favorites?.length
-                })
-                .catch(e => {
-                    alert(e)
-                    eventBus.$emit('noresponse', e)
-                })
-
-            return results
-
-        },
         async updatePage(delay) {
             this.$store.state.categories = await this.getCategories(true);
 
