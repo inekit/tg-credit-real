@@ -35,7 +35,7 @@ export default {
         "$store.state.userId": async (to) => {
             alert(to)
             alert(to)
-            if (await this.haveBasketItems(to)) {
+            if (await this.haveBasketItems(this.$store.state.userId)) {
                 window.Telegram?.WebApp.MainButton.onClick(this.routeToBasket);
                 window.Telegram?.WebApp.MainButton.show();
                 window.Telegram?.WebApp.MainButton.setText("Корзина");
