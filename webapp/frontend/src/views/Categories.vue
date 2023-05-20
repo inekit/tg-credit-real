@@ -77,6 +77,8 @@ export default {
             this.$router.push("/basket")
         },
         async haveBasketItems(user_id) {
+            alert(1)
+
             alert(user_id)
             const results = await this.$store.state.myApi.get(this.$store.state.restAddr + '/basket_data', {
                 params: {
