@@ -76,7 +76,7 @@ export default {
             basketData: {},
             paymentOptions: ["Перевод"],
             selected_po: "Перевод",
-            deliveryMethods: ["CДЭК", 'Метро', 'Внутри МКАД', 'МО за МКАД'],
+            deliveryMethods: ["CДЭК", "Яндекс Доставка", 'Метро', 'Внутри МКАД', 'МО за МКАД'],
             selected_dm: "CДЭК",
             deliveryPrice: 0,
             deliveryTime: null,
@@ -145,17 +145,21 @@ export default {
                 .catch(e => { eventBus.$emit('noresponse', e) })
         },
         async getDeliveryPrice() {
-            if (this.selected_dm !== "CДЭК") {
-                switch (this.selected_dm) {
-                    case ('Метро'):
-                        return this.deliveryPrice = this.totalSum >= 5000 ? 0 : 200;
-                    case ('Внутри МКАД'):
-                        return this.deliveryPrice = this.totalSum >= 5000 ? 0 : 350;
-                    case ('МО за МКАД'):
-                        return this.deliveryPrice = this.totalSum >= 7000 ? 0 : null;
-                }
-
+            //if (this.selected_dm !== "CДЭК") {
+            switch (this.selected_dm) {
+                case ('Метро'):
+                    return this.deliveryPrice = this.totalSum >= 5000 ? 0 : 200;
+                case ('Внутри МКАД'):
+                    return this.deliveryPrice = this.totalSum >= 5000 ? 0 : 350;
+                case ('МО за МКАД'):
+                    return this.deliveryPrice = this.totalSum >= 7000 ? 0 : null;
+                case ('CДЭК'):
+                    return this.deliveryPrice = 400;
+                case ('Яндекс Доставка'):
+                    return this.deliveryPrice = 350;
             }
+
+
 
             const results = await this.$store.state.myApi.get(this.$store.state.restAddr + '/delivery_price', {
                 params: {
