@@ -42,8 +42,10 @@
             </div>
             <hr />
         </div>
-        <label>Описание</label>
-        <div class="description" v-html="item.description"></div>
+        <div v-if="item.description">
+            <label>Описание</label>
+            <div class="description" v-html="item.description"></div>
+        </div>
         <div class="order">
             <span>{{ item.price }} ₽</span>
             <div class="count-select">
