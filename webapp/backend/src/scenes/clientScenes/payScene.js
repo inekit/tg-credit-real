@@ -10,7 +10,7 @@ const scene = new CustomWizardScene("payScene").enter((ctx) => {
   ctx.scene.state.sent = false;
 
   ctx.replyWithKeyboard("ENTER_PHOTOS", "main_menu_back_keyboard");
-  ctx.wizard.selectStep(0);
+  //ctx.wizard.selectStep(0);
 });
 
 scene.addStep({
