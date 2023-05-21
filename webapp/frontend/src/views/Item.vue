@@ -29,7 +29,7 @@
         </div>
         <div class="puffs-container">
             <label>Количество затяжек</label>
-            <span class="stock">{{ item.puffs_count }}</span>
+            <span class="puffs">{{ item.puffs_count }}</span>
             <hr />
         </div>
         <div class="option-select" v-if="item.select_name">
@@ -337,13 +337,16 @@ form {
         color: var(--tg-theme-text-color);
     }
 
-    .stock-container {
+    .stock-container,
+    .puffs-container {
         position: relative;
 
         span {
             position: absolute;
             right: 0;
             top: 0;
+            color: #414141;
+            color: var(--tg-theme-text-color);
 
             &.green {
                 color: rgb(40, 160, 40)
