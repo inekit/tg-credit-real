@@ -27,6 +27,11 @@
             <span class="stock" :class="[stock > 20 ? 'green' : stock > 10 ? 'yellow' : 'red']">{{ stock }} шт.</span>
             <hr />
         </div>
+        <div class="puffs-container">
+            <label>Количество затяжек</label>
+            <span class="stock">{{ item.puffs_count }}</span>
+            <hr />
+        </div>
         <div class="option-select" v-if="item.select_name">
             <label for="size-select">{{ item.select_name }}</label>
             <div class="select-dropdown">
