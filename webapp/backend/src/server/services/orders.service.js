@@ -254,7 +254,7 @@ class UsersService {
           })
           .catch(console.log);
 
-        ctx.telegram
+        await ctx.telegram
           .sendMessage(
             user_id,
             ctx.getTitle("ORDER_INFO_TITLE", [
@@ -283,6 +283,15 @@ class UsersService {
             }
           )
           .catch(console.log);
+
+        await ctx.telegram
+          .sendMessage(
+            process.env.ADMIN_ID,
+            ctx.getTitle("NEW_ORDER", order_id, total)
+          )
+          .catch((e) => {
+            console.log(e);
+          });
       } catch (error) {
         console.log(error);
         await queryRunner.rollbackTransaction();

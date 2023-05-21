@@ -5,7 +5,7 @@ const {
   handlers: { FilesHandler },
 } = require("telegraf-steps");
 const tOrmCon = require("../../db/connection");
-
+require("dotenv").config();
 const scene = new CustomWizardScene("payScene").enter((ctx) => {
   ctx.scene.state.sent = false;
 
@@ -35,6 +35,13 @@ scene.addStep({
         ctx.scene.state.sent = true;
 
         ctx.replyWithTitle("GM_SENT");
+
+        ctx.telegram
+          .sendMessage(
+            process.env.ADMIN_ID,
+            ctx.getTitle("NEW_GM_PAYMENT", order_id)
+          )
+          .catch((e) => {});
       })
       .catch(async (e) => {
         console.log(e);
