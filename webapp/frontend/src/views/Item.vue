@@ -40,9 +40,9 @@
                     </option>
                 </select>
             </div>
-            <hr />
         </div>
         <div v-if="item.description">
+            <hr />
             <label>Описание</label>
             <div class="description" v-html="item.description"></div>
         </div>
