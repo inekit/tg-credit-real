@@ -16,7 +16,7 @@
 <script>
 import { QuillEditor } from '@vueup/vue-quill'
 import '@vueup/vue-quill/dist/vue-quill.snow.css'
-import TurndownService from 'turndown'
+//import TurndownService from 'turndown'
 //import { marked } from 'marked'
 //import * as DOMPurify from 'dompurify'
 import eventBus from '../eventBus'
@@ -86,16 +86,9 @@ export default {
 
             this.photo && formData.append(`preview`, this.photo);
 
-
-            const turndownService = new TurndownService({
-                headingStyle: "atx",
-                //bulletListMarker: "-",
-                //fence: "~~~",
-                //emDelimiter: "*",
-            })
             formData.append(
                 'text',
-                turndownService.turndown(this.$refs.postTextEditor.getHTML()),
+                this.$refs.postTextEditor.getHTML(),
             )
 
             return formData

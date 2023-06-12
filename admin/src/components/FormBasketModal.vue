@@ -68,16 +68,14 @@ export default {
             this.searchQuery = event.target.value;
             this.get();
         },
-        select(row) {
-            this.selectedItem = row.id;
-            this.select_name = row.select_name;
-        },
         selectItem(event) {
-            this.selectedOption = event.target.value;
+            this.selectedItem = event.target.value;
 
             this.options_array = this.rows.find(el => el.id == event.target.value)?.options_array;
         },
         selectOption(event) {
+            this.selectedOption = event.target.value;
+
             this.selectedStock = this.options_array.find(el => el.id == event.target.value)?.stock
             console.log(this.selectedStock)
             this.stockArray = [...new Array(this.selectedStock).keys()].map(i => i + 1);
