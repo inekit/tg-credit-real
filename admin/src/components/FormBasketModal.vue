@@ -4,13 +4,18 @@
             <CModalTitle>Добавление товара в корзину</CModalTitle>
         </CModalHeader>
         <CModalBody>
-            <CFormInput class="mb-4" type="text" @input="search" placeholder="Поиск по названию" />
+            <CFormInput class="mb-3" type="text" @input="search" placeholder="Поиск по названию" />
             <div class="search-rows">
                 <div class="search-row" v-for="row, i in rows" :key="i">
                     {{ row.title }} {{ row.price }}
                 </div>
             </div>
-            <CFormSelect :aria-label="select_name" @change="selectOption($event)" label="Результаты поиска">
+            <CFormSelect :aria-label="select_name" @change="selectItem($event)" label="Результаты поиска" class="mb-3">
+                <option :selected="selectedItem === null" value="">Выберите товар</option>
+                <option :selected="selectedItem === option.id" :value="option.id" v-for="option, i in rows" :key="i">{{
+                    option.title }}</option>
+            </CFormSelect>
+            <CFormSelect :aria-label="select_name" @change="selectOption($event)" label="Вариант" class="mb-3">
                 <option :selected="selectedOption === null" value="">Выберите опцию</option>
                 <option :selected="selectedOption === option.id" :value="option.id" v-for="option, i in options_array"
                     :key="i">{{ `${option.name} - ${option.stock} шт.` }}</option>
@@ -48,12 +53,14 @@ export default {
         return {
             searchQuery: "",
             selectedCount: 0,
+            selectedItem: null,
             selectedOption: null,
             select_name: "",
             options_array: [],
         };
     },
     mounted() {
+        this.get();
     },
     updated() {
     },
@@ -69,9 +76,12 @@ export default {
             this.selectedOption = row.id
             this.select_name = row.select_name
         },
+        selectItem(event) {
+            this.options_array = this.rows.find(el => el.id == event.target.value)?.options_array
+        },
         selectOption(event) {
             console.log(event.target.value)
-            this.selectedStock = this.rows.find(el => el.id == event.target.value)?.stock
+            this.selectedStock = this.options_array.find(el => el.id == event.target.value)?.stock
         },
         selectCount(event) {
             this.selectedCount = event.target.value
@@ -81,7 +91,7 @@ export default {
             return myApi
                 .get(this.$store.state.publicPath + "/api/admin/items/", {
                     params: {
-                        take: 50,
+                        take: 100,
                         page: 1,
                         searchQuery: this.searchQuery,
                     },
