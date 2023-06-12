@@ -14,7 +14,7 @@ function add(ctx) {
 
     const previewBinary = req.files?.preview;
 
-    for (user of users) {
+    for (let user of users) {
       if (previewBinary)
         await ctx.telegram
           .sendPhoto(
@@ -33,7 +33,7 @@ function add(ctx) {
             }
           )
           .catch((e) => {
-            //console.log(e);
+            console.log(e);
           });
       else
         await ctx.telegram
