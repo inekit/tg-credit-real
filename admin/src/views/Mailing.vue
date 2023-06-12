@@ -1,8 +1,8 @@
 <template>
     <div>
         <span>Текст поста</span>
-        <QuillEditor theme="snow" toolbar="essential" ref="postTextEditor" id="postTextEditor"
-            placeholder="Краткое описание" />
+        <QuillEditor theme="snow" :toolbar="['bold', 'italic', 'underline', 'strike']" ref="postTextEditor"
+            id="postTextEditor" placeholder="Краткое описание" />
         <span>Обложка поста</span>
         <div class="border p-2 mt-3 preview-container">
             <img :src="preview" class="img-fluid" />

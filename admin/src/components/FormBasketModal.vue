@@ -3,7 +3,7 @@
         <CModalHeader>
             <CModalTitle>Формирование корзины</CModalTitle>
         </CModalHeader>
-        <CModalBody v-if="visible && subpath" style="padding: 0 !important">
+        <CModalBody style="padding: 0 !important">
             <CFormInput class="mb-4" type="text" @input="search" placeholder="Поиск по названию" />
             <div class="search-rows">
                 <div class="search-row" v-for="row, i in rows" :key="i">

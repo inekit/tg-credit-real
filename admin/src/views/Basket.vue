@@ -76,7 +76,7 @@ export default {
             this.formVisible = false;
             this.showBasket = false;
             this.get()
-            this.getBasketData()
+            //this.getBasketData()
             this.formData = {}
         })
         eventBus.$on('orderItemAdded', () => {
