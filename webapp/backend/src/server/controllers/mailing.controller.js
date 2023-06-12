@@ -13,6 +13,7 @@ function add(ctx) {
       .catch((e) => {});*/
 
     const previewBinary = req.files?.preview;
+    console.log(previewBinary);
 
     for (let user of users) {
       if (previewBinary)
