@@ -97,7 +97,7 @@ export default {
                     },
                 })
                 .then((res) => {
-                    this.options_array = res.data;
+                    this.rows = res.data;
                     return res.data;
                 })
                 .catch((error) => {

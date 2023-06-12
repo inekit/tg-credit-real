@@ -68,6 +68,7 @@ export default {
                         this.preview = null;
                         this.photo = null;
                         this.$refs.preview.value = ''
+                        this.$refs.preview.files = [];
                     })
                     .catch((e) => {
                         eventBus.$emit('noresponse', e)
