@@ -3,7 +3,7 @@
         <CFormInput class="mb-4" type="number" v-model.number="user_id" @change="get" placeholder="Поиск по UID" />
         <AddBasketItemModal :visible="formVisible" :formData="formData" :mode="formMode" />
         <div v-if="user_id" class="change-basket-buttons">
-            <button class="btn btn-primary" @click="showBasket = true">Сформировать заказ</button>
+            <button class="btn btn-primary" @click="showBasket = true">Добавление товара в корзину</button>
         </div>
         <FormBasketModal :visible="showBasket" :user_id="user_id" />
         <Table :fields="tableFieldNames" :postData="get" :actions="dataActions" :rows="rows" editMode="form"

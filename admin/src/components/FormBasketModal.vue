@@ -61,7 +61,7 @@ export default {
     },
     computed: {
         stockArray() {
-            return Array(selectedStock).keys()
+            return Array(this.selectedStock).keys()
         }
     },
     methods: {
