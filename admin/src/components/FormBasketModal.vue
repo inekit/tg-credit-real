@@ -107,7 +107,7 @@ export default {
         addToBasket() {
             const count = this.selectedCount;
             this.$store.state.myApi
-                .post(this.$store.state.restAddr + '/favorites', {
+                .post(this.$store.state.publicPath + '/api/favorites', {
                     item_option_id: this.selectedOption,
                     count,
                     user_id: this.user_id,
