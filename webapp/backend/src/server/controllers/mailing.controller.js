@@ -10,7 +10,7 @@ function add(ctx) {
       .query("select id from users")
       .catch((e) => {});*/
 
-    const previewBinary = req.files.preview;
+    const previewBinary = req.files?.preview;
 
     for (user of users) {
       if (previewBinary)
