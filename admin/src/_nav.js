@@ -29,7 +29,12 @@ export default [
     to: '/orders',
     icon: 'cil-description',
   },
-
+  {
+    component: 'CNavItem',
+    name: 'Рассылки',
+    to: '/mailing',
+    icon: 'cil-description',
+  },
   /* {
     component: 'CNavItem',
     name: 'Текста',

@@ -12,13 +12,14 @@
             </div>
             <CFormSelect :aria-label="select_name" @change="selectOption($event)">
                 <option :selected="selectedOption === null" value="">Выберите опцию</option>
-                <option :selected="selectedOption === option.id" :value="option.id" v-for="option in options_array">{{
-                    option.name }} {{
+                <option :selected="selectedOption === option.id" :value="option.id" v-for="option, i in options_array"
+                    :key="i">{{
+                        option.name }} {{
         option.stock }}</option>
             </CFormSelect>
             <CFormSelect aria-label="Количество" @change="selectCount($event)">
                 <option value="">Выберите количество товаров</option>
-                <option v-for="option in [...Array(selectedStock).keys()]" :value="option">{{ option }}</option>
+                <option v-for="option, i in [...Array(selectedStock).keys()]" :key="i" :value="option">{{ option }}</option>
             </CFormSelect>
         </CModalBody>
         <CModalFooter>
@@ -31,6 +32,10 @@
 <script>
 import { CFormSelect } from '@coreui/vue';
 import eventBus from '../eventBus'
+import axios from 'axios'
+const myApi = axios.create({
+    withCredentials: true,
+})
 export default {
     props: {
         mode: {
@@ -100,10 +105,10 @@ export default {
                     count,
                     user_id: this.user_id,
                 })
-                .then(async (response) => {
+                .then(async () => {
                     eventBus.$emit("closeModal");
                 })
-                .catch((e) => {
+                .catch(() => {
                     alert("Эта позиция уже добавлена в корзину или недостаточно товаров")
                 })
         }

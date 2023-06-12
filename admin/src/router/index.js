@@ -52,6 +52,12 @@ const routes = [
         children: [],
       },
       {
+        path: '/mailing',
+        name: 'Mailing',
+        component: () => import('@/views/Mailing.vue'),
+        children: [],
+      },
+      {
         path: '/order/:orderId',
         name: 'OrderItems',
         props: true,

@@ -14,12 +14,10 @@
 </template>
 
 <script>
-import AddCategoryModal from '@/components/AddCategoryModal.vue'
-import Table from '@/components/Table.vue'
 import { QuillEditor } from '@vueup/vue-quill'
 import '@vueup/vue-quill/dist/vue-quill.snow.css'
 import TurndownService from 'turndown'
-import { marked } from 'marked'
+//import { marked } from 'marked'
 //import * as DOMPurify from 'dompurify'
 import eventBus from '../eventBus'
 
@@ -30,8 +28,6 @@ const myApi = axios.create({
 
 export default {
     components: {
-        AddCategoryModal,
-        Table,
         QuillEditor
     },
     data() {
