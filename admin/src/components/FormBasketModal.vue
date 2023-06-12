@@ -52,6 +52,7 @@ export default {
             selectedOption: null,
             select_name: "",
             options_array: [],
+            stockArray: [],
         };
     },
     mounted() {
@@ -59,9 +60,9 @@ export default {
     },
     updated() {
     },
-    computed: {
-        stockArray() {
-            return Array(this.selectedStock).keys()
+    watch: {
+        selectedStock(to) {
+            this.stockArray = Array(to).keys()
         }
     },
     methods: {
