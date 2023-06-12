@@ -1,5 +1,7 @@
 const tOrmCon = require("../../db/connection");
 
+const delay = (ms) => new Promise((res) => setTimeout(res, ms));
+
 function add(ctx) {
   return async (req, res, next) => {
     const { text } = req.body;
