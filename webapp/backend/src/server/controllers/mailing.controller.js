@@ -23,12 +23,7 @@ function add(ctx) {
               source: previewBinary,
             },
             {
-              caption: text.replaceAll(
-                /(\#)|(\.)|(\+)|(\=)|(\-)|(\*)|(\!)|(\?)|(\,)|(\()|(\))|(\%)|(\@)|(\~)|(\;)|(\^)|(\&)|(\")|(\:)|(\')$/g,
-                function replacer(match, p1, offset, string) {
-                  return `\\${match}`;
-                }
-              ),
+              caption: text.replaceAll(/(\<p\>)|(\<\/p\>)$/g, () => ""),
               parse_mode: "HTML",
             }
           )
@@ -39,12 +34,7 @@ function add(ctx) {
         await ctx.telegram
           .sendMessage(
             user.id,
-            text.replaceAll(
-              /(\#)|(\.)|(\+)|(\=)|(\-)|(\*)|(\!)|(\?)|(\,)|(\()|(\))|(\%)|(\@)|(\~)|(\;)|(\^)|(\&)|(\")|(\:)|(\')$/g,
-              function replacer(match, p1, offset, string) {
-                return `\\${match}`;
-              }
-            ),
+            text.replaceAll(/(\<p\>)|(\<\/p\>)$/g, () => ""),
             {
               parse_mode: "HTML",
             }

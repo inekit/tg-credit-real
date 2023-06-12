@@ -51,12 +51,12 @@ export default {
                     title: 'Название',
                 },
                 {
-                    name: 'size',
-                    title: 'Размер',
+                    name: 'option_name',
+                    title: 'Опция',
                 },
                 {
-                    name: 'material',
-                    title: 'Материал',
+                    name: 'price',
+                    title: 'Цена',
                 },
                 {
                     name: 'count',
