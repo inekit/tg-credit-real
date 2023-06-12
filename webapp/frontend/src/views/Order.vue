@@ -16,10 +16,11 @@
         <div class="delivery">
             <h2>Способ доставки</h2>
             <div class="select-group">
-                <div v-for="dm in                                                                           deliveryMethods                                                                          "
+                <div v-for="dm, i in                                                                           deliveryMethods                                                                          "
                     :key="dm">
                     <input type="radio" :id="dm" :value="dm" v-model="selected_dm" @change="getDeliveryPrice">
                     <label :for="dm" @click="selected_dm = dm; getDeliveryPrice()">{{ dm }}</label>
+                    <div class="method-description" @click="alert(methodsDescriptions[i])">!</div>
                 </div>
             </div>
         </div>
@@ -76,7 +77,8 @@ export default {
             basketData: {},
             paymentOptions: ["Перевод"],
             selected_po: "Перевод",
-            deliveryMethods: ["CДЭК", "Яндекс Доставка", 'Метро', 'Внутри МКАД', 'МО за МКАД'],
+            deliveryMethods: ["CДЭК", "Яндекс Доставка до пункта выдачи", 'До станции метро', 'Внутри МКАД', 'МО за МКАД'],
+            methodsDescriptions: ["Доставка по россии курьерской службой СДЭК", "v", "f,", "f", ""],
             selected_dm: "CДЭК",
             deliveryPrice: 0,
             deliveryTime: null,
@@ -117,7 +119,7 @@ export default {
     methods: {
         order() {
             if (!this.basketData.address || !this.basketData.phone ||
-                !this.basketData.name || !this.basketData.surname || !this.basketData.patronymic
+                !this.basketData.name || !this.basketData.surname //|| !this.basketData.patronymic
                 || !this.basketData.postal_code)
                 return alert("Пожалуйста, заполните все поля")
             //if (!this.deliveryPrice) return alert("Пожалуйста, укажите верные данные для доставки")
@@ -149,6 +151,8 @@ export default {
             switch (this.selected_dm) {
                 case ('Метро'):
                     return this.deliveryPrice = this.totalSum >= 5000 ? 0 : 200;
+                case ('До станции метро'):
+                    return this.deliveryPrice = this.totalSum >= 5000 ? 0 : 200;
                 case ('Внутри МКАД'):
                     return this.deliveryPrice = this.totalSum >= 5000 ? 0 : 350;
                 case ('МО за МКАД'):
@@ -156,6 +160,8 @@ export default {
                 case ('CДЭК'):
                     return this.deliveryPrice = 400;
                 case ('Яндекс Доставка'):
+                    return this.deliveryPrice = 350;
+                case ('Яндекс Доставка до пункта выдачи'):
                     return this.deliveryPrice = 350;
             }
 

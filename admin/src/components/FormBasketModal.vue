@@ -4,36 +4,51 @@
             <CModalTitle>Формирование корзины</CModalTitle>
         </CModalHeader>
         <CModalBody v-if="visible && subpath" style="padding: 0 !important">
-            <div class="user-iframe-container">
-                <iframe :src="`https://smoke-market.online/colorsfront/${subpath}/${user_id}`" width="495" height="730"
-                    align="left">
-                    Ваш браузер не поддерживает плавающие фреймы!
-                </iframe>
+            <CFormInput class="mb-4" type="text" @input="search" placeholder="Поиск по названию" />
+            <div class="search-rows">
+                <div class="search-row" v-for="row, i in rows" :key="i">
+                    {{ row.title }} {{ row.price }}
+                </div>
             </div>
+            <CFormSelect :aria-label="select_name" @change="selectOption($event)">
+                <option :selected="selectedOption === null" value="">Выберите опцию</option>
+                <option :selected="selectedOption === option.id" :value="option.id" v-for="option in options_array">{{
+                    option.name }} {{
+        option.stock }}</option>
+            </CFormSelect>
+            <CFormSelect aria-label="Количество" @change="selectCount($event)">
+                <option value="">Выберите количество товаров</option>
+                <option v-for="option in [...Array(selectedStock).keys()]" :value="option">{{ option }}</option>
+            </CFormSelect>
         </CModalBody>
         <CModalFooter>
-            <CButton color="secondary" @click="subpath = 'results'">
-                Товары
-            </CButton>
-            <CButton color="secondary" @click="subpath = 'basket'">Корзина</CButton>
+            <CButton color="secondary" @click="closeModal"> Отменить </CButton>
+            <CButton color="primary" @click="addToBasket">Добавить</CButton>
         </CModalFooter>
     </CModal>
 </template>
   
 <script>
+import { CFormSelect } from '@coreui/vue';
 import eventBus from '../eventBus'
 export default {
     props: {
         mode: {
             required: true,
             type: String,
-            validator: (value) => ['new', 'edit'].includes(value.toLowerCase()),
+            validator: (value) => ["new", "edit"].includes(value.toLowerCase()),
         },
         user_id: Number,
         visible: Boolean,
     },
     data() {
-        return { subpath: "basket" }
+        return {
+            searchQuery: "",
+            selectedCount: 0,
+            selectedOption: null,
+            select_name: "",
+            options_array: [],
+        };
     },
     mounted() {
     },
@@ -41,9 +56,59 @@ export default {
     },
     methods: {
         closeModal() {
-            eventBus.$emit('closeModal')
+            eventBus.$emit("closeModal");
         },
+        search(event) {
+            this.searchQuery = event.target.value;
+            this.get();
+        },
+        select(row) {
+            this.selectedOption = row.id
+            this.select_name = row.select_name
+        },
+        selectOption(event) {
+            this.selectedStock = this.rows.find(el => el.id == event.target.value)?.stock
+        },
+        selectCount(event) {
+            this.selectedCount = event.target.value
+        },
+        get(take, page) {
+            console.log(this.tag);
+            return myApi
+                .get(this.$store.state.publicPath + "/api/admin/items/", {
+                    params: {
+                        take: take ?? 10,
+                        page: page ?? 1,
+                        searchQuery: this.searchQuery,
+                    },
+                })
+                .then((res) => {
+                    if (res.data?.length > 0 || (this.searchQuery && ((page ?? 1) === 1)))
+                        this.rows = res.data;
+                    return res.data;
+                })
+                .catch((error) => {
+                    eventBus.$emit("noresponse", error);
+                    return false;
+                });
+        },
+        addToBasket() {
+            const count = this.selectedCount;
+            this.$store.state.myApi
+                .post(this.$store.state.restAddr + '/favorites', {
+                    item_option_id: this.selectedOption,
+                    count,
+                    user_id: this.user_id,
+                })
+                .then(async (response) => {
+                    eventBus.$emit("closeModal");
+                })
+                .catch((e) => {
+                    alert("Эта позиция уже добавлена в корзину или недостаточно товаров")
+                })
+        }
     },
+    components: { CFormSelect }
 }
 </script>
   

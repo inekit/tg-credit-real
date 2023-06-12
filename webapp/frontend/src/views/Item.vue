@@ -24,7 +24,8 @@
     <form>
         <div class="stock-container">
             <label>Наличие</label>
-            <span class="stock" :class="[stock > 20 ? 'green' : stock > 10 ? 'yellow' : 'red']">{{ stock }} шт.</span>
+            <span class="stock" :class="[stock > 20 ? 'green' : stock > 10 ? 'yellow' : 'red']">{{ stock > 0 ? `В наличии` : `Нет
+                в наличии` }}</span>
             <hr />
         </div>
         <div class="puffs-container">

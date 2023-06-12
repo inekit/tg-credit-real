@@ -12,6 +12,7 @@ function editOne(req, res, next) {
     .edit({
       order: req.body.order,
       greeting: req.body.greeting,
+      card_number: req.body.card_number,
       id: 1,
     })
     .then((data) => res.send(data))

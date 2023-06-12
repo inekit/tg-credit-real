@@ -59,6 +59,10 @@ scene.hears(titles.getValues("ABOUT_BUTTON"), (ctx) => {
   ctx.replyWithTitle("ABOUT_TITLE");
 });
 
+scene.hears(titles.getValues("CHANNEL_BUTTON"), (ctx) => {
+  ctx.replyWithTitle("CHANNEL_TITLE");
+});
+
 scene.hears(titles.getValues("SUPPORT_BUTTON"), (ctx) => {
   ctx.replyWithKeyboard("SUPPORT_TITLE", "chat_keyboard", [ctx.from.id]);
 });

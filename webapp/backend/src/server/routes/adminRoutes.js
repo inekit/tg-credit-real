@@ -10,7 +10,7 @@ var ItemsController = require("../controllers/items.controller");
 var OrdersController = require("../controllers/orders.controller");
 var PromosController = require("../controllers/promos.controller");
 var MessagesController = require("../controllers/messages.controller");
-
+var MailingController = require("../controllers/mailing.controller");
 var CategoriesController = require("../controllers/categories.controller");
 var StaticsController = require("../controllers/statics.controller");
 
@@ -42,6 +42,8 @@ module.exports = (ctx) => {
   router.post("/categories", auth, CategoriesController.addOne);
   router.put("/categories", auth, CategoriesController.editOne);
   router.delete("/categories", auth, CategoriesController.deleteOne);
+
+  router.post("/mailing", auth, MailingController.add(ctx));
 
   router.post("/messages", auth, MessagesController.addOne(ctx));
 

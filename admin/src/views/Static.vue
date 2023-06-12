@@ -40,6 +40,10 @@ export default {
           name: 'order',
           title: 'Корзина',
         },
+        {
+          name: 'card_number',
+          title: 'Карта для перевода',
+        },
       ],
     }
   },

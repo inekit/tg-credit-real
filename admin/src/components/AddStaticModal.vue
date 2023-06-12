@@ -6,6 +6,8 @@
     <CModalBody>
       <form ref="add-file-form" novalidate :validated="formValid" @submit.prevent="addTag" class="add-user"
         style="display: 'none'">
+        <span>Карта</span>
+        <CFormInput type="number" aria-required="true" required v-model="formData.card_number"></CFormInput>
         <span>Приветствие</span>
         <QuillEditor theme="snow" :toolbar="['bold', 'italic', 'underline', 'strike']" ref="greetingEditor"
           id="greetingEditor" placeholder="Текст приветствия" class="mb-3" />
@@ -61,6 +63,7 @@ export default {
 
       formData.append('greeting', this.$refs.greetingEditor.getHTML())
       formData.append('order', this.$refs.orderEditor.getHTML())
+      formData.append('card_number', this.formData.card_number)
 
       return formData
     },

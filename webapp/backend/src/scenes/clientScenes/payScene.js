@@ -6,10 +6,17 @@ const {
 } = require("telegraf-steps");
 const tOrmCon = require("../../db/connection");
 require("dotenv").config();
-const scene = new CustomWizardScene("payScene").enter((ctx) => {
+const scene = new CustomWizardScene("payScene").enter(async (ctx) => {
   ctx.scene.state.sent = false;
 
-  ctx.replyWithKeyboard("ENTER_PHOTOS", "main_menu_back_keyboard");
+  const connection = await tOrmCon;
+  const statics = (
+    await connection.query(`select * from statics where id = 1`)
+  )?.[0];
+
+  ctx.replyWithKeyboard("ENTER_PHOTOS", "main_menu_back_keyboard", [
+    statics?.card_number,
+  ]);
   //ctx.wizard.selectStep(0);
 });
 

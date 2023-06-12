@@ -287,7 +287,7 @@ class UsersService {
         await ctx.telegram
           .sendMessage(
             process.env.ADMIN_ID,
-            ctx.getTitle("NEW_ORDER", order_id, total)
+            ctx.getTitle("NEW_ORDER", [order_id, total])
           )
           .catch((e) => {
             console.log(e);
