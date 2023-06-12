@@ -60,12 +60,6 @@ export default {
     },
     updated() {
     },
-    watch: {
-        selectedStock(to) {
-            console.log('changed')
-            this.stockArray = new Array(to).keys()
-        }
-    },
     methods: {
         closeModal() {
             eventBus.$emit("closeModal");
@@ -84,6 +78,7 @@ export default {
         selectOption(event) {
             this.selectedStock = this.options_array.find(el => el.id == event.target.value)?.stock
             console.log(this.selectedStock)
+            this.stockArray = new Array(this.selectedStock).keys()
         },
         selectCount(event) {
             this.selectedCount = event.target.value
