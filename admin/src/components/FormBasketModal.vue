@@ -1,23 +1,23 @@
 <template>
     <CModal backdrop="static" alignment="center" :visible="visible" @close="closeModal">
         <CModalHeader>
-            <CModalTitle>Формирование корзины</CModalTitle>
+            <CModalTitle>Добавление товара в корзину</CModalTitle>
         </CModalHeader>
-        <CModalBody style="padding: 0 !important">
+        <CModalBody>
             <CFormInput class="mb-4" type="text" @input="search" placeholder="Поиск по названию" />
             <div class="search-rows">
                 <div class="search-row" v-for="row, i in rows" :key="i">
                     {{ row.title }} {{ row.price }}
                 </div>
             </div>
-            <CFormSelect :aria-label="select_name" @change="selectOption($event)">
+            <CFormSelect :aria-label="select_name" @change="selectOption($event)" label="Результаты поиска">
                 <option :selected="selectedOption === null" value="">Выберите опцию</option>
                 <option :selected="selectedOption === option.id" :value="option.id" v-for="option, i in options_array"
                     :key="i">{{
                         option.name }} {{
         option.stock }}</option>
             </CFormSelect>
-            <CFormSelect aria-label="Количество" @change="selectCount($event)">
+            <CFormSelect aria-label="Количество" @change="selectCount($event)" label="Количество товаров">
                 <option value="">Выберите количество товаров</option>
                 <option v-for="option, i in [...Array(selectedStock).keys()]" :key="i" :value="option">{{ option }}</option>
             </CFormSelect>
@@ -77,19 +77,18 @@ export default {
         selectCount(event) {
             this.selectedCount = event.target.value
         },
-        get(take, page) {
+        get() {
             console.log(this.tag);
             return myApi
                 .get(this.$store.state.publicPath + "/api/admin/items/", {
                     params: {
-                        take: take ?? 10,
-                        page: page ?? 1,
+                        take: 50,
+                        page: 1,
                         searchQuery: this.searchQuery,
                     },
                 })
                 .then((res) => {
-                    if (res.data?.length > 0 || (this.searchQuery && ((page ?? 1) === 1)))
-                        this.rows = res.data;
+                    this.options_array = res.data;
                     return res.data;
                 })
                 .catch((error) => {

@@ -28,11 +28,6 @@ function add(ctx) {
                 }
               ),
               parse_mode: "MarkdownV2",
-              reply_markup: kbs.length
-                ? {
-                    inline_keyboard: [kbs],
-                  }
-                : undefined,
             }
           )
           .catch((e) => {
@@ -50,11 +45,6 @@ function add(ctx) {
             ),
             {
               parse_mode: "MarkdownV2",
-              reply_markup: kbs.length
-                ? {
-                    inline_keyboard: [kbs],
-                  }
-                : undefined,
             }
           )
           .catch((e) => {
