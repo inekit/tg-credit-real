@@ -62,7 +62,8 @@ export default {
     },
     watch: {
         selectedStock(to) {
-            this.stockArray = Array(to).keys()
+            console.log('changed')
+            this.stockArray = new Array(to).keys()
         }
     },
     methods: {
@@ -82,6 +83,7 @@ export default {
         },
         selectOption(event) {
             this.selectedStock = this.options_array.find(el => el.id == event.target.value)?.stock
+            console.log(this.selectedStock)
         },
         selectCount(event) {
             this.selectedCount = event.target.value
