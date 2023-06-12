@@ -35,8 +35,8 @@ class BasketsService {
 
         const data = await queryRunner
           .query(
-            `insert into order_items (order_id, item_option_id, count) values ($1,$2,1)`,
-            [basket_id, item_option_id]
+            `insert into order_items (order_id, item_option_id, count) values ($1,$2,$3)`,
+            [basket_id, item_option_id, count || 1]
           )
           .catch(async (e) => {
             return await queryRunner.query(
