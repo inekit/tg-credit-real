@@ -69,16 +69,18 @@ export default {
             this.get();
         },
         select(row) {
-            this.selectedOption = row.id
-            this.select_name = row.select_name
+            this.selectedItem = row.id;
+            this.select_name = row.select_name;
         },
         selectItem(event) {
-            this.options_array = this.rows.find(el => el.id == event.target.value)?.options_array
+            this.selectedOption = event.target.value;
+
+            this.options_array = this.rows.find(el => el.id == event.target.value)?.options_array;
         },
         selectOption(event) {
             this.selectedStock = this.options_array.find(el => el.id == event.target.value)?.stock
             console.log(this.selectedStock)
-            this.stockArray = new Array(this.selectedStock).keys()
+            this.stockArray = [...new Array(this.selectedStock).keys()].map(i => i + 1);
         },
         selectCount(event) {
             this.selectedCount = event.target.value
