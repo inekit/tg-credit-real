@@ -64,14 +64,15 @@ export default {
                         },
                     })
                     .then(() => {
-                        eventBus.$emit('postAdded')
+                        this.$refs.postTextEditor.setHTML("")
+                        this.preview = null;
+                        this.photo = null;
                     })
                     .catch((e) => {
                         eventBus.$emit('noresponse', e)
                     })
             } catch (e) {
-                this.formValid = true
-                //eventBus.$emit('wrongInputData', e)
+                eventBus.$emit('wrongInputData', e)
             }
 
         },
@@ -95,8 +96,6 @@ export default {
                 'text',
                 turndownService.turndown(this.$refs.postTextEditor.getHTML()),
             )
-
-            this.$refs.postTextEditor.setHTML("")
 
             return formData
         },

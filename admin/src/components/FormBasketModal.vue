@@ -13,9 +13,7 @@
             <CFormSelect :aria-label="select_name" @change="selectOption($event)" label="Результаты поиска">
                 <option :selected="selectedOption === null" value="">Выберите опцию</option>
                 <option :selected="selectedOption === option.id" :value="option.id" v-for="option, i in options_array"
-                    :key="i">{{
-                        option.name }} {{
-        option.stock }}</option>
+                    :key="i">{{ `${option.name} - ${option.stock} шт.` }}</option>
             </CFormSelect>
             <CFormSelect aria-label="Количество" @change="selectCount($event)" label="Количество товаров">
                 <option value="">Выберите количество товаров</option>
@@ -72,6 +70,7 @@ export default {
             this.select_name = row.select_name
         },
         selectOption(event) {
+            console.log(event.target.value)
             this.selectedStock = this.rows.find(el => el.id == event.target.value)?.stock
         },
         selectCount(event) {
