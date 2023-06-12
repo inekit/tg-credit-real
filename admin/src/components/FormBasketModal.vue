@@ -5,11 +5,6 @@
         </CModalHeader>
         <CModalBody>
             <CFormInput class="mb-3" type="text" @input="search" placeholder="Поиск по названию" />
-            <div class="search-rows">
-                <div class="search-row" v-for="row, i in rows" :key="i">
-                    {{ row.title }} {{ row.price }}
-                </div>
-            </div>
             <CFormSelect :aria-label="select_name" @change="selectItem($event)" label="Результаты поиска" class="mb-3">
                 <option :selected="selectedItem === null" value="">Выберите товар</option>
                 <option :selected="selectedItem === option.id" :value="option.id" v-for="option, i in rows" :key="i">{{
@@ -82,6 +77,7 @@ export default {
         selectOption(event) {
             console.log(event.target.value)
             this.selectedStock = this.options_array.find(el => el.id == event.target.value)?.stock
+            console.log(this.selectedStock)
         },
         selectCount(event) {
             this.selectedCount = event.target.value

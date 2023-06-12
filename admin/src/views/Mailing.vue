@@ -67,7 +67,7 @@ export default {
                         this.$refs.postTextEditor.setHTML("")
                         this.preview = null;
                         this.photo = null;
-                        this.$refs.preview.value = ''
+                        document.querySelector('input[type=file]').value = '';
                         this.$refs.preview.files = [];
                     })
                     .catch((e) => {
