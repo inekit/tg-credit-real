@@ -68,7 +68,6 @@ export default {
                         this.preview = null;
                         this.photo = null;
                         document.querySelector('input[type=file]').value = '';
-                        this.$refs.preview.files = [];
                     })
                     .catch((e) => {
                         eventBus.$emit('noresponse', e)

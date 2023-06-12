@@ -17,7 +17,7 @@
             </CFormSelect>
             <CFormSelect aria-label="Количество" @change="selectCount($event)" label="Количество товаров">
                 <option value="">Выберите количество товаров</option>
-                <option v-for="option, i in [...Array(selectedStock).keys()]" :key="i" :value="option">{{ option }}</option>
+                <option v-for="option, i in stockArray" :key="i" :value="option">{{ option }}</option>
             </CFormSelect>
         </CModalBody>
         <CModalFooter>
@@ -59,6 +59,11 @@ export default {
     },
     updated() {
     },
+    computed: {
+        stockArray() {
+            return Array(selectedStock).keys()
+        }
+    },
     methods: {
         closeModal() {
             eventBus.$emit("closeModal");
@@ -75,9 +80,7 @@ export default {
             this.options_array = this.rows.find(el => el.id == event.target.value)?.options_array
         },
         selectOption(event) {
-            console.log(event.target.value)
             this.selectedStock = this.options_array.find(el => el.id == event.target.value)?.stock
-            console.log(this.selectedStock)
         },
         selectCount(event) {
             this.selectedCount = event.target.value
