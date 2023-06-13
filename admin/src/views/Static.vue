@@ -33,14 +33,6 @@ export default {
       },
       tableFieldNames: [
         {
-          name: 'greeting',
-          title: 'Приветствие',
-        },
-        {
-          name: 'order',
-          title: 'Корзина',
-        },
-        {
           name: 'card_number',
           title: 'Карта для перевода',
         },
