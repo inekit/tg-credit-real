@@ -19,6 +19,6 @@ module.exports = new EntitySchema({
       primary: false,
       length: 1024,
     },
-    card_number: { type: "varchar", primary: false, length: 16 },
+    card_number: { type: "varchar", primary: false, length: 1024 },
   },
 });
