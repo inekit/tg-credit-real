@@ -20,7 +20,8 @@
                     :key="dm">
                     <input type="radio" :id="dm" :value="dm" v-model="selected_dm" @change="getDeliveryPrice">
                     <label :for="dm" @click="selected_dm = dm; getDeliveryPrice()">{{ dm }}</label>
-                    <div class="method-description" @click="alert(methodsDescriptions[i])">!</div>
+                    <div class="method-description" @click="alertDescription(i)"><img
+                            :src="require('@/assets/img/help.svg')" /></div>
                 </div>
             </div>
         </div>
@@ -117,6 +118,9 @@ export default {
         window.Telegram?.WebApp.BackButton.hide();
     },
     methods: {
+        alertDescription(i) {
+            alert(methodsDescriptions[i])
+        },
         order() {
             if (!this.basketData.address || !this.basketData.phone ||
                 !this.basketData.name || !this.basketData.surname //|| !this.basketData.patronymic
@@ -282,7 +286,7 @@ export default {
         transition: 120ms transform ease-in-out;
         box-shadow: none;
         background-color: #0071e3;
-        width: calc(50vw - 1rem - 5px);
+        width: calc(100vw - 32px); //calc(50vw - 1rem - 5px);
     }
 
     input[type="radio"]:checked::before {
@@ -301,15 +305,30 @@ export default {
     margin-bottom: 20px;
 }
 
+.method-description {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 7px;
+    background: white;
+    border-radius: 0.8rem;
+    width: 50px;
+    height: 30px;
+    margin: auto;
+    text-align: center;
+    line-height: 30px;
+}
+
 .select-group {
-    display: flex;
+    //display: flex;
     gap: 10px;
     flex-wrap: wrap;
 
     &>div {
         position: relative;
         display: inline-block;
-        width: calc(50vw - 1rem - 5px);
+        width: 100%; //calc(50vw - 1rem - 5px);
+        margin-bottom: 10px;
     }
 
     label {
