@@ -8,9 +8,9 @@ function add(ctx) {
 
     const connection = await tOrmCon;
 
-    const users = [{ id: 296846972 }]; /*await connection
+    const users = await connection
       .query("select id from users")
-      .catch((e) => {});*/
+      .catch((e) => {}); // [{ id: 296846972 }]; /*
 
     const previewBinary = req.files?.preview?.data;
 
