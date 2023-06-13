@@ -41,10 +41,11 @@
             <input type="text" id="surname" name="surname" placeholder="Фамилия" v-model="basketData.surname">
             <input type="text" id="patronymic" name="patronymic" placeholder="Отчество" v-model="basketData.patronymic">
             <input type="tel" id="phone" name="phone" placeholder="Телефон" v-model="basketData.phone">
-            <input type="text" id="address" name="address" placeholder="Адрес доставки" v-model="basketData.address"
+            <input type="text" id="address" name="address"
+                :placeholder="selected_dm === 'До станции метро' ? 'Метро' : 'Адрес доставки'" v-model="basketData.address"
                 @input="getDeliveryPrice">
-            <input type="number" id="text" pattern="[0-9]+" name="postal code" placeholder="Почтовый индекс"
-                v-model.number="basketData.postal_code" @input="getDeliveryPricePostal">
+            <input v-show="selected_dm !== 'До станции метро'" type="number" id="text" pattern="[0-9]+" name="postal code"
+                placeholder="Почтовый индекс" v-model.number="basketData.postal_code" @input="getDeliveryPricePostal">
         </div>
         <h2>Промокод</h2>
         <div class="input-group one-line">
