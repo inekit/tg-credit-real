@@ -7,7 +7,7 @@
       <form ref="add-file-form" novalidate :validated="formValid" @submit.prevent="addTag" class="add-user"
         style="display: 'none'">
         <span>Карта</span>
-        <CFormInput type="number" aria-required="true" required v-model="formData.card_number"></CFormInput>
+        <CFormInput type="text" aria-required="true" required v-model="formData.card_number"></CFormInput>
       </form>
     </CModalBody>
     <CModalFooter>
