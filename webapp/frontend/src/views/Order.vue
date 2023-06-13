@@ -119,7 +119,7 @@ export default {
     },
     methods: {
         alertDescription(i) {
-            alert(methodsDescriptions[i])
+            alert(this.methodsDescriptions[i])
         },
         order() {
             if (!this.basketData.address || !this.basketData.phone ||
@@ -307,16 +307,26 @@ export default {
 
 .method-description {
     position: absolute;
-    top: 0;
+    top: -2px;
     bottom: 0;
-    right: 7px;
-    background: white;
-    border-radius: 0.8rem;
-    width: 50px;
-    height: 30px;
+    right: 5px;
+    background: #fff;
+    border-radius: 0.7rem;
+    width: 33px;
+    height: 33px;
     margin: auto;
     text-align: center;
     line-height: 30px;
+
+    img {
+        width: 25px;
+        position: absolute;
+        margin: auto;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+    }
 }
 
 .select-group {
