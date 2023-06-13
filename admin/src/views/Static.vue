@@ -2,7 +2,7 @@
   <div>
     <AddStaticModal :visible="formVisible" :formData="formData" :mode="formMode" />
     <Table :fields="tableFieldNames" :postData="getStatic" :actions="dataActions" :rows="rows" editMode="form"
-      name="Статика" />
+      name="Параметры" />
   </div>
 </template>
 

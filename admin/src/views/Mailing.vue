@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="card p-3">
         <span>Текст поста</span>
         <QuillEditor theme="snow" :toolbar="['bold', 'italic', 'underline', 'strike']" ref="postTextEditor"
             id="postTextEditor" placeholder="Краткое описание" />

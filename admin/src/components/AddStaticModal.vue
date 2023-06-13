@@ -1,18 +1,13 @@
 <template>
   <CModal size="xl" backdrop="static" alignment="center" :visible="visible" @close="closeModal">
     <CModalHeader>
-      <CModalTitle>Статические данные</CModalTitle>
+      <CModalTitle>Параметры</CModalTitle>
     </CModalHeader>
     <CModalBody>
       <form ref="add-file-form" novalidate :validated="formValid" @submit.prevent="addTag" class="add-user"
         style="display: 'none'">
         <span>Карта</span>
         <CFormInput type="number" aria-required="true" required v-model="formData.card_number"></CFormInput>
-        <span>Приветствие</span>
-        <QuillEditor theme="snow" :toolbar="['bold', 'italic', 'underline', 'strike']" ref="greetingEditor"
-          id="greetingEditor" placeholder="Текст приветствия" class="mb-3" />
-        <span>Корзина</span>
-        <QuillEditor theme="snow" toolbar="essential" ref="orderEditor" id="orderEditor" placeholder="Текст в корзине" />
       </form>
     </CModalBody>
     <CModalFooter>
@@ -26,8 +21,6 @@
 
 <script>
 import axios from 'axios'
-import { QuillEditor } from '@vueup/vue-quill'
-import '@vueup/vue-quill/dist/vue-quill.snow.css'
 
 const myApi = axios.create({
   withCredentials: true,
@@ -35,7 +28,7 @@ const myApi = axios.create({
 import eventBus from '../eventBus'
 
 export default {
-  components: { QuillEditor },
+  components: {},
   props: {
     visible: false,
     formData: {
@@ -61,8 +54,8 @@ export default {
 
       var formData = new FormData()
 
-      formData.append('greeting', this.$refs.greetingEditor.getHTML())
-      formData.append('order', this.$refs.orderEditor.getHTML())
+      //formData.append('greeting', this.$refs.greetingEditor.getHTML())
+      //formData.append('order', this.$refs.orderEditor.getHTML())
       formData.append('card_number', this.formData.card_number)
 
       return formData

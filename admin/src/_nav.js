@@ -35,11 +35,10 @@ export default [
     to: '/mailing',
     icon: 'cil-description',
   },
-  /* {
+  {
     component: 'CNavItem',
-    name: 'Текста',
+    name: 'Параметры',
     to: '/static',
     icon: 'cil-description',
   },
-  */
 ]
