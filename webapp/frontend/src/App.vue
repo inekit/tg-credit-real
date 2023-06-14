@@ -5,7 +5,7 @@
 <script>
 export default {
   async mounted() {
-    let foo = document.createElement('script');
+    /*let foo = document.createElement('script');
     foo.setAttribute("src", "https://telegram.org/js/telegram-web-app.js");
     document.head.appendChild(foo);
 
@@ -13,6 +13,7 @@ export default {
     nopinch.setAttribute("name", "viewport");
     nopinch.setAttribute("content", "width=device-width, user-scalable=no");
     document.head.appendChild(nopinch);
+    */
   },
   methods: {
   }
