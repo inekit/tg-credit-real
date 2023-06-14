@@ -33,32 +33,7 @@ export default {
     },
     watch: {
         "$store.state.userId": async function (to) {
-            const haveBasketItems = async () => {
-                const results = await this.$store.state.myApi.get(this.$store.state.restAddr + '/basket_data', {
-                    params: {
-                        user_id: to,
-                    }
-                })
-                    .then(response => {
-                        return response.data?.favorites?.length
-                    })
-                    .catch(e => {
-                        alert(e)
-                        eventBus.$emit('noresponse', e)
-                    })
 
-                return results
-
-            }
-
-            if (await haveBasketItems()) {
-                window.Telegram?.WebApp.MainButton.onClick(this.routeToBasket);
-                window.Telegram?.WebApp.MainButton.setText("Корзина");
-                window.Telegram?.WebApp.MainButton.show();
-            } else {
-                window.Telegram?.WebApp.MainButton.offClick(this.routeToBasket);
-                window.Telegram?.WebApp.MainButton.hide();
-            }
         }
     },
     beforeMount() {
@@ -79,7 +54,32 @@ export default {
         this.$store.state.userId = buttonUserId ?? this.$route.params?.userId;
         window.Telegram?.WebApp.enableClosingConfirmation()
 
+        const haveBasketItems = async () => {
+            const results = await this.$store.state.myApi.get(this.$store.state.restAddr + '/basket_data', {
+                params: {
+                    user_id: to,
+                }
+            })
+                .then(response => {
+                    return response.data?.favorites?.length
+                })
+                .catch(e => {
+                    alert(e)
+                    eventBus.$emit('noresponse', e)
+                })
 
+            return results
+
+        }
+
+        if (await haveBasketItems()) {
+            window.Telegram?.WebApp.MainButton.onClick(this.routeToBasket);
+            window.Telegram?.WebApp.MainButton.setText("Корзина");
+            window.Telegram?.WebApp.MainButton.show();
+        } else {
+            window.Telegram?.WebApp.MainButton.offClick(this.routeToBasket);
+            window.Telegram?.WebApp.MainButton.hide();
+        }
 
         //window.Telegram?.WebApp.onEvent('viewportChanged', () => window.Telegram?.WebApp.expand())
 
