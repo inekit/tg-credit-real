@@ -57,7 +57,7 @@ export default {
         const haveBasketItems = async () => {
             const results = await this.$store.state.myApi.get(this.$store.state.restAddr + '/basket_data', {
                 params: {
-                    user_id: to,
+                    user_id: this.$store.state.userId,
                 }
             })
                 .then(response => {
