@@ -31,6 +31,7 @@ export default {
       tableKey: 1,
       dataActions: {
         "К заказу": { action: this.routeToPosts, color: 'primary' },
+        Удалить: { action: this.delete, color: 'danger' },
       },
       tableFieldNames: [
         {
@@ -96,7 +97,7 @@ export default {
           .then(() => {
             this.get()
             //this.rows = this.rows.filter((el) => el.id !== id)
-            eventBus.$emit('tagDeleted')
+            eventBus.$emit('orderDeleted')
           })
           .catch((error) => {
             eventBus.$emit('noresponse', error)

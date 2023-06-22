@@ -30,6 +30,11 @@
             value="" label="Без категорий" />
         </div>
         <CFormInput type="number" class="mb-3" label="Цена" placeholder="Введите цену" v-model.number="formData.price" />
+        <CFormInput type="number" class="mb-3" label="Цена" placeholder="Введите необходимое количество товара для опта"
+          v-model.number="formData.saleCount" />
+        <CFormInput type="number" class="mb-3" label="Цена" placeholder="Введите оптовую цену"
+          v-model.number="formData.salePrice" />
+
         <div class="options-shedle">
           <span>Опции</span>
           <CFormCheck id="select-taste" @change="formData.select_name = 'Вкус'" type="radio" name="select-name"
@@ -212,6 +217,9 @@ export default {
 
       formData.append('title', this.formData.title)
       formData.append('price', this.formData.price)
+      this.formData.saleCount && formData.append('saleCount', this.formData.saleCount)
+      this.formData.saleCount && formData.append('salePrice', this.formData.salePrice)
+
       this.formData.select_name && formData.append('select_name', this.formData.select_name)
 
 
