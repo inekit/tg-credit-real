@@ -24,7 +24,8 @@
     <form>
         <div class="stock-container">
             <label>Наличие</label>
-            <span class="stock" :class="[stock > 20 ? 'green' : stock > 10 ? 'yellow' : 'red']">{{ stock > 0 ? `В наличии` : `Нет
+            <span class="stock" :class="[stock > 20 ? 'green' : stock > 10 ? 'yellow' : 'red']">{{ stock > 0 ? `В наличии` :
+                `Нет
                 в наличии` }}</span>
             <hr />
         </div>
@@ -33,6 +34,12 @@
             <span class="puffs">{{ item.puffs_count }}</span>
             <hr />
         </div>
+        <div v-if="item.sale_count" class="sale-container">
+            <label>Оптом от {{ item.sale_count }} шт.</label>
+            <span class="puffs">{{ item.sale_price }} ₽</span>
+            <hr />
+        </div>
+
         <div class="option-select" v-if="item.select_name">
             <label for="size-select">{{ item.select_name }}</label>
             <div class="select-dropdown">
@@ -48,7 +55,8 @@
             <div class="description" v-html="item.description"></div>
         </div>
         <div class="order">
-            <span>{{ item.price }} ₽</span>
+            <span :style="[item.sale_count ? 'text-decoration: line-through' : '']">{{ item.price }} ₽</span>
+            <span v-if="item.sale_count">{{ item.sale_price }} ₽</span>
             <div class="count-select">
                 <button :class="[!count ? 'hidden' : '']" type="button" @click="changeCount(count - 1)">-</button>
                 <span>{{ count ? count : 1 }}</span>
