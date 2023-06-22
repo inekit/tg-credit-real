@@ -263,7 +263,6 @@ class UsersService {
             description,
             text,
             price,
-            saleCount,
             sale_count: saleCount || null,
             sale_price: salePrice || null,
             category_name: categoryName,
