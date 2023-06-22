@@ -30,10 +30,20 @@
             value="" label="Без категорий" />
         </div>
         <CFormInput type="number" class="mb-3" label="Цена" placeholder="Введите цену" v-model.number="formData.price" />
-        <CFormInput type="number" class="mb-3" label="Цена" placeholder="Введите необходимое количество товара для опта"
-          v-model.number="formData.saleCount" />
-        <CFormInput type="number" class="mb-3" label="Цена" placeholder="Введите оптовую цену"
-          v-model.number="formData.salePrice" />
+        <label class="form-label">Оптовые скидки</label>
+        <div v-if="formData.sale_count || formData.sale_price">
+          <CFormInput type="number" class="mb-3" placeholder="Введите необходимое количество товара для опта"
+            v-model.number="formData.sale_count" />
+          <CFormInput type="number" class="mb-3" placeholder="Введите оптовую цену"
+            v-model.number="formData.sale_price" />
+          <CButton color="danger" type="button" @click="formData.sale_count = null; formData.sale_price = null">
+            Убрать скидку
+          </CButton>
+        </div>
+        <CButton v-else color="primary" type="button"
+          @click="formData.sale_count = 5; formData.sale_price = formData.price">
+          Добавить скидку
+        </CButton>
 
         <div class="options-shedle">
           <span>Опции</span>
@@ -217,8 +227,8 @@ export default {
 
       formData.append('title', this.formData.title)
       formData.append('price', this.formData.price)
-      this.formData.saleCount && formData.append('saleCount', this.formData.saleCount)
-      this.formData.saleCount && formData.append('salePrice', this.formData.salePrice)
+      this.formData.sale_count && formData.append('saleCount', this.formData.sale_count)
+      this.formData.sale_price && formData.append('salePrice', this.formData.sale_price)
 
       this.formData.select_name && formData.append('select_name', this.formData.select_name)
 
