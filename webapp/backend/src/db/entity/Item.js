@@ -32,8 +32,8 @@ module.exports = new EntitySchema({
       nullable: false,
       default: 100,
     },
-    saleCount: { type: "int", nullable: true },
-    salePrice: { type: "int", nullable: true },
+    sale_count: { type: "int", nullable: true },
+    sale_price: { type: "int", nullable: true },
     preview: {
       type: "varchar",
       length: 300,
