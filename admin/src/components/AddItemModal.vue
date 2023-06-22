@@ -227,8 +227,8 @@ export default {
 
       formData.append('title', this.formData.title)
       formData.append('price', this.formData.price)
-      formData.append('saleCount', this.formData.sale_count)
-      formData.append('salePrice', this.formData.sale_price)
+      this.formData.sale_count && formData.append('saleCount', this.formData.sale_count)
+      this.formData.sale_price && formData.append('salePrice', this.formData.sale_price)
 
       this.formData.select_name && formData.append('select_name', this.formData.select_name)
 
