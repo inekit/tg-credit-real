@@ -257,6 +257,7 @@ export default {
                     this.count = (await this.getBasketOption())?.count ?? 0;
                     this.item.is_favorite = true;
                     this.countItemsOrdered = testNewCount + this.count;
+                    console.log(this.countItemsOrdered)
 
                 })
                 .catch((e) => {
