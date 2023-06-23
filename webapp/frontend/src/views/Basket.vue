@@ -34,8 +34,10 @@
     </div>
     <div class="order">
         <span class="label"> Итого: </span>
-        <span class="value" :style="[total !== sale_total ? 'text-decoration: line-through' : '']">{{ total }} ₽</span>
-        <span class="value" v-if="total !== sale_total">{{ sale_total }} ₽</span>
+        <span class="value">
+            <span :style="[total !== sale_total ? 'text-decoration: line-through' : '']">{{
+                total }}</span>
+            <span v-if="total !== sale_total">{{ sale_total }}</span> ₽</span>
 
     </div>
 </template>
