@@ -56,7 +56,7 @@
         </div>
         <div class="order">
             <span :style="[item.sale_count ? 'text-decoration: line-through' : '']">{{ item.price }} ₽</span>
-            <span v-if="item.sale_count">{{ item.sale_price }} ₽</span>
+            <span v-if="item.sale_count"> {{ item.sale_price }} ₽</span>
             <div class="count-select">
                 <button :class="[!count ? 'hidden' : '']" type="button" @click="changeCount(count - 1)">-</button>
                 <span>{{ count ? count : 1 }}</span>
@@ -91,6 +91,7 @@ export default {
             options_array: [],
             selected_option: null,
             count: 0,
+            countItemsOrdered: 0,
         }
     },
     watch: {
@@ -100,6 +101,10 @@ export default {
         async item(to) {
 
             this.selected_option = to?.options_array?.[0]?.id
+            this.countItemsOrdered = (await this.getBasketItem())?.reduce((prev, cur, i) => {
+                return prev + cur.count;
+            }, 0)
+            console.log(countItemsOrdered)
             this.count = (await this.getBasketOption())?.count ?? 0;
             this.item.is_favorite = !!this.count;
             this.item.description = marked.parse(this.item.description?.replaceAll("\r\n\r\n", "<span><br/><span/>\r\n\r\n"))
@@ -193,7 +198,27 @@ export default {
 
                         return item
                     }
-                    catch (e) { console.log(e); rej(e) }
+                    catch (e) { console.log(e); }
+                })
+                .catch((e) => {
+                    eventBus.$emit('noresponse', e)
+                })
+        },
+        async getBasketItem() {
+            return await this.$store.state.myApi
+                .get(this.$store.state.restAddr + '/favorites', {
+                    params: {
+                        user_id: this.$store.state.userId,
+                        item_id: this.item.id,
+                    }
+                })
+                .then((response) => {
+                    try {
+                        const options = response.data;
+
+                        return options
+                    }
+                    catch (e) { console.log(e); }
                 })
                 .catch((e) => {
                     eventBus.$emit('noresponse', e)
@@ -201,6 +226,8 @@ export default {
         },
         changeCount(newCount) {
             if (newCount > 100 || newCount > this.stock) return alert("Выбрано максимальное доступное количество товара")
+
+            const testNewCount = this.countItemsOrdered - this.count;
             this.$store.state.myApi.put(this.$store.state.restAddr + '/favorites', {
                 user_id: this.$store.state.userId,
                 item_option_id: this.selected_option,
@@ -208,6 +235,8 @@ export default {
             })
                 .then(async response => {
                     this.count = (await this.getBasketOption())?.count ?? 0;
+                    this.countItemsOrdered = testNewCount + this.count;
+                    console.log(this.countItemsOrdered)
                     this.item.is_favorite = !!this.count;
                 })
                 .catch(e => { eventBus.$emit('noresponse', e) })
@@ -349,7 +378,7 @@ form {
     }
 
     .stock-container,
-    .puffs-container {
+    .puffs-container .sale-container {
         position: relative;
 
         span {
