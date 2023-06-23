@@ -222,6 +222,9 @@ class BasketsService {
               total +=
                 basketData.favorites[i].sale_price *
                 basketData.favorites[i].count;
+            else
+              total +=
+                basketData.favorites[i].price * basketData.favorites[i].count;
           }
 
           basketData.total = total;
