@@ -199,7 +199,7 @@ class BasketsService {
 
           if (!basketData.favorites[0]?.id) basketData.favorites = [];
 
-          let total = 0;
+          let sale_total = 0;
 
           for (let i in basketData.favorites) {
             const item_id = basketData.favorites[i].item_id;
@@ -219,15 +219,15 @@ class BasketsService {
               count_items_total >= basketData.favorites[i].sale_count;
 
             if (basketData.favorites[i].is_sale)
-              total +=
+              sale_total +=
                 basketData.favorites[i].sale_price *
                 basketData.favorites[i].count;
             else
-              total +=
+              sale_total +=
                 basketData.favorites[i].price * basketData.favorites[i].count;
           }
 
-          basketData.total = total;
+          basketData.sale_total = sale_total;
           return res(data[0]);
         })
         .catch((error) => {
