@@ -104,7 +104,7 @@ export default {
             this.countItemsOrdered = (await this.getBasketItem())?.reduce((prev, cur, i) => {
                 return prev + cur.count;
             }, 0)
-            console.log(countItemsOrdered)
+            console.log(this.countItemsOrdered)
             this.count = (await this.getBasketOption())?.count ?? 0;
             this.item.is_favorite = !!this.count;
             this.item.description = marked.parse(this.item.description?.replaceAll("\r\n\r\n", "<span><br/><span/>\r\n\r\n"))
