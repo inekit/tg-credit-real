@@ -244,8 +244,8 @@ export default {
     },
     computed: {
         totalSum() {
-            const basketTotal = +(this.sale.type === 'money' ? Math.max((this.basketData.total - this.sale.sum), 0) :
-                (+(100 - this.sale.sum) * this.basketData.total / 100).toFixed(0))
+            const basketTotal = +(this.sale.type === 'money' ? Math.max((this.basketData.sale_total - this.sale.sum), 0) :
+                (+(100 - this.sale.sum) * this.basketData.sale_total / 100).toFixed(0))
 
             return basketTotal + (+this.deliveryPrice ?? 0)
         }
