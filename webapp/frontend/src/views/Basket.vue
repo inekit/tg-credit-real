@@ -51,6 +51,7 @@ export default {
         return {
             basketItems: [],
             total: 0,
+            sale_total: 0
         }
     },
     watch: {
@@ -153,6 +154,7 @@ export default {
                 .then(response => {
 
                     this.total = response.data.total;
+                    this.sale_total = response.data.sale_total;
 
                     let rows = response.data?.favorites;
 
