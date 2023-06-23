@@ -173,11 +173,13 @@ class BasketsService {
 
       connection
         .query(
-          `select u.name, u.surname, u.patronymic, u.address, u.phone, u.postal_code, coalesce(sum(i.price * oi.count),0)::int  total, 
+          `select u.name, u.surname, u.patronymic, u.address, u.phone, u.postal_code, 
+          coalesce(sum(i.price * oi.count),0)::int  total, 
           sum(oi.count)::int  total_count,
           json_agg(DISTINCT 
             jsonb_build_object('id', io.id, 'item_id', i.id, 'order_id', o.id, 'creation_date', o.creation_date, 
-            'title', i.title, 'image_list', io.photos, 'count', count, 'option_name', io.name, 'price', price,'select_name', i.select_name, 'stock', io.stock))  favorites
+            'title', i.title, 'image_list', io.photos, 'count', count, 'option_name', io.name, 'price', price,
+            'select_name', i.select_name, 'stock', io.stock,'sale_count', sale_count, 'sale_price', sale_price))  favorites
           from users u 
           left join orders o on u.id = o.user_id
           left join order_items oi on oi.order_id = o.id
@@ -196,6 +198,33 @@ class BasketsService {
           if (!basketData) return rej("No basket");
 
           if (!basketData.favorites[0]?.id) basketData.favorites = [];
+
+          const total = 0;
+
+          for (let i in basketData.favorites) {
+            const item_id = basketData.favorites[i].item_id;
+
+            const count_items_total = basketData.favorites?.reduce(
+              (prev, cur, i) => {
+                if (cur.item_id === item_id) return prev + cur.count;
+                else return prev;
+              },
+              0
+            );
+
+            basketData.favorites[i].count_items_total = count_items_total;
+
+            basketData.favorites[i].is_sale =
+              basketData.favorites[i].sale_count &&
+              count_items_total >= basketData.favorites[i].sale_count;
+
+            if (basketData.favorites[i].is_sale)
+              total +=
+                basketData.favorites[i].sale_price *
+                basketData.favorites[i].count;
+          }
+
+          basketData.total = total;
           return res(data[0]);
         })
         .catch((error) => {
