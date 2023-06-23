@@ -17,7 +17,9 @@
                     {{ item.select_name }} {{ item.option_name }}
                 </span>
                 <span class="price">
-                    {{ item.price }} ₽
+                    <span :style="[item.is_sale ? 'text-decoration: line-through' : '']">{{
+                        item.price }} ₽</span>
+                    <span v-if="item.is_sale"> {{ item.sale_price }} ₽</span>
                 </span>
             </RouterLink>
             <div v-if="!item.mainside_id" class="count-select">
