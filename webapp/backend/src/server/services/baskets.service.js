@@ -199,7 +199,7 @@ class BasketsService {
 
           if (!basketData.favorites[0]?.id) basketData.favorites = [];
 
-          const total = 0;
+          let total = 0;
 
           for (let i in basketData.favorites) {
             const item_id = basketData.favorites[i].item_id;
