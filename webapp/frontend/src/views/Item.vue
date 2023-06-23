@@ -244,6 +244,9 @@ export default {
         async order(count) {
             if (count > 1) return this.changeCount(count);
             if (this.stock < 1) return alert("Товар закончился")
+
+            const testNewCount = this.countItemsOrdered - this.count;
+
             this.$store.state.myApi
                 .post(this.$store.state.restAddr + '/favorites', {
                     item_option_id: this.selected_option,
@@ -253,7 +256,7 @@ export default {
                 .then(async (response) => {
                     this.count = (await this.getBasketOption())?.count ?? 0;
                     this.item.is_favorite = true;
-
+                    this.countItemsOrdered = testNewCount + this.count;
 
                 })
                 .catch((e) => {
