@@ -47,7 +47,12 @@
         </div>
         <div class="pricing">Стоимость товаров<span>{{ basketData?.total }} ₽</span>
         </div>
-        <div class="pricing" v-if="sale.sum > 0">Скидка<span>{{ sale.type === 'money' ? `${sale.sum} ₽` : `${sale.sum}
+        <div class="pricing" v-if="basketData?.total !== basketData?.sale_total">Скидка за опт<span> {{ basketData?.total -
+            basketData?.sale_total }}
+                ₽</span>
+        </div>
+        <div class="pricing" v-if="sale.sum > 0">Скидка по промокоду<span>{{ sale.type === 'money' ? `${sale.sum} ₽` :
+            `${sale.sum}
                 % `
         }}</span></div>
         <div class="pricing">К оплате<span>{{ totalSum }} ₽</span></div>
