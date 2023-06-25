@@ -16,6 +16,7 @@ const scene = new CustomWizardScene("payScene").enter(async (ctx) => {
 
   ctx.replyWithKeyboard("ENTER_PHOTOS", "main_menu_back_keyboard", [
     statics?.card_number,
+    statics?.sbp_number,
   ]);
   //ctx.wizard.selectStep(0);
 });
