@@ -55,13 +55,15 @@
             <div class="description" v-html="item.description"></div>
         </div>
         <div class="order">
-            <span
-                :style="[item.sale_count && countItemsOrdered >= item.sale_count ? 'text-decoration: line-through' : '']">{{
-                    item.price }} ₽</span>
-            <span v-if="item.sale_count && countItemsOrdered >= item.sale_count">
-                <pre> </pre>{{ item.sale_price }}
-                ₽
+            <span>
+                <span
+                    :style="[item.sale_count && countItemsOrdered >= item.sale_count ? 'text-decoration: line-through' : '']">{{
+                        item.price }}</span>
+                <span v-if="item.sale_count && countItemsOrdered >= item.sale_count">
+                    <pre style="display: inline;margin-left: -7px;width: 1;"></pre>{{ item.sale_price }}
+                </span> ₽
             </span>
+
             <div class="count-select">
                 <button :class="[!count ? 'hidden' : '']" type="button" @click="changeCount(count - 1)">-</button>
                 <span>{{ count ? count : 1 }}</span>
