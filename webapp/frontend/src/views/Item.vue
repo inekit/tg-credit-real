@@ -58,7 +58,8 @@
             <span
                 :style="[item.sale_count && countItemsOrdered >= item.sale_count ? 'text-decoration: line-through' : '']">{{
                     item.price }} ₽</span>
-            <span v-if="item.sale_count && countItemsOrdered >= item.sale_count"> {{ item.sale_price }} ₽</span>
+            <span v-if="item.sale_count && countItemsOrdered >= item.sale_count"><span> </span>{{ item.sale_price }}
+                ₽</span>
             <div class="count-select">
                 <button :class="[!count ? 'hidden' : '']" type="button" @click="changeCount(count - 1)">-</button>
                 <span>{{ count ? count : 1 }}</span>
