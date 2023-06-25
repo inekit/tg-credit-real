@@ -38,7 +38,7 @@
             <span :style="[total !== sale_total ? 'text-decoration: line-through' : '']">{{
                 total }}</span>
             <span v-if="total !== sale_total">
-                <pre style="display: inline;margin-left: -7px;width: 1;"></pre>{{ sale_total }}
+                <pre style="display: inline;margin-left: 3px;width: 1;"></pre>{{ sale_total }}
             </span> ₽</span>
 
     </div>

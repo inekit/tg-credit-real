@@ -60,7 +60,7 @@
                     :style="[item.sale_count && countItemsOrdered >= item.sale_count ? 'text-decoration: line-through' : '']">{{
                         item.price }}</span>
                 <span v-if="item.sale_count && countItemsOrdered >= item.sale_count">
-                    <pre style="display: inline;margin-left: -7px;width: 1;"></pre>{{ item.sale_price }}
+                    <pre style="display: inline;margin-left: 3px;width: 1;"></pre>{{ item.sale_price }}
                 </span> ₽
             </span>
 
