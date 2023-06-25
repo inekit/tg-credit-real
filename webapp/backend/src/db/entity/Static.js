@@ -25,5 +25,11 @@ module.exports = new EntitySchema({
       length: 1024,
       default: "ТЕСТ",
     },
+    sbp_number: {
+      type: "varchar",
+      primary: false,
+      length: 1024,
+      default: "ТЕСТ",
+    },
   },
 });

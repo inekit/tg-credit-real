@@ -36,6 +36,11 @@ export default {
           name: 'card_number',
           title: 'Карта для перевода',
         },
+        {
+
+          name: 'sbp_number',
+          title: 'Номер для СБП',
+        }
       ],
     }
   },

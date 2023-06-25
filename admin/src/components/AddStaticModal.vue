@@ -8,6 +8,8 @@
         style="display: 'none'">
         <span>Карта</span>
         <CFormInput type="text" aria-required="true" required v-model="formData.card_number"></CFormInput>
+        <span>Номер для СБП</span>
+        <CFormInput type="text" aria-required="true" required v-model="formData.sbp_number"></CFormInput>
       </form>
     </CModalBody>
     <CModalFooter>
@@ -57,6 +59,7 @@ export default {
       //formData.append('greeting', this.$refs.greetingEditor.getHTML())
       //formData.append('order', this.$refs.orderEditor.getHTML())
       formData.append('card_number', this.formData.card_number)
+      formData.append('sbp_number', this.formData.sbp_number)
 
       return formData
     },
