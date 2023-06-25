@@ -123,7 +123,8 @@ class UsersService {
         const basket = (
           await queryRunner.query(
             `select o.*, count(oi.item_option_id) count_items,
-          json_agg(json_build_object('title', i.title,'count',oi.count, 'id', io.id, 'price', i.price,'stock', io.stock)) items 
+          json_agg(json_build_object('title', i.title,'count',oi.count, 'id', io.id, 'price', i.price,'stock', io.stock,
+          'sale_count', sale_count, 'sale_price', sale_price)) items 
           from orders o 
           left join order_items oi on o.id = oi.order_id  
           left join item_options io on oi.item_option_id = io.id  
@@ -186,10 +187,27 @@ class UsersService {
           );
         }
 
-        let total = basket.items.reduce(
-          (prev, cur) => prev + cur.price * cur.count,
-          0
-        );
+        let total = 0;
+
+        for (let i in basket.items) {
+          const item_id = basket.items[i].item_id;
+
+          const count_items_total = basket.items?.reduce((prev, cur, i) => {
+            if (cur.item_id === item_id) return prev + cur.count;
+            else return prev;
+          }, 0);
+
+          basket.items[i].count_items_total = count_items_total;
+
+          basket.items[i].is_sale =
+            basket.items[i].sale_count &&
+            count_items_total >= basket.items[i].sale_count;
+
+          if (basket.items[i].is_sale)
+            total += basket.items[i].sale_price * basket.items[i].count;
+          else total += basket.items[i].price * basket.items[i].count;
+        }
+
         total =
           type === "money"
             ? Math.max(total - sum, 0)
