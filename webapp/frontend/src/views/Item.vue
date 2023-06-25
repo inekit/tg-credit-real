@@ -389,7 +389,8 @@ form {
     }
 
     .stock-container,
-    .puffs-container .sale-container {
+    .puffs-container,
+    .sale-container {
         position: relative;
 
         span {
