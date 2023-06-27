@@ -21,7 +21,7 @@ console.log("started");
 
 (async () => {
   bot.use(telegraf.session(), require("./stages"));
-  bot.on("message", async (ctx) => {
+  bot.hears(/.+/g, async (ctx) => {
     ctx.replyWithTitle("UNAVAILABLE_MESSAGE");
   });
   bot.action(/^.+$/g, (ctx) => ctx.answerCbQuery().catch((e) => {}));
