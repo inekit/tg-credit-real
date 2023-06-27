@@ -20,10 +20,10 @@ global.titles = titles;
 console.log("started");
 
 (async () => {
+  bot.use(telegraf.session(), require("./stages"));
   bot.on("message", async (ctx) => {
     ctx.replyWithTitle("UNAVAILABLE_MESSAGE");
   });
-  bot.use(telegraf.session(), require("./stages"));
   bot.action(/^.+$/g, (ctx) => ctx.answerCbQuery().catch((e) => {}));
 
   server(ctx);
