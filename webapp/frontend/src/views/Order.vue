@@ -411,6 +411,16 @@ export default {
     margin-bottom: -10px
 }
 
+input#comment {
+    background-color: #E6E6E6;
+    padding: 17px 20px;
+    width: calc(100% - 40px);
+    border-radius: 1rem;
+    border: none;
+    margin-bottom: 10px;
+    font-size: 1rem;
+}
+
 .total {}
 
 .pricing {
