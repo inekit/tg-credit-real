@@ -58,7 +58,7 @@ scene.addStep({
   }),
 });
 
-scene.on("message", async (ctx) => {
+scene.on("text", async (ctx) => {
   ctx.replyWithTitle("UNAVAILABLE_MESSAGE");
 });
 
