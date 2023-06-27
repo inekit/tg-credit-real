@@ -35,6 +35,12 @@ const adminStage = new Stage([
   //require("./scenes/adminScenes/confirmCertificate"),
 ]);
 
+const catchStage = new Stage([]);
+
+catchStage.on("message", async (ctx) => {
+  ctx.replyWithTitle("UNAVAILABLE_MESSAGE");
+});
+
 mainStage.hears(titles.getValues("BUTTON_BACK_ADMIN"), (ctx) => {
   ctx.scene.enter("adminScene");
 });
@@ -59,6 +65,7 @@ mainStage.action("admin", async (ctx) => {
 const stages = new Composer();
 
 stages.use(Telegraf.chatType("private", mainStage.middleware()));
+stages.use(Telegraf.chatType("private", catchStage.middleware()));
 stages.use(Telegraf.chatType("private", adminStage.middleware()));
 
 module.exports = stages;

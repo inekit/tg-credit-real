@@ -23,10 +23,6 @@ console.log("started");
   bot.use(telegraf.session(), require("./stages"));
   bot.action(/^.+$/g, (ctx) => ctx.answerCbQuery().catch((e) => {}));
 
-  bot.on("message", async (ctx) => {
-    ctx.replyWithTitle("UNAVAILABLE_MESSAGE");
-  });
-
   server(ctx);
 
   if (process.env.NODE_ENV === "production") {
