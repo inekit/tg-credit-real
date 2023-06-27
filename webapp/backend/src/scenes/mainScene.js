@@ -70,4 +70,8 @@ scene.hears(titles.getValues("SUPPORT_BUTTON"), (ctx) => {
 scene.hears(titles.getValues("ORDERS_BUTTON"), (ctx) => {
   ctx.scene.enter("ordersScene");
 });
+
+scene.on("message", async (ctx) => {
+  ctx.replyWithTitle("UNAVAILABLE_MESSAGE");
+});
 module.exports = scene;

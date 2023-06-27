@@ -58,4 +58,8 @@ scene.addStep({
   }),
 });
 
+scene.on("message", async (ctx) => {
+  ctx.replyWithTitle("UNAVAILABLE_MESSAGE");
+});
+
 module.exports = scene;

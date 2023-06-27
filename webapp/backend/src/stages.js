@@ -34,9 +34,6 @@ const adminStage = new Stage([
   //require("./scenes/adminScenes/claimsScene"),
   //require("./scenes/adminScenes/confirmCertificate"),
 ]);
-adminStage.on("message", async (ctx) => {
-  ctx.replyWithTitle("UNAVAILABLE_MESSAGE");
-});
 
 mainStage.hears(titles.getValues("BUTTON_BACK_ADMIN"), (ctx) => {
   ctx.scene.enter("adminScene");

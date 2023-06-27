@@ -107,4 +107,8 @@ scene.action("go_back", async (ctx) => {
   ctx.scene.enter("ordersScene", { edit: true });
 });
 
+scene.on("message", async (ctx) => {
+  ctx.replyWithTitle("UNAVAILABLE_MESSAGE");
+});
+
 module.exports = scene;
