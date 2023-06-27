@@ -35,6 +35,9 @@
             <input v-show="selected_dm !== 'До станции метро'" type="number" id="text" pattern="[0-9]+" name="postal code"
                 placeholder="Почтовый индекс" v-model.number="basketData.postal_code" @input="getDeliveryPricePostal">
         </div>
+        <h2>Комментарий к заказу</h2>
+        <input type="text" id="comment" name="comment" maxlength="255" placeholder="Комментарий"
+            v-model="basketData.comment">
         <h2>Промокод</h2>
         <div class="input-group one-line">
             <input type="text" id="name" name="name" class="form-control" placeholder="Введите промокод"
@@ -72,16 +75,16 @@ export default {
             basketData: {},
             paymentOptions: ["Перевод"],
             selected_po: "Перевод",
-            deliveryMethods: ["CДЭК", "Яндекс Доставка до пункта выдачи", 'До станции метро', 'Внутри МКАД', 'МО за МКАД'],
+            deliveryMethods: ["Почта России", "Яндекс Доставка до пункта выдачи", 'До станции метро', 'Внутри МКАД', 'МО за МКАД'],
             methodsDescriptions: [
-                "Доставка по россии курьерской службой СДЭК",
+                "Доставка по россии курьерской службой Почта России",
                 "Яндекс Доставка до пункта выдачи",
                 "Доставка курьером по Москве. Встреча у станции метро.",
                 "Доставка курьером по Москве. Встреча по вашему адресу",
                 `Доставка курьером по Московской области. 
 Встреча по вашему адресу, цена расчитывается исходя из удаленности от МКАД.
 При заказе этим способом с вами свяжется менеджер для уточнения цены`],
-            selected_dm: "CДЭК",
+            selected_dm: "Почта России",
             deliveryPrice: 0,
             deliveryTime: null,
             sale: {
@@ -92,7 +95,7 @@ export default {
     },
     watch: {
         selected_dm(to) {
-            if (to === 'CДЭК' || to === "Яндекс Доставка") {
+            if (to === 'Почта России' || to === "Яндекс Доставка") {
                 this.selected_po = "Перевод";
                 this.paymentOptions = ["Перевод"];
             } else this.paymentOptions = ["Перевод", "Наличные курьеру"];
@@ -143,6 +146,7 @@ export default {
                     promo_code: this.sale.code,
                     delivery_price: this.deliveryPrice,
                     delivery_time: this.deliveryTime,
+                    comment: this.basketData.comment,
                     total: this.totalSum
                 })
                 .then(async (response) => {
@@ -162,7 +166,7 @@ export default {
                     return this.deliveryPrice = this.totalSum >= 5000 ? 0 : 350;
                 case ('МО за МКАД'):
                     return this.deliveryPrice = this.totalSum >= 7000 ? 0 : null;
-                case ('CДЭК'):
+                case ('Почта России'):
                     return this.deliveryPrice = 400;
                 case ('Яндекс Доставка'):
                     return this.deliveryPrice = 350;

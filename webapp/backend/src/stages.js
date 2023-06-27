@@ -45,11 +45,9 @@ mainStage.action(/^pay\_([0-9]+)$/g, async (ctx) => {
   ctx.scene.enter("payScene", { order_id: ctx.match[1] });
 });
 
-/*mainStage.on("message", async (ctx, next) => {
-  console.log(ctx.message.web_app_data);
-  //ctx.reply(ctx.message.web_app_data.data);
-  next();
-});*/
+mainStage.on("message", async (ctx) => {
+  ctx.replyWithTitle("UNAVAILABLE_MESSAGE");
+});
 
 /*mainStage.on("web_app_data", (ctx) => {
   console.log(ctx);

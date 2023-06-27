@@ -40,6 +40,7 @@ module.exports = new EntitySchema({
       enum: [
         "Я. Доставка",
         "Яндекс Доставка",
+        "Почта России",
         "CДЭК",
         "Курьер",
         "Почта РФ",
@@ -87,6 +88,11 @@ module.exports = new EntitySchema({
       nullable: true,
     },
     reciept_photo_id: {
+      type: "varchar",
+      length: 255,
+      nullable: true,
+    },
+    comment: {
       type: "varchar",
       length: 255,
       nullable: true,

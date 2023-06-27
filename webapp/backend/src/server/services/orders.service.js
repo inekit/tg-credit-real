@@ -105,6 +105,7 @@ class UsersService {
       postal_code,
       promo_code,
       delivery_price,
+      comment,
     },
     ctx
   ) {
@@ -233,6 +234,7 @@ class UsersService {
           promo_code,
           patronymic,
           delivery_price,
+          comment,
         });
 
         const { id: order_id } = data;
