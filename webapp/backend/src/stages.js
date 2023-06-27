@@ -39,6 +39,10 @@ mainStage.hears(titles.getValues("BUTTON_BACK_ADMIN"), (ctx) => {
   ctx.scene.enter("adminScene");
 });
 
+mainStage.hears(/.+/g, async (ctx) => {
+  ctx.replyWithTitle("UNAVAILABLE_MESSAGE");
+});
+
 mainStage.action(/^pay\_([0-9]+)$/g, async (ctx) => {
   await ctx.answerCbQuery().catch((e) => {});
 
