@@ -34,6 +34,8 @@ scene.addStep({
 
     const order_id = ctx.scene.state.order_id;
 
+    const connection = await tOrmCon;
+
     const items = (
       await connection
         .query(
@@ -52,7 +54,6 @@ scene.addStep({
         .catch((e) => console.log(e))
     )[0].items;
 
-    const connection = await tOrmCon;
     await connection
       .query(
         `update orders set reciept_photo_id=$1 where id = $2 returning *`,
