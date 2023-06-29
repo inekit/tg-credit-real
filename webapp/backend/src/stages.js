@@ -61,8 +61,9 @@ mainStage.action(/^status\_([0-9]+)\_(.+)\_([0-9])$/g, async (ctx) => {
     .catch((e) => console.log(e));
 
   const items = (
-    await queryRunner.query(
-      `select 
+    await connection
+      .query(
+        `select 
       json_agg(json_build_object('title', i.title,'count',oi.count, 'id', io.id, 'price', i.price,'stock', io.stock,
       'sale_count', sale_count, 'sale_price', sale_price)) items 
       from orders o 
@@ -72,8 +73,9 @@ mainStage.action(/^status\_([0-9]+)\_(.+)\_([0-9])$/g, async (ctx) => {
       where o.id = $1
       group by o.id
       limit 1`,
-      [order_id]
-    )
+        [order_id]
+      )
+      .catch((e) => console.log(e))
   )[0].items;
 
   if (!is_updated)
