@@ -73,7 +73,7 @@ module.exports = async function sendOrder(
   };
 
   if (!edit)
-    if (reciept_photo_id)
+    if (is_payment)
       await ctx.telegram
         .sendPhoto(process.env.ADMIN_ID, reciept_photo_id, {
           parse_mode: "HTML",
@@ -92,18 +92,26 @@ module.exports = async function sendOrder(
         .catch((e) => {
           console.log(e);
         });
-  else if (reciept_photo_id)
-    await ctx.editMessageMedia(
-      {
-        type: "photo",
-        media: reciept_photo_id,
-        caption: title,
-        parse_mode: "HTML",
-      },
-      {
-        reply_markup: keyboard,
-      }
-    );
+  else if (is_payment)
+    await ctx
+      .editMessageMedia(
+        {
+          type: "photo",
+          media: reciept_photo_id,
+          caption: title,
+          parse_mode: "HTML",
+        },
+        {
+          reply_markup: keyboard,
+        }
+      )
+      .catch((e) => {
+        console.log(e);
+      });
   else
-    ctx.editMessageText(title, { reply_markup: keyboard, parse_mode: "HTML" });
+    ctx
+      .editMessageText(title, { reply_markup: keyboard, parse_mode: "HTML" })
+      .catch((e) => {
+        console.log(e);
+      });
 };
