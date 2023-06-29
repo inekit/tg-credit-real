@@ -5,6 +5,7 @@ const {
 } = require("telegraf");
 const titles = require("telegraf-steps").titlesGetter(__dirname + "/Titles");
 const tOrmCon = require("./db/connection");
+const sendOrder = require("./Utils/sendOrder");
 require("dotenv").config();
 const moment = require("moment");
 const mainStage = new Stage(
@@ -63,46 +64,7 @@ mainStage.action(/^status\_([0-9]+)\_(.+)$/g, async (ctx) => {
       .answerCbQuery(ctx.getTitle("CANT_CHANGE_STATUS"))
       .catch((e) => {});
 
-  const {
-    creation_date,
-    username,
-    user_id,
-    selected_dm,
-    address,
-    postal_code,
-    surname,
-    name,
-    patronymic,
-    phone,
-    comment,
-    selected_po,
-    delivery_price,
-    promo_code,
-    total,
-  } = res?.[0];
-
-  ctx.editMessageText(
-    ctx.getTitle("NEW_ORDER", [
-      order_id,
-      moment(creation_date).format("DD.MM.YYYY"),
-      username ? `@${username}` : " ",
-      user_id,
-      selected_dm,
-      address,
-      postal_code,
-      surname,
-      name,
-      patronymic,
-      phone,
-      comment ?? "Нет",
-      selected_po,
-      delivery_price ? `${delivery_price} руб.` : "Не учтена",
-      promo_code ?? "Не использован",
-      total,
-      status,
-      comment,
-    ])
-  );
+  await sendOrder(ctx, res?.[0], {}, true);
 });
 
 mainStage.action(/^pay\_([0-9]+)$/g, async (ctx) => {

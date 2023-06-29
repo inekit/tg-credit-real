@@ -6,7 +6,7 @@ const {
   NoInputDataError,
 } = require("../utils/httpErrors");
 require("dotenv").config();
-
+const sendOrder = require("../../Utils/sendOrder");
 const Robokassa = require("../utils/robokassa");
 const moment = require("moment");
 class UsersService {
@@ -260,12 +260,12 @@ class UsersService {
             ?.map((el) => (el.id ? `📦 ${el.title} - ${el.count} (шт.)` : ""))
             ?.join("\n") ?? "";
 
-        const robokassa = new Robokassa({
+        /*const robokassa = new Robokassa({
           MerchantLogin: process.env.ROBO_MERCHANT_LOGIN,
           Password: process.env.ROBO_PASSWORD,
-        });
+        });*/
 
-        const link = await robokassa
+        /*const link = await robokassa
           .getInvoiceLink({
             OutSum: total,
             InvId: order_id,
@@ -274,7 +274,7 @@ class UsersService {
               ?.join("; ")
               .substr(0, 100),
           })
-          .catch(console.log);
+          .catch(console.log);*/
 
         await ctx.telegram
           .sendMessage(
@@ -306,54 +306,26 @@ class UsersService {
           )
           .catch(console.log);
 
-        const statuses = [
-          "Новый",
-          "Оплачен",
-          "В обработке",
-          "Доставляется",
-          "Доставлен",
-          "Завершен",
-          "Отменен",
-        ];
-
-        await ctx.telegram
-          .sendMessage(
-            process.env.ADMIN_ID,
-            ctx.getTitle("NEW_ORDER", [
-              order_id,
-              moment(new Date()).format("DD.MM.YYYY"),
-              username ? `@${username}` : " ",
-              user_id,
-              selected_dm,
-              address,
-              postal_code,
-              surname,
-              name,
-              patronymic,
-              phone,
-              comment ?? "Нет",
-              selected_po,
-              delivery_price ? `${delivery_price} руб.` : "Не учтена",
-              promo_code ?? "Не использован",
-              total,
-              "Новый",
-              comment,
-            ]),
-            {
-              reply_markup: {
-                parse_mode: "HTML",
-                inline_keyboard: statuses.map((el) => [
-                  {
-                    text: el,
-                    callback_data: `status_${order_id}_${el}`,
-                  },
-                ]),
-              },
-            }
-          )
-          .catch((e) => {
-            console.log(e);
-          });
+        await sendOrder(
+          ctx,
+          {
+            user_id,
+            total,
+            selected_dm,
+            selected_po,
+            phone,
+            address,
+            name,
+            surname,
+            postal_code,
+            promo_code,
+            patronymic,
+            delivery_price,
+            comment,
+          },
+          basket.items,
+          false
+        );
       } catch (error) {
         console.log(error);
         await queryRunner.rollbackTransaction();
