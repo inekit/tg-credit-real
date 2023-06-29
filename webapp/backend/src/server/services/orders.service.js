@@ -331,10 +331,10 @@ class UsersService {
               name,
               patronymic,
               phone,
-              comment,
+              comment ?? "Нет",
               selected_po,
-              delivery_price ?? "Не учтена",
-              promo_code,
+              delivery_price ? `${delivery_price} руб.` : "Не учтена",
+              promo_code ?? "Не использован",
               total,
               "Новый",
               comment,
@@ -345,7 +345,7 @@ class UsersService {
                 inline_keyboard: statuses.map((el) => [
                   {
                     text: el,
-                    callback_data: `status-${el}`,
+                    callback_data: `status_${order_id}_${el}`,
                   },
                 ]),
               },
