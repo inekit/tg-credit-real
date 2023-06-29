@@ -321,7 +321,7 @@ class UsersService {
             process.env.ADMIN_ID,
             ctx.getTitle("NEW_ORDER", [
               order_id,
-              username,
+              username ? `@${username}` : "",
               user_id,
               selected_dm,
               address,
@@ -330,6 +330,7 @@ class UsersService {
               name,
               patronymic,
               phone,
+              comment,
               selected_po,
               delivery_price ?? "Не учтена",
               promo_code,
