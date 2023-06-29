@@ -34,6 +34,24 @@ scene.addStep({
 
     const order_id = ctx.scene.state.order_id;
 
+    const items = (
+      await connection
+        .query(
+          `select 
+        json_agg(json_build_object('title', i.title,'count',oi.count, 'id', io.id, 'price', i.price,'stock', io.stock,
+        'sale_count', sale_count, 'sale_price', sale_price)) items 
+        from orders o 
+        left join order_items oi on o.id = oi.order_id  
+        left join item_options io on oi.item_option_id = io.id  
+        left join items i on io.item_id = i.id 
+        where o.id = $1
+        group by o.id
+        limit 1`,
+          [order_id]
+        )
+        .catch((e) => console.log(e))
+    )[0].items;
+
     const connection = await tOrmCon;
     await connection
       .query(
@@ -48,7 +66,7 @@ scene.addStep({
         await sendOrder(
           ctx,
           Object.assign(res?.[0]?.[0], { username: ctx.from.username }),
-          {},
+          items,
           false,
           true
         );
