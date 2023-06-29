@@ -39,6 +39,11 @@ module.exports = async function sendOrder(
     "Отменен",
   ];
 
+  const orderStr =
+    items
+      ?.map((el) => (el.id ? `📦 ${el.title} - ${el.count} (шт.)` : ""))
+      ?.join("\n") ?? "";
+
   const titleName = is_payment ? "NEW_GM" : "NEW_ORDER";
 
   const title = ctx.getTitle(titleName, [
@@ -54,6 +59,7 @@ module.exports = async function sendOrder(
     patronymic,
     phone,
     comment ?? "Нет",
+    orderStr,
     selected_po,
     delivery_price ? `${delivery_price} руб.` : "Не учтена",
     promo_code ?? "Не использован",
