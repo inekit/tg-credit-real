@@ -1,6 +1,9 @@
 require("dotenv").config();
+const moment = require("moment");
+
 module.exports = async function sendOrder(ctx, orderData, items, edit = false) {
   const {
+    id,
     creation_date,
     username,
     user_id,
@@ -16,6 +19,7 @@ module.exports = async function sendOrder(ctx, orderData, items, edit = false) {
     delivery_price,
     promo_code,
     total,
+    status,
     reciept_photo_id,
   } = orderData;
 
@@ -30,7 +34,7 @@ module.exports = async function sendOrder(ctx, orderData, items, edit = false) {
   ];
 
   const title = ctx.getTitle("NEW_ORDER", [
-    order_id,
+    id,
     moment(creation_date).format("DD.MM.YYYY"),
     username ? `@${username}` : " ",
     user_id,

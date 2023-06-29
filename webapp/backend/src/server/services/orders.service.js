@@ -309,6 +309,7 @@ class UsersService {
         await sendOrder(
           ctx,
           {
+            id: order_id,
             user_id,
             total,
             selected_dm,
