@@ -34,22 +34,22 @@ scene.addStep({
     const order_id = ctx.scene.state.order_id;
 
     const connection = await tOrmCon;
-    connection
-      .query(`update orders set reciept_photo_id=$1 where id = $2`, [
-        photos,
-        order_id,
-      ])
+    await connection
+      .query(
+        `update orders set reciept_photo_id=$1 where id = $2 returning *`,
+        [photos, order_id]
+      )
       .then(async (res) => {
         ctx.scene.state.sent = true;
 
         ctx.replyWithTitle("GM_SENT");
 
-        ctx.telegram
-          .sendMessage(
-            process.env.ADMIN_ID,
-            ctx.getTitle("NEW_GM_PAYMENT", order_id)
-          )
-          .catch((e) => {});
+        await sendOrder(
+          ctx,
+          Object.assign(res?.[0]?.[0], { username: ctx.from.username }),
+          {},
+          false
+        );
       })
       .catch(async (e) => {
         console.log(e);
