@@ -237,17 +237,19 @@ class UsersService {
           comment,
         });
 
-        const { id: order_id } = data;
+        const { id: order_id, status } = data;
 
         await queryRunner.query(
           `update order_items set order_id=$1 where order_id = $2`,
           [order_id, basket_id]
         );
 
-        await queryRunner.query(
-          `update users set address=$2,phone=$3,name=$4,surname=$5,patronymic=$6,postal_code=$7 where id = $1`,
-          [user_id, address, phone, name, surname, patronymic, postal_code]
-        );
+        const username = (
+          await queryRunner.query(
+            `update users set address=$2,phone=$3,name=$4,surname=$5,patronymic=$6,postal_code=$7 where id = $1 returning username`,
+            [user_id, address, phone, name, surname, patronymic, postal_code]
+          )
+        )?.[0]?.[0]?.username;
 
         await queryRunner.commitTransaction();
         global.io.emit("UPDATE_ORDERS");
@@ -304,10 +306,49 @@ class UsersService {
           )
           .catch(console.log);
 
+        const statuses = [
+          "Новый",
+          "Оплачен",
+          "В обработке",
+          "Доставляется",
+          "Доставлен",
+          "Завершен",
+          "Отменен",
+        ];
+
         await ctx.telegram
           .sendMessage(
             process.env.ADMIN_ID,
-            ctx.getTitle("NEW_ORDER", [order_id, total])
+            ctx.getTitle("NEW_ORDER", [
+              order_id,
+              username,
+              user_id,
+              selected_dm,
+              address,
+              postal_code,
+              surname,
+              name,
+              patronymic,
+              phone,
+              selected_po,
+              delivery_price ?? "Не учтена",
+              promo_code,
+              total,
+              status,
+              comment,
+            ]),
+            {
+              reply_markup: {
+                inline_keyboard: statuses.map((el) => [
+                  [
+                    {
+                      text: el,
+                      action: `status-${el}`,
+                    },
+                  ],
+                ]),
+              },
+            }
           )
           .catch((e) => {
             console.log(e);
