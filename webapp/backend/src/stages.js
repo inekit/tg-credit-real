@@ -64,7 +64,12 @@ mainStage.action(/^status\_([0-9]+)\_(.+)$/g, async (ctx) => {
       .answerCbQuery(ctx.getTitle("CANT_CHANGE_STATUS"))
       .catch((e) => {});
 
-  await sendOrder(ctx, res?.[0], {}, true);
+  await sendOrder(
+    ctx,
+    Object.assign(res?.[0], { username: ctx.from.username }),
+    {},
+    true
+  );
 });
 
 mainStage.action(/^pay\_([0-9]+)$/g, async (ctx) => {

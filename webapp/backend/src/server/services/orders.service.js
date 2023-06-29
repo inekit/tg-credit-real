@@ -311,6 +311,7 @@ class UsersService {
           {
             id: order_id,
             user_id,
+            username,
             total,
             selected_dm,
             selected_po,
