@@ -321,7 +321,8 @@ class UsersService {
             process.env.ADMIN_ID,
             ctx.getTitle("NEW_ORDER", [
               order_id,
-              username ? `@${username}` : "",
+              moment(new Date()).format("DD.MM.YYYY"),
+              username ? `@${username}` : " ",
               user_id,
               selected_dm,
               address,
@@ -335,7 +336,7 @@ class UsersService {
               delivery_price ?? "Не учтена",
               promo_code,
               total,
-              status,
+              "Новый",
               comment,
             ]),
             {
