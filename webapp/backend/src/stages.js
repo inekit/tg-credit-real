@@ -39,7 +39,7 @@ mainStage.hears(titles.getValues("BUTTON_BACK_ADMIN"), (ctx) => {
   ctx.scene.enter("adminScene");
 });
 
-mainStage.action(/^status\_([0-9]+)\_([.+]+)$/g, async (ctx) => {
+mainStage.action(/^status\_([0-9]+)\_(.+)$/g, async (ctx) => {
   if (ctx.chat.id != process.env.ADMIN_ID)
     return await ctx
       .answerCbQuery(ctx.getTitle("CANT_CHANGE_STATUS_RIGHTS"))
