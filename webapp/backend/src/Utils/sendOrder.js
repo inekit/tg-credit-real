@@ -59,7 +59,7 @@ module.exports = async function sendOrder(ctx, orderData, items, edit = false) {
     inline_keyboard: statuses.map((el) => [
       {
         text: el,
-        callback_data: `status_${order_id}_${el}`,
+        callback_data: `status_${id}_${el}`,
       },
     ]),
   };

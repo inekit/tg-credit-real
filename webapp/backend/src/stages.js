@@ -7,6 +7,7 @@ const titles = require("telegraf-steps").titlesGetter(__dirname + "/Titles");
 const tOrmCon = require("./db/connection");
 const sendOrder = require("./Utils/sendOrder");
 require("dotenv").config();
+const moment = require("moment");
 const mainStage = new Stage(
   [
     require("./scenes/mainScene"),
