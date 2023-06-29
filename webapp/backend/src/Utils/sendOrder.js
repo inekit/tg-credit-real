@@ -50,7 +50,7 @@ module.exports = async function sendOrder(ctx, orderData, items, edit = false) {
     delivery_price ? `${delivery_price} руб.` : "Не учтена",
     promo_code ?? "Не использован",
     total,
-    status,
+    status ?? "Новый",
     comment,
   ]);
 
@@ -68,6 +68,7 @@ module.exports = async function sendOrder(ctx, orderData, items, edit = false) {
     if (reciept_photo_id)
       await ctx.telegram
         .sendPhoto(process.env.ADMIN_ID, reciept_photo_id, {
+          parse_mode: "HTML",
           reply_markup: keyboard,
           caption: title,
         })
@@ -76,7 +77,10 @@ module.exports = async function sendOrder(ctx, orderData, items, edit = false) {
         });
     else
       await ctx.telegram
-        .sendMessage(process.env.ADMIN_ID, title, { reply_markup: keyboard })
+        .sendMessage(process.env.ADMIN_ID, title, {
+          reply_markup: keyboard,
+          parse_mode: "HTML",
+        })
         .catch((e) => {
           console.log(e);
         });
@@ -89,7 +93,9 @@ module.exports = async function sendOrder(ctx, orderData, items, edit = false) {
       },
       {
         reply_markup: keyboard,
+        parse_mode: "HTML",
       }
     );
-  else ctx.editMessageText(title, { reply_markup: keyboard });
+  else
+    ctx.editMessageText(title, { reply_markup: keyboard, parse_mode: "HTML" });
 };
