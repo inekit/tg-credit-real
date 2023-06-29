@@ -1,7 +1,13 @@
 require("dotenv").config();
 const moment = require("moment");
 
-module.exports = async function sendOrder(ctx, orderData, items, edit = false) {
+module.exports = async function sendOrder(
+  ctx,
+  orderData,
+  items,
+  edit = false,
+  is_payment = false
+) {
   const {
     id,
     creation_date,
@@ -33,7 +39,9 @@ module.exports = async function sendOrder(ctx, orderData, items, edit = false) {
     "Отменен",
   ];
 
-  const title = ctx.getTitle("NEW_ORDER", [
+  const titleName = is_payment ? "NEW_GM" : "NEW_ORDER";
+
+  const title = ctx.getTitle(titleName, [
     id,
     moment(creation_date).format("DD.MM.YYYY"),
     username ? `@${username}` : " ",
@@ -59,7 +67,7 @@ module.exports = async function sendOrder(ctx, orderData, items, edit = false) {
     inline_keyboard: statuses.map((el) => [
       {
         text: el,
-        callback_data: `status_${id}_${el}`,
+        callback_data: `status_${id}_${el}_${is_payment ? 1 : 0}`,
       },
     ]),
   };

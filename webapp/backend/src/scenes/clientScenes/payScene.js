@@ -49,7 +49,8 @@ scene.addStep({
           ctx,
           Object.assign(res?.[0]?.[0], { username: ctx.from.username }),
           {},
-          false
+          false,
+          true
         );
       })
       .catch(async (e) => {

@@ -41,7 +41,7 @@ mainStage.hears(titles.getValues("BUTTON_BACK_ADMIN"), (ctx) => {
   ctx.scene.enter("adminScene");
 });
 
-mainStage.action(/^status\_([0-9]+)\_(.+)$/g, async (ctx) => {
+mainStage.action(/^status\_([0-9]+)\_(.+)\_([0-9])$/g, async (ctx) => {
   if (ctx.chat.id != process.env.ADMIN_ID)
     return await ctx
       .answerCbQuery(ctx.getTitle("CANT_CHANGE_STATUS_RIGHTS"))
@@ -49,6 +49,7 @@ mainStage.action(/^status\_([0-9]+)\_(.+)$/g, async (ctx) => {
 
   const order_id = ctx.match[1];
   const status = ctx.match[2];
+  const is_photo = !!+ctx.match[3];
 
   const connection = await tOrmCon;
 
@@ -68,7 +69,8 @@ mainStage.action(/^status\_([0-9]+)\_(.+)$/g, async (ctx) => {
     ctx,
     Object.assign(res?.[0], { username: ctx.from.username }),
     {},
-    true
+    true,
+    is_photo
   );
 });
 
