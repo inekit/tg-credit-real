@@ -94,7 +94,6 @@ module.exports = async function sendOrder(ctx, orderData, items, edit = false) {
       },
       {
         reply_markup: keyboard,
-        parse_mode: "HTML",
       }
     );
   else
