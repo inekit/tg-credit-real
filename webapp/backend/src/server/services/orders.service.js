@@ -341,6 +341,7 @@ class UsersService {
             ]),
             {
               reply_markup: {
+                parse_mode: "HTML",
                 inline_keyboard: statuses.map((el) => [
                   {
                     text: el,
