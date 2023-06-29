@@ -341,12 +341,10 @@ class UsersService {
             {
               reply_markup: {
                 inline_keyboard: statuses.map((el) => [
-                  [
-                    {
-                      text: el,
-                      action: `status-${el}`,
-                    },
-                  ],
+                  {
+                    text: el,
+                    callback_data: `status-${el}`,
+                  },
                 ]),
               },
             }
