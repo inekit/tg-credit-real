@@ -90,6 +90,7 @@ module.exports = async function sendOrder(ctx, orderData, items, edit = false) {
         type: "photo",
         media: reciept_photo_id,
         caption: title,
+        parse_mode: "HTML",
       },
       {
         reply_markup: keyboard,
