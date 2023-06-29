@@ -107,11 +107,13 @@ module.exports = async function sendOrder(
       )
       .catch((e) => {
         console.log(e);
+        ctx.answerCbQuery().catch((e) => {});
       });
   else
     ctx
       .editMessageText(title, { reply_markup: keyboard, parse_mode: "HTML" })
       .catch((e) => {
         console.log(e);
+        ctx.answerCbQuery().catch((e) => {});
       });
 };
