@@ -8,6 +8,7 @@ const {
 require("dotenv").config();
 const sendOrder = require("../../Utils/sendOrder");
 const Robokassa = require("../utils/robokassa");
+const googleDocs = require("../../Utils/googleDocs");
 const moment = require("moment");
 class UsersService {
   constructor() {
@@ -250,6 +251,24 @@ class UsersService {
             [user_id, address, phone, name, surname, patronymic, postal_code]
           )
         )?.[0]?.[0]?.username;
+
+        await googleDocs.addOrder({
+          order_id,
+          user_id,
+          total,
+          selected_dm,
+          selected_po,
+          phone,
+          address,
+          name,
+          surname,
+          postal_code,
+          promo_code,
+          patronymic,
+          delivery_price,
+          comment,
+          items: basket.items,
+        });
 
         await queryRunner.commitTransaction();
         global.io.emit("UPDATE_ORDERS");
