@@ -58,94 +58,98 @@ async function addOrder(
     patronymic,
   } = (orderData = {})
 ) {
-  const sheets = google.sheets({ version: "v4", auth });
+  try {
+    const sheets = google.sheets({ version: "v4", auth });
 
-  let last_id = +(
-    await sheets.spreadsheets.values.get({
+    let last_id = +(
+      await sheets.spreadsheets.values.get({
+        spreadsheetId,
+        range: "Заказы(изм)!R3",
+      })
+    )?.data.values?.[0]?.[0];
+
+    const last_index_id = +(
+      await sheets.spreadsheets.values.get({
+        spreadsheetId,
+        range: "Заказы(изм)!S3",
+      })
+    )?.data.values?.[0]?.[0];
+
+    const firstItem = items.shift();
+
+    const insertingRows = items?.map((item) => {
+      return [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        item.table_name,
+        item.count,
+      ];
+    });
+
+    insertingRows?.unshift([
+      last_id + 1,
+      true,
+      moment(new Date()).format("DD.MM.YYYY"),
+      order_id,
+      is_payed,
+      "TG BOT",
+      "Tg",
+      selected_dm === "Почта России" ? "Поч" : selected_dm,
+      `${surname} ${name} ${patronymic}`,
+      phone,
+      address,
+      total,
+      delivery_price,
+      firstItem?.table_name,
+      firstItem?.count,
+    ]);
+
+    const append_res = await sheets.spreadsheets.values.append({
       spreadsheetId,
-      range: "Заказы(изм)!R3",
-    })
-  )?.data.values?.[0]?.[0];
+      range: "Заказы(изм)!A3:A3",
+      valueInputOption: "USER_ENTERED",
+      insertDataOption: "INSERT_ROWS",
+      resource: {
+        majorDimension: "ROWS",
+        values: insertingRows,
+      },
+    });
 
-  const last_index_id = +(
-    await sheets.spreadsheets.values.get({
+    const lastIdRow = +append_res.data.tableRange?.substring(
+      append_res.data.tableRange.length - 3
+    );
+
+    await sheets.spreadsheets.batchUpdate({
       spreadsheetId,
-      range: "Заказы(изм)!S3",
-    })
-  )?.data.values?.[0]?.[0];
-
-  const firstItem = items.shift();
-
-  const insertingRows = items?.map((item) => {
-    return [
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      item.table_name,
-      item.count,
-    ];
-  });
-
-  insertingRows?.unshift([
-    last_id + 1,
-    true,
-    moment(new Date()).format("DD.MM.YYYY"),
-    order_id,
-    is_payed,
-    "TG BOT",
-    "Tg",
-    selected_dm === "Почта России" ? "Поч" : selected_dm,
-    `${surname} ${name} ${patronymic}`,
-    phone,
-    address,
-    total,
-    delivery_price,
-    firstItem?.table_name,
-    firstItem?.count,
-  ]);
-
-  const append_res = await sheets.spreadsheets.values.append({
-    spreadsheetId,
-    range: "Заказы(изм)!A3:A3",
-    valueInputOption: "USER_ENTERED",
-    insertDataOption: "INSERT_ROWS",
-    resource: {
-      majorDimension: "ROWS",
-      values: insertingRows,
-    },
-  });
-
-  const lastIdRow = +append_res.data.tableRange?.substring(
-    append_res.data.tableRange.length - 3
-  );
-
-  await sheets.spreadsheets.batchUpdate({
-    spreadsheetId,
-    resource: {
-      requests: [
-        {
-          addDimensionGroup: {
-            range: {
-              sheetId: 1018969262,
-              dimension: "ROWS",
-              startIndex: last_index_id,
-              endIndex: lastIdRow,
+      resource: {
+        requests: [
+          {
+            addDimensionGroup: {
+              range: {
+                sheetId: 1018969262,
+                dimension: "ROWS",
+                startIndex: last_index_id,
+                endIndex: lastIdRow,
+              },
             },
           },
-        },
-      ],
-    },
-  });
+        ],
+      },
+    });
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 module.exports = { updateStock, addOrder };
