@@ -133,7 +133,7 @@ async function addOrder(orderData = {}) {
   const batchUpdateRequest = {
     requests: [
       {
-        insertDimension: {
+        addDimensionGroup: {
           range: {
             sheetId: 1018969262,
             dimension: "ROWS",
@@ -145,10 +145,10 @@ async function addOrder(orderData = {}) {
       },
     ],
   };
-  /*res = await sheets.spreadsheets.batchUpdate({
+  res = await sheets.spreadsheets.batchUpdate({
     spreadsheetId,
     resource: batchUpdateRequest,
-  });*/
+  });
 
   console.log(res.data);
 }
