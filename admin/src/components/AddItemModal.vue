@@ -56,6 +56,8 @@
           <div class="option-item" v-for="option, id in formData.options_array" :key="option.id">
             <CFormInput type="text" class="mb-3" label="Название" placeholder="Введите название"
               v-model="formData.options_array[id].name" />
+            <CFormInput type="text" class="mb-3" label="Полное название в таблице" placeholder="Введите название"
+              v-model="formData.options_array[id].table_name" />
             <CFormInput type="number" class="mb-3" label="Остаток" placeholder="Введите остаток"
               v-model="formData.options_array[id].stock" />
             <CFormInput type="file" accept="image/*" multiple="multiple" ref="file"
