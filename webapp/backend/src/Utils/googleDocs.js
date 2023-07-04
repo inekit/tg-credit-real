@@ -145,10 +145,10 @@ async function addOrder(orderData = {}) {
       },
     ],
   };
-  res = await sheets.spreadsheets.batchUpdate({
+  /*res = await sheets.spreadsheets.batchUpdate({
     spreadsheetId,
     resource: batchUpdateRequest,
-  });
+  });*/
 
   console.log(res.data);
 }
