@@ -109,8 +109,6 @@ async function addOrder(orderData = {}) {
     firstItem?.count,
   ]);
 
-  console.log(last_id, lastIdRow, insertingRows);
-
   res = await sheets.spreadsheets.values.append({
     spreadsheetId,
     range: "Заказы(изм)!A3:A3",
@@ -126,6 +124,8 @@ async function addOrder(orderData = {}) {
   const lastIdRow = +res.data.tableRange?.substring(
     res.data.tableRange.length - 3
   );
+
+  console.log(last_id, lastIdRow, insertingRows);
 
   const batchUpdateRequest = {
     requests: [
