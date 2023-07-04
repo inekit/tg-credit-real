@@ -137,7 +137,21 @@ async function addOrder(orderData = {}) {
             startIndex: lastIdRow + 1,
             endIndex: lastIdRow + 1 + items.length,
           },
-          inheritFromBefore: false,
+        },
+      },
+      {
+        updateDimensionGroup: {
+          dimensionGroup: {
+            range: {
+              dimension: "ROWS",
+              sheetId: 1018969262,
+              startIndex: lastIdRow + 1,
+              endIndex: lastIdRow + 1 + items.length,
+            },
+            depth: 1,
+            collapsed: true,
+          },
+          fields: "*",
         },
       },
     ],
