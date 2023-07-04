@@ -135,7 +135,7 @@ async function addOrder(orderData = {}) {
             sheetId: 1018969262,
             dimension: "ROWS",
             startIndex: lastIdRow + 1,
-            endIndex: lastIdRow + items.length,
+            endIndex: lastIdRow + 1 + items.length,
           },
           inheritFromBefore: false,
         },
