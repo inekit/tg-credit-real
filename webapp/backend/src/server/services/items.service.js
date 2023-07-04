@@ -154,7 +154,6 @@ class UsersService {
     previewBinary,
     preview,
     puffs_count,
-    table_name,
   }) {
     return new Promise(async (res, rej) => {
       const connection = await tOrmCon;
@@ -181,13 +180,12 @@ class UsersService {
           select_name,
           puffs_count,
           preview: previewName,
-          table_name,
         });
 
         const { id } = data;
         const oa_parsed = JSON.parse(options_array);
         for (let optionIndex in oa_parsed) {
-          const { name, stock } = oa_parsed[optionIndex];
+          const { name, stock, table_name } = oa_parsed[optionIndex];
 
           let fNameFullPaths = Array.isArray(photosBinary[optionIndex])
             ? await Promise.all(
@@ -207,8 +205,8 @@ class UsersService {
           ]?.filter((el) => el);
 
           await queryRunner.query(
-            "insert into item_options (item_id,name,stock,photos ) values ($1,$2,$3,$4)",
-            [id, name, stock, fNameFullPaths]
+            "insert into item_options (item_id,name,stock,photos,table_name ) values ($1,$2,$3,$4,$5)",
+            [id, name, stock, fNameFullPaths, table_name]
           );
         }
 
@@ -242,7 +240,6 @@ class UsersService {
     previewBinary,
     preview,
     puffs_count,
-    table_name,
   }) {
     return new Promise(async (res, rej) => {
       const connection = await tOrmCon;
@@ -272,7 +269,6 @@ class UsersService {
             select_name,
             preview: previewName,
             puffs_count,
-            table_name,
           })
           .where({
             id: id,
@@ -285,7 +281,12 @@ class UsersService {
         let idArray = [];
 
         for (let optionIndex in oa_parsed) {
-          const { name, stock, id: editId } = oa_parsed[optionIndex];
+          const {
+            name,
+            stock,
+            table_name,
+            id: editId,
+          } = oa_parsed[optionIndex];
 
           let fNameFullPaths = Array.isArray(photosBinary[optionIndex])
             ? await Promise.all(
@@ -307,14 +308,14 @@ class UsersService {
           if (editId) {
             idArray.push(editId);
             await queryRunner.query(
-              "update item_options set item_id = $1, name=$2,stock=$3,photos=$4 where id = $5",
-              [id, name, stock, fNameFullPaths, editId]
+              "update item_options set item_id = $1, name=$2,stock=$3,photos=$4,table_name=$6 where id = $5",
+              [id, name, stock, fNameFullPaths, editId, table_name]
             );
           } else {
             const newId = (
               await queryRunner.query(
-                "insert into item_options (item_id,name,stock,photos ) values ($1,$2,$3,$4) returning id",
-                [id, name, stock, fNameFullPaths]
+                "insert into item_options (item_id,name,stock,photos,table_name) values ($1,$2,$3,$4,$5) returning id",
+                [id, name, stock, fNameFullPaths, table_name]
               )
             )?.[0]?.id;
 
