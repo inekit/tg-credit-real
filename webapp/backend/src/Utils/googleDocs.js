@@ -89,7 +89,7 @@ async function addOrder(orderData = {}) {
       majorDimension: "ROWS",
       values: [
         [
-          last_id,
+          last_id + 1,
           true,
           moment(new Date()).format("DD.MM.YYYY"),
           order_id,

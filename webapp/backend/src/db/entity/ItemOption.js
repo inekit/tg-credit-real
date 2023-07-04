@@ -29,6 +29,11 @@ module.exports = new EntitySchema({
       length: 300,
       nullable: true,
     },
+    table_name: {
+      type: "varchar",
+      length: 255,
+      nullable: true,
+    },
   },
   relations: {
     item: {
