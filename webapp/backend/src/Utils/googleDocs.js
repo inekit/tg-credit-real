@@ -50,14 +50,14 @@ async function addOrder(orderData = {}) {
     spreadsheetId,
     range: "Заказы(изм)!R1",
   });
-  const last_id = +res.data.values?.[0]?.[0];
+  const last_id = res.data.values?.[0]?.[0];
 
   res = await sheets.spreadsheets.values.get({
     spreadsheetId,
     range: "Заказы(изм)!S1",
   });
 
-  const lastIdRow = +res.data.values?.[0]?.[0];
+  const lastIdRow = res.data.values?.[0]?.[0];
 
   const {
     order_id,
@@ -146,7 +146,7 @@ async function addOrder(orderData = {}) {
       {
         insertDimension: {
           range: {
-            sheetId: "Заказы(изм)",
+            sheetId: 1018969262,
             dimension: "ROWS",
             startIndex: lastIdRow + 1,
             endIndex: lastIdRow + 1 + items.length,
