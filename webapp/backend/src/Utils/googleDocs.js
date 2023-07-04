@@ -141,7 +141,7 @@ async function addOrder(orderData = {}) {
           range: {
             sheetId: 1018969262,
             dimension: "ROWS",
-            startIndex: last_index_id + 1,
+            startIndex: last_index_id,
             endIndex: lastIdRow,
           },
         },
