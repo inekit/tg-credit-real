@@ -4,7 +4,7 @@ const tOrmCon = require("../db/connection");
 require("dotenv").config();
 const credentialFilename = "credentials.json";
 const scopes = ["https://www.googleapis.com/auth/spreadsheets"];
-
+const moment = require("moment");
 const auth = new google.auth.GoogleAuth({
   keyFile: credentialFilename,
   scopes: scopes,
@@ -52,8 +52,14 @@ async function addOrder(orderData = {}) {
   });
   const last_id = +res.data.values?.[0]?.[0];
 
+  res = await sheets.spreadsheets.values.get({
+    spreadsheetId,
+    range: "Заказы(изм)!S1",
+  });
+
+  const lastIdRow = +res.data.values?.[0]?.[0];
+
   const {
-    date,
     order_id,
     is_payed = false,
     selected_dm,
@@ -81,9 +87,9 @@ async function addOrder(orderData = {}) {
       majorDimension: "ROWS",
       values: [
         [
-          last_id + 1,
+          last_id,
           true,
-          date,
+          moment(new Date()).format("DD.MM.YYYY"),
           order_id,
           is_payed,
           "TG BOT",
