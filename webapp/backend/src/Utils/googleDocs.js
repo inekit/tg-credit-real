@@ -137,7 +137,7 @@ async function addOrder(orderData = {}) {
             startIndex: lastIdRow + 1,
             endIndex: lastIdRow + items.length,
           },
-          //inheritFromBefore: false,
+          inheritFromBefore: false,
         },
       },
     ],
