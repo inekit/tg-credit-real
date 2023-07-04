@@ -78,7 +78,7 @@ async function addOrder(orderData = {}) {
 
   const firstItem = items.shift();
 
-  const insertingRows = items?.map(async (item) => {
+  const insertingRows = items?.map((item) => {
     return [
       null,
       null,
