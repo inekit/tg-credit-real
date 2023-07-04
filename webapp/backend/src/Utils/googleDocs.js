@@ -52,6 +52,13 @@ async function addOrder(orderData = {}) {
   });
   const last_id = +res.data.values?.[0]?.[0];
 
+  res = await sheets.spreadsheets.values.get({
+    spreadsheetId,
+    range: "Заказы(изм)!S3",
+  });
+
+  const last_index_id = +res.data.values?.[0]?.[0];
+
   const {
     order_id,
     is_payed = false,
@@ -134,24 +141,9 @@ async function addOrder(orderData = {}) {
           range: {
             sheetId: 1018969262,
             dimension: "ROWS",
-            startIndex: lastIdRow + 1,
-            endIndex: lastIdRow + 1 + items.length,
+            startIndex: last_index_id + 1,
+            endIndex: lastIdRow,
           },
-        },
-      },
-      {
-        updateDimensionGroup: {
-          dimensionGroup: {
-            range: {
-              dimension: "ROWS",
-              sheetId: 1018969262,
-              startIndex: lastIdRow + 1,
-              endIndex: lastIdRow + 1 + items.length,
-            },
-            depth: 1,
-            collapsed: true,
-          },
-          fields: "*",
         },
       },
     ],
