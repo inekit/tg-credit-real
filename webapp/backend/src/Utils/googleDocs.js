@@ -106,7 +106,7 @@ async function addOrder(orderData = {}) {
     is_payed,
     "TG BOT",
     "Tg",
-    selected_dm,
+    selected_dm === "Почта России" ? "Поч" : selected_dm,
     `${surname} ${name} ${patronymic}`,
     phone,
     address,
@@ -150,7 +150,7 @@ async function addOrder(orderData = {}) {
     resource: batchUpdateRequest,
   });
 
-  console.log(res);
+  console.log(res.data);
 }
 
 module.exports = { updateStock, addOrder };
