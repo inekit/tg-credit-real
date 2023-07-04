@@ -44,7 +44,7 @@ class UsersService {
       const connection = await tOrmCon;
       {
         const query = user_id
-          ? `select p.*,json_agg(DISTINCT jsonb_build_object('id', io.id, 'name', io.name,'stock', io.stock, 'photos', io.photos))  options_array,
+          ? `select p.*,json_agg(DISTINCT jsonb_build_object('id', io.id, 'name', io.name,'stock', io.stock, 'photos', io.photos,'table_name',table_name))  options_array,
             price, select_name,
             case when count(
               case when 
@@ -69,7 +69,7 @@ class UsersService {
                 group by p.id,c.name
                 order by ${orderQueryPart}
                 LIMIT $4 OFFSET $5`
-          : `select p.*,json_agg(DISTINCT jsonb_build_object('id', io.id, 'name', io.name,'stock', io.stock, 'photos', io.photos))  options_array
+          : `select p.*,json_agg(DISTINCT jsonb_build_object('id', io.id, 'name', io.name,'stock', io.stock, 'photos', io.photos,'table_name',table_name))  options_array
                  ,price, select_name
                     from public.items p
                     left join item_options io on p.id = io.item_id
@@ -154,6 +154,7 @@ class UsersService {
     previewBinary,
     preview,
     puffs_count,
+    table_name,
   }) {
     return new Promise(async (res, rej) => {
       const connection = await tOrmCon;
@@ -180,6 +181,7 @@ class UsersService {
           select_name,
           puffs_count,
           preview: previewName,
+          table_name,
         });
 
         const { id } = data;
@@ -240,6 +242,7 @@ class UsersService {
     previewBinary,
     preview,
     puffs_count,
+    table_name,
   }) {
     return new Promise(async (res, rej) => {
       const connection = await tOrmCon;
@@ -269,6 +272,7 @@ class UsersService {
             select_name,
             preview: previewName,
             puffs_count,
+            table_name,
           })
           .where({
             id: id,
