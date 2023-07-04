@@ -135,7 +135,7 @@ async function addOrder(orderData = {}) {
             sheetId: 1018969262,
             dimension: "ROWS",
             startIndex: lastIdRow + 1,
-            endIndex: lastIdRow + 1 + items.length,
+            endIndex: lastIdRow + items.length,
           },
           //inheritFromBefore: false,
         },
@@ -146,31 +146,6 @@ async function addOrder(orderData = {}) {
   res = await sheets.spreadsheets.batchUpdate({
     spreadsheetId,
     resource: batchUpdateRequest,
-  });
-
-  console.log(res.data);
-
-  res = await sheets.spreadsheets.batchUpdate({
-    spreadsheetId,
-    resource: {
-      requests: [
-        {
-          updateDimensionGroup: {
-            dimensionGroup: {
-              range: {
-                sheetId: 1018969262,
-                dimension: "ROWS",
-                startIndex: lastIdRow - 1,
-                endIndex: lastIdRow,
-              },
-              collapsed: true,
-              depth: 1,
-            },
-            fields: "*",
-          },
-        },
-      ],
-    },
   });
 
   console.log(res.data);
