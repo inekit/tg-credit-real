@@ -139,19 +139,6 @@ async function addOrder(orderData = {}) {
           },
           //inheritFromBefore: false,
         },
-        updateDimensionGroup: {
-          dimensionGroup: {
-            range: {
-              sheetId: 1018969262,
-              dimension: "ROWS",
-              startIndex: 1,
-              endIndex: lastIdRow,
-            },
-            collapsed: true,
-            depth: 1,
-          },
-          fields: "collapsed",
-        },
       },
     ],
   };
