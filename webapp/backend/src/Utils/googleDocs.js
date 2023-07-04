@@ -43,23 +43,8 @@ async function updateStock() {
   }
 }
 
-async function addOrder(orderData = {}) {
-  const sheets = google.sheets({ version: "v4", auth });
-
-  let res = await sheets.spreadsheets.values.get({
-    spreadsheetId,
-    range: "Заказы(изм)!R3",
-  });
-  const last_id = +res.data.values?.[0]?.[0];
-
-  res = await sheets.spreadsheets.values.get({
-    spreadsheetId,
-    range: "Заказы(изм)!S3",
-  });
-
-  const last_index_id = +res.data.values?.[0]?.[0];
-
-  const {
+async function addOrder(
+  {
     order_id,
     is_payed = false,
     selected_dm,
@@ -71,10 +56,23 @@ async function addOrder(orderData = {}) {
     surname,
     name,
     patronymic,
-    postal_code,
-    promo_code,
-    comment,
-  } = orderData;
+  } = (orderData = {})
+) {
+  const sheets = google.sheets({ version: "v4", auth });
+
+  let last_id = +(
+    await sheets.spreadsheets.values.get({
+      spreadsheetId,
+      range: "Заказы(изм)!R3",
+    })
+  )?.data.values?.[0]?.[0];
+
+  const last_index_id = +(
+    await sheets.spreadsheets.values.get({
+      spreadsheetId,
+      range: "Заказы(изм)!S3",
+    })
+  )?.data.values?.[0]?.[0];
 
   const firstItem = items.shift();
 
@@ -116,7 +114,7 @@ async function addOrder(orderData = {}) {
     firstItem?.count,
   ]);
 
-  res = await sheets.spreadsheets.values.append({
+  const append_res = await sheets.spreadsheets.values.append({
     spreadsheetId,
     range: "Заказы(изм)!A3:A3",
     valueInputOption: "USER_ENTERED",
@@ -126,35 +124,28 @@ async function addOrder(orderData = {}) {
       values: insertingRows,
     },
   });
-  console.log(res.data.tableRange);
 
-  const lastIdRow = +res.data.tableRange?.substring(
-    res.data.tableRange.length - 3
+  const lastIdRow = +append_res.data.tableRange?.substring(
+    append_res.data.tableRange.length - 3
   );
 
-  console.log(last_id, lastIdRow, insertingRows);
-
-  const batchUpdateRequest = {
-    requests: [
-      {
-        addDimensionGroup: {
-          range: {
-            sheetId: 1018969262,
-            dimension: "ROWS",
-            startIndex: last_index_id,
-            endIndex: lastIdRow,
+  await sheets.spreadsheets.batchUpdate({
+    spreadsheetId,
+    resource: {
+      requests: [
+        {
+          addDimensionGroup: {
+            range: {
+              sheetId: 1018969262,
+              dimension: "ROWS",
+              startIndex: last_index_id,
+              endIndex: lastIdRow,
+            },
           },
         },
-      },
-    ],
-  };
-
-  res = await sheets.spreadsheets.batchUpdate({
-    spreadsheetId,
-    resource: batchUpdateRequest,
+      ],
+    },
   });
-
-  console.log(res.data);
 }
 
 module.exports = { updateStock, addOrder };
