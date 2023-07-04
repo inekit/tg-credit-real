@@ -48,16 +48,16 @@ async function addOrder(orderData = {}) {
 
   let res = await sheets.spreadsheets.values.get({
     spreadsheetId,
-    range: "Заказы(изм)!R1",
+    range: "Заказы(изм)!R3",
   });
-  const last_id = res.data.values?.[0]?.[0];
+  const last_id = +res.data.values?.[0]?.[0];
 
   res = await sheets.spreadsheets.values.get({
     spreadsheetId,
-    range: "Заказы(изм)!S1",
+    range: "Заказы(изм)!S3",
   });
 
-  const lastIdRow = res.data.values?.[0]?.[0];
+  const lastIdRow = +res.data.values?.[0]?.[0];
 
   const {
     order_id,
