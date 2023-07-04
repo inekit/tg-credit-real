@@ -137,6 +137,8 @@ async function addOrder(orderData = {}) {
             startIndex: lastIdRow + 1,
             endIndex: lastIdRow + 1 + items.length,
           },
+          collapsed: true,
+          depth: 1,
           //inheritFromBefore: false,
         },
       },
