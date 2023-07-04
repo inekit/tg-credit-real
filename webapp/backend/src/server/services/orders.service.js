@@ -126,7 +126,7 @@ class UsersService {
           await queryRunner.query(
             `select o.*, count(oi.item_option_id) count_items,
           json_agg(json_build_object('title', i.title,'count',oi.count, 'id', io.id, 'price', i.price,'stock', io.stock,
-          'sale_count', sale_count, 'sale_price', sale_price)) items 
+          'sale_count', sale_count, 'sale_price', sale_price,'table_name',table_name)) items 
           from orders o 
           left join order_items oi on o.id = oi.order_id  
           left join item_options io on oi.item_option_id = io.id  

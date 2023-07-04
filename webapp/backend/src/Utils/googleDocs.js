@@ -78,7 +78,45 @@ async function addOrder(orderData = {}) {
 
   const firstItem = items.shift();
 
-  console.log(last_id, lastIdRow);
+  const insertingRows = items?.map(async (item) => {
+    return [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      item.table_name,
+      item.count,
+    ];
+  });
+
+  insertingRows?.unshift([
+    last_id + 1,
+    true,
+    moment(new Date()).format("DD.MM.YYYY"),
+    order_id,
+    is_payed,
+    "TG BOT",
+    "Tg",
+    selected_dm,
+    `${surname} ${name} ${patronymic}`,
+    phone,
+    address,
+    total,
+    delivery_price,
+    firstItem?.table_name,
+    firstItem?.count,
+  ]);
+
+  console.log(last_id, lastIdRow, insertingRows);
 
   res = await sheets.spreadsheets.values.append({
     spreadsheetId,
@@ -87,59 +125,10 @@ async function addOrder(orderData = {}) {
     insertDataOption: "INSERT_ROWS",
     resource: {
       majorDimension: "ROWS",
-      values: [
-        [
-          last_id + 1,
-          true,
-          moment(new Date()).format("DD.MM.YYYY"),
-          order_id,
-          is_payed,
-          "TG BOT",
-          "Tg",
-          selected_dm,
-          `${surname} ${name} ${patronymic}`,
-          phone,
-          address,
-          total,
-          delivery_price,
-          firstItem?.table_name,
-          firstItem?.count,
-        ],
-      ],
+      values: insertingRows,
     },
   });
   console.log(res.data);
-
-  items.forEach(async (item) => {
-    await sheets.spreadsheets.values.append({
-      spreadsheetId,
-      range: "Заказы(изм)!N3:O3",
-      valueInputOption: "USER_ENTERED",
-      insertDataOption: "INSERT_ROWS",
-      resource: {
-        majorDimension: "ROWS",
-        values: [
-          [
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            item.table_name,
-            item.count,
-          ],
-        ],
-      },
-    });
-  });
 
   const batchUpdateRequest = {
     requests: [
