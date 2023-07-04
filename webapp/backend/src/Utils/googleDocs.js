@@ -164,7 +164,7 @@ async function addOrder(orderData = {}) {
                 endIndex: lastIdRow,
               },
               collapsed: true,
-              depth: 2,
+              depth: 1,
             },
             fields: "*",
           },
