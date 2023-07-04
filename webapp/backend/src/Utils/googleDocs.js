@@ -78,6 +78,8 @@ async function addOrder(orderData = {}) {
 
   const firstItem = items.shift();
 
+  console.log(last_id, lastIdRow);
+
   res = await sheets.spreadsheets.values.append({
     spreadsheetId,
     range: "Заказы(изм)!A3:A3",
@@ -116,7 +118,25 @@ async function addOrder(orderData = {}) {
       insertDataOption: "INSERT_ROWS",
       resource: {
         majorDimension: "ROWS",
-        values: [[item.table_name, item.count]],
+        values: [
+          [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            item.table_name,
+            item.count,
+          ],
+        ],
       },
     });
   });
@@ -136,7 +156,7 @@ async function addOrder(orderData = {}) {
       },
     ],
   };
-  res = sheets.spreadsheets.batchUpdate({
+  res = await sheets.spreadsheets.batchUpdate({
     spreadsheetId,
     resource: batchUpdateRequest,
   });
