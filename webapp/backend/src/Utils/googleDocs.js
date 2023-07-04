@@ -144,6 +144,21 @@ async function addOrder(
               },
             },
           },
+          {
+            updateDimensionGroup: {
+              dimensionGroup: {
+                range: {
+                  dimension: "ROWS",
+                  sheetId: 1018969262,
+                  startIndex: last_index_id,
+                  endIndex: lastIdRow,
+                },
+                depth: 1,
+                collapsed: true,
+              },
+              fields: "*",
+            },
+          },
         ],
       },
     });
