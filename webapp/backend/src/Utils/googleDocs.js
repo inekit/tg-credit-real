@@ -52,13 +52,6 @@ async function addOrder(orderData = {}) {
   });
   const last_id = +res.data.values?.[0]?.[0];
 
-  res = await sheets.spreadsheets.values.get({
-    spreadsheetId,
-    range: "Заказы(изм)!S3",
-  });
-
-  const lastIdRow = +res.data.values?.[0]?.[0];
-
   const {
     order_id,
     is_payed = false,
@@ -128,7 +121,11 @@ async function addOrder(orderData = {}) {
       values: insertingRows,
     },
   });
-  console.log(res.data);
+  console.log(res.data.tableRange);
+
+  const lastIdRow = +res.data.tableRange?.substring(
+    res.data.tableRange.length - 3
+  );
 
   const batchUpdateRequest = {
     requests: [
