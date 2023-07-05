@@ -75,7 +75,7 @@ async function dropOrder(order_id) {
     if (!ids[index][0]) end_id = index;
     else break;
     index++;
-  } while (index <= ids.length);
+  } while (index < ids.length);
 
   console.log(12, start_id, end_id);
 
