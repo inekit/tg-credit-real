@@ -30,7 +30,7 @@ module.exports = (ctx) => {
   router.get("/orders", auth, OrdersController.getAll(ctx));
   router.post("/orders", auth, OrdersController.addOne(ctx));
   router.put("/orders", auth, OrdersController.editOne(ctx));
-  router.delete("/orders", auth, OrdersController.deleteOne);
+  router.delete("/orders", auth, OrdersController.deleteOne(ctx));
 
   router.put("/orders_items", auth, OrdersController.editItem);
   router.delete("/orders_items", auth, OrdersController.dropItem);

@@ -103,8 +103,6 @@ async function dropOrder(order_id) {
   }
 }
 
-dropOrder(163);
-
 async function addOrder(
   {
     order_id,
@@ -229,4 +227,4 @@ async function addOrder(
   }
 }
 
-module.exports = { updateStock, addOrder };
+module.exports = { updateStock, addOrder, dropOrder };

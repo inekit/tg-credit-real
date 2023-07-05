@@ -358,17 +358,43 @@ class UsersService {
     });
   }
 
-  delete(id) {
-    return new Promise((res, rej) => {
+  delete(id, ctx) {
+    return new Promise(async (res, rej) => {
       if (!id) return rej(new NoInputDataError({ id: id }));
 
-      tOrmCon.then((connection) => {
-        connection
-          .getRepository("Order")
-          .delete({ id })
-          .then((data) => res(data))
-          .catch((error) => rej(new MySqlError(error)));
-      });
+      const connection = await tOrmCon;
+
+      const queryRunner = connection.createQueryRunner();
+
+      await queryRunner.connect();
+
+      await queryRunner.startTransaction();
+
+      try {
+        const data = (
+          await queryRunner.query(
+            "delete from orders where id = $1 returning *",
+            [id]
+          )
+        )[0][0];
+
+        await googleDocs.dropOrder(+id);
+
+        await ctx.telegram
+          .deleteMessage(process.env.ADMIN_ID, data.last_message_id)
+          .catch((e) => console.log(e));
+
+        await queryRunner.commitTransaction();
+
+        res(data);
+      } catch (error) {
+        console.log(error);
+        await queryRunner.rollbackTransaction();
+
+        rej(new MySqlError(error));
+      } finally {
+        await queryRunner.release();
+      }
     });
   }
 

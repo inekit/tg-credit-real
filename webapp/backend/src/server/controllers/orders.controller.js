@@ -27,11 +27,13 @@ function editOne(ctx) {
   };
 }
 
-function deleteOne(req, res, next) {
-  ordersService
-    .delete(req.body.id)
-    .then((data) => res.send(data))
-    .catch((error) => next(error));
+function deleteOne(ctx) {
+  return (req, res, next) => {
+    ordersService
+      .delete(req.body.id, ctx)
+      .then((data) => res.send(data))
+      .catch((error) => next(error));
+  };
 }
 
 function editItem(req, res, next) {
