@@ -44,6 +44,11 @@ module.exports = new EntitySchema({
       nullable: false,
       default: 100,
     },
+    taste_strength: {
+      type: "int",
+      nullable: false,
+      default: 20,
+    },
     select_name: {
       type: "varchar",
       length: 255,

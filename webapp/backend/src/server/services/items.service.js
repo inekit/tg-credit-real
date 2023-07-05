@@ -154,6 +154,7 @@ class UsersService {
     previewBinary,
     preview,
     puffs_count,
+    taste_strength,
   }) {
     return new Promise(async (res, rej) => {
       const connection = await tOrmCon;
@@ -180,6 +181,7 @@ class UsersService {
           select_name,
           puffs_count,
           preview: previewName,
+          taste_strength,
         });
 
         const { id } = data;
@@ -240,6 +242,7 @@ class UsersService {
     previewBinary,
     preview,
     puffs_count,
+    taste_strength,
   }) {
     return new Promise(async (res, rej) => {
       const connection = await tOrmCon;
@@ -269,6 +272,7 @@ class UsersService {
             select_name,
             preview: previewName,
             puffs_count,
+            taste_strength,
           })
           .where({
             id: id,
