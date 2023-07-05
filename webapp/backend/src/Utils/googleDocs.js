@@ -117,6 +117,7 @@ async function addOrder(
     surname,
     name,
     patronymic,
+    comment,
   } = (orderData = {})
 ) {
   try {
@@ -176,6 +177,7 @@ async function addOrder(
       delivery_price,
       firstItem?.table_name,
       firstItem?.count,
+      comment,
     ]);
 
     const append_res = await sheets.spreadsheets.values.append({
