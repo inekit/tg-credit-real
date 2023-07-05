@@ -30,6 +30,7 @@
                     </option>
                 </select>
             </div>
+            <hr />
         </div>
         <div class="stock-container">
             <label>Наличие</label>
@@ -51,7 +52,6 @@
         <div v-if="item.sale_count" class="sale-container">
             <label>Оптом от {{ item.sale_count }} шт.</label>
             <span class="puffs">{{ item.sale_price }} ₽</span>
-            <hr />
         </div>
         <div v-if="item.description">
             <hr />
