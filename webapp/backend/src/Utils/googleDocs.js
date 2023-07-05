@@ -194,7 +194,7 @@ async function addOrder(
       append_res.data.tableRange?.substring(
         append_res.data.tableRange.length - 3
       )
-    );
+    ).replace(/[^0-9]/g, "");
 
     console.log(lastIdRow);
 
