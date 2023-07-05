@@ -34,6 +34,11 @@
             <span class="puffs">{{ item.puffs_count }}</span>
             <hr />
         </div>
+        <div class="strength-container">
+            <label>Крепость</label>
+            <span class="puffs">{{ item.taste_strength }}</span>
+            <hr />
+        </div>
         <div v-if="item.sale_count" class="sale-container">
             <label>Оптом от {{ item.sale_count }} шт.</label>
             <span class="puffs">{{ item.sale_price }} ₽</span>
@@ -390,7 +395,8 @@ form {
 
     .stock-container,
     .puffs-container,
-    .sale-container {
+    .sale-container,
+    .strength-container {
         position: relative;
 
         span {
