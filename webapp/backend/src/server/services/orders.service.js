@@ -209,8 +209,6 @@ class UsersService {
           else total += basket.items[i].price * basket.items[i].count;
         }
 
-        console.log(1243);
-
         total =
           type === "money"
             ? Math.max(total - sum, 0)
@@ -220,26 +218,26 @@ class UsersService {
 
         if (total < 0) throw new Error("PROMO_TO_LARGE");
 
-        console.log(1243, total);
+        const getDeliveryPrice = () => {
+          switch (selected_dm) {
+            case "Метро":
+              return (delivery_price = total >= 5000 ? 0 : 200);
+            case "До станции метро":
+              return (delivery_price = total >= 5000 ? 0 : 200);
+            case "Внутри МКАД":
+              return (delivery_price = total >= 5000 ? 0 : 350);
+            case "МО за МКАД":
+              return (delivery_price = total >= 7000 ? 0 : null);
+            case "Почта России":
+              return (delivery_price = 400);
+            case "Яндекс Доставка":
+              return (delivery_price = 350);
+            case "Яндекс Доставка до пункта выдачи":
+              return (delivery_price = 350);
+          }
+        };
 
-        let delivery_price;
-
-        switch (selected_dm) {
-          case "Метро":
-            return (delivery_price = total >= 5000 ? 0 : 200);
-          case "До станции метро":
-            return (delivery_price = total >= 5000 ? 0 : 200);
-          case "Внутри МКАД":
-            return (delivery_price = total >= 5000 ? 0 : 350);
-          case "МО за МКАД":
-            return (delivery_price = total >= 7000 ? 0 : null);
-          case "Почта России":
-            return (delivery_price = 400);
-          case "Яндекс Доставка":
-            return (delivery_price = 350);
-          case "Яндекс Доставка до пункта выдачи":
-            return (delivery_price = 350);
-        }
+        let delivery_price = getDeliveryPrice();
 
         total = +total + +delivery_price;
 
