@@ -138,8 +138,13 @@ module.exports = async function sendOrder(
       .catch((e) => console.log(e));
   }
 
-  const connection = await tOrmCon;
-  await connection
-    .query("update orders set last_message_id = $1 where id = $2", [1, id])
-    .catch((e) => console.log(e));
+  if (!edit) {
+    const connection = await tOrmCon;
+    await connection
+      .query("update orders set last_message_id = $1 where id = $2", [
+        message?.message_id,
+        id,
+      ])
+      .catch((e) => console.log(e));
+  }
 };
