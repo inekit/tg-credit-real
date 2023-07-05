@@ -105,7 +105,6 @@ class UsersService {
       patronymic,
       postal_code,
       promo_code,
-      delivery_price,
       comment,
     },
     ctx
