@@ -191,6 +191,8 @@ class UsersService {
 
         let total = 0;
 
+        console.log(basket.items);
+
         for (let i in basket.items) {
           const item_id = basket.items[i].item_id;
 
@@ -251,6 +253,8 @@ class UsersService {
             [user_id, address, phone, name, surname, patronymic, postal_code]
           )
         )?.[0]?.[0]?.username;
+
+        console.log(basket.items);
 
         await googleDocs.addOrder({
           order_id,
@@ -466,6 +470,15 @@ class UsersService {
           ])
           .then((data) => {
             const orderObj = data[0][0];
+
+            /*sendOrder(
+              ctx,
+              Object.assign(orderObj),
+              items,
+              true,
+              is_photo
+            );*/
+
             ctx.telegram
               .sendMessage(
                 orderObj.user_id,
