@@ -220,6 +220,8 @@ class UsersService {
 
         if (total < 0) throw new Error("PROMO_TO_LARGE");
 
+        console.log(1243, total);
+
         let delivery_price;
 
         switch (selected_dm) {
