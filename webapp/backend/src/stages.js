@@ -83,13 +83,15 @@ mainStage.action(/^status\_([0-9]+)\_(.+)\_([0-9])$/g, async (ctx) => {
       .answerCbQuery(ctx.getTitle("CANT_CHANGE_STATUS"))
       .catch((e) => {});
 
+  const orderData = res?.[0];
+
   ctx.telegram
     .sendMessage(
-      res.user_id,
+      orderData.user_id,
       ctx.getTitle("ORDER_NEW_STATUS_TITLE", [
-        res.id,
-        moment(res.creation_date).format("DD.MM.YYYY"),
-        res.status,
+        orderData.id,
+        moment(orderData.creation_date).format("DD.MM.YYYY"),
+        orderData.status,
       ]),
       {
         parse_mode: "HTML",
@@ -99,7 +101,7 @@ mainStage.action(/^status\_([0-9]+)\_(.+)\_([0-9])$/g, async (ctx) => {
 
   await sendOrder(
     ctx,
-    Object.assign(res?.[0], { username: ctx.from.username }),
+    Object.assign(orderData, { username: ctx.from.username }),
     items,
     true,
     is_photo
