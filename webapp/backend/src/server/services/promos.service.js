@@ -60,16 +60,18 @@ class UsersService {
       try {
         let used = true;
 
-        const count_used = (
-          await queryRunner.query(
-            "select count(*) count_used from users_promos where promo_code = $1",
-            [code]
-          )
-        )[0].count_used;
+        const { count_used, count_used_me } =
+          (
+            await queryRunner.query(
+              "select count(*) count_used, count(CASE WHEN user_id=$2 THEN 1 END) count_used_me from users_promos where promo_code = $1",
+              [code, user_id]
+            )
+          )[0] ?? {};
 
-        console.log(maxCount, count_used);
+        console.log(maxCount, count_used, count_used_me);
 
-        if (maxCount <= count_used) throw new Error("PROMO_USED");
+        if (maxCount <= count_used || count_used_me)
+          throw new Error("PROMO_USED");
 
         !test &&
           (await queryRunner.query(

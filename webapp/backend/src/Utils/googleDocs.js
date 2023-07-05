@@ -105,7 +105,7 @@ async function addOrder(
       is_payed,
       "TG BOT",
       "Tg",
-      selected_dm === "Почта России" ? "Поч" : selected_dm,
+      selected_dm === "Почта России" ? "Поч" : null,
       `${surname} ${name} ${patronymic}`,
       phone,
       address,
