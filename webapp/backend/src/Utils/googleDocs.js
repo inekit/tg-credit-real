@@ -46,60 +46,64 @@ async function updateStock() {
 async function dropOrder(order_id) {
   if (!order_id) return;
 
-  const sheets = google.sheets({ version: "v4", auth });
+  try {
+    const sheets = google.sheets({ version: "v4", auth });
 
-  let ids = (
-    await sheets.spreadsheets.values.get({
-      spreadsheetId,
-      range: "Заказы(изм)!A3:A",
-    })
-  )?.data.values;
+    let ids = (
+      await sheets.spreadsheets.values.get({
+        spreadsheetId,
+        range: "Заказы(изм)!A3:A",
+      })
+    )?.data.values;
 
-  console.log(ids);
+    console.log(ids);
 
-  let start_id, end_id;
+    let start_id, end_id;
 
-  for (let index in ids) {
-    if (ids[index][0] == order_id) {
-      start_id = +index;
-      break;
+    for (let index in ids) {
+      if (ids[index][0] == order_id) {
+        start_id = +index;
+        break;
+      }
     }
-  }
 
-  if (!start_id) return;
+    if (!start_id) return;
 
-  let index = start_id + 1;
-  end_id = start_id;
-  do {
-    if (!ids[index][0]) end_id = index;
-    else break;
-    index++;
-  } while (index < ids.length);
+    let index = start_id + 1;
+    end_id = start_id;
+    do {
+      if (!ids[index][0]) end_id = index;
+      else break;
+      index++;
+    } while (index < ids.length);
 
-  console.log(12, start_id, end_id);
+    console.log(12, start_id, end_id);
 
-  const res = await sheets.spreadsheets.batchUpdate({
-    spreadsheetId,
-    resource: {
-      requests: [
-        {
-          deleteDimension: {
-            range: {
-              sheetId: 1018969262,
-              dimension: "ROWS",
-              startIndex: start_id + 2,
-              endIndex: end_id + 3,
+    const res = await sheets.spreadsheets.batchUpdate({
+      spreadsheetId,
+      resource: {
+        requests: [
+          {
+            deleteDimension: {
+              range: {
+                sheetId: 1018969262,
+                dimension: "ROWS",
+                startIndex: start_id + 2,
+                endIndex: end_id + 3,
+              },
             },
           },
-        },
-      ],
-    },
-  });
+        ],
+      },
+    });
 
-  console.log(res);
+    console.log(res);
+  } catch (e) {
+    console.log(e);
+  }
 }
 
-dropOrder(171);
+dropOrder(163);
 
 async function addOrder(
   {
