@@ -252,8 +252,6 @@ class UsersService {
           )
         )?.[0]?.[0]?.username;
 
-        console.log(basket.items);
-
         await googleDocs.addOrder({
           order_id,
           user_id,
@@ -276,14 +274,10 @@ class UsersService {
         global.io.emit("UPDATE_ORDERS");
         res(data);
 
-        let orderStr = "";
-
-        for (let el of basket.items) {
-          console.log("length ", basket.items.length, el.id);
-          orderStr = orderStr + `📦 ${el.title} - ${el.count} (шт.)`;
-        }
-
-        console.log(orderStr);
+        const orderStr =
+          basket.items
+            ?.map((el) => (el.id ? `📦 ${el.title} - ${el.count} (шт.)` : ""))
+            ?.join("\n") ?? "";
 
         /*const robokassa = new Robokassa({
           MerchantLogin: process.env.ROBO_MERCHANT_LOGIN,

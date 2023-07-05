@@ -112,7 +112,7 @@ async function addOrder(
     address,
     total,
     delivery_price,
-    items,
+    items: itemsPast,
     surname,
     name,
     patronymic,
@@ -135,9 +135,11 @@ async function addOrder(
       })
     )?.data.values?.[0]?.[0];
 
-    const firstItem = items.shift();
+    const itemsNew = [...itemsPast];
 
-    const insertingRows = items?.map((item) => {
+    const firstItem = itemsNew.shift();
+
+    const insertingRows = itemsNew?.map((item) => {
       return [
         null,
         null,
