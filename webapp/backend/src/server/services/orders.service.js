@@ -238,6 +238,8 @@ class UsersService {
 
         total = total + (basket.individual_price ?? 0);
 
+        console.log(delivery_price, total);
+
         const data = await queryRunner.manager.getRepository("Order").save({
           user_id,
           total,
