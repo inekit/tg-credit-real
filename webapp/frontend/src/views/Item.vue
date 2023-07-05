@@ -46,7 +46,7 @@
         </div>
         <div class="strength-container">
             <label>Крепость</label>
-            <span class="puffs">{{ item.taste_strength }}</span>
+            <span class="puffs">{{ item.taste_strength }} мг</span>
             <hr />
         </div>
         <div v-if="item.sale_count" class="sale-container">
