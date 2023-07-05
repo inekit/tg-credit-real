@@ -52,7 +52,7 @@ async function dropOrder(order_id) {
     let ids = (
       await sheets.spreadsheets.values.get({
         spreadsheetId,
-        range: "Заказы(изм)!A3:A",
+        range: "Заказы(изм)!D3:D",
       })
     )?.data.values;
 
