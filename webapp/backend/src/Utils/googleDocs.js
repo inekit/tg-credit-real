@@ -188,6 +188,8 @@ async function addOrder(
       },
     });
 
+    console.log(append_res);
+
     const lastIdRow = +append_res.data.tableRange?.substring(
       append_res.data.tableRange.length - 3
     );
