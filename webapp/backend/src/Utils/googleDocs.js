@@ -24,7 +24,7 @@ async function updateStock() {
 
   let res = await sheets.spreadsheets.values.get({
     spreadsheetId,
-    range: "Склад(Изм)!B3:E200",
+    range: "Склад(Изм)!B3:E300",
   });
 
   console.log(res.data);
