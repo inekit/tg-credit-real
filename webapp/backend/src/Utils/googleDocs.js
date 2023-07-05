@@ -48,6 +48,15 @@ async function dropOrder(order_id) {
 
   const sheets = google.sheets({ version: "v4", auth });
 
+  let ids = (
+    await sheets.spreadsheets.values.get({
+      spreadsheetId,
+      range: "Заказы(изм)!A3:A",
+    })
+  )?.data.values;
+
+  console.log(ids);
+
   const res = await sheets.spreadsheets.batchUpdate({
     spreadsheetId,
     resource: {
@@ -57,7 +66,7 @@ async function dropOrder(order_id) {
             range: {
               sheetId: 1018969262,
               dimension: "ROWS",
-              startIndex: 3,
+              startIndex: 2,
               endIndex: 5,
             },
           },
