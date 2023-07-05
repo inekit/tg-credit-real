@@ -22,6 +22,15 @@
     <h1>{{ item.title }}</h1>
     <hr class="my-1" />
     <form>
+        <div class="option-select" v-if="item.select_name">
+            <label for="size-select">{{ item.select_name }}</label>
+            <div class="select-dropdown">
+                <select id="option-select" v-model="selected_option" @change="changeOption" required>
+                    <option v-for="option in item.options_array" :key="option.id" :value="option.id">{{ option.name }}
+                    </option>
+                </select>
+            </div>
+        </div>
         <div class="stock-container">
             <label>Наличие</label>
             <span class="stock" :class="[stock > 20 ? 'green' : stock > 10 ? 'yellow' : 'red']">{{ stock > 0 ? `В наличии` :
@@ -43,16 +52,6 @@
             <label>Оптом от {{ item.sale_count }} шт.</label>
             <span class="puffs">{{ item.sale_price }} ₽</span>
             <hr />
-        </div>
-
-        <div class="option-select" v-if="item.select_name">
-            <label for="size-select">{{ item.select_name }}</label>
-            <div class="select-dropdown">
-                <select id="option-select" v-model="selected_option" @change="changeOption" required>
-                    <option v-for="option in item.options_array" :key="option.id" :value="option.id">{{ option.name }}
-                    </option>
-                </select>
-            </div>
         </div>
         <div v-if="item.description">
             <hr />
