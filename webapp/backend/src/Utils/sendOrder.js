@@ -29,15 +29,18 @@ module.exports = async function sendOrder(
     reciept_photo_id,
   } = orderData;
 
-  const statuses = [
-    "Новый",
-    "Оплачен",
-    "В обработке",
-    "Доставляется",
-    "Доставлен",
-    "Завершен",
-    "Отменен",
-  ];
+  const statuses =
+    status === "Завершен" || status === "Отменен"
+      ? []
+      : [
+          "Новый",
+          "Оплачен",
+          "В обработке",
+          "Доставляется",
+          "Доставлен",
+          "Завершен",
+          "Отменен",
+        ];
 
   const orderStr =
     items
