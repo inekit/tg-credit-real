@@ -14,6 +14,8 @@
           required />
         <CFormInput type="number" class="mb-3" label="Количество затяжек" placeholder="Введите количество затяжек"
           v-model="formData.puffs_count" />
+        <CFormInput type="number" class="mb-3" label="Крепость" placeholder="Введите крепость"
+          v-model="formData.taste_strength" />
         <CFormInput type="file" accept="image/*" ref="file" @change="previewImage" class="mb-3" label="Превью"
           placeholder="Превью" />
         <div class="border p-2 mt-3 preview-container">
@@ -238,12 +240,10 @@ export default {
       this.formData.preview && formData.append(`preview`, this.formData.preview);
 
       formData.append(`puffs_count`, this.formData.puffs_count);
+      formData.append(`taste_strength`, this.formData.taste_strength);
 
       const turndownService = new TurndownService({
         headingStyle: "atx",
-        //bulletListMarker: "-",
-        //fence: "~~~",
-        //emDelimiter: "*",
       })
       formData.append(
         'description',
