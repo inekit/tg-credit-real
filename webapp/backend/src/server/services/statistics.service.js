@@ -26,7 +26,7 @@ class UsersService {
 
         await queryRunner.commitTransaction();
 
-        res({ count_users: data?.count });
+        res({ count_users: 1 });
       } catch (error) {
         console.log(error);
         await queryRunner.rollbackTransaction();
