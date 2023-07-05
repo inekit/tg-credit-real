@@ -4,6 +4,15 @@ const fs = require("fs");
 const allowed_updates = ["message", "callback_query", "chat_member"];
 const TOKEN = process.env.BOT_TOKEN;
 const server = require("./server/app");
+const cron = require("node-cron");
+const googleDocs = require("../../Utils/googleDocs");
+
+googleDocs.updateStock();
+
+cron.schedule("0 * * * *", () => {
+  googleDocs.updateStock();
+});
+
 const keyboards = {
   ...require("./Keyboards/keyboards"),
   ...require("./Keyboards/inlineKeyboards"),
