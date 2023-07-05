@@ -61,7 +61,7 @@ async function dropOrder(order_id) {
 
   for (let index in ids) {
     if (ids[index][0] == order_id) {
-      start_id = index;
+      start_id = +index;
       break;
     }
   }
@@ -72,7 +72,8 @@ async function dropOrder(order_id) {
   end_id = start_id;
   do {
     console.log("rffr", ids[index][0], index);
-
+    if (!ids[index][0]) end_id = index;
+    else break;
     index++;
   } while (index <= ids.length);
 
