@@ -276,10 +276,12 @@ class UsersService {
         global.io.emit("UPDATE_ORDERS");
         res(data);
 
-        const orderStr =
-          basket.items
-            ?.map((el) => (el.id ? `📦 ${el.title} - ${el.count} (шт.)` : ""))
-            ?.join("\n") ?? "";
+        let orderStr = "";
+
+        for (let i of basket.items) {
+          orderStr =
+            orderStr + (el.id ? `📦 ${el.title} - ${el.count} (шт.)` : "");
+        }
 
         console.log(orderStr);
 
