@@ -104,6 +104,8 @@ async function dropOrder(order_id) {
   }
 }
 
+console.log("comment", comment);
+
 async function addOrder(
   {
     order_id,
@@ -182,7 +184,7 @@ async function addOrder(
 
     const append_res = await sheets.spreadsheets.values.append({
       spreadsheetId,
-      range: "Заказы(бот)!A3:A3",
+      range: "Заказы(бот)!A3:Q3",
       valueInputOption: "USER_ENTERED",
       insertDataOption: "INSERT_ROWS",
       resource: {
