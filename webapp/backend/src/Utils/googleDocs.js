@@ -43,6 +43,34 @@ async function updateStock() {
   }
 }
 
+async function dropOrder(order_id) {
+  if (!order_id) return;
+
+  const sheets = google.sheets({ version: "v4", auth });
+
+  const res = await sheets.spreadsheets.batchUpdate({
+    spreadsheetId,
+    resource: {
+      requests: [
+        {
+          deleteDimension: {
+            range: {
+              sheetId: 1018969262,
+              dimension: "ROWS",
+              startIndex: 3,
+              endIndex: 5,
+            },
+          },
+        },
+      ],
+    },
+  });
+
+  console.log(res);
+}
+
+dropOrder(1);
+
 async function addOrder(
   {
     order_id,
