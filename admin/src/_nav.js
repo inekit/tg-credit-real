@@ -41,4 +41,10 @@ export default [
     to: '/static',
     icon: 'cil-description',
   },
+  {
+    component: 'CNavItem',
+    name: 'Статистика',
+    to: '/statistics',
+    icon: 'cil-description',
+  },
 ]
