@@ -22,6 +22,7 @@
     "coreui_library_short_version": "4.1"
   },
   "dependencies": {
+    "@google-cloud/local-auth": "^2.1.0",
     "@json2csv/node": "^6.1.2",
     "@vuepic/vue-datepicker": "^3.6.3",
     "@vueup/vue-quill": "^1.1.1",
@@ -30,6 +31,7 @@
     "core-js": "^3.19.0",
     "crypto": "^1.0.1",
     "dompurify": "^2.4.5",
+    "googleapis": "^105.0.0",
     "json-2-csv": "^3.20.0",
     "marked": "^4.3.0",
     "mitt": "^3.0.0",

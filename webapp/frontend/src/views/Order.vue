@@ -227,7 +227,7 @@ export default {
                     alert(`Промокод на ${sale.sum} ${sale.type === 'money' ? "рублей" : "%"} успешно активирован`)
                     return this.sale = response.data ?? { sum: 0 };
                 })
-                .catch(e => { this.sale = { sum: 0 }; alert("Промокод недействителен") })
+                .catch(e => { this.sale = { sum: 0 }; basketData.promo_code = null; alert("Промокод недействителен") })
 
             return results ?? {}
 
