@@ -191,10 +191,10 @@ async function addOrder(
     console.log(append_res);
 
     const lastIdRow = parseInt(
-      append_res.data.tableRange?.substring(
-        append_res.data.tableRange.length - 3
-      )
-    ).replace(/[^0-9]/g, "");
+      append_res.data.tableRange
+        ?.substring(append_res.data.tableRange.length - 3)
+        ?.replace(/[^0-9]/g, "")
+    );
 
     console.log(lastIdRow);
 
