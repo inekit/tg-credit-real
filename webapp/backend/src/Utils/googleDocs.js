@@ -17,7 +17,7 @@ async function updateStock() {
   const connection = await tOrmCon;
 
   const options = await connection
-    .query("select io.id, io.table_name from item_options")
+    .query("select io.id, io.table_name from item_options io")
     .catch((e) => console.log(e));
 
   const sheets = google.sheets({ version: "v4", auth });
