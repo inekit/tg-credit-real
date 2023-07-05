@@ -71,7 +71,6 @@ async function dropOrder(order_id) {
   let index = start_id + 1;
   end_id = start_id;
   do {
-    console.log("rffr", ids[index][0], index);
     if (!ids[index][0]) end_id = index;
     else break;
     index++;
@@ -79,7 +78,7 @@ async function dropOrder(order_id) {
 
   console.log(12, start_id, end_id);
 
-  /*const res = await sheets.spreadsheets.batchUpdate({
+  const res = await sheets.spreadsheets.batchUpdate({
     spreadsheetId,
     resource: {
       requests: [
@@ -97,7 +96,7 @@ async function dropOrder(order_id) {
     },
   });
 
-  console.log(res);*/
+  console.log(res);
 }
 
 dropOrder(10);
