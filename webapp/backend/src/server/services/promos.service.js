@@ -84,7 +84,6 @@ class UsersService {
         res({ code, type, sum });
       } catch (err) {
         console.log(err);
-        ctx.replyWithTitle("PROMO_USED");
         rej(err);
 
         await queryRunner.rollbackTransaction();
