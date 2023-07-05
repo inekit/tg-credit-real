@@ -70,7 +70,7 @@ class UsersService {
 
         console.log(maxCount, count_used, count_used_me);
 
-        if (maxCount <= count_used || count_used_me)
+        if (maxCount <= count_used || count_used_me > 0)
           throw new Error("PROMO_USED");
 
         !test &&
