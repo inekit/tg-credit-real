@@ -22,11 +22,15 @@ class UsersService {
       await queryRunner.startTransaction();
 
       try {
-        const data = await queryRunner.query("select count(*) from users");
+        const data = await queryRunner.query(
+          "select count(*) count_users from users"
+        );
+
+        console.log(data);
 
         await queryRunner.commitTransaction();
 
-        res({ count_users: 1 });
+        res({ count_users: data.count_users });
       } catch (error) {
         console.log(error);
         await queryRunner.rollbackTransaction();
