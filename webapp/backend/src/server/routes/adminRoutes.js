@@ -13,6 +13,7 @@ var MessagesController = require("../controllers/messages.controller");
 var MailingController = require("../controllers/mailing.controller");
 var CategoriesController = require("../controllers/categories.controller");
 var StaticsController = require("../controllers/statics.controller");
+var StatisticsController = require("../controllers/statistics.controller");
 
 var fileUpload = require("express-fileupload");
 router.use(fileUpload({}));
@@ -46,6 +47,8 @@ module.exports = (ctx) => {
   router.post("/mailing", auth, MailingController.add(ctx));
 
   router.post("/messages", auth, MessagesController.addOne(ctx));
+
+  router.get("/statistics", auth, StatisticsController.get);
 
   router.get("/statics", auth, StaticsController.getOne);
   router.put("/statics", auth, StaticsController.editOne);
