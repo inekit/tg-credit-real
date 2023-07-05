@@ -124,14 +124,14 @@ async function addOrder(
     let last_id = +(
       await sheets.spreadsheets.values.get({
         spreadsheetId,
-        range: "Заказы(изм)!R3",
+        range: "Заказы(изм)!R1",
       })
     )?.data.values?.[0]?.[0];
 
     const last_index_id = +(
       await sheets.spreadsheets.values.get({
         spreadsheetId,
-        range: "Заказы(изм)!S3",
+        range: "Заказы(изм)!S1",
       })
     )?.data.values?.[0]?.[0];
 
