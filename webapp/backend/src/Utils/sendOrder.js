@@ -1,5 +1,6 @@
 require("dotenv").config();
 const moment = require("moment");
+const tOrmCon = require("../db/connection");
 
 module.exports = async function sendOrder(
   ctx,
@@ -27,6 +28,7 @@ module.exports = async function sendOrder(
     total,
     status,
     reciept_photo_id,
+    last_message_id,
   } = orderData;
 
   const statuses =
@@ -81,9 +83,11 @@ module.exports = async function sendOrder(
     ]),
   };
 
+  let message;
+
   if (!edit)
     if (is_payment)
-      await ctx.telegram
+      message = await ctx.telegram
         .sendPhoto(process.env.ADMIN_ID, reciept_photo_id, {
           parse_mode: "HTML",
           reply_markup: keyboard,
@@ -93,7 +97,7 @@ module.exports = async function sendOrder(
           console.log(e);
         });
     else
-      await ctx.telegram
+      message = await ctx.telegram
         .sendMessage(process.env.ADMIN_ID, title, {
           reply_markup: keyboard,
           parse_mode: "HTML",
@@ -102,7 +106,7 @@ module.exports = async function sendOrder(
           console.log(e);
         });
   else if (is_payment)
-    await ctx
+    message = await ctx
       .editMessageMedia(
         {
           type: "photo",
@@ -119,10 +123,23 @@ module.exports = async function sendOrder(
         ctx.answerCbQuery().catch((e) => {});
       });
   else
-    ctx
+    message = await ctx
       .editMessageText(title, { reply_markup: keyboard, parse_mode: "HTML" })
       .catch((e) => {
         console.log(e);
         ctx.answerCbQuery().catch((e) => {});
       });
+
+  console.log(message);
+
+  if (is_payment && !edit) {
+    await ctx.telegram
+      .deleteMessage(ctx.chat.id, last_message_id)
+      .catch((e) => console.log(e));
+  }
+
+  const connection = await tOrmCon;
+  await connection
+    .query("update orders set last_message_id = $1 where id = $2", [1, id])
+    .catch((e) => console.log(e));
 };
