@@ -32,6 +32,7 @@ async function updateStock() {
 
   for (let option of options) {
     const stock = tableData?.find((el) => el[0] === option.table_name)?.[3];
+    console.log("stock", stock, option.table_name);
     if (!stock) continue;
 
     await connection
