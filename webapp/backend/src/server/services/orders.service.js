@@ -221,19 +221,19 @@ class UsersService {
         const getDeliveryPrice = () => {
           switch (selected_dm) {
             case "Метро":
-              return (delivery_price = total >= 5000 ? 0 : 200);
+              return total >= 5000 ? 0 : 200;
             case "До станции метро":
-              return (delivery_price = total >= 5000 ? 0 : 200);
+              return total >= 5000 ? 0 : 200;
             case "Внутри МКАД":
-              return (delivery_price = total >= 5000 ? 0 : 350);
+              return total >= 5000 ? 0 : 350;
             case "МО за МКАД":
-              return (delivery_price = total >= 7000 ? 0 : null);
+              return total >= 7000 ? 0 : null;
             case "Почта России":
-              return (delivery_price = 400);
+              return 400;
             case "Яндекс Доставка":
-              return (delivery_price = 350);
+              return 350;
             case "Яндекс Доставка до пункта выдачи":
-              return (delivery_price = 350);
+              return 350;
           }
         };
 
