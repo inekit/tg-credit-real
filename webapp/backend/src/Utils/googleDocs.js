@@ -104,8 +104,6 @@ async function dropOrder(order_id) {
   }
 }
 
-console.log("comment", comment);
-
 async function addOrder(
   {
     order_id,
@@ -123,6 +121,8 @@ async function addOrder(
   } = (orderData = {})
 ) {
   try {
+    console.log("comment", comment);
+
     const sheets = google.sheets({ version: "v4", auth });
 
     let last_id = +(
