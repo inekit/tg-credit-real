@@ -32,8 +32,11 @@ async function updateStock() {
 
   for (let option of options) {
     const stock = tableData?.find((el) => el[0] === option.table_name)?.[3];
-    console.log("stock", stock, option.table_name);
-    if (!stock) continue;
+
+    if (!stock) {
+      console.log("stock", stock, option.table_name);
+      continue;
+    }
 
     await connection
       .query("update item_options set stock = $1 where table_name = $2", [
@@ -121,8 +124,6 @@ async function addOrder(
   } = (orderData = {})
 ) {
   try {
-    console.log("comment", comment);
-
     const sheets = google.sheets({ version: "v4", auth });
 
     let last_id = +(
