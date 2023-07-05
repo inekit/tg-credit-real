@@ -57,7 +57,28 @@ async function dropOrder(order_id) {
 
   console.log(ids);
 
-  const res = await sheets.spreadsheets.batchUpdate({
+  let start_id, end_id;
+
+  for (let index in ids) {
+    if (ids[index][0] === order_id) {
+      start_id = index;
+      break;
+    }
+  }
+
+  if (!start_id) return;
+
+  let index = start_id + 1;
+  end_id = start_id;
+  do {
+    if (!ids[index][0]) end_id = index;
+    else break;
+    index++;
+  } while (index <= ids.length);
+
+  console.log(start_id, end_id);
+
+  /*const res = await sheets.spreadsheets.batchUpdate({
     spreadsheetId,
     resource: {
       requests: [
@@ -66,8 +87,8 @@ async function dropOrder(order_id) {
             range: {
               sheetId: 1018969262,
               dimension: "ROWS",
-              startIndex: 2,
-              endIndex: 5,
+              startIndex: start_id + 3,
+              endIndex: end_id + 3,
             },
           },
         },
@@ -75,10 +96,10 @@ async function dropOrder(order_id) {
     },
   });
 
-  console.log(res);
+  console.log(res);*/
 }
 
-dropOrder(1);
+dropOrder(10);
 
 async function addOrder(
   {
