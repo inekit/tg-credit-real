@@ -2,7 +2,7 @@ const { google } = require("googleapis");
 
 const tOrmCon = require("../db/connection");
 require("dotenv").config();
-const credentialFilename = "credentials.json";
+const credentialFilename = "../../sm_credentials.json";
 const scopes = ["https://www.googleapis.com/auth/spreadsheets"];
 const moment = require("moment");
 const auth = new google.auth.GoogleAuth({
@@ -52,7 +52,7 @@ async function dropOrder(order_id) {
     let ids = (
       await sheets.spreadsheets.values.get({
         spreadsheetId,
-        range: "Заказы(изм)!D3:D",
+        range: "Заказы(бот)!D3:D",
       })
     )?.data.values;
 
@@ -86,7 +86,7 @@ async function dropOrder(order_id) {
           {
             deleteDimension: {
               range: {
-                sheetId: 1018969262,
+                sheetId: 1865953136,
                 dimension: "ROWS",
                 startIndex: start_id + 2,
                 endIndex: end_id + 3,
@@ -124,14 +124,14 @@ async function addOrder(
     let last_id = +(
       await sheets.spreadsheets.values.get({
         spreadsheetId,
-        range: "Заказы(изм)!R1",
+        range: "Заказы(бот)!R1",
       })
     )?.data.values?.[0]?.[0];
 
     const last_index_id = +(
       await sheets.spreadsheets.values.get({
         spreadsheetId,
-        range: "Заказы(изм)!S1",
+        range: "Заказы(бот)!S1",
       })
     )?.data.values?.[0]?.[0];
 
@@ -179,7 +179,7 @@ async function addOrder(
 
     const append_res = await sheets.spreadsheets.values.append({
       spreadsheetId,
-      range: "Заказы(изм)!A3:A3",
+      range: "Заказы(бот)!A3:A3",
       valueInputOption: "USER_ENTERED",
       insertDataOption: "INSERT_ROWS",
       resource: {
@@ -199,7 +199,7 @@ async function addOrder(
           {
             addDimensionGroup: {
               range: {
-                sheetId: 1018969262,
+                sheetId: 1865953136,
                 dimension: "ROWS",
                 startIndex: last_index_id,
                 endIndex: lastIdRow,
@@ -211,7 +211,7 @@ async function addOrder(
               dimensionGroup: {
                 range: {
                   dimension: "ROWS",
-                  sheetId: 1018969262,
+                  sheetId: 1865953136,
                   startIndex: last_index_id,
                   endIndex: lastIdRow,
                 },
