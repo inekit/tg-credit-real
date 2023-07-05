@@ -443,6 +443,7 @@ form {
             background-color: #e7e7e7;
             border-radius: 10px;
             color: white;
+            margin-bottom: 1rem;
 
             select {
                 font-size: 15px;
