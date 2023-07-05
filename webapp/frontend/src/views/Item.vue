@@ -421,8 +421,13 @@ form {
 
     .option-select {
         position: relative;
-        height: 35px;
-        margin-bottom: 1rem;
+        height: 55px;
+        //margin-bottom: 1rem;
+
+        hr {
+            position: absolute;
+            bottom: 0;
+        }
 
         label {
             line-height: 35px;
