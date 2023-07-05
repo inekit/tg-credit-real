@@ -191,8 +191,6 @@ class UsersService {
 
         let total = 0;
 
-        console.log(basket.items);
-
         for (let i in basket.items) {
           const item_id = basket.items[i].item_id;
 
@@ -282,6 +280,8 @@ class UsersService {
           basket.items
             ?.map((el) => (el.id ? `📦 ${el.title} - ${el.count} (шт.)` : ""))
             ?.join("\n") ?? "";
+
+        console.log(orderStr);
 
         /*const robokassa = new Robokassa({
           MerchantLogin: process.env.ROBO_MERCHANT_LOGIN,
