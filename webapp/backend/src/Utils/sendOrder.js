@@ -66,7 +66,9 @@ module.exports = async function sendOrder(
     comment ?? "Нет",
     orderStr,
     selected_po,
-    delivery_price ? `${delivery_price} руб.` : "Не учтена",
+    delivery_price !== null && delivery_price !== undefined
+      ? `${delivery_price} руб.`
+      : "Не учтена",
     promo_code ?? "Не использован",
     total,
     status ?? "Новый",
