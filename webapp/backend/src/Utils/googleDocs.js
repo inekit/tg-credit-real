@@ -99,7 +99,7 @@ async function dropOrder(order_id) {
   console.log(res);
 }
 
-dropOrder(10);
+dropOrder(171);
 
 async function addOrder(
   {
