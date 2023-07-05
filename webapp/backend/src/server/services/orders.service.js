@@ -122,7 +122,6 @@ class UsersService {
       await queryRunner.startTransaction();
 
       try {
-        getDeliveryPrice() {
         const basket = (
           await queryRunner.query(
             `select o.*, count(oi.item_option_id) count_items,
@@ -211,31 +210,30 @@ class UsersService {
           else total += basket.items[i].price * basket.items[i].count;
         }
 
-        total =
-          +(type === "money"
-            ? Math.max(total - sum, 0)
-            : ((+(100 - sum) * total) / 100).toFixed(0));
+        total = +(type === "money"
+          ? Math.max(total - sum, 0)
+          : ((+(100 - sum) * total) / 100).toFixed(0));
 
         if (total < 0) throw new Error("PROMO_TO_LARGE");
 
         let delivery_price;
 
         switch (selected_dm) {
-          case ('Метро'):
-              return delivery_price = total >= 5000 ? 0 : 200;
-          case ('До станции метро'):
-              return delivery_price = total >= 5000 ? 0 : 200;
-          case ('Внутри МКАД'):
-              return delivery_price = total >= 5000 ? 0 : 350;
-          case ('МО за МКАД'):
-              return delivery_price = total >= 7000 ? 0 : null;
-          case ('Почта России'):
-              return delivery_price = 400;
-          case ('Яндекс Доставка'):
-              return delivery_price = 350;
-          case ('Яндекс Доставка до пункта выдачи'):
-              return delivery_price = 350;
-      }
+          case "Метро":
+            return (delivery_price = total >= 5000 ? 0 : 200);
+          case "До станции метро":
+            return (delivery_price = total >= 5000 ? 0 : 200);
+          case "Внутри МКАД":
+            return (delivery_price = total >= 5000 ? 0 : 350);
+          case "МО за МКАД":
+            return (delivery_price = total >= 7000 ? 0 : null);
+          case "Почта России":
+            return (delivery_price = 400);
+          case "Яндекс Доставка":
+            return (delivery_price = 350);
+          case "Яндекс Доставка до пункта выдачи":
+            return (delivery_price = 350);
+        }
 
         total = +total + +delivery_price;
 
