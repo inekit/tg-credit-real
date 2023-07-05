@@ -83,6 +83,20 @@ mainStage.action(/^status\_([0-9]+)\_(.+)\_([0-9])$/g, async (ctx) => {
       .answerCbQuery(ctx.getTitle("CANT_CHANGE_STATUS"))
       .catch((e) => {});
 
+  ctx.telegram
+    .sendMessage(
+      res.user_id,
+      ctx.getTitle("ORDER_NEW_STATUS_TITLE", [
+        res.id,
+        moment(res.creation_date).format("DD.MM.YYYY"),
+        res.status,
+      ]),
+      {
+        parse_mode: "HTML",
+      }
+    )
+    .catch(console.log);
+
   await sendOrder(
     ctx,
     Object.assign(res?.[0], { username: ctx.from.username }),
