@@ -209,6 +209,8 @@ class UsersService {
           else total += basket.items[i].price * basket.items[i].count;
         }
 
+        console.log(1243);
+
         total = +(type === "money"
           ? Math.max(total - sum, 0)
           : ((+(100 - sum) * total) / 100).toFixed(0));
