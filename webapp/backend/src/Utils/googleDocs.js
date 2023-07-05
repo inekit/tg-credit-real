@@ -87,7 +87,7 @@ async function dropOrder(order_id) {
             range: {
               sheetId: 1018969262,
               dimension: "ROWS",
-              startIndex: start_id + 3,
+              startIndex: start_id + 2,
               endIndex: end_id + 3,
             },
           },
