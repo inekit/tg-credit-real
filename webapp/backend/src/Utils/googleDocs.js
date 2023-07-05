@@ -60,7 +60,7 @@ async function dropOrder(order_id) {
   let start_id, end_id;
 
   for (let index in ids) {
-    if (ids[index][0] === order_id) {
+    if (ids[index][0] == order_id) {
       start_id = index;
       break;
     }
@@ -76,7 +76,7 @@ async function dropOrder(order_id) {
     index++;
   } while (index <= ids.length);
 
-  console.log(start_id, end_id);
+  console.log(12, start_id, end_id);
 
   /*const res = await sheets.spreadsheets.batchUpdate({
     spreadsheetId,
