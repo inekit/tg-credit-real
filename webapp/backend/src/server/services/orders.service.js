@@ -211,9 +211,12 @@ class UsersService {
 
         console.log(1243);
 
-        total = +(type === "money"
-          ? Math.max(total - sum, 0)
-          : ((+(100 - sum) * total) / 100).toFixed(0));
+        total =
+          type === "money"
+            ? Math.max(total - sum, 0)
+            : ((+(100 - sum) * total) / 100).toFixed(0);
+
+        total = +total;
 
         if (total < 0) throw new Error("PROMO_TO_LARGE");
 
