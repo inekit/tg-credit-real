@@ -278,7 +278,7 @@ class UsersService {
 
         let orderStr = "";
 
-        for (let i of basket.items) {
+        for (let el of basket.items) {
           orderStr =
             orderStr + (el.id ? `📦 ${el.title} - ${el.count} (шт.)` : "");
         }
