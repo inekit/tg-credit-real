@@ -77,7 +77,7 @@ async function dropOrder(order_id) {
     let index = start_id + 1;
     end_id = start_id;
     do {
-      if (!ids[index][0]) end_id = index;
+      if (!ids?.[index]?.[0]) end_id = index;
       else break;
       index++;
     } while (index < ids.length);
