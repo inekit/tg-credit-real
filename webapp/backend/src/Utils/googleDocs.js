@@ -82,6 +82,8 @@ async function dropOrder(order_id) {
       index++;
     } while (index < ids.length);
 
+    end_id = index;
+
     console.log(12, start_id, end_id);
 
     const res = await sheets.spreadsheets.batchUpdate({
