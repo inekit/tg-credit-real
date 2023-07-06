@@ -91,6 +91,7 @@ export default {
                 sum: 0
             },
             orderText: null,
+            isOrdering: false,
         }
     },
     watch: {
@@ -126,6 +127,10 @@ export default {
             alert(this.methodsDescriptions[i])
         },
         order() {
+            if (this.isOrdering === true) return;
+
+            this.isOrdering = true;
+
             if (!this.basketData.address || !this.basketData.phone ||
                 !this.basketData.name || !this.basketData.surname //|| !this.basketData.patronymic
                 || !this.basketData.postal_code)
