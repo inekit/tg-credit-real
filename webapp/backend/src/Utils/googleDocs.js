@@ -65,7 +65,8 @@ async function dropOrder(order_id) {
     let start_id, end_id;
 
     for (let index in ids) {
-      if (ids[index][0] == order_id) {
+      console.log(ids?.[index]?.[0]);
+      if (ids?.[index]?.[0] == order_id) {
         start_id = +index;
         break;
       }
