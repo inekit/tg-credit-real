@@ -83,7 +83,7 @@ async function dropOrder(order_id) {
       console.log(index);
     } while (index < ids.length);
 
-    if (index === ids.length) end_id = start_id + 100;
+    if (index >= ids.length) end_id = start_id + 100;
 
     console.log(12, start_id, end_id);
 
