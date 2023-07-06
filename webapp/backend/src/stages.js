@@ -7,6 +7,8 @@ const titles = require("telegraf-steps").titlesGetter(__dirname + "/Titles");
 const tOrmCon = require("./db/connection");
 const sendOrder = require("./Utils/sendOrder");
 require("dotenv").config();
+const googleDocs = require("./Utils/googleDocs");
+
 const moment = require("moment");
 const mainStage = new Stage(
   [
@@ -65,7 +67,7 @@ mainStage.action(/^status\_([0-9]+)\_(.+)\_([0-9])$/g, async (ctx) => {
       .query(
         `select 
       json_agg(json_build_object('title', i.title,'count',oi.count, 'id', io.id, 'price', i.price,'stock', io.stock,
-      'sale_count', sale_count, 'sale_price', sale_price)) items 
+      'sale_count', sale_count, 'sale_price', sale_price, 'option_name',io.name)) items 
       from orders o 
       left join order_items oi on o.id = oi.order_id  
       left join item_options io on oi.item_option_id = io.id  
@@ -84,6 +86,10 @@ mainStage.action(/^status\_([0-9]+)\_(.+)\_([0-9])$/g, async (ctx) => {
       .catch((e) => {});
 
   const orderData = res?.[0];
+
+  if (status === "Отменен") {
+    googleDocs.dropOrder(+order_id);
+  }
 
   ctx.telegram
     .sendMessage(

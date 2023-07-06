@@ -46,7 +46,9 @@ module.exports = async function sendOrder(
 
   const orderStr =
     items
-      ?.map((el) => (el.id ? `📦 ${el.title} - ${el.count} (шт.)` : ""))
+      ?.map((el) =>
+        el.id ? `📦 ${el.title} ${el.option_name} - ${el.count} (шт.)` : ""
+      )
       ?.join("\n") ?? "";
 
   const titleName = is_payment ? "NEW_GM" : "NEW_ORDER";
