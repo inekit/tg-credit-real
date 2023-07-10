@@ -87,6 +87,12 @@ mainStage.action(/^status\_([0-9]+)\_(.+)\_([0-9])$/g, async (ctx) => {
 
   const orderData = res?.[0];
 
+  const username = (
+    await queryRunner.query(`select * from  users u  where u.id = $1`, [
+      orderData.user_id,
+    ])
+  )?.[0]?.username;
+
   if (status === "Отменен") {
     googleDocs.dropOrder(+order_id);
   }
@@ -107,7 +113,7 @@ mainStage.action(/^status\_([0-9]+)\_(.+)\_([0-9])$/g, async (ctx) => {
 
   await sendOrder(
     ctx,
-    Object.assign(orderData, { username: ctx.from.username }),
+    Object.assign(orderData, { username }),
     items,
     true,
     is_photo
