@@ -88,7 +88,7 @@ mainStage.action(/^status\_([0-9]+)\_(.+)\_([0-9])$/g, async (ctx) => {
   const orderData = res?.[0];
 
   const username = (
-    await queryRunner.query(`select * from  users u  where u.id = $1`, [
+    await connection.query(`select * from  users u  where u.id = $1`, [
       orderData.user_id,
     ])
   )?.[0]?.username;
