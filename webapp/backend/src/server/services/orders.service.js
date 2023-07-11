@@ -155,7 +155,7 @@ class UsersService {
         if (promo_code) {
           const promoObj =
             (
-              await queryRunner
+              await connection
                 .query("select * from promos where code = $1 limit 1", [
                   promo_code,
                 ])
@@ -183,7 +183,7 @@ class UsersService {
 
           if (maxCount <= count_used) throw new Error("PROMO_USED");
 
-          await queryRunner
+          await connection
             .query(
               "insert into users_promos (user_id, promo_code, used, use_date) values ($1,$2,true, now())",
               [user_id, promo_code]
