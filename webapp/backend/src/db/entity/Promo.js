@@ -15,6 +15,11 @@ module.exports = new EntitySchema({
       enum: ["money", "procent"],
       nullable: false,
     },
+    is_permanent: {
+      type: "boolean",
+      nullable: false,
+      default: false,
+    },
     count: {
       type: "int",
       nullable: false,

@@ -93,7 +93,7 @@ class UsersService {
     });
   }
 
-  edit({ code, count, type, sum }) {
+  edit({ code, count, type, sum, is_permanent }) {
     return new Promise(async (res, rej) => {
       const connection = await tOrmCon;
 
@@ -106,6 +106,7 @@ class UsersService {
             count,
             type,
             sum,
+            is_permanent,
           })
           .where({
             code,

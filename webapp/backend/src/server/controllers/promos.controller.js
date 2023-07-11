@@ -27,10 +27,10 @@ function test(req, res, next) {
 }
 
 function add(req, res, next) {
-  const { code, type, sum, count } = req.body;
+  const { code, type, sum, count, is_permanent } = req.body;
 
   servicePreset
-    .add({ code, type, sum, count })
+    .add({ code, type, sum, count, is_permanent })
     .then((data) => res.send(data))
     .catch((error) => {
       console.log(error);
@@ -39,7 +39,7 @@ function add(req, res, next) {
 }
 
 function edit(req, res, next) {
-  const { code, type, sum, count } = req.body;
+  const { code, type, sum, count, is_permanent } = req.body;
 
   promosService
     .edit({
@@ -47,6 +47,7 @@ function edit(req, res, next) {
       type,
       sum,
       count,
+      is_permanent,
     })
     .then((data) => res.send(data))
     .catch((error) => next(error));
