@@ -20,10 +20,8 @@
           <CFormCheck id="type-procent" :checked="formData.type === 'procent'" @input="formData.type = 'procent'"
             type="radio" name="type-procent" value="procent" label="Процент" />
         </div>
-        <span>Возможность использовать несколько раз</span>
         <CFormCheck id="flexCheckChecked" label="Возможность использовать несколько раз"
           :checked="!!formData.is_permanent" @input="formData.is_permanent = !formData.is_permanent" />
-
         <CFormInput class="mb-3" v-model.number="formData.count" label="Количество использований" id="inputCount"
           aria-describedby="inputGroupPrepend" type="number" required feedbackValid="Все ок"
           feedbackInvalid="Введите корректное число" />
