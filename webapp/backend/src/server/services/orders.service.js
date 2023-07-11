@@ -155,7 +155,7 @@ class UsersService {
         if (promo_code) {
           const promoObj =
             (
-              await connection
+              await queryRunner
                 .query("select * from promos where code = $1 limit 1", [
                   promo_code,
                 ])
