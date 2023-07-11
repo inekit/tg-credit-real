@@ -40,6 +40,7 @@ class UsersService {
         count: maxCount,
         type,
         sum,
+        is_permanent,
       } = (
         await connection
           .query("select * from promos where code = $1 limit 1", [code])
@@ -70,14 +71,16 @@ class UsersService {
 
         console.log(maxCount, count_used, count_used_me);
 
-        if (maxCount <= count_used || count_used_me > 0)
+        if (maxCount <= count_used || (count_used_me > 0 && !is_permanent))
           throw new Error("PROMO_USED");
 
         !test &&
-          (await queryRunner.query(
-            "insert into users_promos (user_id, promo_code, used, use_date) values ($1,$2,true, now())",
-            [user_id, code]
-          ));
+          (await queryRunner
+            .query(
+              "insert into users_promos (user_id, promo_code, used, use_date) values ($1,$2,true, now())",
+              [user_id, code]
+            )
+            .catch(console.log));
 
         await queryRunner.commitTransaction();
 

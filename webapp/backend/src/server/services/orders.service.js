@@ -168,6 +168,7 @@ class UsersService {
           sum = promoObj.sum;
           type = promoObj.type;
           const maxCount = promoObj.count;
+          const is_permanent = promoObj.is_permanent;
 
           if (!sum) return rej(new Error("WRONG_PROMO"));
 
@@ -182,10 +183,16 @@ class UsersService {
 
           if (maxCount <= count_used) throw new Error("PROMO_USED");
 
-          await queryRunner.query(
-            "insert into users_promos (user_id, promo_code, used, use_date) values ($1,$2,true, now())",
-            [user_id, promo_code]
-          );
+          await queryRunner
+            .query(
+              "insert into users_promos (user_id, promo_code, used, use_date) values ($1,$2,true, now())",
+              [user_id, promo_code]
+            )
+            .catch((e) => {
+              console.log(123);
+              if (is_permanent) return;
+              throw new Error("PROMO_USED");
+            });
         }
 
         let total = 0;
