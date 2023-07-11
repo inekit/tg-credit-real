@@ -282,7 +282,7 @@ class UsersService {
           )
         )?.[0]?.[0]?.username;
 
-        await googleDocs.addOrder({
+        googleDocs.addOrder({
           order_id,
           user_id,
           total,
