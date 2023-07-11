@@ -59,7 +59,7 @@ export default {
     eventBus.$on('addNewCode', () => {
       this.formMode = 'new'
       this.formVisible = true
-      this.formData = { type: 'money', }
+      this.formData = { type: 'money', is_permanent: false }
     })
     eventBus.$on('closeModal', () => {
       this.formVisible = false
