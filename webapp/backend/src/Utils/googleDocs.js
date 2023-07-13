@@ -200,6 +200,16 @@ async function addOrder(
       resource: {
         requests: [
           {
+            deleteDimensionGroup: {
+              range: {
+                sheetId: 1865953136,
+                dimension: "ROWS",
+                startIndex: last_index_id,
+                endIndex: last_row_id,
+              },
+            },
+          },
+          {
             insertDimension: {
               range: {
                 sheetId: 1865953136,
