@@ -242,16 +242,6 @@ async function addOrder(
       },
     });
 
-    console.log("append_res", append_res);
-
-    const lastIdRow = parseInt(
-      append_res.data.updatedRange
-        ?.substring(append_res.data.updatedRange.length - 3)
-        ?.replace(/[^0-9]/g, "")
-    );
-
-    console.log(lastIdRow);
-
     await sheets.spreadsheets.batchUpdate({
       spreadsheetId,
       resource: {
@@ -262,7 +252,7 @@ async function addOrder(
                 sheetId: 1865953136,
                 dimension: "ROWS",
                 startIndex: last_index_id,
-                endIndex: lastIdRow,
+                endIndex: last_row_id,
               },
             },
           },
@@ -273,7 +263,7 @@ async function addOrder(
                   dimension: "ROWS",
                   sheetId: 1865953136,
                   startIndex: last_index_id,
-                  endIndex: lastIdRow,
+                  endIndex: last_row_id,
                 },
                 depth: 1,
                 collapsed: true,
