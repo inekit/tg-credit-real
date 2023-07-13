@@ -204,8 +204,8 @@ async function addOrder(
               range: {
                 sheetId: 1865953136,
                 dimension: "ROWS",
-                startIndex: last_row_id + 1,
-                endIndex: last_row_id + 1 + itemsPast?.length,
+                startIndex: last_row_id,
+                endIndex: last_row_id + itemsPast?.length,
               },
               inheritFromBefore: true,
             },
