@@ -203,7 +203,7 @@ async function addOrder(
       resource: {
         requests: [
           {
-            InsertDimensionRequest: {
+            insertDimension: {
               range: {
                 sheetId: 1865953136,
                 dimension: "ROWS",
