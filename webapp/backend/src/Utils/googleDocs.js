@@ -130,16 +130,12 @@ async function addOrder(
   try {
     const sheets = google.sheets({ version: "v4", auth });
 
-    let r = (
+    let [last_id, last_index_id, last_row_id] = (
       await sheets.spreadsheets.values.get({
         spreadsheetId,
         range: "Заказы(бот)!R1:T1",
       })
     )?.data.values?.[0];
-
-    console.log(r);
-
-    let [last_id, last_index_id, last_row_id] = r;
 
     last_row_id = +last_row_id;
     last_index_id = +last_index_id;
