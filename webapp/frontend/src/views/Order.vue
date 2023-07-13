@@ -139,8 +139,10 @@ export default {
 
             if (!this.basketData.address || !this.basketData.phone ||
                 !this.basketData.name || !this.basketData.surname //|| !this.basketData.patronymic
-                || !this.basketData.postal_code)
+                || !this.basketData.postal_code) {
+                this.isOrdering = false;
                 return alert("Пожалуйста, заполните все поля")
+            }
             //if (!this.deliveryPrice) return alert("Пожалуйста, укажите верные данные для доставки")
 
             this.$store.state.myApi
@@ -164,7 +166,10 @@ export default {
                     window.Telegram?.WebApp.disableClosingConfirmation()
                     window.Telegram?.WebApp.close();
                 })
-                .catch(e => { eventBus.$emit('noresponse', e) })
+                .catch(e => {
+                    eventBus.$emit('noresponse', e);
+                    this.isOrdering = false;
+                })
         },
         async getDeliveryPrice() {
             //if (this.selected_dm !== "CДЭК") {
