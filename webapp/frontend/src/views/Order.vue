@@ -106,6 +106,7 @@ export default {
     async beforeMount() {
         window.Telegram?.WebApp.BackButton.onClick(this.routeBack);
         window.Telegram?.WebApp.BackButton.show();
+        this.isOrdering = false;
 
         this.$store.state.userId = this.$store.state.userId ?? this.$route.params?.userId;
 
@@ -125,6 +126,7 @@ export default {
         window.Telegram?.WebApp.MainButton.hide();
         window.Telegram?.WebApp.BackButton.offClick(this.routeBack);
         window.Telegram?.WebApp.BackButton.hide();
+        this.isOrdering = false;
     },
     methods: {
         alertDescription(i) {

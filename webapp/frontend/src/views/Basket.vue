@@ -31,6 +31,7 @@
                 <button type="button" @click="dropItem(item)">Удалить</button>
             </div>
         </div>
+        <button hidden v-if="basketItems.length > 0" class="" @click="order">Оформить заказ</button>
     </div>
     <div class="order">
         <span class="label"> Итого: </span>
@@ -48,7 +49,6 @@
 import eventBus from '../eventBus'
 import { ListLoader, InstagramLoader } from 'vue-content-loader'
 
-//<button v-if="basketItems.length > 0" class="" @click="order">Оформить заказ</button>
 export default {
     components: { InstagramLoader },
     data() {
