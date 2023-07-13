@@ -198,6 +198,22 @@ async function addOrder(
       },
     });
 
+    const request = {
+      valueInputOption: "USER_ENTERED",
+      data: [
+        {
+          range: "Заказы(бот)!R6:S6",
+          values: [["1", "2"]],
+        },
+      ],
+    };
+    sheets.spreadsheets.batchUpdate({
+      spreadsheetId,
+      resource: {
+        requests: [request],
+      },
+    });
+
     console.log(append_res);
 
     const lastIdRow = parseInt(
