@@ -106,6 +106,9 @@ export default {
         window.Telegram?.WebApp.BackButton.onClick(this.routeBack);
         window.Telegram?.WebApp.BackButton.show();
 
+        this.$store.state.userId = this.$store.state.userId ?? this.$route.params?.userId;
+
+
         window.Telegram?.WebApp.MainButton.onClick(this.order);
         window.Telegram?.WebApp.MainButton.enable();
         window.Telegram?.WebApp.MainButton.show();
