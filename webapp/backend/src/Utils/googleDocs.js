@@ -242,7 +242,7 @@ async function addOrder(
       },
     });
 
-    console.log("append_res", append_res.data.tableRange);
+    console.log("append_res", append_res);
 
     const lastIdRow = parseInt(
       append_res.data.tableRange
