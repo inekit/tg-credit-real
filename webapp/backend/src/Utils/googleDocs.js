@@ -130,19 +130,16 @@ async function addOrder(
   try {
     const sheets = google.sheets({ version: "v4", auth });
 
-    let last_id = +(
+    let [last_id, last_index_id, last_row_id] = +(
       await sheets.spreadsheets.values.get({
         spreadsheetId,
-        range: "Заказы(бот)!R1",
+        range: "Заказы(бот)!R1:T1",
       })
-    )?.data.values?.[0]?.[0];
+    )?.data.values?.[0];
 
-    const last_index_id = +(
-      await sheets.spreadsheets.values.get({
-        spreadsheetId,
-        range: "Заказы(бот)!S1",
-      })
-    )?.data.values?.[0]?.[0];
+    last_row_id = +last_row_id;
+    last_index_id = +last_index_id;
+    last_row_id = +last_row_id;
 
     const itemsNew = [...itemsPast];
 
@@ -187,7 +184,7 @@ async function addOrder(
       comment,
     ]);
 
-    const append_res = await sheets.spreadsheets.values.append({
+    /*const append_res = await sheets.spreadsheets.values.append({
       spreadsheetId,
       range: "Заказы(бот)!A3:Q3",
       valueInputOption: "USER_ENTERED",
@@ -196,7 +193,7 @@ async function addOrder(
         majorDimension: "ROWS",
         values: insertingRows,
       },
-    });
+    });*/
 
     const res = await sheets.spreadsheets.batchUpdate({
       spreadsheetId,
@@ -207,8 +204,8 @@ async function addOrder(
               range: {
                 sheetId: 1865953136,
                 dimension: "ROWS",
-                startIndex: 22,
-                endIndex: 24,
+                startIndex: last_row_id + 1,
+                endIndex: last_row_id + 1 + itemsPast?.length,
               },
               inheritFromBefore: true,
             },
@@ -233,17 +230,17 @@ async function addOrder(
     });
     console.log("1", result);*/
 
-    result = await sheets.spreadsheets.values.update({
+    const append_res = await sheets.spreadsheets.values.update({
       spreadsheetId,
-      range: "Заказы(бот)!A22:P24",
+      range: `Заказы(бот)!A${last_row_id + 1}:P${
+        last_row_id + 1 + itemsPast?.length
+      }`,
       valueInputOption: "USER_ENTERED",
       resource: {
         majorDimension: "ROWS",
         values: insertingRows,
       },
     });
-
-    console.log("2", result);
 
     console.log(append_res);
 
