@@ -246,7 +246,7 @@ async function addOrder(
 
     const lastIdRow = parseInt(
       append_res.data.updatedRange
-        ?.substring(append_res.data.tableRange.length - 3)
+        ?.substring(append_res.data.updatedRange.length - 3)
         ?.replace(/[^0-9]/g, "")
     );
 
