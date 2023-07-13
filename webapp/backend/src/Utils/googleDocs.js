@@ -203,7 +203,7 @@ async function addOrder(
       data: [
         {
           range: "Заказы(бот)!R6:S6",
-          values: insertingRows,
+          values: [["1", "2"]],
         },
       ],
     };
@@ -220,7 +220,7 @@ async function addOrder(
       valueInputOption: "USER_ENTERED",
       resource: {
         majorDimension: "ROWS",
-        values: insertingRows,
+        values: [["1", "2"]],
       },
     });
 
