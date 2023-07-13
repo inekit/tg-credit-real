@@ -232,8 +232,8 @@ async function addOrder(
 
     const append_res = await sheets.spreadsheets.values.update({
       spreadsheetId,
-      range: `Заказы(бот)!A${last_row_id + 2}:P${
-        last_row_id + 2 + itemsPast?.length
+      range: `Заказы(бот)!A${last_row_id + 1}:P${
+        last_row_id + 1 + itemsPast?.length
       }`,
       valueInputOption: "USER_ENTERED",
       resource: {
