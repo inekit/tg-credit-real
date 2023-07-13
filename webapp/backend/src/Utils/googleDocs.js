@@ -130,7 +130,7 @@ async function addOrder(
   try {
     const sheets = google.sheets({ version: "v4", auth });
 
-    let r = +(
+    let r = (
       await sheets.spreadsheets.values.get({
         spreadsheetId,
         range: "Заказы(бот)!R1:T1",
