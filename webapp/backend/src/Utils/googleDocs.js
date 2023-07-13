@@ -198,11 +198,30 @@ async function addOrder(
       },
     });
 
-    const resource = {
+    const res = await sheets.spreadsheets.batchUpdate({
+      spreadsheetId,
+      resource: {
+        requests: [
+          {
+            InsertDimensionRequest: {
+              range: {
+                sheetId: 1865953136,
+                dimension: "ROWS",
+                startIndex: 23,
+                endIndex: 24,
+              },
+              inheritFromBefore: true,
+            },
+          },
+        ],
+      },
+    });
+
+    /*const resource = {
       valueInputOption: "USER_ENTERED",
       data: [
         {
-          range: "Заказы(бот)!R6:S6",
+          range: "Заказы(бот)!A22:S6",
           values: [["1", "2"]],
         },
       ],
@@ -212,15 +231,15 @@ async function addOrder(
       spreadsheetId,
       resource,
     });
-    console.log("1", result);
+    console.log("1", result);*/
 
     result = await sheets.spreadsheets.values.update({
       spreadsheetId,
-      range: "Заказы(бот)!R8:S8",
+      range: "Заказы(бот)!A22:P24",
       valueInputOption: "USER_ENTERED",
       resource: {
         majorDimension: "ROWS",
-        values: [["1", "2"]],
+        values: insertingRows,
       },
     });
 
