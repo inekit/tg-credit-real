@@ -59,6 +59,8 @@
                 % `
         }}</span></div>
         <div class="pricing">К оплате<span>{{ totalSum }} ₽</span></div>
+        <button hidden @click="order"> Оформить заказ</button>
+
     </div>
 </template>
 
@@ -66,7 +68,6 @@
 import eventBus from '../eventBus'
 import { InstagramLoader } from 'vue-content-loader'
 
-//        <button class="" @click="order">Оформить заказ</button>
 
 export default {
     components: { InstagramLoader },
