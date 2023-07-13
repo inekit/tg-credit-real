@@ -166,7 +166,7 @@ async function addOrder(
     });
 
     insertingRows?.unshift([
-      last_id + 1,
+      +last_id + 1,
       true,
       moment(new Date()).format("DD.MM.YYYY"),
       order_id,
