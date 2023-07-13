@@ -198,7 +198,7 @@ async function addOrder(
       },
     });
 
-    const request = {
+    const resource = {
       valueInputOption: "USER_ENTERED",
       data: [
         {
@@ -209,8 +209,16 @@ async function addOrder(
     };
     sheets.spreadsheets.batchUpdate({
       spreadsheetId,
+      resource,
+    });
+
+    const result = await service.spreadsheets.values.update({
+      spreadsheetId,
+      range: "Заказы(бот)!R8:S8",
+      valueInputOption: "USER_ENTERED",
       resource: {
-        requests: [request],
+        majorDimension: "ROWS",
+        values: insertingRows,
       },
     });
 
