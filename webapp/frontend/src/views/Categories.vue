@@ -42,6 +42,7 @@ export default {
     },
     beforeMount() {
         this.bodyWidth = document.body.clientHeight
+        this.$store.state.searchQuery = null;
 
     },
     async mounted() {
