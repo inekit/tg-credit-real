@@ -55,13 +55,15 @@ class UsersService {
     });
   }
 
-  getAll({ id, page = 1, take = 10, isBasket, user_id }, ctx) {
+  getAll({ id, page = 1, take = 10, isBasket, user_id, searchQuery }, ctx) {
     return new Promise(async (res, rej) => {
       if (id) {
         return this.getOne({ id }, ctx)
           .then((data) => res(data))
           .catch((error) => rej(error));
       }
+
+      searchQuery = searchQuery ? `%${searchQuery}%` : null;
 
       const skip = (page - 1) * take;
 
@@ -76,7 +78,15 @@ class UsersService {
           left join order_items oi on o.id = oi.order_id  
           left join item_options io on oi.item_option_id = io.id  
           left join items i on io.item_id = i.id 
+          left join users u on user_id = u.id
           where (user_id = $3 or $3 is NULL)  
+          and (lower(username) like lower($1) 
+            or lower(o.id::varchar) like lower($1) 
+            or lower(patronymic) like lower($1) 
+            or lower(name) like lower($1) 
+            or lower(surname) like lower($1) 
+            or $1 is NULL)
+          )
           ${isBasket ? "" : `and status <> 'basket'`}
           GROUP BY o.id
           ORDER BY o.id DESC
@@ -111,6 +121,8 @@ class UsersService {
   ) {
     return new Promise(async (res, rej) => {
       if (!user_id) return rej(new NoInputDataError({ user_id }));
+
+      console.log("order_");
 
       const connection = await tOrmCon;
 
