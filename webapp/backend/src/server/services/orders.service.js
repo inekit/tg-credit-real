@@ -85,7 +85,7 @@ class UsersService {
             or lower(patronymic) like lower($1) 
             or lower(name) like lower($1) 
             or lower(surname) like lower($1) 
-            or $1 is NULL)
+            or $1 is NULL
           )
           ${isBasket ? "" : `and status <> 'basket'`}
           GROUP BY o.id
