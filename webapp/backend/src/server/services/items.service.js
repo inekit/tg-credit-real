@@ -61,7 +61,7 @@ class UsersService {
                 left join item_options io on p.id = io.item_id
                 left join order_items oi on io.id = oi.item_option_id
                 left join orders o on o.id = oi.order_id
-                where (lower(title) like lower($1) or $1 is NULL) 
+                where ((lower(title) like lower($1) or $1 is NULL) or (lower(io.name) like lower($1) or $1 is NULL))
                 and (p.category_name = $2 or $2 is NULL)  
                 and (p.id = $3 or $3 is NULL)  
                 and io.stock > 0
