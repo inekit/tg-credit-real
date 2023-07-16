@@ -35,7 +35,10 @@ export default {
     watch: {
         "$store.state.userId": async function (to) {
 
-        }
+        },
+        "$store.state.searchQuery": async function () {
+            this.$router.push("/results")
+        },
     },
     beforeMount() {
         this.bodyWidth = document.body.clientHeight
