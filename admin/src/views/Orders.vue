@@ -1,6 +1,7 @@
 <template>
   <div>
     <OrderModal :visible="formVisible" :formData="formData" :mode="formMode" />
+    <CFormInput class="mb-4" type="search" v-model="searchQuery" @change="get()" placeholder="Поиск" />
     <Table :key="tableKey" :fields="tableFieldNames" :postData="get" :actions="dataActions" :rows="rows" editMode="form"
       name="Теги" />
   </div>
@@ -76,6 +77,7 @@ export default {
           params: {
             take: take ?? 10,
             page: page ?? 1,
+            searchQuery: this.searchQuery
           },
         })
         .then((res) => {
