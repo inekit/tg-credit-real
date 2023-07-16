@@ -37,7 +37,7 @@ export default {
 
         },
         "$store.state.searchQuery": async function () {
-            this.$router.push("/results")
+            this.$router.push(`/results/${this.$store.state.userId}`)
         },
     },
     beforeMount() {
