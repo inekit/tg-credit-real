@@ -82,9 +82,9 @@ class UsersService {
           where (user_id = $3 or $3 is NULL)  
           and (lower(username) like lower($1) 
             or lower(o.id::varchar) like lower($1) 
-            or lower(patronymic) like lower($1) 
-            or lower(name) like lower($1) 
-            or lower(surname) like lower($1) 
+            or lower(o.patronymic) like lower($1) 
+            or lower(o.name) like lower($1) 
+            or lower(o.surname) like lower($1) 
             or $1 is NULL
           )
           ${isBasket ? "" : `and status <> 'basket'`}
