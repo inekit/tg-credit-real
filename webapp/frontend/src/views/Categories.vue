@@ -37,12 +37,12 @@ export default {
 
         },
         "$store.state.searchQuery": async function () {
-            this.$router.push(`/results/${this.$store.state.userId}`)
+            if (this.$store.state.searchQuery) this.$router.push(`/results/${this.$store.state.userId}`)
         },
     },
     beforeMount() {
         this.bodyWidth = document.body.clientHeight
-        this.$store.state.searchQuery = null;
+        if (this.$store.state.searchQuery) this.$store.state.searchQuery = null;
 
     },
     async mounted() {
