@@ -1,5 +1,6 @@
 <template>
   <div>
+    <CFormInput class="mb-4" type="search" v-model="searchQuery" @change="get" placeholder="Поиск" />
     <AddItemModal :visible="formVisible" :formData="formData" :mode="formMode" />
     <Table :fields="tableFieldNames" :postData="get" :actions="dataActions" :rows="rows" editMode="form" name="Позиции" />
   </div>
@@ -152,6 +153,7 @@ export default {
               ? [this.$route.params.tag]
               : undefined,
             category: this.$route.params.categoryName,
+            searchQuery: this.searchQuery
           },
         })
         .then((res) => {
