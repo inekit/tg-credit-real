@@ -1,4 +1,5 @@
 <template>
+    <searchBlock />
     <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 300 250"></InstagramLoader>
     <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 300 200"></InstagramLoader>
     <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 300 200"></InstagramLoader>

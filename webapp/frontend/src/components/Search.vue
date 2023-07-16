@@ -1,38 +1,6 @@
 <template>
     <div class="search-block">
         <input type="search" :value="$store.state.searchQuery" @change="openResults" placeholder="Поиск.." />
-        <div class="sort" @click="toggleSort">
-            <img :src="require('@/assets/img/sort.svg')" />
-        </div>
-        <div class="categories" @click="toggleCategories">
-            <img :src="require('@/assets/img/categories.svg')" />
-        </div>
-        <div ref="sort-list" class="sort-list">
-            <span>Сортировать по</span>
-            <div v-for="sort_value, sort_key in {
-                newing: 'Новизна', ascending: 'По возрастанию', descending: 'По убыванию'
-            }">
-                <label :for="sort_key">{{ sort_value }}</label>
-                <input :id="sort_key" :checked="sort_key === $store.state.filters.sort_type" @click="changeSort"
-                    type="radio" name="project-name" :value="sort_key" />
-            </div>
-        </div>
-        <div ref="categories-list" class="categories-list">
-            <span>Категория</span>
-            <div>
-                <input id="null-name" :checked="!$store.state.filters.category_name" @click="changeCategory" type="radio"
-                    name="project-name" value="" />
-                <label for="null-name">Все категории</label>
-            </div>
-            <div v-for="category in categories" :key="category.name">
-                <input :id="category.name" :checked="category.name === $store.state.filters.category_name"
-                    @change="changeCategory" type="radio" name="project-name" :value="category.name"
-                    :label="category.name" />
-                <label :for="category.name">{{ category.name }}</label>
-            </div>
-        </div>
-        <div ref="close-block" class="close-block" @click="closeAll"></div>
-
     </div>
 </template>
   
@@ -46,7 +14,6 @@ export default {
         }
     },
     async beforeMount() {
-        this.categories = await this.getCategories()
         let uri = window.location.search.substring(1);
         this.params = new URLSearchParams(uri)
         this.$store.state.filters = { category_name: this.params.get('category'), sort_type: this.params.get('sort') ?? "newing" }
@@ -61,45 +28,6 @@ export default {
             if (this.$route.name === "Filters" || this.$route.name === "Cities")
                 this.$router.push('/results/' + this.$route.params.city)
 
-        },
-        async getCategories() {
-            return await this.$store.state.myApi
-                .get(this.$store.state.restAddr + '/categories')
-                .then((res) => {
-                    return res.data
-                })
-                .catch((error) => {
-                    eventBus.$emit('noresponse', error)
-                })
-        },
-        toggleCategories() {
-            this.$refs['categories-list'].classList.toggle("shown")
-            this.$refs['close-block'].classList.toggle("shown")
-            document.body.classList.toggle("h-100")
-        },
-        toggleSort() {
-            this.$refs['sort-list'].classList.toggle("shown")
-            this.$refs['close-block'].classList.toggle("shown")
-            document.body.classList.toggle("h-100")
-        },
-        closeAll() {
-            this.$refs['sort-list'].classList.remove("shown")
-            this.$refs['categories-list'].classList.remove("shown")
-            this.$refs['close-block'].classList.remove("shown")
-        },
-        changeSort(e) {
-            this.$store.state.filters = { category_name: this.$store.state.filters.category_name, sort_type: e.target.value }
-            const searchURL = new URL(window.location);
-            searchURL.searchParams.set('sort', e.target.value);
-            window.history.pushState({}, '', searchURL);
-            this.toggleSort()
-        },
-        changeCategory(e) {
-            this.$store.state.filters = { sort_type: this.$store.state.filters.sort_type, category_name: e.target.value }
-            const searchURL = new URL(window.location);
-            searchURL.searchParams.set('category', e.target.value);
-            window.history.pushState({}, '', searchURL);
-            this.toggleCategories()
         },
         clickInput() {
             document.activeElement.blur();
