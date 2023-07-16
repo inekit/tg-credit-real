@@ -80,18 +80,18 @@ class UsersService {
           left join items i on io.item_id = i.id 
           left join users u on user_id = u.id
           where (user_id = $3 or $3 is NULL)  
-          and (lower(username) like lower($1) 
-            or lower(o.id::varchar) like lower($1) 
-            or lower(o.patronymic) like lower($1) 
-            or lower(o.name) like lower($1) 
-            or lower(o.surname) like lower($1) 
+          and (lower(username) like lower($4) 
+            or lower(o.id::varchar) like lower($4) 
+            or lower(o.patronymic) like lower($4) 
+            or lower(o.name) like lower($4) 
+            or lower(o.surname) like lower($4) 
             or $1 is NULL
           )
           ${isBasket ? "" : `and status <> 'basket'`}
           GROUP BY o.id
           ORDER BY o.id DESC
           LIMIT $1 OFFSET $2`,
-          [take, skip, user_id]
+          [take, skip, user_id, searchQuery]
         )
         .then(async (data) => {
           return res(data);
