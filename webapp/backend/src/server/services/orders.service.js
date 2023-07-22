@@ -150,6 +150,22 @@ class UsersService {
         )[0];
         if (basket.count_items < 1) throw new Error("No items");
 
+        const limits = queryRunner.query(
+          `select 
+            COUNT(CASE WHEN creation_date >= date_trunc('minute',now() - interval '10 minute') THEN 1 END) count_o_m,
+            COUNT(CASE WHEN creation_date >= date_trunc('day',now() - interval '1 day') THEN 1 END) count_o_d,
+            EXTRACT(MINUTE FROM now()-MAX(creation_date)) AS last_o_m_ago
+           from orders where user_id = $1`,
+          [user_id]
+        );
+
+        const { count_o_m, count_o_d, last_o_m_ago } = limits?.[0] ?? {};
+
+        if (count_o_d >= 10) {
+          throw new Error("Too much orders a day");
+        } else if (count_o_m >= 2)
+          throw new Error("Too much orders for 10 minutes");
+
         const basket_id = basket.id;
 
         for (let item of basket.items) {
@@ -371,28 +387,11 @@ class UsersService {
           )
           .catch(console.log);
 
-        const { count_o_m, count_o_d } = (
-          await connection
-            .query(
-              `select 
-                COUNT(CASE WHEN creation_date >= date_trunc('minute',now() - interval '10 minute') THEN 1 END) count_o_m,
-                COUNT(CASE WHEN creation_date >= date_trunc('day',now() - interval '1 day') THEN 1 END) count_o_d,
-               from orders where user_id = $1`,
-              [user_id]
-            )
-            .catch((e) => {
-              console.log(e);
-              ctx.replyWithTitle("DB_ERROR");
-            })
-        )?.[0];
-
-        console.log(count_o_d, count_o_m);
-
-        if (count_o_d >= 10) {
+        if (count_o_d >= 9) {
           await ctx.telegram
             .sendMessage(user_id, ctx.getTitle("TOO_MUCH_ORDERS_DAY", []))
             .catch(console.log);
-        } else if (count_o_m >= 2) {
+        } else if (count_o_m >= 1) {
           await ctx.telegram
             .sendMessage(user_id, ctx.getTitle("TOO_MUCH_ORDERS_MINUTES", []))
             .catch(console.log);
