@@ -150,7 +150,7 @@ class UsersService {
         )[0];
         if (basket.count_items < 1) throw new Error("No items");
 
-        const limits = queryRunner.query(
+        const limits = await queryRunner.query(
           `select 
             COUNT(CASE WHEN creation_date >= date_trunc('minute',now() - interval '10 minute') THEN 1 END) count_o_m,
             COUNT(CASE WHEN creation_date >= date_trunc('day',now() - interval '1 day') THEN 1 END) count_o_d,
