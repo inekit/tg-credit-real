@@ -161,6 +161,8 @@ class UsersService {
 
         const { count_o_m, count_o_d, last_o_m_ago } = limits?.[0] ?? {};
 
+        console.log(count_o_d, count_o_m, last_o_m_ago);
+
         if (count_o_d >= 10) {
           throw new Error("Too much orders a day");
         } else if (count_o_m >= 2)
