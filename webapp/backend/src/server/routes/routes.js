@@ -18,6 +18,7 @@ module.exports = (ctx) => {
 
   router.get("/basket_data", BasketsController.getBasketData);
   router.post("/orders", OrdersController.addOne(ctx));
+  router.get("/can_order", OrdersController.canOrder);
 
   router.get("/delivery_price", DeliveryController.get);
 

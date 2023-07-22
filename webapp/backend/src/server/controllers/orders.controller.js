@@ -49,6 +49,14 @@ function dropItem(req, res, next) {
     .then((data) => res.send(data))
     .catch((error) => next(error));
 }
+
+function canOrder(req, res, next) {
+  ordersService
+    .canOrder(req.query)
+    .then((data) => res.send(data))
+    .catch((error) => next(error));
+}
+
 module.exports = {
   getAll,
   addOne,
@@ -56,4 +64,5 @@ module.exports = {
   deleteOne,
   dropItem,
   editItem,
+  canOrder,
 };

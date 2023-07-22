@@ -133,7 +133,21 @@ export default {
                 .catch(e => { eventBus.$emit('noresponse', e) })
         },
         order() {
-            this.$router.push("/order")
+            this.$store.state.myApi.get(this.$store.state.restAddr + "can_order", {
+                params: {
+                    user_id: this.$store.state.userId,
+
+                }
+            })
+                .then(response => {
+                    if (response.data.can_order)
+                        this.$router.push("/order")
+
+                    else if (response.data.reason === "minutes")
+                        alert("Вы совершили два заказа подряд. Подождите 10 минут, чтобы сделать следующий")
+                    else alert("Вы создали слишком много заказов сегодня. Подождите до завтра, чтобы создать следующий")
+                })
+                .catch(e => { eventBus.$emit('noresponse', e) })
         },
         routeBack() {
             this.$router.go(-1)
