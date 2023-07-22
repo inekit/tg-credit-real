@@ -159,6 +159,8 @@ class UsersService {
           [user_id]
         );
 
+        console.log(limits);
+
         const { count_o_m, count_o_d, last_o_m_ago } = limits?.[0] ?? {};
 
         console.log(count_o_d, count_o_m, last_o_m_ago);
