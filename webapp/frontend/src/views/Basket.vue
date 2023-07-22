@@ -133,7 +133,7 @@ export default {
                 .catch(e => { eventBus.$emit('noresponse', e) })
         },
         order() {
-            this.$store.state.myApi.get(this.$store.state.restAddr + "can_order", {
+            this.$store.state.myApi.get(this.$store.state.restAddr + "/can_order", {
                 params: {
                     user_id: this.$store.state.userId,
 
