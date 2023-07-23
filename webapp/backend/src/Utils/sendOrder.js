@@ -31,8 +31,6 @@ module.exports = async function sendOrder(
     last_message_id,
   } = orderData;
 
-  console.log("upd54");
-
   const statuses =
     status === "Завершен" || status === "Отменен"
       ? []
@@ -91,8 +89,6 @@ module.exports = async function sendOrder(
 
   let message;
 
-  console.log("upd5");
-
   if (!edit)
     if (is_payment)
       message = await ctx.telegram
@@ -141,8 +137,6 @@ module.exports = async function sendOrder(
       .catch((e) => {
         console.log(e);
       });
-
-  console.log("upd6");
 
   if (is_payment && !edit) {
     await ctx.telegram

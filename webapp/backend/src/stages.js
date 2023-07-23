@@ -233,8 +233,6 @@ mainStage.action(/^cancel\_([0-9]+)$/g, async (ctx) => {
   );
 
   await ctx.answerCbQuery().catch((e) => {});
-
-  console.log("upd228");
 });
 
 /*mainStage.on("web_app_data", (ctx) => {
