@@ -229,7 +229,7 @@ mainStage.action(/^cancel\_([0-9]+)$/g, async (ctx) => {
     Object.assign(orderData, { username }),
     items,
     true,
-    is_photo
+    false
   );
 
   await ctx.answerCbQuery().catch((e) => {});
