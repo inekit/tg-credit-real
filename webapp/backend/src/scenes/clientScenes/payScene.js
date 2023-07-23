@@ -62,11 +62,41 @@ scene.addStep({
       .then(async (res) => {
         ctx.scene.state.sent = true;
 
+        const order_data = res?.[0]?.[0];
+
         ctx.replyWithTitle("GM_SENT");
+
+        let orderStr = items?.[0].title
+          ? items?.map((el) => `📦 ${el.title} - ${el.count} (шт.)`)?.join("\n")
+          : "";
+
+        orderStr = orderStr ?? "Нет позиций";
+
+        await ctx.telegram
+          .editMessageText(
+            user_id,
+            order_data.client_message_id,
+            ctx.getTitle("ORDER_INFO_TITLE", [
+              order_id,
+              moment(order_data.creation_date).format("DD.MM.YYYY"),
+              orderStr,
+              "Оплачен",
+              order_data.selected_dm,
+              order_data.total,
+            ]),
+            {
+              //reply_markup: keyboard,
+              parse_mode: "HTML",
+            }
+          )
+          .catch((e) => {
+            console.log(e);
+            ctx.answerCbQuery().catch((e) => {});
+          });
 
         await sendOrder(
           ctx,
-          Object.assign(res?.[0]?.[0], { username: ctx.from.username }),
+          Object.assign(order_data, { username: ctx.from.username }),
           items,
           false,
           true

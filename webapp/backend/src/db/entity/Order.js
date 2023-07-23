@@ -105,6 +105,10 @@ module.exports = new EntitySchema({
       type: "bigint",
       nullable: true,
     },
+    client_message_id: {
+      type: "bigint",
+      nullable: true,
+    },
   },
   relations: {
     user: {

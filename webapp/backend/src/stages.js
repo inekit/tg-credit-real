@@ -126,6 +126,102 @@ mainStage.action(/^pay\_([0-9]+)$/g, async (ctx) => {
   ctx.scene.enter("payScene", { order_id: ctx.match[1] });
 });
 
+mainStage.action(/^cancel\_([0-9]+)$/g, async (ctx) => {
+  await ctx.answerCbQuery().catch((e) => {});
+
+  const order_id = ctx.match[1];
+
+  const [res, is_updated] = await connection
+    .query("update orders set status = $1 where id = $2 returning *", [
+      "Отменен",
+      order_id,
+    ])
+    .catch((e) => console.log(e));
+
+  const items = (
+    await connection
+      .query(
+        `select 
+      json_agg(json_build_object('title', i.title,'count',oi.count, 'id', io.id, 'price', i.price,'stock', io.stock,
+      'sale_count', sale_count, 'sale_price', sale_price, 'option_name',io.name)) items 
+      from orders o 
+      left join order_items oi on o.id = oi.order_id  
+      left join item_options io on oi.item_option_id = io.id  
+      left join items i on io.item_id = i.id 
+      where o.id = $1
+      group by o.id
+      limit 1`,
+        [order_id]
+      )
+      .catch((e) => console.log(e))
+  )[0].items;
+
+  if (!is_updated)
+    return await ctx
+      .answerCbQuery(ctx.getTitle("CANT_CHANGE_STATUS"))
+      .catch((e) => {});
+
+  const orderData = res?.[0];
+
+  const username = (
+    await connection.query(`select * from  users u  where u.id = $1`, [
+      orderData.user_id,
+    ])
+  )?.[0]?.username;
+
+  googleDocs.dropOrder(+order_id);
+
+  ctx.telegram
+    .sendMessage(
+      orderData.user_id,
+      ctx.getTitle("ORDER_NEW_STATUS_TITLE", [
+        orderData.id,
+        moment(orderData.creation_date).format("DD.MM.YYYY"),
+        orderData.status,
+      ]),
+      {
+        parse_mode: "HTML",
+      }
+    )
+    .catch(console.log);
+
+  const orderStr =
+    items
+      ?.map((el) =>
+        el.id ? `📦 ${el.title} ${el.option_name} - ${el.count} (шт.)` : ""
+      )
+      ?.join("\n") ?? "";
+
+  await ctx.telegram
+    .editMessageText(
+      orderData.user_id,
+      orderData.client_message_id,
+      ctx.getTitle("ORDER_INFO_TITLE", [
+        order_id,
+        moment(orderData.creation_date).format("DD.MM.YYYY"),
+        orderStr,
+        "Новый",
+        orderData.selected_dm,
+        orderData.total,
+      ]),
+      {
+        //reply_markup: keyboard,
+        parse_mode: "HTML",
+      }
+    )
+    .catch((e) => {
+      console.log(e);
+    });
+
+  await sendOrder(
+    ctx,
+    Object.assign(orderData, { username }),
+    items,
+    true,
+    is_photo
+  );
+});
+
 /*mainStage.on("web_app_data", (ctx) => {
   console.log(ctx);
   ctx.replyWithTitle("ITEM_INFO_TITLE");

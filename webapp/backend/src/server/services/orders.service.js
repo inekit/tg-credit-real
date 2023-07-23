@@ -332,10 +332,6 @@ class UsersService {
           items: basket.items,
         });
 
-        await queryRunner.commitTransaction();
-        global.io.emit("UPDATE_ORDERS");
-        res(data);
-
         const orderStr =
           basket.items
             ?.map((el) =>
@@ -361,7 +357,7 @@ class UsersService {
           })
           .catch(console.log);*/
 
-        await ctx.telegram
+        const client_message = await ctx.telegram
           .sendMessage(
             user_id,
             ctx.getTitle("ORDER_INFO_TITLE", [
@@ -384,12 +380,29 @@ class UsersService {
                             callback_data: "pay_" + order_id,
                           },
                         ],
+                        [
+                          {
+                            text: "Отменить",
+                            callback_data: "cancel_" + order_id,
+                          },
+                        ],
                       ]
                     : [],
               },
             }
           )
           .catch(console.log);
+
+        await queryRunner
+          .query("update orders set client_message_id = $1 where id = $2", [
+            client_message?.message_id,
+            order_id,
+          ])
+          .catch((e) => console.log(e));
+
+        await queryRunner.commitTransaction();
+        global.io.emit("UPDATE_ORDERS");
+        res(data);
 
         if (count_o_d >= 9) {
           await ctx.telegram

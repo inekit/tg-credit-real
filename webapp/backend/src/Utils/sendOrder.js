@@ -110,8 +110,10 @@ module.exports = async function sendOrder(
           console.log(e);
         });
   else if (is_payment)
-    message = await ctx
+    message = await ctx.telegram
       .editMessageMedia(
+        process.env.ADMIN_ID,
+        last_message_id,
         {
           type: "photo",
           media: reciept_photo_id,
@@ -127,8 +129,11 @@ module.exports = async function sendOrder(
         ctx.answerCbQuery().catch((e) => {});
       });
   else
-    message = await ctx
-      .editMessageText(title, { reply_markup: keyboard, parse_mode: "HTML" })
+    message = await ctx.telegram
+      .editMessageText(process.env.ADMIN_ID, last_message_id, title, {
+        reply_markup: keyboard,
+        parse_mode: "HTML",
+      })
       .catch((e) => {
         console.log(e);
         ctx.answerCbQuery().catch((e) => {});

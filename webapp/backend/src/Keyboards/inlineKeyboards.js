@@ -331,6 +331,7 @@ exports.payment_keyboard = (ctx, order_id) =>
     order_id
       ? [
           [callbackButton("Оплатить", "pay_" + order_id)],
+          [callbackButton("Отменить", "cancel_" + order_id)],
           [callbackButton(ctx.getTitle("BACK_BUTTON"), "go_back")],
         ]
       : [[callbackButton(ctx.getTitle("BACK_BUTTON"), "go_back")]]
