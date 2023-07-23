@@ -232,7 +232,7 @@ mainStage.action(/^cancel\_([0-9]+)$/g, async (ctx) => {
     is_photo
   );
 
-  console.log("upd5");
+  console.log("upd228");
 });
 
 /*mainStage.on("web_app_data", (ctx) => {

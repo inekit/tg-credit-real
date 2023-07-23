@@ -89,6 +89,8 @@ module.exports = async function sendOrder(
 
   let message;
 
+  console.log("upd5");
+
   if (!edit)
     if (is_payment)
       message = await ctx.telegram
@@ -127,7 +129,6 @@ module.exports = async function sendOrder(
       )
       .catch((e) => {
         console.log(e);
-        ctx.answerCbQuery().catch((e) => {});
       });
   else
     message = await ctx.telegram
@@ -137,10 +138,9 @@ module.exports = async function sendOrder(
       })
       .catch((e) => {
         console.log(e);
-        ctx.answerCbQuery().catch((e) => {});
       });
 
-  console.log(message);
+  console.log("upd6");
 
   if (is_payment && !edit) {
     await ctx.telegram
