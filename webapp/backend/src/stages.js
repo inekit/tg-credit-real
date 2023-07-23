@@ -118,6 +118,8 @@ mainStage.action(/^status\_([0-9]+)\_(.+)\_([0-9])$/g, async (ctx) => {
     true,
     is_photo
   );
+
+  await ctx.answerCbQuery().catch((e) => {});
 });
 
 mainStage.action(/^pay\_([0-9]+)$/g, async (ctx) => {
@@ -127,8 +129,6 @@ mainStage.action(/^pay\_([0-9]+)$/g, async (ctx) => {
 });
 
 mainStage.action(/^cancel\_([0-9]+)$/g, async (ctx) => {
-  await ctx.answerCbQuery().catch((e) => {});
-
   const connection = await tOrmCon;
 
   const order_id = ctx.match[1];
@@ -231,6 +231,8 @@ mainStage.action(/^cancel\_([0-9]+)$/g, async (ctx) => {
     true,
     is_photo
   );
+
+  await ctx.answerCbQuery().catch((e) => {});
 
   console.log("upd228");
 });
