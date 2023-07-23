@@ -31,6 +31,8 @@ module.exports = async function sendOrder(
     last_message_id,
   } = orderData;
 
+  console.log("upd54");
+
   const statuses =
     status === "Завершен" || status === "Отменен"
       ? []
