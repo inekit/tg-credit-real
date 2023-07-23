@@ -77,6 +77,7 @@ scene.addStep({
           .editMessageText(
             order_data.user_id,
             order_data.client_message_id,
+            null,
             ctx.getTitle("ORDER_INFO_TITLE", [
               order_id,
               moment(order_data.creation_date).format("DD.MM.YYYY"),
