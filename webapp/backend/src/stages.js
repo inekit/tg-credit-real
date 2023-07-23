@@ -158,6 +158,8 @@ mainStage.action(/^cancel\_([0-9]+)$/g, async (ctx) => {
       .catch((e) => console.log(e))
   )[0].items;
 
+  console.log("upd1");
+
   if (!is_updated)
     return await ctx
       .answerCbQuery(ctx.getTitle("CANT_CHANGE_STATUS"))
@@ -187,12 +189,16 @@ mainStage.action(/^cancel\_([0-9]+)$/g, async (ctx) => {
     )
     .catch(console.log);
 
+  console.log("upd2");
+
   const orderStr =
     items
       ?.map((el) =>
         el.id ? `📦 ${el.title} ${el.option_name} - ${el.count} (шт.)` : ""
       )
       ?.join("\n") ?? "";
+
+  console.log("upd3");
 
   await ctx.telegram
     .editMessageText(
@@ -216,6 +222,8 @@ mainStage.action(/^cancel\_([0-9]+)$/g, async (ctx) => {
       console.log(e);
     });
 
+  console.log("upd4");
+
   await sendOrder(
     ctx,
     Object.assign(orderData, { username }),
@@ -223,6 +231,8 @@ mainStage.action(/^cancel\_([0-9]+)$/g, async (ctx) => {
     true,
     is_photo
   );
+
+  console.log("upd5");
 });
 
 /*mainStage.on("web_app_data", (ctx) => {
