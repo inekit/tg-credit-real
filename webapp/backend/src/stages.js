@@ -196,6 +196,7 @@ mainStage.action(/^cancel\_([0-9]+)$/g, async (ctx) => {
     .editMessageText(
       orderData.user_id,
       orderData.client_message_id,
+      null,
       ctx.getTitle("ORDER_INFO_TITLE", [
         order_id,
         moment(orderData.creation_date).format("DD.MM.YYYY"),

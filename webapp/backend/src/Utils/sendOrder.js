@@ -114,6 +114,7 @@ module.exports = async function sendOrder(
       .editMessageMedia(
         process.env.ADMIN_ID,
         last_message_id,
+        null,
         {
           type: "photo",
           media: reciept_photo_id,
@@ -130,7 +131,7 @@ module.exports = async function sendOrder(
       });
   else
     message = await ctx.telegram
-      .editMessageText(process.env.ADMIN_ID, last_message_id, title, {
+      .editMessageText(process.env.ADMIN_ID, last_message_id, null, title, {
         reply_markup: keyboard,
         parse_mode: "HTML",
       })
