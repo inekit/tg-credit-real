@@ -74,7 +74,7 @@ scene.addStep({
 
         await ctx.telegram
           .editMessageText(
-            user_id,
+            order_data.user_id,
             order_data.client_message_id,
             ctx.getTitle("ORDER_INFO_TITLE", [
               order_id,
