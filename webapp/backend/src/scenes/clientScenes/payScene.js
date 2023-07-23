@@ -82,7 +82,7 @@ scene.addStep({
               order_id,
               moment(order_data.creation_date).format("DD.MM.YYYY"),
               orderStr,
-              "Оплачен",
+              "Новый",
               order_data.selected_dm,
               order_data.total,
             ]),
