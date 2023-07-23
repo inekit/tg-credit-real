@@ -129,6 +129,8 @@ mainStage.action(/^pay\_([0-9]+)$/g, async (ctx) => {
 mainStage.action(/^cancel\_([0-9]+)$/g, async (ctx) => {
   await ctx.answerCbQuery().catch((e) => {});
 
+  const connection = await tOrmCon;
+
   const order_id = ctx.match[1];
 
   const [res, is_updated] = await connection
