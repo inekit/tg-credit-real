@@ -209,7 +209,7 @@ mainStage.action(/^cancel\_([0-9]+)$/g, async (ctx) => {
         order_id,
         moment(orderData.creation_date).format("DD.MM.YYYY"),
         orderStr,
-        "Новый",
+        "Отменен",
         orderData.selected_dm,
         orderData.total,
       ]),
