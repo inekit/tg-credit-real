@@ -8,10 +8,11 @@
             <CTableHead color="light">
               <CTableRow>
                 <CTableHeaderCell v-for="f in    fieldsTransformed   " :key="f.name + 'header'" class="text-center"
-                  :class="[f.order ? 'orderable' : '', f.name === currentOrder ? 'current' : '', orderDesc === true ? 'desc' : '']"
-                  @click="changeOrder(f)">
+                  :class="[f.order ? 'orderable' : '',
+                  f.name === currentOrder ? 'current' : '',
+                  orderDesc === true && f.name === currentOrder ? 'desc' : '']" @click="changeOrder(f)">
+                  <div class="order-toggle"><img :src="require('@/assets/images/arrow_up.svg')" /></div>
                   {{ f.title }}
-                  <div class="order-toggle">tgl</div>
                 </CTableHeaderCell>
                 <CTableHeaderCell class="text-center">Действия</CTableHeaderCell>
               </CTableRow>
