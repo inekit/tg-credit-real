@@ -114,7 +114,7 @@ export default {
       this.postData(this.perPage, this.page)
     },
     lastPage() {
-      this.page = lastPageNumber
+      this.page = this.lastPageNumber
       this.postData(this.perPage, this.page)
     },
     editRow(i) {
