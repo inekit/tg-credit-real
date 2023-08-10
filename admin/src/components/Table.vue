@@ -170,13 +170,15 @@ th:not(.orderable)>.order-toggle {
 
 }
 
-th.orderable>.order-toggle {
-  img {
-    height: 15px;
-    transition: 0.1s;
+th.orderable {
+  &>.order-toggle {
+    img {
+      height: 15px;
+      transition: 0.1s;
+    }
   }
 
-  &.desc>img {
+  &.desc img {
     transform: rotate(180);
   }
 }
