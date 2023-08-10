@@ -11,8 +11,8 @@
                   :class="[f.order ? 'orderable' : '',
                   f.name === currentOrder ? 'current' : '',
                   orderDesc === true && f.name === currentOrder ? 'desc' : '']" @click="changeOrder(f)">
-                  <div class="order-toggle"><img :src="require('@/assets/images/arrow_up.svg')" /></div>
                   {{ f.title }}
+                  <div class="order-toggle"><img :src="require('@/assets/images/arrow_up.svg')" /></div>
                 </CTableHeaderCell>
                 <CTableHeaderCell class="text-center">Действия</CTableHeaderCell>
               </CTableRow>
@@ -167,5 +167,18 @@ export default {
 
 th:not(.orderable)>.order-toggle {
   display: none;
+
+}
+
+th.orderable>.order-toggle {
+  img {
+    height: 15px;
+    transition: 0.1s;
+
+    &.desc {
+      transform: rotate(180);
+    }
+  }
+
 }
 </style>
