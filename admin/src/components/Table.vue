@@ -7,14 +7,15 @@
           <CTable align="middle" class="mb-0 border" hover responsive>
             <CTableHead color="light">
               <CTableRow>
-                <CTableHeaderCell v-for="fn in fieldNames" :key="fn + 'header'" class="text-center">{{ fn }}
+                <CTableHeaderCell v-for="f in   fieldsTransformed  " :key="f.name + 'header'" class="text-center"
+                  :class="[f.order ? 'orderabe' : '']">{{ f.name }}
                 </CTableHeaderCell>
                 <CTableHeaderCell class="text-center">Действия</CTableHeaderCell>
               </CTableRow>
             </CTableHead>
             <CTableBody>
-              <CTableRow v-for="(row, i) in transformData(rows)" :key="i + 'row'">
-                <CTableDataCell v-for="(column, j) in row" :key="j + 'row'" class="text-center">
+              <CTableRow v-for="(  row, i  ) in   transformData(rows)  " :key="i + 'row'">
+                <CTableDataCell v-for="(  column, j  ) in   row  " :key="j + 'row'" class="text-center">
                   <CFormInput v-if="updatingId === rows[i]?.id" v-model="formData[fields[j]?.name]" />
                   <span v-else>{{ column }}</span>
                 </CTableDataCell>
@@ -24,8 +25,8 @@
                       Сохранить</CButton>
                     <CButton v-if="updatingId === rows[i]?.id" :color="'light'" size="md" @click="updatingId = false">
                       Отменить</CButton>
-                    <CButton v-else v-for="(info, name) in actions" :key="name + 'action'" :color="info?.color" size="sm"
-                      @click="chooseAction(name, info, i, j, column)">{{ name }}</CButton>
+                    <CButton v-else v-for="(  info, name  ) in   actions  " :key="name + 'action'" :color="info?.color"
+                      size="sm" @click="chooseAction(name, info, i, j, column)">{{ name }}</CButton>
                   </div>
                 </CTableDataCell>
               </CTableRow>
@@ -73,17 +74,20 @@ export default {
   },
   data() {
     return {
-      fieldNames: [],
+      fieldsTransformed: [],
       perPage: 10,
       page: 1,
       updatingId: false,
       formData: {},
+      orderDesc: false,
+
     }
   },
   async mounted() {
-    this.fieldNames = this.fields.map((el) => {
-      if (typeof el === 'object') return el.title ?? el.name
-      else return el
+    this.fieldsTransformed = this.fields.map((el) => {
+      if (typeof el === 'object') el.name = el.title ?? el.name
+      else el = { name: el }
+      return el;
     })
 
     await this.postData(this.perPage, this.page)

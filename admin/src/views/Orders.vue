@@ -59,14 +59,17 @@ export default {
         {
           name: 'orders_count',
           title: 'Кол-во заказов клиента',
+          order: true,
         },
         {
           name: 'creation_date',
           title: 'Дата создания',
+          order: true,
         },
         {
           name: 'status',
           title: 'Статус',
+          order: true,
         },
       ],
     }
