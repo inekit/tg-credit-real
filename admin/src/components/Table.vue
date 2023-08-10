@@ -129,6 +129,7 @@ export default {
       this.postData(this.perPage, this.page, this.currentOrder, this.orderDesc)
     },
     changeOrder(field) {
+      if (!field.order) return;
       this.page = 1;
       if (this.currentOrder === field.name) this.orderDesc = !this.orderDesc
       else { this.currentOrder = field.name; this.orderDesc = true }
