@@ -8,7 +8,7 @@
             <CTableHead color="light">
               <CTableRow>
                 <CTableHeaderCell v-for="f in   fieldsTransformed  " :key="f.name + 'header'" class="text-center"
-                  :class="[f.order ? 'orderabe' : '']">{{ f.name }}
+                  :class="[f.order ? 'orderable' : '']">{{ f.title }}
                 </CTableHeaderCell>
                 <CTableHeaderCell class="text-center">Действия</CTableHeaderCell>
               </CTableRow>
@@ -85,7 +85,7 @@ export default {
   },
   async mounted() {
     this.fieldsTransformed = this.fields.map((el) => {
-      if (typeof el === 'object') el.name = el.title ?? el.name
+      if (typeof el === 'object') el.title = el.title ?? el.name
       else el = { name: el }
       return el;
     })
