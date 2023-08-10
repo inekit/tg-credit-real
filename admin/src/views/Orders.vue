@@ -140,7 +140,7 @@ export default {
             data: { id: item.id },
           })
           .then(() => {
-            this.get(null, null, null, true)
+            this.get(null, null, "id", true)
             this.getPageCount()
             //this.rows = this.rows.filter((el) => el.id !== id)
             eventBus.$emit('orderDeleted')
