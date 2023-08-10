@@ -178,10 +178,13 @@ th.orderable {
     }
   }
 
-  &.desc img {
-    transform: rotate(180deg);
+  &.current img {
     background-color: #7db3ff;
     border-radius: 100px;
+  }
+
+  &.desc img {
+    transform: rotate(180deg);
   }
 }
 </style>
