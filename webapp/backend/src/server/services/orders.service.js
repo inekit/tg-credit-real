@@ -74,7 +74,7 @@ class UsersService {
             or lower(o.patronymic) like lower($1) 
             or lower(o.name) like lower($1) 
             or lower(o.surname) like lower($1) 
-            or $4 is NULL
+            or $1 is NULL
           )
           and o.status <> 'basket'
           GROUP BY o.id,u.username
