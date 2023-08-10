@@ -95,13 +95,15 @@ export default {
       this.formData = elObj
       this.formMode = 'edit'
     },
-    get(take, page) {
+    get(take, page, order, orderDesc) {
       return myApi
         .get(this.$store.state.publicPath + '/api/admin/orders/', {
           params: {
             take: take ?? 10,
             page: page ?? 1,
-            searchQuery: this.searchQuery
+            searchQuery: this.searchQuery,
+            order,
+            orderDesc
           },
         })
         .then((res) => {

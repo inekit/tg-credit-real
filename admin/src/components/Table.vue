@@ -8,7 +8,8 @@
             <CTableHead color="light">
               <CTableRow>
                 <CTableHeaderCell v-for="f in   fieldsTransformed  " :key="f.name + 'header'" class="text-center"
-                  :class="[f.order ? 'orderable' : '']">{{ f.title }}
+                  :class="[f.order ? 'orderable' : '']" @click="changeOrder(f.order)">{{ f.title }}
+                  <div class="order-toggle">tgl</div>
                 </CTableHeaderCell>
                 <CTableHeaderCell class="text-center">Действия</CTableHeaderCell>
               </CTableRow>
@@ -80,7 +81,7 @@ export default {
       updatingId: false,
       formData: {},
       orderDesc: false,
-
+      currentOrder: "id",
     }
   },
   async mounted() {
@@ -90,7 +91,7 @@ export default {
       return el;
     })
 
-    await this.postData(this.perPage, this.page)
+    await this.postData(this.perPage, this.page, this.currentOrder, this.orderDesc)
     await this.getPageCount()
   },
   methods: {
@@ -104,24 +105,30 @@ export default {
       } else info?.action(this.rows[rowId])
     },
     async nextPage() {
-      const data = await this.postData(this.perPage, this.page + 1)
+      const data = await this.postData(this.perPage, this.page + 1, this.currentOrder, this.orderDesc)
       if (data?.length > 0) this.page++
     },
     previousPage() {
       if (this.page > 1) this.page--
-      this.postData(this.perPage, this.page)
+      this.postData(this.perPage, this.page, this.currentOrder, this.orderDesc)
     },
     toPage(n) {
       this.page = n
-      this.postData(this.perPage, this.page)
+      this.postData(this.perPage, this.page, this.currentOrder, this.orderDesc)
     },
     firstPage() {
       this.page = 1
-      this.postData(this.perPage, this.page)
+      this.postData(this.perPage, this.page, this.currentOrder, this.orderDesc)
     },
     lastPage() {
       this.page = this.lastPageNumber
-      this.postData(this.perPage, this.page)
+      this.postData(this.perPage, this.page, this.currentOrder, this.orderDesc)
+    },
+    changeOrder(field) {
+      this.page = 1;
+      if (this.currentOrder === field.name) this.orderDesc = !this.orderDesc
+      else this.currentOrder = field.name
+      this.postData(this.perPage, this.page, this.currentOrder, this.orderDesc)
     },
     editRow(i) {
       this.updatingId = false
@@ -152,5 +159,9 @@ export default {
 <style lang="scss">
 .btn-md {
   margin: 0;
+}
+
+.th:not(.orderable) {
+  display: hidden;
 }
 </style>
