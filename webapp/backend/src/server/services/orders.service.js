@@ -373,7 +373,7 @@ class UsersService {
         const orders_count = (
           await queryRunner.query(
             `select count (DISTINCT CASE WHEN o.status <> 'Отменен' then o.id ELSE NULL END) - 1 orders_count 
-            from orders where user_id = $1`,
+            from orders o where user_id = $1`,
             [user_id]
           )
         )?.[0]?.orders_count;
