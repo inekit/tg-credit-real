@@ -174,11 +174,10 @@ th.orderable>.order-toggle {
   img {
     height: 15px;
     transition: 0.1s;
-
-    &.desc {
-      transform: rotate(180);
-    }
   }
 
+  &.desc>img {
+    transform: rotate(180);
+  }
 }
 </style>
