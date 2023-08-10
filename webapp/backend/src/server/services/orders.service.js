@@ -91,7 +91,19 @@ class UsersService {
     });
   }
 
-  getAll({ id, page = 1, take = 10, isBasket, user_id, searchQuery }, ctx) {
+  getAll(
+    {
+      id,
+      page = 1,
+      take = 10,
+      isBasket,
+      user_id,
+      searchQuery,
+      order = "id",
+      orderDesc,
+    },
+    ctx
+  ) {
     return new Promise(async (res, rej) => {
       if (id) {
         return this.getOne({ id }, ctx)
@@ -129,7 +141,11 @@ class UsersService {
           )
           ${isBasket ? "" : `and o.status <> 'basket'`}
           GROUP BY o.id,u.username
-          ORDER BY o.id DESC
+          ORDER BY ${
+            ["id", "creation_date", "status"].includes(order)
+              ? "o." + order
+              : "count (DISTINCT CASE WHEN uo.status <> 'Отменен' then uo.id ELSE NULL END) - 1"
+          } ${orderDesc ? "DESC" : ""}
           LIMIT $1 OFFSET $2`,
           [take, skip, user_id, searchQuery]
         )
