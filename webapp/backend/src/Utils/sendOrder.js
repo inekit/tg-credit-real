@@ -140,7 +140,7 @@ module.exports = async function sendOrder(
 
   if (is_payment && !edit) {
     await ctx.telegram
-      .deleteMessage(ctx.chat.id, last_message_id)
+      .deleteMessage(process.env.ADMIN_ID, last_message_id)
       .catch((e) => console.log(e));
   }
 
