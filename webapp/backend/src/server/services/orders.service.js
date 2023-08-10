@@ -92,7 +92,7 @@ class UsersService {
             or $4 is NULL
           )
           ${isBasket ? "" : `and o.status <> 'basket'`}
-          GROUP BY o.id
+          GROUP BY o.id,u.username
           ORDER BY o.id DESC
           LIMIT $1 OFFSET $2`,
           [take, skip, user_id, searchQuery]
