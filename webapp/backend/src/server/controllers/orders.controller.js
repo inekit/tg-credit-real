@@ -9,6 +9,15 @@ function getAll(ctx) {
   };
 }
 
+function getCount(ctx) {
+  return (req, res, next) => {
+    ordersService
+      .getCount(req.query, ctx)
+      .then((data) => res.send(data))
+      .catch((error) => next(error));
+  };
+}
+
 function addOne(ctx) {
   return (req, res, next) => {
     ordersService
@@ -65,4 +74,5 @@ module.exports = {
   dropItem,
   editItem,
   canOrder,
+  getCount,
 };

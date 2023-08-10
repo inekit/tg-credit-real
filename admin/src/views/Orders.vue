@@ -1,9 +1,9 @@
 <template>
   <div>
     <OrderModal :visible="formVisible" :formData="formData" :mode="formMode" />
-    <CFormInput class="mb-4" type="search" v-model="searchQuery" @change="get()" placeholder="Поиск" />
+    <CFormInput class="mb-4" type="search" v-model="searchQuery" @change="get(); getPageCount()" placeholder="Поиск" />
     <Table :key="tableKey" :fields="tableFieldNames" :postData="get" :actions="dataActions" :rows="rows" editMode="form"
-      name="Заказы" />
+      :lastPageNumber="getPageCount" name="Заказы" />
   </div>
 </template>
 
@@ -109,6 +109,21 @@ export default {
           return false
         })
     },
+    getPageCount() {
+      return myApi
+        .get(this.$store.state.publicPath + '/api/admin/orders_count/', {
+          params: {
+            searchQuery: this.searchQuery
+          },
+        })
+        .then((res) => {
+          return res.data.orders_count
+        })
+        .catch((error) => {
+          eventBus.$emit('noresponse', error)
+          return false
+        })
+    },
     delete(item) {
       const result = confirm('Вы действительно хотите удалить заказ?')
       if (result)
@@ -118,6 +133,7 @@ export default {
           })
           .then(() => {
             this.get()
+            this.getPageCount()
             //this.rows = this.rows.filter((el) => el.id !== id)
             eventBus.$emit('orderDeleted')
           })

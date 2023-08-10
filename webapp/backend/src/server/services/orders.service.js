@@ -14,6 +14,8 @@ class UsersService {
   constructor() {
     this.getOne = this.getOne.bind(this);
     this.getAll = this.getAll.bind(this);
+    this.getCount = this.getCount.bind(this);
+
     this.dropItem = this.dropItem.bind(this);
   }
 
@@ -52,6 +54,40 @@ class UsersService {
           return res(order);
         })
         .catch((error) => rej(new MySqlError(error)));
+    });
+  }
+
+  getCount({ searchQuery }, ctx) {
+    return new Promise(async (res, rej) => {
+      searchQuery = searchQuery ? `%${searchQuery}%` : null;
+
+      const connection = await tOrmCon;
+
+      connection
+        .query(
+          `SELECT count (o.id)
+          from orders o 
+          where 
+          (lower(username) like lower($4) 
+            or lower(o.id::varchar) like lower($4) 
+            or lower(o.patronymic) like lower($4) 
+            or lower(o.name) like lower($4) 
+            or lower(o.surname) like lower($4) 
+            or $4 is NULL
+          )
+          and o.status <> 'basket'
+          GROUP BY o.id,u.username
+          ORDER BY o.id DESC
+          LIMIT $1 OFFSET $2`,
+          [searchQuery]
+        )
+        .then(async (data) => {
+          return res(data);
+        })
+        .catch((error) => {
+          console.log(error);
+          rej(new MySqlError(error));
+        });
     });
   }
 

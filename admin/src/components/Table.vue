@@ -37,9 +37,10 @@
     </CCol>
   </CRow>
   <CPagination aria-label="Page navigation example">
+    <CPaginationItem v-if="lastPageNumber" @click="firstPage">В начало</CPaginationItem>
     <CPaginationItem @click="previousPage">Назад</CPaginationItem>
     <CPaginationItem disabled>{{ page }}</CPaginationItem>
-    <CPaginationItem @click="nextPage">Далее</CPaginationItem>
+    <CPaginationItem v-if="lastPageNumber" @click="lastPage">В конец</CPaginationItem>
   </CPagination>
 </template>
 
@@ -66,6 +67,7 @@ export default {
       type: String,
       default: 'inline',
     },
+    lastPageNumber: Number,
   },
   data() {
     return {
@@ -83,6 +85,7 @@ export default {
     })
 
     await this.postData(this.perPage, this.page)
+    await this.getPageCount()
   },
   methods: {
     dateFormatter,
@@ -104,6 +107,14 @@ export default {
     },
     toPage(n) {
       this.page = n
+      this.postData(this.perPage, this.page)
+    },
+    firstPage() {
+      this.page = 1
+      this.postData(this.perPage, this.page)
+    },
+    lastPage() {
+      this.page = lastPageNumber
       this.postData(this.perPage, this.page)
     },
     editRow(i) {
