@@ -69,17 +69,16 @@ class UsersService {
           from orders o 
           left join users u on o.user_id = u.id
           where 
-          (lower(username) like lower($4) 
-            or lower(o.id::varchar) like lower($4) 
-            or lower(o.patronymic) like lower($4) 
-            or lower(o.name) like lower($4) 
-            or lower(o.surname) like lower($4) 
+          (lower(username) like lower($1) 
+            or lower(o.id::varchar) like lower($1) 
+            or lower(o.patronymic) like lower($1) 
+            or lower(o.name) like lower($1) 
+            or lower(o.surname) like lower($1) 
             or $4 is NULL
           )
           and o.status <> 'basket'
           GROUP BY o.id,u.username
-          ORDER BY o.id DESC
-          LIMIT $1 OFFSET $2`,
+          ORDER BY o.id DESC`,
           [searchQuery]
         )
         .then(async (data) => {
