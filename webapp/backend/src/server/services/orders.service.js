@@ -145,7 +145,7 @@ class UsersService {
             ["id", "creation_date", "status"].includes(order)
               ? "o." + order
               : "count (DISTINCT CASE WHEN uo.status <> 'Отменен' then uo.id ELSE NULL END) - 1"
-          } ${orderDesc ? "DESC" : ""}
+          } ${orderDesc === "true" ? "DESC" : ""}
           LIMIT $1 OFFSET $2`,
           [take, skip, user_id, searchQuery]
         )

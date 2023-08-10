@@ -162,6 +162,6 @@ export default {
 }
 
 th:not(.orderable)>.order-toggle {
-  display: hidden;
+  display: none;
 }
 </style>

@@ -39,6 +39,7 @@ export default {
         {
           name: 'id',
           title: 'ID',
+          order: true,
         },
         {
           name: 'fio',
