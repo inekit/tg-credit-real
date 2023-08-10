@@ -44,6 +44,14 @@ export default {
           title: 'ФИО',
         },
         {
+          name: 'username',
+          title: 'Юзернейм',
+        },
+        {
+          name: 'address',
+          title: 'Адрес',
+        },
+        {
           name: 'phone',
           title: 'Телефон',
         },
