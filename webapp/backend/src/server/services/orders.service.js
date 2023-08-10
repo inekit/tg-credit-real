@@ -74,7 +74,7 @@ class UsersService {
           `SELECT o.*,
           json_agg(DISTINCT jsonb_build_object('title', i.title,'count',oi.count, 
            'option_id', io.id, 'option_name', io.name, 'price', i.price)) items,
-           surname||' '|| name || '' || patronymic as fio,
+           o.surname||' '|| o.name || '' || o.patronymic as fio,
           count (uo.id) orders_count
           from orders o 
           left join order_items oi on o.id = oi.order_id  
