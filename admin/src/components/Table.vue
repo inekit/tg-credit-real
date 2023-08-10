@@ -40,6 +40,7 @@
     <CPaginationItem v-if="lastPageNumber" @click="firstPage">В начало</CPaginationItem>
     <CPaginationItem @click="previousPage">Назад</CPaginationItem>
     <CPaginationItem disabled>{{ page }}</CPaginationItem>
+    <CPaginationItem @click="nextPage">Вперед</CPaginationItem>
     <CPaginationItem v-if="lastPageNumber" @click="lastPage">В конец</CPaginationItem>
   </CPagination>
 </template>

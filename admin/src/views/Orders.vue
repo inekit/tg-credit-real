@@ -3,7 +3,7 @@
     <OrderModal :visible="formVisible" :formData="formData" :mode="formMode" />
     <CFormInput class="mb-4" type="search" v-model="searchQuery" @change="get(); getPageCount()" placeholder="Поиск" />
     <Table :key="tableKey" :fields="tableFieldNames" :postData="get" :actions="dataActions" :rows="rows" editMode="form"
-      :lastPageNumber="getPageCount" name="Заказы" />
+      :lastPageNumber="lastPageNumber" name="Заказы" />
   </div>
 </template>
 
@@ -34,6 +34,7 @@ export default {
         "К заказу": { action: this.routeToPosts, color: 'primary' },
         Удалить: { action: this.delete, color: 'danger' },
       },
+      lastPageNumber: 1,
       tableFieldNames: [
         {
           name: 'id',
@@ -109,7 +110,7 @@ export default {
           return false
         })
     },
-    getPageCount() {
+    getPageCount(take) {
       return myApi
         .get(this.$store.state.publicPath + '/api/admin/orders_count/', {
           params: {
@@ -117,7 +118,7 @@ export default {
           },
         })
         .then((res) => {
-          return res.data.orders_count
+          return this.lastPageNumber = Math.ceil(res.data.orders_count / (take ?? 10))
         })
         .catch((error) => {
           eventBus.$emit('noresponse', error)
