@@ -73,13 +73,16 @@ class UsersService {
         .query(
           `SELECT o.*,
           json_agg(DISTINCT jsonb_build_object('title', i.title,'count',oi.count, 
-           'option_id', io.id, 'option_name', io.name, 'price', i.price)) items 
+           'option_id', io.id, 'option_name', io.name, 'price', i.price)) items,
+           surname||' '|| name || '' || patronymic as fio,
+          count (uo.id) orders_count
           from orders o 
           left join order_items oi on o.id = oi.order_id  
           left join item_options io on oi.item_option_id = io.id  
           left join items i on io.item_id = i.id 
-          left join users u on user_id = u.id
-          where (user_id = $3 or $3 is NULL)  
+          left join users u on o.user_id = u.id
+          left join orders uo on u.id = uo.user_id
+          where (o.user_id = $3 or $3 is NULL)  
           and (lower(username) like lower($4) 
             or lower(o.id::varchar) like lower($4) 
             or lower(o.patronymic) like lower($4) 

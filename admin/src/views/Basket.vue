@@ -6,7 +6,7 @@
             <button class="btn btn-primary" @click="showBasket = true">Добавление товара в корзину</button>
         </div>
         <FormBasketModal :visible="showBasket" :user_id="user_id" />
-        <Table :fields="tableFieldNames" :postData="get" :actions="dataActions" :rows="rows" editMode="form"
+        <Table v-if="user_id" :fields="tableFieldNames" :postData="get" :actions="dataActions" :rows="rows" editMode="form"
             name="Позиции" />
     </div>
 </template>

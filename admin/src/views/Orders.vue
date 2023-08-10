@@ -3,7 +3,7 @@
     <OrderModal :visible="formVisible" :formData="formData" :mode="formMode" />
     <CFormInput class="mb-4" type="search" v-model="searchQuery" @change="get()" placeholder="Поиск" />
     <Table :key="tableKey" :fields="tableFieldNames" :postData="get" :actions="dataActions" :rows="rows" editMode="form"
-      name="Теги" />
+      name="Заказы" />
   </div>
 </template>
 
@@ -38,6 +38,18 @@ export default {
         {
           name: 'id',
           title: 'ID',
+        },
+        {
+          name: 'fio',
+          title: 'ФИО',
+        },
+        {
+          name: 'phone',
+          title: 'Телефон',
+        },
+        {
+          name: 'orders_count',
+          title: 'Кол-во заказов клиента',
         },
         {
           name: 'creation_date',

@@ -1,10 +1,10 @@
 <template>
-    <div class="card p-3">
+    <div class="mailing-block card p-3">
         <span>Текст поста</span>
         <QuillEditor theme="snow" :toolbar="['bold', 'italic', 'underline', 'strike']" ref="postTextEditor"
-            id="postTextEditor" placeholder="Краткое описание" />
+            id="postTextEditor" placeholder="Краткое описание" class="mb-3" />
         <span>Обложка поста</span>
-        <div class="border p-2 mt-3 preview-container">
+        <div class="border p-2 mb-3 preview-container">
             <img :src="preview" class="img-fluid" />
         </div>
         <CFormInput type="file" accept="image/*" ref="preview" @input="previewMultiImage" class="mb-3" label="Превью"
@@ -100,5 +100,13 @@ export default {
 <style lang="scss">
 button {
     margin-bottom: 20px;
+}
+
+.mailing-block {
+
+    &>span,
+    &>label {
+        margin-bottom: 1rem;
+    }
 }
 </style>
