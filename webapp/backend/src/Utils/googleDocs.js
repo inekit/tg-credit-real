@@ -125,6 +125,7 @@ async function addOrder(
     name,
     patronymic,
     comment,
+    orders_count,
   } = (orderData = {})
 ) {
   try {
@@ -145,11 +146,13 @@ async function addOrder(
 
     const firstItem = itemsNew.shift();
 
+    const formattedDate = moment(new Date()).format("DD.MM.YYYY");
+
     const insertingRows = itemsNew?.map((item) => {
       return [
         null,
         null,
-        null,
+        formattedDate,
         null,
         null,
         null,
@@ -162,13 +165,14 @@ async function addOrder(
         null,
         item.table_name,
         item.count,
+        null,
       ];
     });
 
     insertingRows?.unshift([
       +last_id + 1,
       true,
-      moment(new Date()).format("DD.MM.YYYY"),
+      formattedDate,
       order_id,
       is_payed,
       "TG BOT",
@@ -182,6 +186,7 @@ async function addOrder(
       firstItem?.table_name,
       firstItem?.count,
       comment,
+      orders_count,
     ]);
 
     /*const append_res = await sheets.spreadsheets.values.append({
@@ -242,7 +247,7 @@ async function addOrder(
 
     const append_res = await sheets.spreadsheets.values.update({
       spreadsheetId,
-      range: `Заказы(бот)!A${last_row_id + 1}:P${
+      range: `Заказы(бот)!A${last_row_id + 1}:Q${
         last_row_id + 1 + itemsPast?.length
       }`,
       valueInputOption: "USER_ENTERED",

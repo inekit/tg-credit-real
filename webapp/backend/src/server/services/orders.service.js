@@ -370,6 +370,14 @@ class UsersService {
           )
         )?.[0]?.[0]?.username;
 
+        const orders_count = (
+          await queryRunner.query(
+            `select count (DISTINCT CASE WHEN o.status <> 'Отменен' then o.id ELSE NULL END) - 1 orders_count 
+            from orders where user_id = $1`,
+            [user_id]
+          )
+        )?.[0]?.orders_count;
+
         googleDocs.addOrder({
           order_id,
           user_id,
@@ -386,6 +394,7 @@ class UsersService {
           delivery_price,
           comment,
           items: basket.items,
+          orders_count,
         });
 
         const orderStr =
