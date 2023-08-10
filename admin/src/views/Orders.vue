@@ -118,7 +118,8 @@ export default {
           },
         })
         .then((res) => {
-          return this.lastPageNumber = Math.ceil(res.data.orders_count / (take ?? 10))
+          this.lastPageNumber = Math.ceil(res.data.orders_count / (take ?? 10))
+          return this.lastPageNumber
         })
         .catch((error) => {
           eventBus.$emit('noresponse', error)

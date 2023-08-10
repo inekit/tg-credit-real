@@ -69,6 +69,7 @@ export default {
       default: 'inline',
     },
     lastPageNumber: Number,
+    getPageCount: Function
   },
   data() {
     return {
