@@ -8,7 +8,7 @@
             <CTableHead color="light">
               <CTableRow>
                 <CTableHeaderCell v-for="f in   fieldsTransformed  " :key="f.name + 'header'" class="text-center"
-                  :class="[f.order ? 'orderable' : '']" @click="changeOrder(f.order)">{{ f.title }}
+                  :class="[f.order ? 'orderable' : '']" @click="changeOrder(f)">{{ f.title }}
                   <div class="order-toggle">tgl</div>
                 </CTableHeaderCell>
                 <CTableHeaderCell class="text-center">Действия</CTableHeaderCell>
