@@ -97,7 +97,7 @@ export default {
     },
     watch: {
         selected_dm(to) {
-            if (to === 'Почта России' || to === "Яндекс Доставка") {
+            if (to === 'Почта России' || to === "Яндекс Доставка до пункта выдачи") {
                 this.selected_po = "Перевод";
                 this.paymentOptions = ["Перевод"];
             } else this.paymentOptions = ["Перевод", "Наличные курьеру"];
