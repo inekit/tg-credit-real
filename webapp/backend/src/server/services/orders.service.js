@@ -90,7 +90,7 @@ class UsersService {
             or lower(o.surname) like lower($4) 
             or $4 is NULL
           )
-          ${isBasket ? "" : `and status <> 'basket'`}
+          ${isBasket ? "" : `and o.status <> 'basket'`}
           GROUP BY o.id
           ORDER BY o.id DESC
           LIMIT $1 OFFSET $2`,
