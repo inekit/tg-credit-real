@@ -67,6 +67,7 @@ class UsersService {
         .query(
           `SELECT count (o.id)
           from orders o 
+          left join users u on o.user_id = u.id
           where 
           (lower(username) like lower($4) 
             or lower(o.id::varchar) like lower($4) 
@@ -82,7 +83,7 @@ class UsersService {
           [searchQuery]
         )
         .then(async (data) => {
-          return res(data);
+          return res({ orders_count: data.length });
         })
         .catch((error) => {
           console.log(error);
