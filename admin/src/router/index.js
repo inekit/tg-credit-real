@@ -46,21 +46,9 @@ const routes = [
         children: [],
       },
       {
-        path: '/statistics',
-        name: 'Statistics',
-        component: () => import('@/views/Statistics.vue'),
-        children: [],
-      },
-      {
         path: '/orders',
         name: 'Orders',
         component: () => import('@/views/Orders.vue'),
-        children: [],
-      },
-      {
-        path: '/mailing',
-        name: 'Mailing',
-        component: () => import('@/views/Mailing.vue'),
         children: [],
       },
       {
@@ -71,22 +59,9 @@ const routes = [
         children: [],
       },
       {
-        path: '/basket',
-        name: 'BasketItems',
-        props: true,
-        component: () => import('@/views/Basket.vue'),
-        children: [],
-      },
-      {
         path: '/categories',
         name: 'Categories',
         component: () => import('@/views/Categories.vue'),
-        children: [],
-      },
-      {
-        path: '/promos',
-        name: 'Promos',
-        component: () => import('@/views/Promos.vue'),
         children: [],
       },
     ],

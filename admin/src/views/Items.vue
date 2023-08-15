@@ -2,7 +2,7 @@
   <div>
     <AddItemModal :visible="formVisible" :formData="formData" :mode="formMode" />
     <CFormInput class="mb-4" type="search" v-model="searchQuery" @change="get()" placeholder="Поиск" />
-    <Table :fields="tableFieldNames" :postData="get" :actions="dataActions" :rows="rows" editMode="form" name="Позиции" />
+    <Table :fields="tableFieldNames" :postData="get" :actions="dataActions" :rows="rows" editMode="form" name="Каналы" />
   </div>
 </template>
 
