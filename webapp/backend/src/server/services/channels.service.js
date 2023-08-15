@@ -30,13 +30,13 @@ class ChannelsService {
         const query = `select c.*
                     from public.channels c
                     where (lower(title) like lower($1) or $1 is NULL)
-                    and (p.category_name = $2 or $2 is NULL)  
+                    and (p.category_name = any($2) or $2 is NULL)  
                     and (p.id = $3 or $3 is NULL)  
                     group by p.id
                     order by id
                     LIMIT $4 OFFSET $5`;
         connection
-          .query(query, [searchQuery, category, id, take, skip])
+          .query(query, [searchQuery, categories, id, take, skip])
           .then((data) => res(data))
           .catch((error) => rej(new MySqlError(error)));
       }
