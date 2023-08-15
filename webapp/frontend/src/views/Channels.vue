@@ -84,7 +84,7 @@
                                     </div>
                                     <div class="ChannelBlog_channelBlog__content">
                                         <div class="ChannelBlog_channelBlog__subscribers _icon-profile">
-                                            26 244
+                                            {{ channel.participants_count }}
                                         </div>
                                         <h3 class="ChannelBlog_channelBlog__title">
                                             {{ channel.title }}

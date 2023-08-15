@@ -17,59 +17,61 @@
                             </div>
                         </div>
                         <button type="button" class="Channel_channelProfile__image">
-                            <img src="https://aviatatravel.com/media/channels_logo/2022-11-20-17-18-57.jpg"
-                                alt="" /></button><button type="button"
-                            class="Channel_channelProfile__icon _icon-bookmark"></button>
+                            <img :src="`/colorsserver/public/pics/${channel.preview}`" alt="" /></button><button
+                            type="button" class="Channel_channelProfile__icon _icon-bookmark"></button>
                     </div>
                     <div class="Channel_channelProfile__content">
-                        <h1 class="Channel_channelProfile__title">Дизайнус</h1>
+                        <h1 class="Channel_channelProfile__title">{{ channel.title }}</h1>
                         <div class="Channel_channelProfile__subcribers _icon-profile">
-                            26 244
+                            {{ channel.participants_count }}
                         </div>
                         <p class="Channel_channelProfile__text">
-                            Публикуем прекрасный дизайн, созданный гениями мира сего
+                            {{ channel.description }}
                         </p>
                     </div>
                     <div class="Channel_channelProfile__body">
                         <ul class="Channel_channelProfile__tabList" role="tablist">
                             <li class="Channel_channelProfile__item Channel_channelProfile__item_active" role="tab"
                                 id="tab:r0:0" aria-selected="true" aria-disabled="false" aria-controls="panel:r0:0"
-                                tabindex="0" data-rttab="true">
+                                tabindex="0" data-rttab="true" @click="infoActive = true">
                                 Информация
                             </li>
                             <li class="Channel_channelProfile__item" role="tab" id="tab:r0:1" aria-selected="false"
-                                aria-disabled="false" aria-controls="panel:r0:1" data-rttab="true">
+                                aria-disabled="false" aria-controls="panel:r0:1" data-rttab="true"
+                                @click="infoActive = false">
                                 Стоимость
                             </li>
                         </ul>
                     </div>
                 </div>
             </div>
-            <div class="react-tabs__tab-panel react-tabs__tab-panel--selected" role="tabpanel" id="panel:r0:0"
-                aria-labelledby="tab:r0:0">
+            <div v-show="infoActive" class="top-tabpanel" role="tabpanel" id="panel:r0:0" aria-labelledby="tab:r0:0">
                 <div class="Channel_channelContent">
                     <div class="container">
                         <div>
                             <div class="ChannelInfo_channelContent__actions">
-                                <button type="button" class="ChannelInfo_channelContent__action">
+                                <button type="button" class="ChannelInfo_channelContent__action"
+                                    @click="window.open(channel.tgstat_link, '_blank')">
                                     <span
                                         class="ChannelInfo_channelContent__label _icon-arrow-right">ТГстат</span></button><button
-                                    type="button" class="ChannelInfo_channelContent__action">
+                                    type="button" class="ChannelInfo_channelContent__action"
+                                    @click="window.open(channel.telemetr_link, '_blank')">
                                     <span class="ChannelInfo_channelContent__label _icon-arrow-right">Телеметр</span>
                                 </button>
                             </div>
                             <div class="ChannelInfo_channelContent__content">
                                 <div class="ChannelInfo_channelContent__data">
                                     <span class="ChannelInfo_channelContent__placeholder">Охваты</span>
-                                    <p class="ChannelInfo_channelContent__text">5.7K</p>
+                                    <p class="ChannelInfo_channelContent__text">{{ formatThousands(channel.post_reach) }}
+                                    </p>
                                 </div>
                                 <div class="ChannelInfo_channelContent__data">
                                     <span class="ChannelInfo_channelContent__placeholder">ERR</span>
-                                    <p class="ChannelInfo_channelContent__text">22</p>
+                                    <p class="ChannelInfo_channelContent__text">{{ channel.err }}</p>
                                 </div>
                                 <div class="ChannelInfo_channelContent__data">
                                     <span class="ChannelInfo_channelContent__placeholder">CPM</span>
-                                    <p class="ChannelInfo_channelContent__text">1.2K</p>
+                                    <p class="ChannelInfo_channelContent__text">{{ formatThousands(channel.cpm) }}</p>
                                 </div>
                             </div>
                         </div>
@@ -90,31 +92,19 @@
                                                     aria-label="scrollable content" style="height: auto; overflow: hidden">
                                                     <div class="simplebar-content" style="padding: 0px">
                                                         <ul class="Channel_channelSwiperTabs__list" role="tablist">
-                                                            <li class="Channel_channelSwiperTabs__item Channel_channelSwiperTabs__item_active"
+                                                            <li class="Channel_channelSwiperTabs__item"
+                                                                :class="[sexActive ? 'Channel_channelSwiperTabs__item_active' : '']"
                                                                 role="tab" id="tab:r1:0" aria-selected="true"
                                                                 aria-disabled="false" aria-controls="panel:r1:0"
-                                                                tabindex="0" data-rttab="true">
+                                                                tabindex="0" data-rttab="true" @click="sexActive = true">
                                                                 Пол
                                                             </li>
-                                                            <li class="Channel_channelSwiperTabs__item" role="tab"
-                                                                id="tab:r1:1" aria-selected="false" aria-disabled="false"
-                                                                aria-controls="panel:r1:1" data-rttab="true">
-                                                                Гео
-                                                            </li>
-                                                            <li class="Channel_channelSwiperTabs__item" role="tab"
-                                                                id="tab:r1:2" aria-selected="false" aria-disabled="false"
-                                                                aria-controls="panel:r1:2" data-rttab="true">
+                                                            <li class="Channel_channelSwiperTabs__item"
+                                                                :class="[!sexActive ? 'Channel_channelSwiperTabs__item_active' : '']"
+                                                                role="tab" id="tab:r1:2" aria-selected="false"
+                                                                aria-disabled="false" aria-controls="panel:r1:2"
+                                                                data-rttab="true" @click="sexActive = false">
                                                                 Возраст
-                                                            </li>
-                                                            <li class="Channel_channelSwiperTabs__item" role="tab"
-                                                                id="tab:r1:3" aria-selected="false" aria-disabled="false"
-                                                                aria-controls="panel:r1:3" data-rttab="true">
-                                                                Отзывы
-                                                            </li>
-                                                            <li class="Channel_channelSwiperTabs__item" role="tab"
-                                                                id="tab:r1:4" aria-selected="false" aria-disabled="false"
-                                                                aria-controls="panel:r1:4" data-rttab="true">
-                                                                Примеры рекламы
                                                             </li>
                                                         </ul>
                                                     </div>
@@ -134,8 +124,8 @@
                         </div>
                         <div>
                             <div class="container">
-                                <div class="react-tabs__tab-panel react-tabs__tab-panel--selected" role="tabpanel"
-                                    id="panel:r1:0" aria-labelledby="tab:r1:0">
+                                <div class="" v-show="!sexActive" role="tabpanel" id="panel:r1:0"
+                                    aria-labelledby="tab:r1:0">
                                     <div class="GenderCount_gender">
                                         <div class="GenderCount_gender__body">
                                             <div class="GenderCount_gender__item">
@@ -163,7 +153,164 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="" v-show="!sexActive" role="tabpanel" id="panel:r5:2"
+                                    aria-labelledby="tab:r5:2">
+                                    <div class="ProgressBars_location__YHytS">
+                                        <div class="ProgressBars_location__body__-aPT7">
+                                            <div class="ProgressBars_location__item__MEYqK">
+                                                <h2 class="ProgressBars_location__title__OzI8F">До 18 лет <span>4%</span>
+                                                </h2>
+                                                <div class="ProgressBars_location__statusbar__58zTm"><span
+                                                        style="width: 4%;"></span></div>
+                                            </div>
+                                            <div class="ProgressBars_location__item__MEYqK">
+                                                <h2 class="ProgressBars_location__title__OzI8F">18-24 <span>26%</span></h2>
+                                                <div class="ProgressBars_location__statusbar__58zTm"><span
+                                                        style="width: 26%;"></span></div>
+                                            </div>
+                                            <div class="ProgressBars_location__item__MEYqK">
+                                                <h2 class="ProgressBars_location__title__OzI8F">25-34 <span>32%</span></h2>
+                                                <div class="ProgressBars_location__statusbar__58zTm"><span
+                                                        style="width: 32%;"></span></div>
+                                            </div>
+                                            <div class="ProgressBars_location__item__MEYqK">
+                                                <h2 class="ProgressBars_location__title__OzI8F">35-44 <span>23%</span></h2>
+                                                <div class="ProgressBars_location__statusbar__58zTm"><span
+                                                        style="width: 23%;"></span></div>
+                                            </div>
+                                            <div class="ProgressBars_location__item__MEYqK">
+                                                <h2 class="ProgressBars_location__title__OzI8F">45-54 <span>10%</span></h2>
+                                                <div class="ProgressBars_location__statusbar__58zTm"><span
+                                                        style="width: 10%;"></span></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div v-show="!infoActive" class="top-tabpanel" role="tabpanel" id="panel:r0:1" aria-labelledby="tab:r0:1">
+                <div class="Channel_channelContent__kcVW0 Channel_channelContent_margin__mroyE">
+                    <div class="container">
+                        <div>
+                            <div class="ChannelPriceActions_channelPrice__uWyC4">
+                                <div class="ChannelPriceActions_channelPrice__content__fLClw">
+                                    <h2 class="ChannelPriceActions_channelPrice__title__ym2M9">Стоимость</h2>
+                                    <p class="ChannelPriceActions_channelPrice__text__Mbugf">за один рекламный пост</p>
+                                </div>
+                                <div class="ChannelPriceActions_channelPrice__price__20drU"><span>100 000 руб.</span></div>
+                            </div>
+                            <div>
+                                <div class="ChannelPriceActions_channelActions__body__7nfTf"><button type="button"
+                                        class="ChannelPriceActions_channelActions__button__MzwI0"><span>Связаться с
+                                            менеджером</span></button></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="SameChannelSlider_sameChannels__iYwuT">
+                        <div class="SameChannelSlider_sameChannels__title__awE7q">
+                            <div class="Title_block__8v8E5"><button class="Title_button__cBkUJ _icon-angle-left"></button>
+                                <h2 class="Title_title__MxNSH">Похожие каналы</h2>
+                            </div>
+                        </div>
+                        <div
+                            class="swiper swiper-initialized swiper-horizontal swiper-pointer-events swiper-backface-hidden">
+                            <div class="swiper-wrapper" style="transform: translate3d(0px, 0px, 0px);">
+                                <div class="swiper-slide SameChannelSlider_sameChannels__slide__FyByA swiper-slide-active"
+                                    style="margin-right: 15px;"><button type="button"
+                                        class="SameChannelSlider_sameChannels__item__PKWlU">
+                                        <div class="SameChannelSlider_sameChannels__image__uKpBK"><img
+                                                src="https://aviatatravel.com/media/channels_logo/photo_2023-05-29_11.19.32.jpeg"
+                                                alt=""></div>
+                                        <div>
+                                            <h3 class="SameChannelSlider_sameChannels__subtitle__xk91w">Yumi</h3>
+                                            <div class="SameChannelSlider_sameChannels__subscribers__LbPGb _icon-profile">
+                                                103 163</div>
+                                        </div>
+                                    </button></div>
+                                <div class="swiper-slide SameChannelSlider_sameChannels__slide__FyByA swiper-slide-next"
+                                    style="margin-right: 15px;"><button type="button"
+                                        class="SameChannelSlider_sameChannels__item__PKWlU">
+                                        <div class="SameChannelSlider_sameChannels__image__uKpBK"><img
+                                                src="https://aviatatravel.com/media/channels_logo/2022-11-03_04.59.55.jpg"
+                                                alt=""></div>
+                                        <div>
+                                            <h3 class="SameChannelSlider_sameChannels__subtitle__xk91w">Карты, тексты, два
+                                                ствола</h3>
+                                            <div class="SameChannelSlider_sameChannels__subscribers__LbPGb _icon-profile">47
+                                                172</div>
+                                        </div>
+                                    </button></div>
+                                <div class="swiper-slide SameChannelSlider_sameChannels__slide__FyByA"
+                                    style="margin-right: 15px;"><button type="button"
+                                        class="SameChannelSlider_sameChannels__item__PKWlU">
+                                        <div class="SameChannelSlider_sameChannels__image__uKpBK"><img
+                                                src="https://aviatatravel.com/media/channels_logo/9FECB72F-69A5-4B53-8058-6198B961E2ED.jpeg"
+                                                alt=""></div>
+                                        <div>
+                                            <h3 class="SameChannelSlider_sameChannels__subtitle__xk91w">Рабочий чат</h3>
+                                            <div class="SameChannelSlider_sameChannels__subscribers__LbPGb _icon-profile">67
+                                                618</div>
+                                        </div>
+                                    </button></div>
+                                <div class="swiper-slide SameChannelSlider_sameChannels__slide__FyByA"
+                                    style="margin-right: 15px;"><button type="button"
+                                        class="SameChannelSlider_sameChannels__item__PKWlU">
+                                        <div class="SameChannelSlider_sameChannels__image__uKpBK"><img
+                                                src="https://aviatatravel.com/media/channels_logo/2022-11-20-17-06-57.jpg"
+                                                alt=""></div>
+                                        <div>
+                                            <h3 class="SameChannelSlider_sameChannels__subtitle__xk91w">SMM RIP</h3>
+                                            <div class="SameChannelSlider_sameChannels__subscribers__LbPGb _icon-profile">
+                                                145 645</div>
+                                        </div>
+                                    </button></div>
+                                <div class="swiper-slide SameChannelSlider_sameChannels__slide__FyByA"
+                                    style="margin-right: 15px;"><button type="button"
+                                        class="SameChannelSlider_sameChannels__item__PKWlU">
+                                        <div class="SameChannelSlider_sameChannels__image__uKpBK"><img
+                                                src="https://aviatatravel.com/media/channels_logo/photo_2023-06-08_14.22.40_Zh9x1vA.jpeg"
+                                                alt=""></div>
+                                        <div>
+                                            <h3 class="SameChannelSlider_sameChannels__subtitle__xk91w">продай мне эту ручку
+                                            </h3>
+                                            <div class="SameChannelSlider_sameChannels__subscribers__LbPGb _icon-profile">73
+                                                699</div>
+                                        </div>
+                                    </button></div>
+                                <div class="swiper-slide SameChannelSlider_sameChannels__slide__FyByA"
+                                    style="margin-right: 15px;"><button type="button"
+                                        class="SameChannelSlider_sameChannels__item__PKWlU">
+                                        <div class="SameChannelSlider_sameChannels__image__uKpBK"><img
+                                                src="https://aviatatravel.com/media/channels_logo/2022-11-03_05.03.55.jpg"
+                                                alt=""></div>
+                                        <div>
+                                            <h3 class="SameChannelSlider_sameChannels__subtitle__xk91w">Боги Маркетинга</h3>
+                                            <div class="SameChannelSlider_sameChannels__subscribers__LbPGb _icon-profile">
+                                                126 384</div>
+                                        </div>
+                                    </button></div>
+                                <div class="swiper-slide SameChannelSlider_sameChannels__slide__FyByA"
+                                    style="margin-right: 15px;"><button type="button"
+                                        class="SameChannelSlider_sameChannels__item__PKWlU">
+                                        <div class="SameChannelSlider_sameChannels__image__uKpBK"><img
+                                                src="https://aviatatravel.com/media/channels_logo/2022-11-20-17-07-16.jpg"
+                                                alt=""></div>
+                                        <div>
+                                            <h3 class="SameChannelSlider_sameChannels__subtitle__xk91w">Авоська маркетинга
+                                            </h3>
+                                            <div class="SameChannelSlider_sameChannels__subscribers__LbPGb _icon-profile">26
+                                                068</div>
+                                        </div>
+                                    </button></div>
+                            </div>
+                            <div class="swiper-button-prev swiper-button-disabled"></div>
+                            <div class="swiper-button-next"></div>
+                            <div class="swiper-scrollbar"></div>
                         </div>
                     </div>
                 </div>
@@ -181,6 +328,8 @@ export default {
     components: { InstagramLoader },
     data() {
         return {
+            infoActive: true,
+            sexActive: true
         }
     },
     watch: {

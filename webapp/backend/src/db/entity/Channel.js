@@ -19,7 +19,7 @@ module.exports = new EntitySchema({
       default: " ",
       default: "Описание",
     },
-    publication_date: {
+    adding_date: {
       createDate: true,
     },
     category_name: {
@@ -32,24 +32,42 @@ module.exports = new EntitySchema({
       nullable: false,
       default: 100,
     },
-    sale_count: { type: "int", nullable: true },
-    sale_price: { type: "int", nullable: true },
     preview: {
       type: "varchar",
       length: 300,
       nullable: true,
     },
-    puffs_count: {
+    participants_count: {
       type: "int",
       nullable: false,
       default: 100,
     },
-    taste_strength: {
+    post_reach: {
       type: "int",
       nullable: false,
-      default: 20,
+      default: 100,
     },
-    select_name: {
+    err: {
+      type: "int",
+      nullable: false,
+      default: 100,
+    },
+    cpm: {
+      type: "int",
+      nullable: false,
+      default: 100,
+    },
+    man_percent: {
+      type: "int",
+      nullable: false,
+      default: 100,
+    },
+    tgstat_link: {
+      type: "varchar",
+      length: 255,
+      nullable: true,
+    },
+    telemetr_link: {
       type: "varchar",
       length: 255,
       nullable: true,
