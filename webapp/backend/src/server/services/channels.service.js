@@ -102,7 +102,7 @@ class ChannelsService {
         ? await this.saveReturningFileName(previewBinary, true)
         : preview;
 
-      const data = await queryRunner.manager
+      const data = await connection.manager
         .getRepository("Item")
         .save({
           title,
