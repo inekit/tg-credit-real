@@ -16,7 +16,7 @@ function getAll(req, res, next) {
 
 function getAllWithItems(req, res, next) {
   categoriesService
-    .get(req.body)
+    .get(req.query)
     .then((data) => res.send(data))
     .catch((error) => next(error));
 }
