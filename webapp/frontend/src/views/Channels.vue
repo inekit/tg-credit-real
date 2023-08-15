@@ -72,7 +72,7 @@
                     </h2>
                 </div>
                 <div>
-                    <div v-for=" category  in  $store.state.categories ">
+                    <div v-for=" category  in  $store.state.categories_filtered ">
                         <div class="Badge_badge">
                             <span class="Badge_badge__text">{{ category.name }}</span>
                         </div>
@@ -125,7 +125,7 @@ export default {
     },
     watch: {
         async category_name() {
-            this.$store.state.categories = await this.getCategories()
+            this.$store.state.categories_filtered = await this.getCategories()
         }
     },
     beforeMount() {
@@ -141,6 +141,7 @@ export default {
     methods: {
         async updatePage(delay) {
             this.$store.state.categories = await this.getCategories(true);
+            this.$store.state.categories_filtered = this.$store.state.categories
 
             this.$refs['MainPage_listChannel__container']?.classList.add("hidden")
             document.body.classList.add('stop-scrolling')
