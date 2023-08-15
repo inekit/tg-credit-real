@@ -203,115 +203,14 @@
                                 </div>
                                 <div class="ChannelPriceActions_channelPrice__price__20drU"><span>100 000 руб.</span></div>
                             </div>
-                            <div>
+                            <div class="row">
                                 <div class="ChannelPriceActions_channelActions__body__7nfTf"><button type="button"
-                                        class="ChannelPriceActions_channelActions__button__MzwI0"><span>Связаться с
-                                            менеджером</span></button></div>
+                                        class="ChannelPriceActions_channelActions__button__MzwI0"><span>Связаться</span></button>
+                                </div>
+                                <div class="ChannelPriceActions_channelActions__body__7nfTf"><button type="button"
+                                        class="ChannelPriceActions_channelActions__button__MzwI0"><span>Поторговаться</span></button>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="container">
-                    <div class="SameChannelSlider_sameChannels__iYwuT">
-                        <div class="SameChannelSlider_sameChannels__title__awE7q">
-                            <div class="Title_block__8v8E5"><button class="Title_button__cBkUJ _icon-angle-left"></button>
-                                <h2 class="Title_title__MxNSH">Похожие каналы</h2>
-                            </div>
-                        </div>
-                        <div
-                            class="swiper swiper-initialized swiper-horizontal swiper-pointer-events swiper-backface-hidden">
-                            <div class="swiper-wrapper" style="transform: translate3d(0px, 0px, 0px);">
-                                <div class="swiper-slide SameChannelSlider_sameChannels__slide__FyByA swiper-slide-active"
-                                    style="margin-right: 15px;"><button type="button"
-                                        class="SameChannelSlider_sameChannels__item__PKWlU">
-                                        <div class="SameChannelSlider_sameChannels__image__uKpBK"><img
-                                                src="https://aviatatravel.com/media/channels_logo/photo_2023-05-29_11.19.32.jpeg"
-                                                alt=""></div>
-                                        <div>
-                                            <h3 class="SameChannelSlider_sameChannels__subtitle__xk91w">Yumi</h3>
-                                            <div class="SameChannelSlider_sameChannels__subscribers__LbPGb _icon-profile">
-                                                103 163</div>
-                                        </div>
-                                    </button></div>
-                                <div class="swiper-slide SameChannelSlider_sameChannels__slide__FyByA swiper-slide-next"
-                                    style="margin-right: 15px;"><button type="button"
-                                        class="SameChannelSlider_sameChannels__item__PKWlU">
-                                        <div class="SameChannelSlider_sameChannels__image__uKpBK"><img
-                                                src="https://aviatatravel.com/media/channels_logo/2022-11-03_04.59.55.jpg"
-                                                alt=""></div>
-                                        <div>
-                                            <h3 class="SameChannelSlider_sameChannels__subtitle__xk91w">Карты, тексты, два
-                                                ствола</h3>
-                                            <div class="SameChannelSlider_sameChannels__subscribers__LbPGb _icon-profile">47
-                                                172</div>
-                                        </div>
-                                    </button></div>
-                                <div class="swiper-slide SameChannelSlider_sameChannels__slide__FyByA"
-                                    style="margin-right: 15px;"><button type="button"
-                                        class="SameChannelSlider_sameChannels__item__PKWlU">
-                                        <div class="SameChannelSlider_sameChannels__image__uKpBK"><img
-                                                src="https://aviatatravel.com/media/channels_logo/9FECB72F-69A5-4B53-8058-6198B961E2ED.jpeg"
-                                                alt=""></div>
-                                        <div>
-                                            <h3 class="SameChannelSlider_sameChannels__subtitle__xk91w">Рабочий чат</h3>
-                                            <div class="SameChannelSlider_sameChannels__subscribers__LbPGb _icon-profile">67
-                                                618</div>
-                                        </div>
-                                    </button></div>
-                                <div class="swiper-slide SameChannelSlider_sameChannels__slide__FyByA"
-                                    style="margin-right: 15px;"><button type="button"
-                                        class="SameChannelSlider_sameChannels__item__PKWlU">
-                                        <div class="SameChannelSlider_sameChannels__image__uKpBK"><img
-                                                src="https://aviatatravel.com/media/channels_logo/2022-11-20-17-06-57.jpg"
-                                                alt=""></div>
-                                        <div>
-                                            <h3 class="SameChannelSlider_sameChannels__subtitle__xk91w">SMM RIP</h3>
-                                            <div class="SameChannelSlider_sameChannels__subscribers__LbPGb _icon-profile">
-                                                145 645</div>
-                                        </div>
-                                    </button></div>
-                                <div class="swiper-slide SameChannelSlider_sameChannels__slide__FyByA"
-                                    style="margin-right: 15px;"><button type="button"
-                                        class="SameChannelSlider_sameChannels__item__PKWlU">
-                                        <div class="SameChannelSlider_sameChannels__image__uKpBK"><img
-                                                src="https://aviatatravel.com/media/channels_logo/photo_2023-06-08_14.22.40_Zh9x1vA.jpeg"
-                                                alt=""></div>
-                                        <div>
-                                            <h3 class="SameChannelSlider_sameChannels__subtitle__xk91w">продай мне эту ручку
-                                            </h3>
-                                            <div class="SameChannelSlider_sameChannels__subscribers__LbPGb _icon-profile">73
-                                                699</div>
-                                        </div>
-                                    </button></div>
-                                <div class="swiper-slide SameChannelSlider_sameChannels__slide__FyByA"
-                                    style="margin-right: 15px;"><button type="button"
-                                        class="SameChannelSlider_sameChannels__item__PKWlU">
-                                        <div class="SameChannelSlider_sameChannels__image__uKpBK"><img
-                                                src="https://aviatatravel.com/media/channels_logo/2022-11-03_05.03.55.jpg"
-                                                alt=""></div>
-                                        <div>
-                                            <h3 class="SameChannelSlider_sameChannels__subtitle__xk91w">Боги Маркетинга</h3>
-                                            <div class="SameChannelSlider_sameChannels__subscribers__LbPGb _icon-profile">
-                                                126 384</div>
-                                        </div>
-                                    </button></div>
-                                <div class="swiper-slide SameChannelSlider_sameChannels__slide__FyByA"
-                                    style="margin-right: 15px;"><button type="button"
-                                        class="SameChannelSlider_sameChannels__item__PKWlU">
-                                        <div class="SameChannelSlider_sameChannels__image__uKpBK"><img
-                                                src="https://aviatatravel.com/media/channels_logo/2022-11-20-17-07-16.jpg"
-                                                alt=""></div>
-                                        <div>
-                                            <h3 class="SameChannelSlider_sameChannels__subtitle__xk91w">Авоська маркетинга
-                                            </h3>
-                                            <div class="SameChannelSlider_sameChannels__subscribers__LbPGb _icon-profile">26
-                                                068</div>
-                                        </div>
-                                    </button></div>
-                            </div>
-                            <div class="swiper-button-prev swiper-button-disabled"></div>
-                            <div class="swiper-button-next"></div>
-                            <div class="swiper-scrollbar"></div>
                         </div>
                     </div>
                 </div>
@@ -402,6 +301,19 @@ export default {
 <style lang="scss" scoped>
 .hidden {
     display: none;
+}
+
+.row {
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+    position: relative;
+
+    &>div {
+        width: 50%;
+    }
+
+
 }
 </style>
   
