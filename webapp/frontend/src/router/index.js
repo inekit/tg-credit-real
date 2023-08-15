@@ -16,7 +16,7 @@ const routes = [
         component: () => import('@/views/Channels.vue'),
       },
       {
-        path: '/channels/:channelId',
+        path: '/channel/:channelId',
         name: 'Channel',
         component: () => import('@/views/Channel.vue'),
       },
