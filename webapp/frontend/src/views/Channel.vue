@@ -329,7 +329,8 @@ export default {
     data() {
         return {
             infoActive: true,
-            sexActive: true
+            sexActive: true,
+            channel: {},
         }
     },
     watch: {
@@ -337,6 +338,8 @@ export default {
     async beforeMount() {
         window.Telegram?.WebApp.BackButton.onClick(this.routeBack);
         window.Telegram?.WebApp.BackButton.show();
+
+        this.channel = await this.getChannel(this.$route.params.id);
     },
     async mounted() {
         this.updatePage(300);
@@ -370,6 +373,20 @@ export default {
                 document.body.classList.remove('stop-scrolling')
 
             }, delay)
+        },
+        async getChannel(id) {
+            const results = await this.$store.state.myApi.get(this.$store.state.restAddr + '/channels', {
+                params: {
+                    id
+                }
+            })
+                .then(response => {
+                    return response.data;
+                })
+                .catch(e => { eventBus.$emit('noresponse', e) })
+
+            return results
+
         },
     }
 }
