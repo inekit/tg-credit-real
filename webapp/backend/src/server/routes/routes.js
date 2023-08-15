@@ -16,18 +16,7 @@ module.exports = (ctx) => {
   router.put("/favorites", BasketsController.editFavorite);
   router.delete("/favorites", BasketsController.deleteFavorite);
 
-  router.get("/basket_data", BasketsController.getBasketData);
-  router.post("/orders", OrdersController.addOne(ctx));
-  router.get("/can_order", OrdersController.canOrder);
-
-  router.get("/delivery_price", DeliveryController.get);
-
   router.get("/categories", CategoriesController.getAll);
-
-  router.put("/promos", PromosController.use);
-  router.get("/promos", PromosController.test);
-
-  router.get("/statics", StaticsController.getOne);
 
   return router;
 };
