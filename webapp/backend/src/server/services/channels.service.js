@@ -27,7 +27,7 @@ class ChannelsService {
 
       const connection = await tOrmCon;
       {
-        const query = `select c.*, sum(case when uf.user_id=$6 then 1 else 0 end)::int is_favorite
+        const query = `select c.*, sum(case when uf.user_id=$6 then 1 else 2 end)::int is_favorite
                     from public.channels c
                     left join users_favorites uf on uf.channel_id=c.id 
                     where (lower(title) like lower($1) or $1 is NULL)
