@@ -8,10 +8,10 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    redirect: '/channels',
+    redirect: '/channels/1',
     children: [
       {
-        path: '/channels',
+        path: '/channels/userId',
         name: 'Channels',
         component: () => import('@/views/Channels.vue'),
       },
