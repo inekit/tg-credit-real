@@ -18,11 +18,11 @@ class ChannelsService {
     this.edit = this.edit.bind(this);
   }
 
-  get({ id, page = 1, take = 10, searchQuery, categories, user_id }) {
+  get({ id, page = 1, take = 10, searchQuery, category, user_id }) {
     return new Promise(async (res, rej) => {
       const skip = (page - 1) * take;
       searchQuery = searchQuery ? `%${searchQuery}%` : null;
-      categories = categories || null;
+      category = category || null;
       user_id = user_id || null;
 
       const connection = await tOrmCon;
@@ -30,13 +30,13 @@ class ChannelsService {
         const query = `select c.*
                     from public.channels c
                     where (lower(title) like lower($1) or $1 is NULL)
-                    and (c.category_name = any($2) or $2 is NULL)  
+                    and (c.category_name = $2 or $2 is NULL)  
                     and (c.id = $3 or $3 is NULL)  
                     group by c.id
                     order by id
                     LIMIT $4 OFFSET $5`;
         connection
-          .query(query, [searchQuery, categories, id, take, skip])
+          .query(query, [searchQuery, category, id, take, skip])
           .then((data) => res(data))
           .catch((error) => rej(new MySqlError(error)));
       }

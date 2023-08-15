@@ -17,6 +17,25 @@ class UsersService {
     this.edit = this.edit.bind(this);
   }
 
+  get({ category }) {
+    return new Promise(async (res, rej) => {
+      category = category || null;
+
+      const connection = await tOrmCon;
+      {
+        const query = `select c.category_name, json_agg(DISTINCT jsonb_build_object('id', c.id, 'name', c.title,'title', c.preview, 'preview'))  channels_array
+                    from public.channels c
+                    where (c.category_name = $1 or $1 is NULL)  
+                    group by c.id, c.category_name
+                    order by c.category_name,id`;
+        connection
+          .query(query, [category])
+          .then((data) => res(data))
+          .catch((error) => rej(new MySqlError(error)));
+      }
+    });
+  }
+
   async saveReturningFileName(image) {
     if (typeof image === String) return image;
 

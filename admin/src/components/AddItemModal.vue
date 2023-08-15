@@ -1,5 +1,5 @@
 <template>
-  <CButton color="primary" @click="addNewPost">Добавить товар</CButton>
+  <CButton color="primary" @click="addNewPost">Добавить канал</CButton>
   <CModal size="xl" backdrop="static" alignment="center" :visible="visible" @close="closeModal">
     <CForm novalidate :validated="formValid" ref="add-file-form" @change="wregert"
       @submit.prevent="mode === 'new' ? addNewing() : editNewing()" class="add-user" style="display: 'none'">
@@ -12,10 +12,6 @@
         <CFormInput class="mb-3" v-model="formData.title" placeholder="Заголовок" id="inputHeader"
           aria-describedby="inputGroupPrepend" feedbackValid="Все ок" feedbackInvalid="Введите корректный заголовок"
           required />
-        <CFormInput type="number" class="mb-3" label="Количество затяжек" placeholder="Введите количество затяжек"
-          v-model="formData.puffs_count" />
-        <CFormInput type="number" class="mb-3" label="Крепость" placeholder="Введите крепость"
-          v-model="formData.taste_strength" />
         <CFormInput type="file" accept="image/*" ref="file" @change="previewImage" class="mb-3" label="Превью"
           placeholder="Превью" />
         <div class="border p-2 mt-3 preview-container">
@@ -181,16 +177,10 @@ export default {
 
       formData.append('title', this.formData.title)
       formData.append('price', this.formData.price)
-      this.formData.sale_count && formData.append('saleCount', this.formData.sale_count)
-      this.formData.sale_price && formData.append('salePrice', this.formData.sale_price)
 
       this.formData.select_name && formData.append('select_name', this.formData.select_name)
 
-
       this.formData.preview && formData.append(`preview`, this.formData.preview);
-
-      formData.append(`puffs_count`, this.formData.puffs_count);
-      formData.append(`taste_strength`, this.formData.taste_strength);
 
       const turndownService = new TurndownService({
         headingStyle: "atx",
@@ -200,17 +190,10 @@ export default {
         turndownService.turndown(this.$refs.postTextEditor.getHTML()),
       )
 
-      this.formData.options_array?.forEach((option, index) => {
-        option.photos?.forEach(photo => {
-          formData.append(`photos[${index}][]`, photo);
-        })
-
-      });
 
       this.formData.category_name &&
         formData.append('categoryName', this.formData.category_name)
 
-      formData.append('options_array', JSON.stringify(this.formData.options_array))
 
       isEdit && formData.append('id', this.formData.id)
 

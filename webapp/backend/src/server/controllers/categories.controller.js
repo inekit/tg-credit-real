@@ -14,6 +14,13 @@ function getAll(req, res, next) {
   else getOne(req, res);
 }
 
+function getAllWithItems(req, res, next) {
+  categoriesService
+    .get(req.body)
+    .then((data) => res.send(data))
+    .catch((error) => next(error));
+}
+
 function getOne(req, res, next) {
   servicePreset
     .get(req.query.id, 1, 1)
@@ -62,6 +69,7 @@ function deleteOne(req, res, next) {
 
 module.exports = {
   getAll,
+  getAllWithItems,
   getOne,
   addOne,
   editOne,

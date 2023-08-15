@@ -28,9 +28,9 @@
                                                         <span>Все</span>
                                                     </button>
                                                 </li>
-                                                <li class="CategoryItem_item">
+                                                <li v-for="category in $store.state.categories" class="CategoryItem_item">
                                                     <button type="button" class="CategoryItem_button">
-                                                        <span>Дизайн</span>
+                                                        <span>{{ category.name }}</span>
                                                     </button>
                                                 </li>
                                             </ul>
@@ -155,9 +155,7 @@ export default {
             }, delay)
         },
         async getCategories() {
-            const subPath = '/categories'
-
-            const results = await this.$store.state.myApi.get(this.$store.state.restAddr + subPath, {
+            const results = await this.$store.state.myApi.get(this.$store.state.restAddr + '/categories', {
                 params: {
                 }
             })
