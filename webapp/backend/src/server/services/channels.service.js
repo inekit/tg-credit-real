@@ -27,11 +27,13 @@ class ChannelsService {
 
       const connection = await tOrmCon;
       {
-        const query = `select c.*
+        const query = `select c.*, uf.user_id is_favorite
                     from public.channels c
+                    left join users_favorites uf on uf.channel_id=c.id 
                     where (lower(title) like lower($1) or $1 is NULL)
                     and (c.category_name = $2 or $2 is NULL)  
                     and (c.id = $3 or $3 is NULL)  
+                    and (uf.user_id=$6 or $6 is null)
                     group by c.id
                     order by id
                     LIMIT $4 OFFSET $5`;
