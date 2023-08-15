@@ -8,47 +8,22 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    redirect: '/categories/1',
+    redirect: '/channels',
     children: [
       {
-        path: '/categories',
-        name: 'CategoriesFromWAButton',
-        component: () => import('@/views/Categories.vue'),
+        path: '/channels',
+        name: 'Channels',
+        component: () => import('@/views/Channels.vue'),
       },
       {
-        path: '/categories/:userId',
-        name: 'Categories',
-        component: () => import('@/views/Categories.vue'),
+        path: '/channels/:channelId',
+        name: 'Channel',
+        component: () => import('@/views/Channel.vue'),
       },
       {
-        path: '/results/:userId',
-        name: 'Results',
-        component: () => import('@/views/Results.vue'),
-      },
-      {
-        path: '/basket',
-        name: 'Basket',
-        component: () => import('@/views/Basket.vue'),
-      },
-      {
-        path: '/basket/:userId',
-        name: 'BasketForId',
-        component: () => import('@/views/Basket.vue'),
-      },
-      {
-        path: '/order',
-        name: 'Order',
-        component: () => import('@/views/Order.vue'),
-      },
-      {
-        path: '/order/:userId',
-        name: 'OrderForId',
-        component: () => import('@/views/Order.vue'),
-      },
-      {
-        path: '/items/:id',
-        name: 'Items',
-        component: () => import('@/views/Item.vue'),
+        path: '/favourites',
+        name: 'Favourites',
+        component: () => import('@/views/Favourites.vue'),
       },
     ],
   },

@@ -8,7 +8,6 @@ const {
 require("dotenv").config();
 const sendOrder = require("../../Utils/sendOrder");
 const Robokassa = require("../utils/robokassa");
-const googleDocs = require("../../Utils/googleDocs");
 const moment = require("moment");
 class UsersService {
   constructor() {
@@ -378,25 +377,6 @@ class UsersService {
           )
         )?.[0]?.orders_count;
 
-        googleDocs.addOrder({
-          order_id,
-          user_id,
-          total,
-          selected_dm,
-          selected_po,
-          phone,
-          address,
-          name,
-          surname,
-          postal_code,
-          promo_code,
-          patronymic,
-          delivery_price,
-          comment,
-          items: basket.items,
-          orders_count,
-        });
-
         const orderStr =
           basket.items
             ?.map((el) =>
@@ -532,8 +512,6 @@ class UsersService {
           )
         )[0][0];
 
-        await googleDocs.dropOrder(+id);
-
         await ctx.telegram
           .deleteMessage(process.env.ADMIN_ID, data.last_message_id)
           .catch((e) => console.log(e));
@@ -648,10 +626,6 @@ class UsersService {
           ])
           .then((data) => {
             const orderObj = data[0][0];
-
-            if (order.status === "Отменен") {
-              googleDocs.dropOrder(+order.id);
-            }
 
             /*sendOrder(
               ctx,
