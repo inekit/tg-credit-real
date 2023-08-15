@@ -27,7 +27,7 @@ class UsersService {
                     from public.channels c
                     where (c.category_name = $1 or $1 is NULL)  
                     group by c.category_name
-                    order by c.category_name,id`;
+                    order by c.category_name`;
         connection
           .query(query, [category])
           .then((data) => res(data))
