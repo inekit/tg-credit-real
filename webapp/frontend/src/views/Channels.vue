@@ -23,13 +23,17 @@
                                         <div class="simplebar-content" style="padding: 0px">
                                             <ul class="Category_categories__list">
                                                 <li class="CategoryItem_item">
-                                                    <button type="button"
-                                                        class="CategoryItem_button CategoryItem_button_active">
+                                                    <button type="button" class="CategoryItem_button"
+                                                        :class="[category_name === null ? 'CategoryItem_button_active' : '']"
+                                                        @click="category_name = null;">
                                                         <span>Все</span>
                                                     </button>
                                                 </li>
-                                                <li v-for="category in $store.state.categories" class="CategoryItem_item">
-                                                    <button type="button" class="CategoryItem_button">
+                                                <li v-for=" category  in  $store.state.categories "
+                                                    class="CategoryItem_item">
+                                                    <button type="button" class="CategoryItem_button"
+                                                        :class="[category_name === category.name ? 'CategoryItem_button_active' : '']"
+                                                        @click="category_name = category.name">
                                                         <span>{{ category.name }}</span>
                                                     </button>
                                                 </li>
@@ -68,11 +72,11 @@
                     </h2>
                 </div>
                 <div>
-                    <div v-for="category in $store.state.categories">
+                    <div v-for=" category  in  $store.state.categories ">
                         <div class="Badge_badge">
                             <span class="Badge_badge__text">{{ category.name }}</span>
                         </div>
-                        <div v-for="channel in category.channels_array" class="Channels_channels__body">
+                        <div v-for=" channel  in  category.channels_array " class="Channels_channels__body">
                             <RouterLink :to="`/channels/${channel.id}`">
                                 <div class="ChannelBlog_channelBlog">
                                     <div class="ChannelBlog_channelBlog__image">
@@ -116,10 +120,13 @@ export default {
     components: { NavBar, InstagramLoader },
     data() {
         return {
+            category_name: null,
         }
     },
     watch: {
-
+        category_name() {
+            this.getCategories()
+        }
     },
     beforeMount() {
     },
@@ -155,6 +162,7 @@ export default {
         async getCategories() {
             const results = await this.$store.state.myApi.get(this.$store.state.restAddr + '/categories', {
                 params: {
+                    category: this.category_name
                 }
             })
                 .then(response => {
