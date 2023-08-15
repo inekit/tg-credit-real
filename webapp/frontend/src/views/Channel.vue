@@ -339,7 +339,7 @@ export default {
         window.Telegram?.WebApp.BackButton.onClick(this.routeBack);
         window.Telegram?.WebApp.BackButton.show();
 
-        this.channel = await this.getChannel(this.$route.params.id);
+        this.channel = await this.getChannel(this.$route.params.channelId);
     },
     async mounted() {
         this.updatePage(300);
@@ -382,7 +382,7 @@ export default {
         async getChannel(id) {
             const results = await this.$store.state.myApi.get(this.$store.state.restAddr + '/items', {
                 params: {
-                    id
+                    id: id
                 }
             })
                 .then(response => {
