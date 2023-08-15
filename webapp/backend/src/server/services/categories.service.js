@@ -23,11 +23,11 @@ class UsersService {
 
       const connection = await tOrmCon;
       {
-        const query = `select cat.name name, json_agg(DISTINCT jsonb_build_object('id', c.id, 'title', c.title, 'description', c.description, 'preview', c.preview))  channels_array
-                    from public.categories cat left join channels c on cat.name = c.category_name
+        const query = `select c.category_name name, json_agg(DISTINCT jsonb_build_object('id', c.id, 'title', c.title, 'description', c.description, 'preview', c.preview))  channels_array
+                    from public.channels c
                     where (c.category_name = $1 or $1 is NULL)  
-                    group by cat.name
-                    order by cat.name`;
+                    group by c.category_name
+                    order by c.category_name`;
         connection
           .query(query, [category])
           .then((data) => res(data))

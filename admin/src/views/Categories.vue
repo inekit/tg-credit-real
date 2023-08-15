@@ -72,7 +72,7 @@ export default {
     },
     get(take, page) {
       return myApi
-        .get(this.$store.state.publicPath + '/api/categories/', {
+        .get(this.$store.state.publicPath + '/api/admin/categories/', {
           params: {
             take: take ?? 10,
             page: page ?? 1,

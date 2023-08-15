@@ -22,6 +22,8 @@ module.exports = (ctx) => {
   router.put("/items", auth, ChannelsController.editOne);
   router.delete("/items", auth, ChannelsController.deleteOne);
 
+  router.get("/categories", CategoriesController.getAll);
+
   router.post("/categories", auth, CategoriesController.addOne);
   router.put("/categories", auth, CategoriesController.editOne);
   router.delete("/categories", auth, CategoriesController.deleteOne);
