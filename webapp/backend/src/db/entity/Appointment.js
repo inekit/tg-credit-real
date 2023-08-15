@@ -119,13 +119,5 @@ module.exports = new EntitySchema({
       onDelete: "set null",
       onUpdate: "cascade",
     },
-    promo: {
-      target: "Promo",
-      type: "one-to-many",
-      cascade: true,
-      joinColumn: true,
-      onDelete: "cascade",
-      onUpdate: "cascade",
-    },
   },
 });
