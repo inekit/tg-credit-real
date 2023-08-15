@@ -38,7 +38,7 @@ class ChannelsService {
                     order by id
                     LIMIT $4 OFFSET $5`;
         connection
-          .query(query, [searchQuery, category, id, take, skip])
+          .query(query, [searchQuery, category, id, take, skip, user_id])
           .then((data) => res(data))
           .catch((error) => rej(new MySqlError(error)));
       }
