@@ -68,28 +68,26 @@
                     </h2>
                 </div>
                 <div>
-                    <div>
+                    <div v-for="category in $store.state.categories">
                         <div class="Badge_badge">
-                            <span class="Badge_badge__text">Дизайн</span>
+                            <span class="Badge_badge__text">{{ category.name }}</span>
                         </div>
-                        <div class="Channels_channels__body">
-                            <RouterLink :to="'/channels/1'">
+                        <div v-for="channel in category.channels_array" class="Channels_channels__body">
+                            <RouterLink :to="`/channels/${channel.id}`">
                                 <div class="ChannelBlog_channelBlog">
                                     <div class="ChannelBlog_channelBlog__image">
-                                        <img src="https://aviatatravel.com/media/channels_logo/2022-11-20-17-18-57.jpg"
-                                            alt="" />
+                                        <img :src="`/colorsserver/public/pics/${channel.preview}`" alt="" />
                                     </div>
                                     <div class="ChannelBlog_channelBlog__content">
                                         <div class="ChannelBlog_channelBlog__subscribers _icon-profile">
                                             26 244
                                         </div>
                                         <h3 class="ChannelBlog_channelBlog__title">
-                                            Дизайнус
+                                            {{ channel.title }}
                                         </h3>
                                         <div class="ChannelBlog_channelBlog__text">
                                             <p>
-                                                Публикуем прекрасный дизайн, созданный гениями
-                                                мира сего
+                                                {{ channel.description }}
                                             </p>
                                         </div>
                                     </div>

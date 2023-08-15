@@ -23,7 +23,7 @@ class UsersService {
 
       const connection = await tOrmCon;
       {
-        const query = `select c.category_name, json_agg(DISTINCT jsonb_build_object('id', c.id, 'name', c.title,'title', c.preview, 'preview'))  channels_array
+        const query = `select c.category_name name, json_agg(DISTINCT jsonb_build_object('id', c.id, 'title', c.title, 'description', c.description, 'preview', c.preview))  channels_array
                     from public.channels c
                     where (c.category_name = $1 or $1 is NULL)  
                     group by c.id, c.category_name
