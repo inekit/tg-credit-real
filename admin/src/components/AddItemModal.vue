@@ -5,7 +5,7 @@
       @submit.prevent="mode === 'new' ? addNewing() : editNewing()" class="add-user" style="display: 'none'">
       <CModalHeader>
         <CModalTitle>{{
-          mode === 'new' ? 'Добавить товар' : 'Редактировать товар'
+          mode === 'new' ? 'Добавить канал' : 'Редактировать канал'
         }}</CModalTitle>
       </CModalHeader>
       <CModalBody>
@@ -32,56 +32,6 @@
             value="" label="Без категорий" />
         </div>
         <CFormInput type="number" class="mb-3" label="Цена" placeholder="Введите цену" v-model.number="formData.price" />
-        <label class="form-label">Оптовые скидки</label>
-        <div v-if="formData.sale_count || formData.sale_price">
-          <CFormInput type="number" class="mb-3" placeholder="Введите необходимое количество товара для опта"
-            v-model.number="formData.sale_count" />
-          <CFormInput type="number" class="mb-3" placeholder="Введите оптовую цену"
-            v-model.number="formData.sale_price" />
-          <CButton color="danger" type="button" @click="formData.sale_count = null; formData.sale_price = null">
-            Убрать скидку
-          </CButton>
-        </div>
-        <CButton v-else color="primary" type="button" style="display: block;"
-          @click="formData.sale_count = 5; formData.sale_price = formData.price">
-          Добавить скидку
-        </CButton>
-
-        <div class="options-shedle">
-          <span>Опции</span>
-          <CFormCheck id="select-taste" @change="formData.select_name = 'Вкус'" type="radio" name="select-name"
-            value="Вкус" label="Вкус" :checked="formData.select_name === 'Вкус'" />
-          <CFormCheck id="select-color" @change="formData.select_name = 'Цвет'" type="radio" name="select-name"
-            value="Цвет" label="Цвет" :checked="formData.select_name === 'Цвет'" />
-          <CFormCheck id="select-none" @input="selectNone" @change="formData.select_name = null" type="radio"
-            name="select-name" value="" label="Без опций" :checked="!formData.select_name" />
-          <div class="option-item" v-for="option, id in formData.options_array" :key="option.id">
-            <CFormInput type="text" class="mb-3" label="Название" placeholder="Введите название"
-              v-model="formData.options_array[id].name" />
-            <CFormInput type="text" class="mb-3" label="Полное название в таблице" placeholder="Введите название"
-              v-model="formData.options_array[id].table_name" />
-            <CFormInput type="number" class="mb-3" label="Остаток" placeholder="Введите остаток"
-              v-model="formData.options_array[id].stock" />
-            <CFormInput type="file" accept="image/*" multiple="multiple" ref="file"
-              @change="previewMultiImage(id, $event)" class="mb-3" label="Превью" placeholder="Превью" />
-            <div class="border p-2 mt-3 preview-container">
-              <template v-if="preview_list?.[id]?.length">
-                <div v-for="item, index in preview_list?.[id]" :key="index">
-                  <img :src="item" class="img-fluid" />
-                  <button @click.prevent="dropFile(id, index)">Х</button>
-                </div>
-              </template>
-            </div>
-            <CButton v-if="id > 0" color="danger" type="button" @click="dropOption(id)">Удалить
-              опцию
-            </CButton>
-          </div>
-          <CButton v-if="!!formData.select_name" color="primary" type="button" @click="addOption">Добавить опцию
-          </CButton>
-        </div>
-
-
-
         <QuillEditor theme="snow" toolbar="essential" ref="postTextEditor" id="postTextEditor"
           placeholder="Краткое описание" />
       </CModalBody>
