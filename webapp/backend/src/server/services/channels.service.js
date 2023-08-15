@@ -103,7 +103,7 @@ class ChannelsService {
         : preview;
 
       const data = await connection.manager
-        .getRepository("Item")
+        .getRepository("Channel")
         .save({
           title,
           description,
@@ -140,7 +140,7 @@ class ChannelsService {
         : preview;
 
       const data = await connection
-        .getRepository("Item")
+        .getRepository("Channel")
         .createQueryBuilder()
         .update({
           title,
