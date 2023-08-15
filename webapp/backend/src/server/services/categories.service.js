@@ -82,11 +82,10 @@ class UsersService {
       try {
         const fNameFullPath = await this.saveReturningFileName(previewBinary);
 
-        const data = await queryRunner.manager.getRepository("Category").save({
-          name,
-          description,
-          preview: fNameFullPath,
-        });
+        const data = await queryRunner.query(
+          `insert into categories (name, description, preview) values ($1,$2,$3)`,
+          [name, description, fNameFullPath]
+        );
 
         await queryRunner.commitTransaction();
 
