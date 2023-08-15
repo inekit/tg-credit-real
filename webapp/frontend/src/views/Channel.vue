@@ -31,13 +31,15 @@
                     </div>
                     <div class="Channel_channelProfile__body">
                         <ul class="Channel_channelProfile__tabList" role="tablist">
-                            <li class="Channel_channelProfile__item Channel_channelProfile__item_active" role="tab"
-                                id="tab:r0:0" aria-selected="true" aria-disabled="false" aria-controls="panel:r0:0"
-                                tabindex="0" data-rttab="true" @click="infoActive = true">
+                            <li class="Channel_channelProfile__item " role="tab"
+                                :class="[infoActive ? 'Channel_channelProfile__item_active' : '']" id="tab:r0:0"
+                                aria-selected="true" aria-disabled="false" aria-controls="panel:r0:0" tabindex="0"
+                                data-rttab="true" @click="infoActive = true">
                                 Информация
                             </li>
-                            <li class="Channel_channelProfile__item" role="tab" id="tab:r0:1" aria-selected="false"
-                                aria-disabled="false" aria-controls="panel:r0:1" data-rttab="true"
+                            <li class="Channel_channelProfile__item"
+                                :class="[!infoActive ? 'Channel_channelProfile__item_active' : '']" role="tab" id="tab:r0:1"
+                                aria-selected="false" aria-disabled="false" aria-controls="panel:r0:1" data-rttab="true"
                                 @click="infoActive = false">
                                 Стоимость
                             </li>
@@ -124,8 +126,7 @@
                         </div>
                         <div>
                             <div class="container">
-                                <div class="" v-show="!sexActive" role="tabpanel" id="panel:r1:0"
-                                    aria-labelledby="tab:r1:0">
+                                <div class="" v-show="sexActive" role="tabpanel" id="panel:r1:0" aria-labelledby="tab:r1:0">
                                     <div class="GenderCount_gender">
                                         <div class="GenderCount_gender__body">
                                             <div class="GenderCount_gender__item">
