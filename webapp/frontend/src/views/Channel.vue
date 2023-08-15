@@ -315,7 +315,8 @@ export default {
         async getChannel(id) {
             const results = await this.$store.state.myApi.get(this.$store.state.restAddr + '/items', {
                 params: {
-                    id: id
+                    id: id,
+                    user_id: this.$store.state.userId,
                 }
             })
                 .then(response => {
