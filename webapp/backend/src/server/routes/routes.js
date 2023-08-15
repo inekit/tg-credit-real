@@ -9,7 +9,6 @@ module.exports = (ctx) => {
 
   router.get("/favorites", BasketsController.getFavorites);
   router.post("/favorites", BasketsController.addFavorite);
-  router.put("/favorites", BasketsController.editFavorite);
   router.delete("/favorites", BasketsController.deleteFavorite);
 
   router.get("/categories", CategoriesController.getAllWithItems);

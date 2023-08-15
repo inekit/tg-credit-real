@@ -20,13 +20,6 @@ function addFavorite(req, res, next) {
     .catch((error) => next(error));
 }
 
-function editFavorite(req, res, next) {
-  basketsService
-    .editFavorite(req.body)
-    .then((data) => res.send(data))
-    .catch((error) => next(error));
-}
-
 function deleteFavorite(req, res, next) {
   basketsService
     .deleteFavorite(req.body)
@@ -38,6 +31,5 @@ module.exports = {
   getFavorites,
   deleteFavorite,
   addFavorite,
-  editFavorite,
   getBasketData,
 };

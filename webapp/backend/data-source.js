@@ -9,6 +9,7 @@ const Static = require("./src/db/entity/Static");
 const Session = require("./src/db/entity/Session");
 const User = require("./src/db/entity/User");
 const Appointment = require("./src/db/entity/Appointment");
+const UserFavorite = require("./src/db/entity/UserFavorite");
 
 const { DataSource } = require("typeorm");
 
@@ -21,7 +22,16 @@ const AppDataSource = new DataSource({
   username: DB_USER,
   password: DB_PASSWORD,
   database: DB_DATABASE,
-  entities: [User, Admin, Channel, Session, Static, Category, Appointment],
+  entities: [
+    User,
+    Admin,
+    Channel,
+    Session,
+    Static,
+    Category,
+    Appointment,
+    UserFavorite,
+  ],
   synchronize: true,
   migrationsTableName: "custom_migration_table",
   migrations: ["./src/db/migrations/*.js"],

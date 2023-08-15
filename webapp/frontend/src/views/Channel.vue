@@ -18,7 +18,9 @@
                         </div>
                         <button type="button" class="Channel_channelProfile__image">
                             <img :src="`/colorsserver/public/pics/${channel.preview}`" alt="" /></button><button
-                            type="button" class="Channel_channelProfile__icon _icon-bookmark"></button>
+                            type="button" class="Channel_channelProfile__icon _icon-bookmark"
+                            :class="channel.is_favorite ? 'Channel_channelProfile__icon_active' : ''"
+                            @click="toggleFavorite"></button>
                     </div>
                     <div class="Channel_channelProfile__content">
                         <h1 class="Channel_channelProfile__title">{{ channel.title }}</h1>
@@ -279,6 +281,36 @@ export default {
         },
         openLink(link) {
             window.open(link, '_blank')
+        },
+        toggleFavorite() {
+            if (this.channel.is_favorite)
+                this.dropFavorite();
+            else this.addFavorite()
+        },
+        addFavorite() {
+            this.$store.state.myApi
+                .post(this.$store.state.restAddr + '/favorites', {
+                    channel_id: this.$route.params.channelId,
+                    user_id: this.$store.state.userId,
+                })
+                .then(async (response) => {
+                    this.channel.is_favorite = true;
+                })
+                .catch((e) => {
+                    alert("Эта позиция уже добавлена в корзину")
+                })
+        },
+        async dropFavorite() {
+            this.$store.state.myApi.delete(this.$store.state.restAddr + '/favorites', {
+                data: {
+                    user_id: this.$store.state.userId,
+                    channel_id: this.$route.params.channelId,
+                }
+            })
+                .then(async response => {
+                    this.channel.is_favorite = false;
+                })
+                .catch(e => { eventBus.$emit('noresponse', e) })
         },
         async getChannel(id) {
             const results = await this.$store.state.myApi.get(this.$store.state.restAddr + '/items', {

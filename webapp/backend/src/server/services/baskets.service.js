@@ -12,153 +12,48 @@ class BasketsService {
     this.getFavorites = this.getFavorites.bind(this);
     this.getBasketData = this.getBasketData.bind(this);
     this.addFavorite = this.addFavorite.bind(this);
-    this.editFavorite = this.editFavorite.bind(this);
     this.deleteFavorite = this.deleteFavorite.bind(this);
   }
 
-  addFavorite({ user_id, item_option_id, count, mainside_id }) {
+  addFavorite({ user_id, channel_id }) {
     return new Promise(async (res, rej) => {
       const connection = await tOrmCon;
-
-      const queryRunner = connection.createQueryRunner();
-
-      await queryRunner.connect();
-
-      await queryRunner.startTransaction();
-
-      try {
-        const orders = await queryRunner.query(
-          `select * from orders where user_id = $1::bigint and status='basket' limit 1`,
-          [user_id]
-        );
-        const basket_id = orders[0].id;
-
-        const data = await queryRunner
-          .query(
-            `insert into order_items (order_id, item_option_id, count) values ($1,$2,$3)`,
-            [basket_id, item_option_id, count || 1]
-          )
-          .catch(async (e) => {
-            return await queryRunner.query(
-              `update order_items set count = $3 where order_id=$1 and item_option_id=$2`,
-              [basket_id, item_option_id, 1]
-            );
-          });
-
-        await queryRunner.commitTransaction();
-
-        res(data);
-      } catch (error) {
-        console.log(error);
-        await queryRunner.rollbackTransaction();
-
-        rej(new MySqlError(error));
-      } finally {
-        await queryRunner.release();
-      }
+      await connection
+        .query(
+          `insert into users_favorites (user_id, channel_id) values ($1,$2)`,
+          [user_id, channel_id]
+        )
+        .catch((error) => rej(new MySqlError(error)))
+        .then((res) => res(res));
     });
   }
 
-  editFavorite({ user_id, item_option_id, count }) {
+  deleteFavorite({ user_id, channel_id }) {
     return new Promise(async (res, rej) => {
       const connection = await tOrmCon;
-
-      const queryRunner = connection.createQueryRunner();
-
-      await queryRunner.connect();
-
-      await queryRunner.startTransaction();
-
-      try {
-        const orders = await queryRunner.query(
-          `select * from orders where user_id = $1::bigint and status='basket' limit 1`,
-          [user_id]
-        );
-        const basket_id = orders[0].id;
-
-        let data;
-        if (count < 1) {
-          data = await queryRunner.query(
-            `delete from order_items where order_id=$1 and item_option_id=$2`,
-            [basket_id, item_option_id]
-          );
-        } else if (count > 100) throw new Error();
-        else
-          data = await queryRunner.query(
-            `update order_items set count = $3 where order_id=$1 and item_option_id=$2`,
-            [basket_id, item_option_id, count]
-          );
-
-        await queryRunner.commitTransaction();
-
-        res(data);
-      } catch (error) {
-        console.log(error);
-        await queryRunner.rollbackTransaction();
-
-        rej(new MySqlError(error));
-      } finally {
-        await queryRunner.release();
-      }
+      await connection
+        .query(
+          `delete from users_favorites where user_id =$1 and channel_id = $2`,
+          [user_id, channel_id]
+        )
+        .catch((error) => rej(new MySqlError(error)))
+        .then((res) => res(res));
     });
   }
 
-  deleteFavorite({ user_id, item_option_id }) {
-    return new Promise(async (res, rej) => {
-      const connection = await tOrmCon;
-
-      const queryRunner = connection.createQueryRunner();
-
-      await queryRunner.connect();
-
-      await queryRunner.startTransaction();
-
-      try {
-        const orders = await queryRunner.query(
-          `select * from orders where user_id = $1 and status='basket' limit 1`,
-          [user_id]
-        );
-        const basket_id = orders[0].id;
-
-        console.log(orders, basket_id, user_id, item_option_id);
-
-        if (!item_option_id) throw new Error("no data");
-        const data = await queryRunner.query(
-          `delete from order_items 
-          where order_id=$1 and item_option_id=$2;`,
-          [basket_id, item_option_id]
-        );
-
-        await queryRunner.commitTransaction();
-
-        res(data);
-      } catch (error) {
-        console.log(error);
-        await queryRunner.rollbackTransaction();
-
-        rej(new MySqlError(error));
-      } finally {
-        await queryRunner.release();
-      }
-    });
-  }
-
-  getFavorites({ user_id, item_option_id, item_id }) {
+  getFavorites({ user_id }) {
     return new Promise(async (res, rej) => {
       const connection = await tOrmCon;
 
       connection
         .query(
-          `select io.id, i.id item_id, o.id order_id, o.creation_date, i.title, io.photos, count, io.name, price from 
-          orders o 
-          left join order_items oi on oi.order_id = o.id
-          left join item_options io on oi.item_option_id = io.id
-          left join items i on io.item_id = i.id
-          where o.user_id = $1 and o.status='basket' and io.id is not NULL
-          and (item_option_id=$2 or $2::bigint is null)
-          and (item_id=$3 or $3::bigint is null)
-          order by io.id`,
-          [user_id, item_option_id, item_id]
+          `select c.category_name name, json_agg(DISTINCT jsonb_build_object('id', c.id, 'title', c.title,
+        'description', c.description, 'preview', c.preview,'participants_count',c.participants_count))  channels_array
+                   from users_favorites uf left join public.channels c on uf.channel_id = c.id
+                   where uf.user_id = $1
+                   group by c.category_name
+                   order by c.category_name`,
+          [user_id]
         )
         .then(async (data) => {
           return res(data);
