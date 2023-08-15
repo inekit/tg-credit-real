@@ -124,8 +124,8 @@ export default {
         }
     },
     watch: {
-        category_name() {
-            this.getCategories()
+        async category_name() {
+            this.$store.state.categories = await this.getCategories()
         }
     },
     beforeMount() {
