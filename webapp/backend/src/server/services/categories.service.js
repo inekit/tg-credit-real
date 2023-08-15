@@ -26,7 +26,7 @@ class UsersService {
         const query = `select c.category_name name, json_agg(DISTINCT jsonb_build_object('id', c.id, 'title', c.title, 'description', c.description, 'preview', c.preview))  channels_array
                     from public.channels c
                     where (c.category_name = $1 or $1 is NULL)  
-                    group by c.id, c.category_name
+                    group by c.category_name
                     order by c.category_name,id`;
         connection
           .query(query, [category])
