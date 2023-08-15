@@ -7,7 +7,6 @@ const titles = require("telegraf-steps").titlesGetter(__dirname + "/Titles");
 const tOrmCon = require("./db/connection");
 const sendOrder = require("./Utils/sendOrder");
 require("dotenv").config();
-const googleDocs = require("./Utils/googleDocs");
 
 const moment = require("moment");
 const mainStage = new Stage(
@@ -93,10 +92,6 @@ mainStage.action(/^status\_([0-9]+)\_(.+)\_([0-9])$/g, async (ctx) => {
     ])
   )?.[0]?.username;
 
-  if (status === "Отменен") {
-    googleDocs.dropOrder(+order_id);
-  }
-
   ctx.telegram
     .sendMessage(
       orderData.user_id,
@@ -172,8 +167,6 @@ mainStage.action(/^cancel\_([0-9]+)$/g, async (ctx) => {
       orderData.user_id,
     ])
   )?.[0]?.username;
-
-  googleDocs.dropOrder(+order_id);
 
   ctx.telegram
     .sendMessage(

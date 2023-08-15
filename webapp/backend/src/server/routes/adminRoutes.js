@@ -8,7 +8,7 @@ var {
 var UsersController = require("../controllers/user.controller");
 var ChannelsController = require("../controllers/channels.controller");
 var CategoriesController = require("../controllers/categories.controller");
-var StaticsController = require("../controllers/statics.controller");
+//var StaticsController = require("../controllers/statics.controller");
 
 var fileUpload = require("express-fileupload");
 router.use(fileUpload({}));
@@ -26,8 +26,8 @@ module.exports = (ctx) => {
   router.put("/categories", auth, CategoriesController.editOne);
   router.delete("/categories", auth, CategoriesController.deleteOne);
 
-  router.get("/statics", auth, StaticsController.getOne);
-  router.put("/statics", auth, StaticsController.editOne);
+  //router.get("/statics", auth, StaticsController.get);
+  //router.put("/statics", auth, StaticsController.editOne);
 
   router.post("/login", login.local);
   router.put("/register", register.local);
