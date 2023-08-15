@@ -11,7 +11,7 @@ const routes = [
     redirect: '/channels/1',
     children: [
       {
-        path: '/channels/userId',
+        path: '/channels/:userId',
         name: 'Channels',
         component: () => import('@/views/Channels.vue'),
       },
