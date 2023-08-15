@@ -17,7 +17,7 @@
                         <span class="Badge_badge__text">{{ category.name }}</span>
                     </div>
                     <div v-for=" channel  in  category.channels_array " class="Channels_channels__body">
-                        <RouterLink :to="`/channels/${channel.id}`">
+                        <RouterLink :to="`/channel/${channel.id}`">
                             <div class="ChannelBlog_channelBlog">
                                 <div class="ChannelBlog_channelBlog__image">
                                     <img :src="`/colorsserver/public/pics/${channel.preview}`" alt="" />
