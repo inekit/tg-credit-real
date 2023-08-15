@@ -24,7 +24,7 @@ class BasketsService {
           [user_id, channel_id]
         )
         .catch((error) => rej(new MySqlError(error)))
-        .then((res) => res(res));
+        .then((data) => res(data));
     });
   }
 
@@ -37,7 +37,7 @@ class BasketsService {
           [user_id, channel_id]
         )
         .catch((error) => rej(new MySqlError(error)))
-        .then((res) => res(res));
+        .then((data) => res(data));
     });
   }
 
