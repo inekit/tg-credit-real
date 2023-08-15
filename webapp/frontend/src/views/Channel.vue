@@ -375,7 +375,7 @@ export default {
             }, delay)
         },
         async getChannel(id) {
-            const results = await this.$store.state.myApi.get(this.$store.state.restAddr + '/channels', {
+            const results = await this.$store.state.myApi.get(this.$store.state.restAddr + '/items', {
                 params: {
                     id
                 }
