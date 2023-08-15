@@ -374,6 +374,11 @@ export default {
 
             }, delay)
         },
+        formatThousands(number) {
+            if (number >= 1000)
+                return `${+(number / 1000).toFixed(0)}K`
+            else return number;
+        },
         async getChannel(id) {
             const results = await this.$store.state.myApi.get(this.$store.state.restAddr + '/items', {
                 params: {
