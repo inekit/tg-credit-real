@@ -131,22 +131,20 @@
                                         <div class="GenderCount_gender__body">
                                             <div class="GenderCount_gender__item">
                                                 <h2 class="GenderCount_gender__title">
-                                                    Мужской <span>61%</span>
+                                                    Мужской <span>{{ `${channel.man_percent}%` }}</span>
                                                 </h2>
                                                 <div class="GenderCount_gender__statusbar">
-                                                    <span style="
-                                    width: 61%;
+                                                    <span :style="{ width: `${channel.man_percent}%` }" style="
                                     background-color: rgb(13, 86, 225);
                                   "></span>
                                                 </div>
                                             </div>
                                             <div class="GenderCount_gender__item">
                                                 <h2 class="GenderCount_gender__title">
-                                                    Женский <span>39%</span>
+                                                    Женский <span>{{ `${100 - channel.man_percent}%` }}</span>
                                                 </h2>
                                                 <div class="GenderCount_gender__statusbar">
-                                                    <span style="
-                                    width: 39%;
+                                                    <span :style="{ width: `${100 - channel.man_percent}%` }" style="
                                     background-color: rgb(37, 252, 213);
                                   "></span>
                                                 </div>
