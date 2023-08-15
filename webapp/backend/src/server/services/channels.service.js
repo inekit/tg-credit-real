@@ -18,15 +18,7 @@ class ChannelsService {
     this.edit = this.edit.bind(this);
   }
 
-  get({
-    id,
-    page = 1,
-    take = 10,
-    searchQuery,
-    categories,
-    user_id,
-    item_option_id,
-  }) {
+  get({ id, page = 1, take = 10, searchQuery, categories, user_id }) {
     return new Promise(async (res, rej) => {
       const skip = (page - 1) * take;
       searchQuery = searchQuery ? `%${searchQuery}%` : null;
@@ -41,7 +33,7 @@ class ChannelsService {
                     and (p.category_name = $2 or $2 is NULL)  
                     and (p.id = $3 or $3 is NULL)  
                     group by p.id
-                    order by ${orderQueryPart}
+                    order by id
                     LIMIT $4 OFFSET $5`;
         connection
           .query(query, [searchQuery, category, id, take, skip])
