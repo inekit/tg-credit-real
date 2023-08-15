@@ -101,7 +101,7 @@ export default {
   methods: {
     async getProjects() {
       return await myApi
-        .get(this.$store.state.publicPath + '/api/categories/')
+        .get(this.$store.state.publicPath + '/api/admin/categories/')
         .then((res) => {
           return res.data
         })
