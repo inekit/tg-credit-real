@@ -26,7 +26,7 @@ exports.webapp_keyboard = (ctx, id) =>
     [
       webAppButton(
         ctx.getTitle("WEBAPP_INLINE_BUTTON"),
-        "https://92.255.79.59/colorsfront/channels" + id
+        "https://92.255.79.59/colorsfront/channels/" + id
       ),
     ],
   ]);
