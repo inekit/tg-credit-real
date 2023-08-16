@@ -230,7 +230,12 @@ export default {
       this.formData.err && formData.append('err', this.formData.err)
       this.formData.cpm && formData.append('cpm', this.formData.cpm)
       this.formData.man_percent && formData.append('man_percent', this.formData.man_percent)
-      this.formData.age && formData.append('age', this.formData.age)
+      formData.append('l18', this.formData.age.l18)
+      formData.append('l24', this.formData.age.l24)
+      formData.append('l34', this.formData.age.l34)
+      formData.append('l44', this.formData.age.l44)
+      formData.append('l54', this.formData.age.l54)
+      formData.append('l100', this.formData.age.l100)
       this.formData.tgstat_link && formData.append('tgstat_link', this.formData.tgstat_link)
       this.formData.telemetr_link && formData.append('telemetr_link', this.formData.telemetr_link)
 

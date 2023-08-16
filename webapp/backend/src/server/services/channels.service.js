@@ -163,7 +163,12 @@ class ChannelsService {
     err,
     cpm,
     man_percent,
-    age,
+    l18,
+    l24,
+    l34,
+    l44,
+    l54,
+    l100,
     tgstat_link,
     telemetr_link,
   }) {
@@ -190,7 +195,7 @@ class ChannelsService {
           err,
           cpm,
           man_percent,
-          age,
+          age: { l18, l24, l34, l44, l54, l100 },
           tgstat_link,
           telemetr_link,
         })
