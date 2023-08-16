@@ -56,6 +56,8 @@ export default {
       this.formMode = 'new'
       this.formData = {
         category: this.$route.params.categoryName,
+        age: {},
+
       }
       this.formVisible = true
     })
