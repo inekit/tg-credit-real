@@ -37,13 +37,13 @@
         <CFormInput type="number" class="mb-3" label="ERR" v-model.number="formData.err" disabled />
         <CFormInput type="number" class="mb-3" label="CPM" v-model.number="formData.cpm" disabled />
         <CFormInput type="number" class="mb-3" label="Процент мужчин" v-model.number="formData.man_percent" />
-        <span>Возраст аудитории в процентах</span>
+        <span>Возраст аудитории в процентах<br /></span>
 
-        <CFormInput type="number" class="mb-3" label="До 18" v-model.number="formData.age.l18" @change="fixPercent" />
-        <CFormInput type="number" class="mb-3" label="18-24" v-model.number="formData.age.l24" @change="fixPercent" />
-        <CFormInput type="number" class="mb-3" label="25-34" v-model.number="formData.age.l34" @change="fixPercent" />
-        <CFormInput type="number" class="mb-3" label="35-44" v-model.number="formData.age.l44" @change="fixPercent" />
-        <CFormInput type="number" class="mb-3" label="45-54" v-model.number="formData.age.l54" @change="fixPercent" />
+        <CFormInput type="number" class="mb-3" label="До 18" v-model.number="formData.age.l18" @input="fixPercent" />
+        <CFormInput type="number" class="mb-3" label="18-24" v-model.number="formData.age.l24" @input="fixPercent" />
+        <CFormInput type="number" class="mb-3" label="25-34" v-model.number="formData.age.l34" @input="fixPercent" />
+        <CFormInput type="number" class="mb-3" label="35-44" v-model.number="formData.age.l44" @input="fixPercent" />
+        <CFormInput type="number" class="mb-3" label="45-54" v-model.number="formData.age.l54" @input="fixPercent" />
         <CFormInput type="number" class="mb-3" label="55 лет и старше" v-model.number="formData.age.l100"
           @change="fixPercent" />
 
@@ -210,7 +210,7 @@ export default {
       eventBus.$emit('closeModal')
     },
     constractFromData(isEdit) {
-      if (!this.formData.title || !this.$refs.postTextEditor.getHTML())
+      if (!this.formData.title)
         throw new Error()
 
       var formData = new FormData()
