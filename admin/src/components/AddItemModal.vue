@@ -9,8 +9,8 @@
         }}</CModalTitle>
       </CModalHeader>
       <CModalBody>
-        <CFormInput class="mb-3" v-model="formData.title" placeholder="Заголовок" id="inputHeader"
-          aria-describedby="inputGroupPrepend" feedbackValid="Все ок" feedbackInvalid="Введите корректный заголовок"
+        <CFormInput class="mb-3" v-model="formData.title" placeholder="Название канала" id="inputHeader"
+          aria-describedby="inputGroupPrepend" feedbackValid="Все ок" feedbackInvalid="Введите корректное название"
           required />
         <CFormInput type="file" accept="image/*" ref="file" @change="previewImage" class="mb-3" label="Превью"
           placeholder="Превью" />
@@ -27,9 +27,31 @@
           <CFormCheck id="null-name" :checked="!formData.category_name" @change="changeP" type="radio" name="project-name"
             value="" label="Без категорий" />
         </div>
-        <CFormInput type="number" class="mb-3" label="Цена" placeholder="Введите цену" v-model.number="formData.price" />
-        <QuillEditor theme="snow" toolbar="essential" ref="postTextEditor" id="postTextEditor"
-          placeholder="Краткое описание" />
+        <CFormInput type="text" class="mb-3" label="Описание канала" placeholder="Введите описание канала"
+          v-model="formData.description" required />
+        <CFormInput type="number" class="mb-3" label="Цена" v-model.number="formData.price" />
+
+        <CFormInput type="number" class="mb-3" label="Количество подписчиков" v-model.number="formData.participants_count"
+          disabled />
+        <CFormInput type="number" class="mb-3" label="Охват" v-model.number="formData.post_reach" disabled />
+        <CFormInput type="number" class="mb-3" label="ERR" v-model.number="formData.err" disabled />
+        <CFormInput type="number" class="mb-3" label="CPM" v-model.number="formData.cpm" disabled />
+        <CFormInput type="number" class="mb-3" label="Процент мужчин" v-model.number="formData.man_percent" />
+        <span>Возраст аудитории в процентах</span>
+
+        <CFormInput type="number" class="mb-3" label="До 18" v-model.number="formData.age.l18" @change="fixPercent" />
+        <CFormInput type="number" class="mb-3" label="18-24" v-model.number="formData.age.l24" @change="fixPercent" />
+        <CFormInput type="number" class="mb-3" label="25-34" v-model.number="formData.age.l34" @change="fixPercent" />
+        <CFormInput type="number" class="mb-3" label="35-44" v-model.number="formData.age.l44" @change="fixPercent" />
+        <CFormInput type="number" class="mb-3" label="45-54" v-model.number="formData.age.l54" @change="fixPercent" />
+        <CFormInput type="number" class="mb-3" label="55 лет и старше" v-model.number="formData.age.l100"
+          @change="fixPercent" />
+
+
+        <CFormInput type="text" class="mb-3" label="Ссылка tgstat" v-model="formData.tgstat_link" />
+        <CFormInput type="text" class="mb-3" label="Ссылка telemetr" v-model="formData.telemetr_link" />
+
+
       </CModalBody>
       <CModalFooter>
         <CButton color="secondary" @click="closeModal"> Отменить </CButton>
@@ -45,15 +67,13 @@ import axios from 'axios'
 const myApi = axios.create({
   withCredentials: true,
 })
-import { QuillEditor } from '@vueup/vue-quill'
 import '@vueup/vue-quill/dist/vue-quill.snow.css'
-import TurndownService from 'turndown'
 import { marked } from 'marked'
 //import * as DOMPurify from 'dompurify'
 import eventBus from '../eventBus'
 
 export default {
-  components: { QuillEditor },
+  components: {},
   props: {
     mode: {
       required: true,
@@ -108,6 +128,26 @@ export default {
         .catch((error) => {
           eventBus.$emit('noresponse', error)
         })
+    },
+    fixPercent() {
+      const age = this.formData.age
+      const setPercent = (l18 = 0, l24 = 0, l34 = 0, l44 = 0, l54 = 0, l100 = 0) => {
+        this.formData.age = { l18, l24, l34, l44, l54, l100 }
+      }
+      if (age.l18 > 100) {
+        setPercent(100)
+      } else if (age.l18 + age.l24 > 100) {
+        setPercent(age.l18, 100 - age.l18)
+      } else if (age.l18 + age.l24 + age.l34 > 100) {
+        setPercent(age.l18, age.l24, 100 - age.l24 - age.l18)
+      } else if (age.l18 + age.l24 + age.l34 + age.l44 > 100) {
+        setPercent(age.l18, age.l24, age.l34, 100 - age.l34 - age.l24 - age.l18)
+      } else if (age.l18 + age.l24 + age.l34 + age.l44 + age.l54 > 100) {
+        setPercent(age.l18, age.l24, age.l34, age.l44, 100 - age.l44 - age.l34 - age.l24 - age.l18)
+      } else if (age.l18 + age.l24 + age.l34 + age.l44 + age.l54 + age.l100 > 100) {
+        setPercent(age.l18, age.l24, age.l34, age.l44, age.l54, 100 - age.l54 - age.l44 - age.l34 - age.l24 - age.l18)
+      }
+
     },
     selectNone() {
       this.formData.options_array.length = this.preview_list.length = 1
@@ -182,14 +222,16 @@ export default {
 
       this.formData.preview && formData.append(`preview`, this.formData.preview);
 
-      const turndownService = new TurndownService({
-        headingStyle: "atx",
-      })
-      formData.append(
-        'description',
-        turndownService.turndown(this.$refs.postTextEditor.getHTML()),
-      )
 
+      this.formData.description && formData.append('description', this.formData.description)
+      this.formData.participants_count && formData.append('participants_count', this.formData.participants_count)
+      this.formData.post_reach && formData.append('post_reach', this.formData.post_reach)
+      this.formData.err && formData.append('err', this.formData.err)
+      this.formData.cpm && formData.append('cpm', this.formData.cpm)
+      this.formData.man_percent && formData.append('man_percent', this.formData.man_percent)
+      this.formData.age && formData.append('age', this.formData.age)
+      this.formData.tgstat_link && formData.append('tgstat_link', this.formData.tgstat_link)
+      this.formData.telemetr_link && formData.append('telemetr_link', this.formData.telemetr_link)
 
       this.formData.category_name &&
         formData.append('categoryName', this.formData.category_name)

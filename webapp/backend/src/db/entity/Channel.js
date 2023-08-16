@@ -62,6 +62,10 @@ module.exports = new EntitySchema({
       nullable: false,
       default: 100,
     },
+    age: {
+      type: "json",
+      default: {},
+    },
     tgstat_link: {
       type: "varchar",
       length: 255,
