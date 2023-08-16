@@ -12,13 +12,6 @@
         <CFormInput class="mb-3" v-model="formData.name" placeholder="Категория" id="inputName"
           aria-describedby="inputGroupPrepend" maxlength="255" required feedbackValid="Все ок"
           feedbackInvalid="Введите корректное название категории" />
-        <CFormInput type="file" accept="image/*" ref="preview" @input="previewMultiImage" class="mb-3" label="Превью"
-          placeholder="Превью" />
-        <div class="border p-2 mt-3 preview-container">
-          <img :src="preview" class="img-fluid" />
-        </div>
-        <CFormTextarea v-model="formData.description" placeholder="Описание" id="inputDescription"
-          aria-describedby="inputGroupPrepend" required />
       </CForm>
     </CModalBody>
     <CModalFooter>

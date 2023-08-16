@@ -37,10 +37,6 @@ export default {
           name: 'name',
           title: 'Название',
         },
-        {
-          name: 'description',
-          title: 'Описание',
-        },
       ],
     }
   },
