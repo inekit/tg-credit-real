@@ -44,10 +44,6 @@ export default {
           name: 'description',
           title: 'Описание',
         },
-        {
-          name: 'publication_date',
-          title: 'Дата добавления',
-        },
       ],
     }
   },
