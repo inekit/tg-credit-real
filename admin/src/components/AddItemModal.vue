@@ -87,6 +87,7 @@ export default {
       description: '',
       preview: '',
       stock: 0,
+      age: {},
       price: null,
       category_name: '',
       select_name: null,
