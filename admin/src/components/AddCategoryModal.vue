@@ -65,7 +65,7 @@ export default {
       eventBus.$emit('closeModal')
     },
     constractFromData() {
-      if (!this.formData.name || !this.formData.description) throw new Error()
+      if (!this.formData.name) throw new Error()
 
       var formData = new FormData()
 
