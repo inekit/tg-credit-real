@@ -158,38 +158,38 @@
                                     aria-labelledby="tab:r5:2">
                                     <div class="ProgressBars_location__YHytS">
                                         <div class="ProgressBars_location__body__-aPT7">
-                                            <div v-show="channel.age.l18" class="ProgressBars_location__item__MEYqK">
+                                            <div v-show="channel.age.l18 > 0" class="ProgressBars_location__item__MEYqK">
                                                 <h2 class="ProgressBars_location__title__OzI8F">До 18 лет <span>{{
                                                     `${channel.age.l18}%` }}</span>
                                                 </h2>
                                                 <div class="ProgressBars_location__statusbar__58zTm"><span
                                                         :style="{ width: `${channel.age.l18}%` }"></span></div>
                                             </div>
-                                            <div v-show="channel.age.l24" class="ProgressBars_location__item__MEYqK">
+                                            <div v-show="channel.age.l24 > 0" class="ProgressBars_location__item__MEYqK">
                                                 <h2 class="ProgressBars_location__title__OzI8F">18-24 <span>{{
                                                     `${channel.age.l24}%` }}</span></h2>
                                                 <div class="ProgressBars_location__statusbar__58zTm"><span
                                                         :style="{ width: `${channel.age.l24}%` }"></span></div>
                                             </div>
-                                            <div v-show="channel.age.l34" class="ProgressBars_location__item__MEYqK">
+                                            <div v-show="channel.age.l34 > 0" class="ProgressBars_location__item__MEYqK">
                                                 <h2 class="ProgressBars_location__title__OzI8F">25-34 <span>{{
                                                     `${channel.age.l34}%` }}</span></h2>
                                                 <div class="ProgressBars_location__statusbar__58zTm"><span
                                                         :style="{ width: `${channel.age.l34}%` }"></span></div>
                                             </div>
-                                            <div v-show="channel.age.l44" class="ProgressBars_location__item__MEYqK">
+                                            <div v-show="channel.age.l44 > 0" class="ProgressBars_location__item__MEYqK">
                                                 <h2 class="ProgressBars_location__title__OzI8F">35-44 <span>{{
                                                     `${channel.age.l44}%` }}</span></h2>
                                                 <div class="ProgressBars_location__statusbar__58zTm"><span
                                                         :style="{ width: `${channel.age.l44}%` }"></span></div>
                                             </div>
-                                            <div v-show="channel.age.l54" class="ProgressBars_location__item__MEYqK">
+                                            <div v-show="channel.age.l54 > 0" class="ProgressBars_location__item__MEYqK">
                                                 <h2 class="ProgressBars_location__title__OzI8F">45-54 <span>{{
                                                     `${channel.age.l54}%` }}</span></h2>
                                                 <div class="ProgressBars_location__statusbar__58zTm"><span
                                                         :style="{ width: `${channel.age.l54}%` }"></span></div>
                                             </div>
-                                            <div v-show="channel.age.l100" class="ProgressBars_location__item__MEYqK">
+                                            <div v-show="channel.age.l100 > 0" class="ProgressBars_location__item__MEYqK">
                                                 <h2 class="ProgressBars_location__title__OzI8F">55 лет и старше
                                                     <span>{{
                                                         `${channel.age.l100}%` }}</span>
