@@ -10,9 +10,8 @@
                 <div class="Channel_channelProfile__container container">
                     <div class="Channel_channelProfile__header">
                         <div>
-                            <RouterLink type="button" class="Channel_channelProfile__backIcon _icon-angle-left"
-                                :to="`/channels/${$store.state.userId}`">
-                            </RouterLink>
+                            <a type="button" class="Channel_channelProfile__backIcon _icon-angle-left"
+                                @click="$router.back()"></a>
                             <div class="Badge_badge Channel_channelProfile__badge">
                                 <span class="Badge_badge__text">{{ channel.category_name }}</span>
                             </div>
