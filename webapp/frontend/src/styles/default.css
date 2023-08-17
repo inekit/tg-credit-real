@@ -302,7 +302,7 @@
 .Title_title {
   color: #e2e1e1;
   font-size: 0.9375rem;
-  font-weight: 600;
+  font-weight: 500;
   line-height: 1.5;
   margin: 0 auto 0 0;
 }
@@ -339,7 +339,7 @@
 .Badge_badge__text {
   color: #eff0f7;
   font-size: 0.9rem;
-  font-weight: 700;
+  font-weight: 500;
   line-height: 1.5384615385;
 }
 .ChannelBlog_channelBlog {
@@ -390,7 +390,7 @@
   -webkit-line-clamp: 1;
   color: #fff;
   font-size: 0.9375rem;
-  font-weight: 600;
+  font-weight: 500;
   line-height: 1.5;
 }
 .ChannelBlog_channelBlog__text p,
@@ -816,6 +816,9 @@
 }
 :root {
   --swiper-theme-color: #007aff;
+}
+#root {
+  background: linear-gradient(#0a0287, #000);
 }
 .swiper {
   list-style: none;
@@ -1391,7 +1394,7 @@
   }
 }
 .BottomNavBar_bottomNavBar {
-  background-color: #77759b40;
+  background-color: #1f1d2c;
   bottom: 0;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
   left: 0;
@@ -1632,7 +1635,6 @@ h6 {
   font-weight: inherit;
 }
 body {
-  background: linear-gradient(#0a0287, #000);
   color: #eff0f6;
   font-weight: 400;
 }
