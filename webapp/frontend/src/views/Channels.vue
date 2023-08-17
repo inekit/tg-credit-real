@@ -60,9 +60,12 @@
 
         <div>
             <div class="preloaders_block">
-                <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 400 250"></InstagramLoader>
-                <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 400 250"></InstagramLoader>
-                <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 400 250"></InstagramLoader>
+                <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 400 250" secondaryColor="#00427c">
+                </InstagramLoader>
+                <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 400 250" secondaryColor="#00427c">
+                </InstagramLoader>
+                <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 400 250" secondaryColor="#00427c">
+                </InstagramLoader>
             </div>
             <div class="MainPage_listChannel__container container">
                 <div class="Title_block">

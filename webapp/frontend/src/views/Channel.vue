@@ -1,5 +1,5 @@
 <template>
-    <div class="preloaders_block">
+    <div class="preloaders_block" hidden>
         <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 400 250"></InstagramLoader>
         <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 400 250"></InstagramLoader>
         <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 400 250"></InstagramLoader>
@@ -258,7 +258,7 @@ export default {
         this.channel = await this.getChannel(this.$route.params.channelId);
     },
     async mounted() {
-        this.updatePage(300);
+        //this.updatePage(300);
 
     },
     async beforeUnmount() {
