@@ -1412,6 +1412,7 @@
 }
 .BottomNavBar_bottomNavBar__link:before {
   font-weight: 700;
+  transition: 0.2s;
 }
 .BottomNavBar_bottomNavBar__link_active {
   background: linear-gradient(114.44deg, #624af2, #50ddc3);
