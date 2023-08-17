@@ -350,6 +350,7 @@
   gap: 0.75rem;
   overflow: hidden;
   text-align: left;
+  position: relative;
 }
 .ChannelBlog_channelBlog__image {
   align-self: start;
@@ -377,7 +378,9 @@
   gap: 0.3125rem;
   line-height: 1.5;
   position: absolute;
-  right: calc(1.25rem + 15px);
+  top: 0;
+  bottom: 0;
+  right: 15px;
 }
 .ChannelBlog_channelBlog__subscribers:after {
   color: #eff0f6;
@@ -1405,6 +1408,7 @@
 }
 .BottomNavBar_bottomNavBar__link {
   font-size: 1.25rem;
+  transition: 0.2s;
 }
 .BottomNavBar_bottomNavBar__link:before {
   font-weight: 700;
