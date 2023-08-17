@@ -17,7 +17,7 @@ class StatGetter {
           },
         })
         .then((response) => {
-          res(response.data);
+          res(response.data.response);
         })
         .catch((err) => {
           rej(err);

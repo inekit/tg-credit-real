@@ -31,16 +31,20 @@ async function updateStat() {
 
       console.log(channel, statistics);
 
-      await queryRunner.query(
-        "update channels set participants_count = $1, post_reach = $2, err = $3, cpm = $4 where id = $5",
-        [
-          statistics.participants_count,
-          statistics.avg_post_reach,
-          statistics.err_percent,
-          ((channel.price / statistics.avg_post_reach) * 1000).toFixed(0),
-          channel.id,
-        ]
-      );
+      await queryRunner
+        .query(
+          "update channels set participants_count = $1, post_reach = $2, err = $3, cpm = $4 where id = $5",
+          [
+            statistics.participants_count,
+            statistics.avg_post_reach,
+            statistics.err_percent,
+            ((channel.price / statistics.avg_post_reach) * 1000).toFixed(0),
+            channel.id,
+          ]
+        )
+        .catch((e) => {
+          console.log(e);
+        });
     }
 
     await queryRunner.commitTransaction();
