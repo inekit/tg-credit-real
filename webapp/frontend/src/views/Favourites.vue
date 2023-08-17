@@ -121,7 +121,7 @@ export default {
 
 .preloaders_block {
     margin-top: 1rem;
-    margin-bottom: 1000px;
+    margin-bottom: 500px;
 }
 </style>
   

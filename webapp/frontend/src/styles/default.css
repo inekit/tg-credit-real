@@ -436,7 +436,7 @@
   margin: 0 0 0.9375rem;
 }
 .MainPage_mainPage {
-  margin: 1.5625rem 0 0;
+  margin: 1.5625rem 0 3rem;
 }
 .MainPage_headerPage {
   margin: 0 0 0.3125rem;
@@ -1394,7 +1394,7 @@
   }
 }
 .BottomNavBar_bottomNavBar {
-  background-color: #1f1d2c;
+  background-color: #77759b40;
   bottom: 0;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
   left: 0;
@@ -1407,7 +1407,7 @@
   display: flex;
   justify-content: space-between;
   min-height: 3.75rem;
-  padding: 0 2.8125rem 1rem;
+  padding: 0 3.525rem 0.5rem;
 }
 .BottomNavBar_bottomNavBar__link {
   font-size: 1.25rem;

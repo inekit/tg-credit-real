@@ -190,7 +190,7 @@ export default {
 
 .preloaders_block {
     margin: 0;
-    margin-bottom: 1000px;
+    margin-bottom: 300px;
 }
 </style>
   
