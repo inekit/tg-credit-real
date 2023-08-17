@@ -16,10 +16,7 @@ const scene = new CustomWizardScene("connectScene").enter(async (ctx) => {
     await connection.query(`select * from statics where id = 1`)
   )?.[0];
 
-  ctx.replyWithKeyboard("ENTER_PHOTOS", "main_menu_back_keyboard", [
-    statics?.card_number,
-    statics?.sbp_number,
-  ]);
+  ctx.replyWithKeyboard("ENTER_NAME", "main_menu_back_keyboard");
   //ctx.wizard.selectStep(0);
 });
 scene
@@ -75,9 +72,5 @@ async function sendToAdmin(ctx, photo) {
       ctx.answerCbQuery().catch((e) => {});
     });
 }
-
-scene.on("text", async (ctx) => {
-  ctx.replyWithTitle("UNAVAILABLE_MESSAGE");
-});
 
 module.exports = scene;
