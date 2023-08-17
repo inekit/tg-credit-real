@@ -70,7 +70,7 @@
                     <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 400 250" primaryColor="#060067"
                         secondaryColor="#00427c">
                     </InstagramLoader>
-                    <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 400 250" primaryColor="#00427c6e"
+                    <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 400 250" primaryColor="#060067"
                         secondaryColor="#00427c">
                     </InstagramLoader>
                 </div>
@@ -192,6 +192,10 @@ export default {
 .preloaders_block {
     margin: 0;
     margin-bottom: 300px;
+
+    .preloader {
+        margin-bottom: 20px;
+    }
 }
 </style>
   
