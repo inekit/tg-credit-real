@@ -1382,7 +1382,7 @@
 .BottomNavBar_bottomNavBar__link:before {
   font-weight: 700;
 }
-.BottomNavBar_bottomNavBar__link_active__18ldi {
+.BottomNavBar_bottomNavBar__link_active {
   background: linear-gradient(114.44deg, #624af2, #50ddc3);
 }
 .Post_post__rmRol {
@@ -1515,6 +1515,9 @@
 }
 ._icon-menu:before {
   content: '';
+}
+._icon-home:before {
+  content: '';
 }
 ._icon-bookmark:before {
   content: '';

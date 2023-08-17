@@ -108,6 +108,7 @@ class ChannelsService {
     percent_100,
     tgstat_link,
     telemetr_link,
+    tgstat_id,
   }) {
     return new Promise(async (res, rej) => {
       const connection = await tOrmCon;
@@ -139,6 +140,7 @@ class ChannelsService {
           percent_100,
           tgstat_link,
           telemetr_link,
+          tgstat_id,
         })
         .catch((e) => {
           console.log(e);
@@ -171,6 +173,7 @@ class ChannelsService {
     l100,
     tgstat_link,
     telemetr_link,
+    tgstat_id,
   }) {
     return new Promise(async (res, rej) => {
       const connection = await tOrmCon;
@@ -198,6 +201,7 @@ class ChannelsService {
           age: { l18, l24, l34, l44, l54, l100 },
           tgstat_link,
           telemetr_link,
+          tgstat_id,
         })
         .where({
           id: id,

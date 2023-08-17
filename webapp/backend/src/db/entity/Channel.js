@@ -76,6 +76,11 @@ module.exports = new EntitySchema({
       length: 255,
       nullable: true,
     },
+    tgstat_id: {
+      type: "varchar",
+      length: 255,
+      nullable: true,
+    },
   },
   relations: {
     category: {

@@ -29,6 +29,8 @@
         </div>
         <CFormInput type="text" class="mb-3" label="Описание канала" placeholder="Введите описание канала"
           v-model="formData.description" required />
+        <CFormInput type="text" class="mb-3" label="Ссылка на канал" v-model="formData.tgstat_id" />
+
         <CFormInput type="number" class="mb-3" label="Цена" v-model.number="formData.price" />
 
         <CFormInput type="number" class="mb-3" label="Количество подписчиков" v-model.number="formData.participants_count"
@@ -238,6 +240,8 @@ export default {
       formData.append('l100', this.formData.age.l100)
       this.formData.tgstat_link && formData.append('tgstat_link', this.formData.tgstat_link)
       this.formData.telemetr_link && formData.append('telemetr_link', this.formData.telemetr_link)
+      this.formData.tgstat_id && formData.append('tgstat_id', this.formData.tgstat_id)
+
 
       this.formData.category_name &&
         formData.append('categoryName', this.formData.category_name)

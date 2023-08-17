@@ -6,7 +6,6 @@
                     <div class="Title_block">
                         <h2 class="Title_title">Категории</h2>
                     </div>
-                    <a type="button" class="MainPage_actionTitle__button" href="/filter">См. все</a>
                 </div>
             </div>
             <div>
@@ -68,7 +67,7 @@
             <div class="MainPage_listChannel__container container">
                 <div class="Title_block">
                     <h2 class="Title_title MainPage_listChannel__title">
-                        Список каналов
+                        Каналы
                     </h2>
                 </div>
                 <div>
