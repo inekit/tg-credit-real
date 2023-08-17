@@ -37,6 +37,10 @@ mainStage.action(/^connect\_([0-9]+)$/g, async (ctx) => {
   ctx.scene.enter("connectScene", { channel_id });
 });
 
+mainStage.hears(titles.getValues("BUTTON_BACK_USER"), (ctx) =>
+  ctx.scene.enter("clientScene")
+);
+
 const stages = new Composer();
 
 stages.use(Telegraf.chatType("private", mainStage.middleware()));
