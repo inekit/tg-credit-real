@@ -1320,7 +1320,7 @@
   width: 100%;
 }
 .Channel_channelSwiperTabs__item_active {
-  background: linear-gradient(#0f1029 0 0) padding-box, #182d7a border-box;
+  background: linear-gradient(#1c194b 0 0) padding-box, #182d7a border-box;
   border: 2px solid transparent;
   border-radius: 1.25rem;
 }

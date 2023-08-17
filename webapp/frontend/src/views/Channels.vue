@@ -18,7 +18,7 @@
                             <div class="simplebar-mask">
                                 <div class="simplebar-offset" style="right: 0px; bottom: 0px">
                                     <div class="simplebar-content-wrapper" tabindex="0" role="region"
-                                        aria-label="scrollable content" style="height: auto; overflow: scroll hidden">
+                                        aria-label="scrollable content" style="height: auto; ">
                                         <div class="simplebar-content" style="padding: 0px">
                                             <ul class="Category_categories__list">
                                                 <li class="CategoryItem_item">
@@ -60,7 +60,8 @@
 
         <div>
             <div class="preloaders_block">
-                <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 400 250" secondaryColor="#00427c">
+                <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 400 250" primaryColor="#060067"
+                    secondaryColor="#00427c">
                 </InstagramLoader>
                 <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 400 250" secondaryColor="#00427c">
                 </InstagramLoader>
