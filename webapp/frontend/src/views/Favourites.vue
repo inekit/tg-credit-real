@@ -14,6 +14,9 @@
                     <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 400 250" primaryColor="#060067"
                         secondaryColor="#00427c">
                     </InstagramLoader>
+                    <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 400 250" primaryColor="#060067"
+                        secondaryColor="#00427c">
+                    </InstagramLoader>
                 </div>
                 <div class="channels__list">
                     <div v-for=" category  in  $store.state.categories">
