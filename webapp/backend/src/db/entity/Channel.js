@@ -48,7 +48,7 @@ module.exports = new EntitySchema({
       default: 100,
     },
     err: {
-      type: "int",
+      type: "double precision",
       nullable: false,
       default: 100,
     },
