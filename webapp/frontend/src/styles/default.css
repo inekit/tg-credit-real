@@ -1332,7 +1332,7 @@
 }
 .stop-scrolling {
   height: 100%;
-  overflow: hidden;
+  overflow: hidden !important;
 }
 .Channel_channelSwiperTabs__item_active {
   background: linear-gradient(#1c194b 0 0) padding-box, #182d7a border-box;
