@@ -148,8 +148,8 @@ export default {
             this.$store.state.categories_filtered = this.$store.state.categories
 
             this.$refs['results-block']?.classList.add("hidden")
-            document.body.classList.add('stop-scrolling')
-
+            const bodyEl = document.getElementsByClassName("MainPage_mainPage")[0]
+            bodyEl.classList.add('stop-scrolling')
 
             setTimeout(() => {
                 const elements = document.getElementsByClassName('preloaders_block')
@@ -160,7 +160,8 @@ export default {
                     el.classList.add("hidden")
                 }
                 this.$refs['results-block']?.classList.remove("hidden")
-                document.body.classList.remove('stop-scrolling')
+
+                bodyEl.classList.remove('stop-scrolling')
 
             }, delay)
         },
