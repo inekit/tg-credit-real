@@ -1607,7 +1607,7 @@ h6 {
   font-weight: inherit;
 }
 body {
-  background-color: #0f1029;
+  background: linear-gradient(#0a0287, #000);
   color: #eff0f6;
   font-weight: 400;
 }
