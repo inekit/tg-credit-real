@@ -133,7 +133,7 @@ export default {
     async mounted() {
         window.Telegram?.WebApp.BackButton.hide()
         window.Telegram?.WebApp.expand()
-        this.updatePage(300);
+        this.updatePage(400);
 
         const buttonUserId = window.Telegram?.WebApp?.initDataUnsafe?.user?.id
         this.$store.state.userId = buttonUserId ?? this.$route.params?.userId;

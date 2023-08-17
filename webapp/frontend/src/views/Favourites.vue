@@ -7,9 +7,12 @@
                 </h2>
             </div>
             <div class="preloaders_block">
-                <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 400 250"></InstagramLoader>
-                <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 400 250"></InstagramLoader>
-                <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 400 250"></InstagramLoader>
+                <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 400 250" primaryColor="#060067"
+                    secondaryColor="#00427c">
+                </InstagramLoader>
+                <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 400 250" primaryColor="#00427c6e"
+                    secondaryColor="#00427c">
+                </InstagramLoader>
             </div>
             <div class="channels__list">
                 <div v-for=" category  in  $store.state.categories">
@@ -66,7 +69,7 @@ export default {
     async mounted() {
         window.Telegram?.WebApp.BackButton.hide()
         window.Telegram?.WebApp.expand()
-        this.updatePage(300);
+        this.updatePage(400);
         window.Telegram?.WebApp.enableClosingConfirmation()
     },
     async beforeUnmount() {
@@ -117,7 +120,8 @@ export default {
 }
 
 .preloaders_block {
-    margin-top: 1rem
+    margin-top: 1rem;
+    margin-bottom: 1000px;
 }
 </style>
   
