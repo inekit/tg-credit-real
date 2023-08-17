@@ -350,7 +350,7 @@ export default {
                 })
         },
         async getChannel(id) {
-            const results = await this.$store.state.myApi.get(this.$store.state.restAddr + '/items', {
+            const results = await this.$store.state.myApi.get(this.$store.state.restAddr + '/connect', {
                 params: {
                     id: id,
                     user_id: this.$store.state.userId,
