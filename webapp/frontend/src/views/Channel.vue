@@ -93,7 +93,7 @@
                                         <div class="simplebar-mask">
                                             <div class="simplebar-offset" style="right: 0px; bottom: 0px">
                                                 <div class="simplebar-content-wrapper" tabindex="0" role="region"
-                                                    aria-label="scrollable content" style="height: auto; overflow: hidden">
+                                                    aria-label="scrollable content" style="height: auto;">
                                                     <div class="simplebar-content" style="padding: 0px">
                                                         <ul class="Channel_channelSwiperTabs__list" role="tablist">
                                                             <li class="Channel_channelSwiperTabs__item"
@@ -157,7 +157,7 @@
                                 <div class="" v-show="!sexActive" role="tabpanel" id="panel:r5:2"
                                     aria-labelledby="tab:r5:2">
                                     <div class="ProgressBars_location__YHytS">
-                                        <div class="ProgressBars_location__body__-aPT7">
+                                        <div class="ProgressBars_location__body">
                                             <div v-show="channel.age.l18 > 0" class="ProgressBars_location__item__MEYqK">
                                                 <h2 class="ProgressBars_location__title__OzI8F">До 18 лет <span>{{
                                                     `${channel.age.l18}%` }}</span>

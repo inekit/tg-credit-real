@@ -718,7 +718,8 @@
   line-height: 1.4666666667;
 }
 .ChannelPriceActions_channelActions__button__MzwI0 span {
-  background: linear-gradient(#0f1029 0 0) padding-box, #182d7a border-box;
+  background: linear-gradient(#0d0b31 0 0) padding-box, #182d7a border-box;
+  border: 2px solid transparent;
   border-radius: 1.25rem;
   display: inline-block;
   display: block;
@@ -772,8 +773,8 @@
 .ProgressBars_location__YHytS {
   margin-bottom: 1.875rem;
 }
-.ProgressBars_location__body__-aPT7 {
-  background-color: #1b203d;
+.ProgressBars_location__body {
+  background-color: #3e3a736b;
   border-radius: 1.25rem;
   padding: 0.625rem 1.5625rem 1.25rem;
 }
@@ -1170,7 +1171,7 @@
 }
 .Channel_channelProfile__backIcon {
   align-items: center;
-  background-color: #4e4b66;
+  background-color: #182d7a;
   border-radius: 50%;
   display: inline-flex;
   font-size: 0.75rem;
@@ -1306,6 +1307,8 @@
   text-align: center;
   white-space: nowrap;
   flex: 1;
+  transition: 0.2s;
+  border: 2px solid transparent;
 }
 .Channel_channelSwiperTabs__item:after {
   background: linear-gradient(114.44deg, #624af2, #50ddc3);
