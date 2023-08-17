@@ -436,9 +436,8 @@
   margin: 0 0 0.9375rem;
 }
 .MainPage_mainPage {
-  margin-top: 1.5625rem;
-  padding: 0 0 3.75rem;
-  height: 100vh;
+  padding-top: 1.5625rem;
+  height: calc(100vh - 3.75rem);
   overflow-y: scroll;
 }
 .MainPage_headerPage {
