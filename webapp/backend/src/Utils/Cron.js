@@ -48,13 +48,9 @@ async function updateStat() {
     }
 
     await queryRunner.commitTransaction();
-
-    res(data);
   } catch (error) {
     console.log(error);
     await queryRunner.rollbackTransaction();
-
-    rej(new MySqlError(error));
   } finally {
     await queryRunner.release();
   }
