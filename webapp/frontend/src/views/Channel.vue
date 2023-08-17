@@ -334,7 +334,7 @@ export default {
         connect() {
             if (this.isOrdering === true) return;
             this.isOrdering = true;
-            this.$store.state.myApi.get(this.$store.state.restAddr + '/items', {
+            this.$store.state.myApi.get(this.$store.state.restAddr + '/connect', {
                 params: {
                     user_id: this.$store.state.userId,
                     channel_id: this.channel.id,
@@ -350,7 +350,7 @@ export default {
                 })
         },
         async getChannel(id) {
-            const results = await this.$store.state.myApi.get(this.$store.state.restAddr + '/connect', {
+            const results = await this.$store.state.myApi.get(this.$store.state.restAddr + '/items', {
                 params: {
                     id: id,
                     user_id: this.$store.state.userId,
