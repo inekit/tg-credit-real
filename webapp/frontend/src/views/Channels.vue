@@ -63,9 +63,8 @@
                 <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 400 250" primaryColor="#060067"
                     secondaryColor="#00427c">
                 </InstagramLoader>
-                <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 400 250" secondaryColor="#00427c">
-                </InstagramLoader>
-                <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 400 250" secondaryColor="#00427c">
+                <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 400 250" primaryColor="#00427c6e"
+                    secondaryColor="#00427c">
                 </InstagramLoader>
             </div>
             <div class="MainPage_listChannel__container container">
