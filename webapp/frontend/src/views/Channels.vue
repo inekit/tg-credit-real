@@ -59,21 +59,22 @@
         </div>
 
         <div>
-            <div class="preloaders_block">
-                <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 400 250" primaryColor="#060067"
-                    secondaryColor="#00427c">
-                </InstagramLoader>
-                <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 400 250" primaryColor="#00427c6e"
-                    secondaryColor="#00427c">
-                </InstagramLoader>
-            </div>
+
             <div class="MainPage_listChannel__container container">
                 <div class="Title_block">
                     <h2 class="Title_title MainPage_listChannel__title">
                         Каналы
                     </h2>
                 </div>
-                <div>
+                <div class="preloaders_block">
+                    <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 400 250" primaryColor="#060067"
+                        secondaryColor="#00427c">
+                    </InstagramLoader>
+                    <InstagramLoader class="preloader" ref="preloader" viewBox="0 0 400 250" primaryColor="#00427c6e"
+                        secondaryColor="#00427c">
+                    </InstagramLoader>
+                </div>
+                <div class="results-block">
                     <div v-for=" category  in  $store.state.categories_filtered ">
                         <div class="Badge_badge">
                             <span class="Badge_badge__text">{{ category.name }}</span>
@@ -146,7 +147,7 @@ export default {
             this.$store.state.categories = await this.getCategories(true);
             this.$store.state.categories_filtered = this.$store.state.categories
 
-            this.$refs['MainPage_listChannel__container']?.classList.add("hidden")
+            this.$refs['results-block']?.classList.add("hidden")
             document.body.classList.add('stop-scrolling')
 
 
@@ -158,7 +159,7 @@ export default {
                 for (let el of elements) {
                     el.classList.add("hidden")
                 }
-                this.$refs['MainPage_listChannel__container']?.classList.remove("hidden")
+                this.$refs['results-block']?.classList.remove("hidden")
                 document.body.classList.remove('stop-scrolling')
 
             }, delay)
