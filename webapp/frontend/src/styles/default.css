@@ -9,7 +9,7 @@
   white-space: nowrap;
 }
 .CategoryItem_button:after {
-  background: linear-gradient(114.44deg, #624af2, #50ddc3);
+  background: #2274a5;
   border-radius: 1.25rem;
   content: '';
   height: 100%;
@@ -24,12 +24,15 @@
   width: 100%;
 }
 .CategoryItem_button span {
-  background-color: #1b203d;
+  background-color: #19258f;
   border-radius: 1.25rem;
   display: block;
   padding: 0.4375rem 1.1875rem;
   position: relative;
   z-index: 2;
+}
+.CategoryItem_button_active {
+  background-color: #2274a5;
 }
 .CategoryItem_button_active:after {
   -webkit-transform: scaleY(1.15) scaleX(1.05);
@@ -298,7 +301,7 @@
   display: flex;
 }
 .Title_title {
-  color: #a0a3bd;
+  color: #e2e1e1;
   font-size: 0.9375rem;
   font-weight: 600;
   line-height: 1.5;
@@ -319,8 +322,9 @@
   margin-right: auto;
 }
 .Badge_badge {
-  background: #1954c5;
+  background: #2274a5;
   border-radius: 0 20px 20px 0;
+  box-shadow: 0px 0px 50px 10px rgba(0, 0, 0, 0.3);
   display: inline-block;
   margin: 0 0 0 -20px;
   padding: 0.1875rem 1.625rem 0.1875rem 1.4375rem;
@@ -335,13 +339,13 @@
 }
 .Badge_badge__text {
   color: #eff0f7;
-  font-size: 0.8125rem;
+  font-size: 0.9rem;
   font-weight: 700;
   line-height: 1.5384615385;
 }
 .ChannelBlog_channelBlog {
   align-items: center;
-  background: #1b203d;
+  background: #00427c;
   border-radius: 20px;
   display: flex;
   gap: 0.75rem;
@@ -377,7 +381,7 @@
 }
 .ChannelBlog_channelBlog__title {
   -webkit-line-clamp: 1;
-  color: #eff0f6;
+  color: #fff;
   font-size: 0.9375rem;
   font-weight: 600;
   line-height: 1.5;
@@ -392,7 +396,7 @@
 }
 .ChannelBlog_channelBlog__text p {
   -webkit-line-clamp: 2;
-  color: #a0a3bd;
+  color: #e2e1e1;
   font-size: 0.8125rem;
   line-height: 1.5384615385;
 }
@@ -1173,7 +1177,9 @@
 }
 .Channel_channelProfile__badge {
   left: 0;
-  margin: 3.125rem 0 0;
+  right: 0;
+  border-radius: 20px;
+  margin: auto;
   position: absolute;
 }
 @media (max-width: 425px) {
@@ -1196,6 +1202,7 @@
   justify-content: center;
   margin: 0 auto;
   overflow: hidden;
+  margin-top: 3rem;
 }
 .Channel_channelProfile__image img {
   width: 100%;
@@ -1239,7 +1246,7 @@
   margin-bottom: 1.5625rem;
 }
 .Channel_channelProfile__body {
-  background-color: #1b203d;
+  background: linear-gradient(#0a0287, #000);
   border-radius: 6.25rem;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
   padding: 0.375rem;

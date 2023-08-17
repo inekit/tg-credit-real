@@ -65,7 +65,7 @@
                             </div>
                             <div class="ChannelInfo_channelContent__content">
                                 <div class="ChannelInfo_channelContent__data">
-                                    <span class="ChannelInfo_channelContent__placeholder">Охваты</span>
+                                    <span class="ChannelInfo_channelContent__placeholder">Охват</span>
                                     <p class="ChannelInfo_channelContent__text">{{ formatThousands(channel.post_reach) }}
                                     </p>
                                 </div>
