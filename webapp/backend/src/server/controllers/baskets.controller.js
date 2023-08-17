@@ -27,9 +27,19 @@ function deleteFavorite(req, res, next) {
     .catch((error) => next(error));
 }
 
+function connect(ctx) {
+  return (req, res, next) => {
+    basketsService
+      .connect(req.query, ctx)
+      .then((data) => res.send(data))
+      .catch((error) => next(error));
+  };
+}
+
 module.exports = {
   getFavorites,
   deleteFavorite,
   addFavorite,
   getBasketData,
+  connect,
 };

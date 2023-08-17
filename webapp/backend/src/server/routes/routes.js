@@ -6,6 +6,7 @@ var BasketsController = require("../controllers/baskets.controller");
 
 module.exports = (ctx) => {
   router.get("/items", ChannelsController.getAll);
+  router.get("/connect", BasketsController.connect(ctx));
 
   router.get("/favorites", BasketsController.getFavorites);
   router.post("/favorites", BasketsController.addFavorite);

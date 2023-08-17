@@ -4,13 +4,13 @@ const StatGetter = require("./StatGetter");
 
 class Cron {
   constructor() {
-    cron.schedule("0 * * * *", () => {
+    cron.schedule("0 2 * * *", () => {
       updateStat();
     });
   }
 }
 
-updateStat();
+//updateStat();
 
 async function updateStat() {
   const connection = await tOrmCon;

@@ -13,7 +13,7 @@
                             <RouterLink type="button" class="Channel_channelProfile__backIcon _icon-angle-left" :to="'/'">
                             </RouterLink>
                             <div class="Badge_badge Channel_channelProfile__badge">
-                                <span class="Badge_badge__text">Дизайн</span>
+                                <span class="Badge_badge__text">{{ channel.category_name }}</span>
                             </div>
                         </div>
                         <button type="button" class="Channel_channelProfile__image">
@@ -214,13 +214,16 @@
                                     <h2 class="ChannelPriceActions_channelPrice__title__ym2M9">Стоимость</h2>
                                     <p class="ChannelPriceActions_channelPrice__text__Mbugf">за один рекламный пост</p>
                                 </div>
-                                <div class="ChannelPriceActions_channelPrice__price__20drU"><span>100 000 руб.</span></div>
+                                <div class="ChannelPriceActions_channelPrice__price__20drU"><span>{{ channel.price }}
+                                        руб.</span></div>
                             </div>
                             <div class="row">
                                 <div class="ChannelPriceActions_channelActions__body__7nfTf"><button type="button"
+                                        @click="connect()"
                                         class="ChannelPriceActions_channelActions__button__MzwI0"><span>Связаться</span></button>
                                 </div>
                                 <div class="ChannelPriceActions_channelActions__body__7nfTf"><button type="button"
+                                        @click="openTg('https://t.me/Alivian')"
                                         class="ChannelPriceActions_channelActions__button__MzwI0"><span>Поторговаться</span></button>
                                 </div>
                             </div>
@@ -295,6 +298,9 @@ export default {
         openLink(link) {
             window.open(link, '_blank')
         },
+        openTg(link) {
+            window.open(link)
+        },
         toggleFavorite() {
             if (this.channel.is_favorite)
                 this.dropFavorite();
@@ -324,6 +330,23 @@ export default {
                     this.channel.is_favorite = false;
                 })
                 .catch(e => { eventBus.$emit('noresponse', e) })
+        },
+        connect() {
+            if (this.isOrdering === true) return;
+            this.isOrdering = true;
+            this.$store.state.myApi
+                .post(this.$store.state.restAddr + '/connect', {
+                    user_id: this.$store.state.userId,
+                    channel_id: this.channel.id,
+                })
+                .then(async () => {
+                    window.Telegram?.WebApp.disableClosingConfirmation()
+                    window.Telegram?.WebApp.close();
+                })
+                .catch(e => {
+                    eventBus.$emit('noresponse', e);
+                    this.isOrdering = false;
+                })
         },
         async getChannel(id) {
             const results = await this.$store.state.myApi.get(this.$store.state.restAddr + '/items', {

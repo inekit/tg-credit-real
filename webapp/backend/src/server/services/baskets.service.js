@@ -13,6 +13,30 @@ class BasketsService {
     this.getBasketData = this.getBasketData.bind(this);
     this.addFavorite = this.addFavorite.bind(this);
     this.deleteFavorite = this.deleteFavorite.bind(this);
+    this.connect = this.connect.bind(this);
+  }
+
+  connect({ user_id, channel_id }, ctx) {
+    return new Promise(async (res, rej) => {
+      ctx.telegram
+        .sendMessage(user_id, "Нажмите кнопку ниже, чтобы оставить заявку", {
+          parse_mode: "HTML",
+          reply_markup: {
+            inline_keyboard: [
+              [
+                {
+                  text: "Связаться",
+                  callback_data: `connect_${user_id}_${channel_id}`,
+                },
+              ],
+            ],
+          },
+        })
+        .catch((err) => {
+          rej({ error: err });
+        });
+      res(true);
+    });
   }
 
   addFavorite({ user_id, channel_id }) {
