@@ -45,7 +45,7 @@ const scene = new CustomWizardScene("clientScene").enter(async (ctx) => {
         ctx.replyWithTitle("DB_ERROR");
       });
 
-  ctx.replyWithTitle("START_TITLE");
+  ctx.replyWithKeyboard("START_TITLE", "remove_keyboard");
 });
 
 scene.on("message", async (ctx) => {

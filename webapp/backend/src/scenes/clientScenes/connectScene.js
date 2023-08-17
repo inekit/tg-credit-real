@@ -23,14 +23,14 @@ scene
   .addStep({
     variable: "name",
     cb: (ctx) => {
-      ctx.scene.state.input = { name: ctx.message.id };
+      ctx.scene.state.input = { name: ctx.message.message_id };
       ctx.replyNextStep();
     },
   })
   .addStep({
     variable: "post",
     cb: async (ctx) => {
-      ctx.scene.state.input.post = ctx.message.id;
+      ctx.scene.state.input.post = ctx.message.message_id;
       await ctx.replyWithKeyboard("ENTER_PHOTOS", "skip_keyboard");
       ctx.wizard.selectStep(ctx.wizard.cursor + 1);
     },
@@ -40,7 +40,7 @@ scene
     type: "action",
     handler: new Composer()
       .on("photo", async (ctx) => {
-        const photo = ctx.message.id;
+        const photo = ctx.message.message_id;
         sendToAdmin(ctx, photo);
       })
       .action("skip", async (ctx) => {
