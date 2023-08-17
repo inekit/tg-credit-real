@@ -1319,6 +1319,10 @@
   transition: opacity 0.3s ease 0s;
   width: 100%;
 }
+.stop-scrolling {
+  height: 100%;
+  overflow: hidden;
+}
 .Channel_channelSwiperTabs__item_active {
   background: linear-gradient(#1c194b 0 0) padding-box, #182d7a border-box;
   border: 2px solid transparent;
