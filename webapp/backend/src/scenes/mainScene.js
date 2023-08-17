@@ -45,30 +45,7 @@ const scene = new CustomWizardScene("clientScene").enter(async (ctx) => {
         ctx.replyWithTitle("DB_ERROR");
       });
 
-  ctx.replyWithKeyboard("START_TITLE", "main_menu_keyboard");
-});
-
-scene.hears(titles.getValues("WEBAPP_BUTTON"), (ctx) => {
-  ctx.replyWithKeyboard("WEBAPP_TITLE", {
-    name: "webapp_keyboard",
-    args: [ctx.from.id],
-  });
-});
-
-scene.hears(titles.getValues("ABOUT_BUTTON"), (ctx) => {
-  ctx.replyWithTitle("ABOUT_TITLE");
-});
-
-scene.hears(titles.getValues("CHANNEL_BUTTON"), (ctx) => {
-  ctx.replyWithTitle("CHANNEL_TITLE");
-});
-
-scene.hears(titles.getValues("SUPPORT_BUTTON"), (ctx) => {
-  ctx.replyWithKeyboard("SUPPORT_TITLE", "chat_keyboard", [ctx.from.id]);
-});
-
-scene.hears(titles.getValues("ORDERS_BUTTON"), (ctx) => {
-  ctx.scene.enter("ordersScene");
+  ctx.replyWithTitle("START_TITLE");
 });
 
 scene.on("message", async (ctx) => {
