@@ -26,7 +26,7 @@ class BasketsService {
               [
                 {
                   text: "Связаться",
-                  callback_data: `connect_${user_id}_${channel_id}`,
+                  callback_data: `connect_${channel_id}`,
                 },
               ],
             ],
