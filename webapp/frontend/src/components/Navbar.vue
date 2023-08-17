@@ -13,7 +13,6 @@
 </template>
   
 <script>
-import eventBus from '../eventBus'
 
 export default {
     data() {
@@ -25,8 +24,6 @@ export default {
     },
     methods: {
     }
-
-
 
 }
 </script>

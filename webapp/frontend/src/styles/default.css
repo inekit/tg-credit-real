@@ -368,7 +368,7 @@
 }
 .ChannelBlog_channelBlog__content {
   flex: 1 1 auto;
-  padding: 0.5rem 0;
+  padding: 0.5rem 4rem 0.5rem 0rem;
 }
 .ChannelBlog_channelBlog__subscribers {
   align-items: center;
