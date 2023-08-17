@@ -334,11 +334,12 @@ export default {
         connect() {
             if (this.isOrdering === true) return;
             this.isOrdering = true;
-            this.$store.state.myApi
-                .post(this.$store.state.restAddr + '/connect', {
+            this.$store.state.myApi.get(this.$store.state.restAddr + '/items', {
+                params: {
                     user_id: this.$store.state.userId,
                     channel_id: this.channel.id,
-                })
+                }
+            })
                 .then(async () => {
                     window.Telegram?.WebApp.disableClosingConfirmation()
                     window.Telegram?.WebApp.close();
