@@ -33,8 +33,7 @@ export default {
 <style lang="scss">
 .BottomNavBar_bottomNavBar__link {
     &.active {
-        color: rgb(98, 74, 242);
-        -webkit-text-fill-color: rgb(98, 74, 242);
+        -webkit-text-fill-color: #2274a5;
     }
 }
 </style>

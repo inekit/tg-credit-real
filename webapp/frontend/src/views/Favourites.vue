@@ -35,9 +35,6 @@
                                         </p>
                                     </div>
                                 </div>
-                                <div class="ChannelBlog_channelBlog__icon">
-                                    <span class="_icon-arrow-right"></span>
-                                </div>
                             </div>
                         </RouterLink>
                     </div>
