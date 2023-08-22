@@ -39,7 +39,6 @@ scene
     handler: new Composer().action(/add\_type\_(.+)/g, async (ctx) => {
       await ctx.answerCbQuery().catch(console.log);
       ctx.scene.state.input.add_type = ctx.match[1];
-      console.log(ctx.match[1]);
       ctx.replyNextStep();
     }),
   })
