@@ -57,7 +57,7 @@ scene
     type: "action",
     handler: new Composer()
       .on("message", async (ctx) => {
-        console.log(message);
+        console.log(ctx.message.media_group_id, ctx.message);
         const photo = ctx.message.message_id;
         sendToAdmin(ctx, photo);
       })
