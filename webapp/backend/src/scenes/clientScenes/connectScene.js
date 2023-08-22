@@ -56,7 +56,8 @@ scene
     variable: "photos",
     type: "action",
     handler: new Composer()
-      .on("photo", async (ctx) => {
+      .on("message", async (ctx) => {
+        console.log(message);
         const photo = ctx.message.message_id;
         sendToAdmin(ctx, photo);
       })
