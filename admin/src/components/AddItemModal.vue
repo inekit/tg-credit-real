@@ -31,7 +31,14 @@
           v-model="formData.description" required />
         <CFormInput type="text" class="mb-3" label="Ссылка на канал" v-model="formData.tgstat_id" />
 
-        <CFormInput type="number" class="mb-3" label="Цена" v-model.number="formData.price" />
+        <CFormInput type="number" class="mb-3" label="Цена за 1 час в топе и 24 часа в ленте"
+          v-model.number="formData.price_1" />
+        <CFormInput type="number" class="mb-3" label="Цена за 2 часа в топе и 48 часа в ленте"
+          v-model.number="formData.price_2" />
+        <CFormInput type="number" class="mb-3" label="Цена за 3 часа в топе и 72 часа в ленте"
+          v-model.number="formData.price_3" />
+
+        <CFormInput type="number" class="mb-3" label="Цена без удаления" v-model.number="formData.price" />
 
         <CFormInput type="number" class="mb-3" label="Количество подписчиков" v-model.number="formData.participants_count"
           disabled />
@@ -242,6 +249,9 @@ export default {
       this.formData.telemetr_link && formData.append('telemetr_link', this.formData.telemetr_link)
       this.formData.tgstat_id && formData.append('tgstat_id', this.formData.tgstat_id)
 
+      formData.append('price_1', this.formData.price_1)
+      formData.append('price_2', this.formData.price_2)
+      formData.append('price_3', this.formData.price_3)
 
       this.formData.category_name &&
         formData.append('categoryName', this.formData.category_name)

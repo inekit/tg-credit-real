@@ -81,6 +81,10 @@ module.exports = new EntitySchema({
       length: 255,
       nullable: true,
     },
+    prices: {
+      type: "json",
+      default: {},
+    },
   },
   relations: {
     category: {
