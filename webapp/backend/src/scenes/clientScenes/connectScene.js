@@ -38,7 +38,8 @@ scene
     },
     cb: async (ctx) => {
       await ctx.answerCbQuery().catch(console.log);
-      ctx.scene.state.input.add_type = ctx.match[1];
+      const index = ctx.match[0].lastIndexOf("_");
+      ctx.scene.state.input.add_type = ctx.match[0].slice(index + 1);
       console.log(ctx.match);
       ctx.replyNextStep();
     },
