@@ -56,14 +56,14 @@ scene
     variable: "photos",
     type: "action",
     handler: new Composer()
-      .on("message", async (ctx) => {
-        console.log(ctx.message.media_group_id, ctx.message);
-        const photo = ctx.message.message_id;
-        sendToAdmin(ctx, photo);
-      })
       .action("skip", async (ctx) => {
         await ctx.answerCbQuery().catch(console.log);
         sendToAdmin(ctx);
+      })
+      .on("message", async (ctx) => {
+        if (!ctx.message.photo) return;
+        const photo = ctx.message.message_id;
+        sendToAdmin(ctx, photo);
       }),
   });
 
