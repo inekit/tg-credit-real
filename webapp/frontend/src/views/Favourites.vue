@@ -74,7 +74,7 @@ export default {
     async mounted() {
         window.Telegram?.WebApp.BackButton.hide()
         window.Telegram?.WebApp.expand()
-        this.updatePage(500);
+        this.updatePage(400);
         window.Telegram?.WebApp.enableClosingConfirmation()
     },
     async beforeUnmount() {
