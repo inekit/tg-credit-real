@@ -676,12 +676,20 @@
   padding: 0.5rem;
   text-align: center;
 }
+.ChannelPriceActions__body {
+  background-color: #3e3a736b;
+  border-radius: 1.25rem;
+  padding: 0.625rem 1.5625rem 1.25rem;
+}
 .ChannelPriceActions_channelPrice__uWyC4 {
   align-items: center;
   display: flex;
   gap: 1.25rem;
   justify-content: space-between;
-  margin: 0 0 1.875rem;
+  margin: 0 0 1.2rem;
+}
+.ChannelPriceActions_channelPrice__uWyC4:last-child {
+  margin-bottom: 0;
 }
 .ChannelPriceActions_channelPrice__content__fLClw {
   flex: 0 1 70%;
@@ -691,6 +699,8 @@
   font-size: 1.0625rem;
   font-weight: 600;
   line-height: 1.5;
+  text-align: center;
+  margin-bottom: 0.6rem;
 }
 .ChannelPriceActions_channelPrice__text__Mbugf {
   color: #a0a3bd;

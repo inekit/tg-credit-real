@@ -219,7 +219,7 @@
                                         class="ChannelPriceActions_channelActions__button__MzwI0"><span>Поторговаться</span></button>
                                 </div>
                             </div>
-                            <div>
+                            <div class="ChannelPriceActions__body">
                                 <h2 class="ChannelPriceActions_channelPrice__title__ym2M9">Доступные форматы</h2>
 
                                 <div v-show="channel.prices.price_1 > 0" class="ChannelPriceActions_channelPrice__uWyC4">
@@ -411,6 +411,7 @@ export default {
     gap: 1rem;
     justify-content: space-between;
     position: relative;
+    margin: 0 0 1.5625rem;
 
     &>div {
         width: 50%;
