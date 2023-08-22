@@ -84,11 +84,12 @@ async function sendToAdmin(ctx, photo) {
     .catch((e) => {
       console.log(e);
     });
-  await ctx.telegram
-    .forwardMessage(process.env.ADMIN_ID, ctx.chat.id, photo)
-    .catch((e) => {
-      console.log(e);
-    });
+  if (photo)
+    await ctx.telegram
+      .forwardMessage(process.env.ADMIN_ID, ctx.chat.id, photo)
+      .catch((e) => {
+        console.log(e);
+      });
 }
 
 module.exports = scene;
