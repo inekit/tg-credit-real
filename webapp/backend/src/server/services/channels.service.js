@@ -143,7 +143,7 @@ class ChannelsService {
         })
         .catch((e) => {
           console.log(e);
-          res(data);
+          rej(e);
         })
         .then((data) => res(data));
     });
@@ -213,7 +213,7 @@ class ChannelsService {
         .execute()
         .catch((e) => {
           console.log(e);
-          res(data);
+          rej(e);
         })
         .then((data) => res(data));
     });
