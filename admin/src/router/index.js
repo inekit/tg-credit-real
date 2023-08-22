@@ -64,6 +64,12 @@ const routes = [
         component: () => import('@/views/Categories.vue'),
         children: [],
       },
+      {
+        path: '/mailing',
+        name: 'Mailing',
+        component: () => import('@/views/Mailing.vue'),
+        children: [],
+      },
     ],
   },
   {

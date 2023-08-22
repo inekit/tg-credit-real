@@ -11,4 +11,10 @@ export default [
     to: '/categories',
     icon: 'cil-description',
   },
+  {
+    component: 'CNavItem',
+    name: 'Рассылки',
+    to: '/mailing',
+    icon: 'cil-description',
+  },
 ]
