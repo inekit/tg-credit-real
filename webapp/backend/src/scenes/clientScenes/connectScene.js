@@ -22,14 +22,14 @@ const scene = new CustomWizardScene("connectScene").enter(async (ctx) => {
 scene
   .addStep({
     variable: "name",
-    cb: (ctx) => {
+    cb: async (ctx) => {
       ctx.scene.state.input = { name: ctx.message.message_id };
-      ctx.replyNextStep();
+      await ctx.replyWithKeyboard("ENTER_ADD_TYPE", "add_type_keyboard");
+      ctx.wizard.selectStep(ctx.wizard.cursor + 1);
     },
   })
   .addSelect({
     variable: "add_type",
-    keyboard: "add_type_keyboard",
     options: {
       1: "add_type_1",
       2: "add_type_2",
