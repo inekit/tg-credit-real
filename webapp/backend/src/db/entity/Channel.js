@@ -29,7 +29,7 @@ module.exports = new EntitySchema({
     },
     price: {
       type: "int",
-      nullable: false,
+      nullable: true,
       default: 100,
     },
     preview: {

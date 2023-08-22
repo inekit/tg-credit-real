@@ -53,7 +53,7 @@ export default {
       this.formData = {
         category: this.$route.params.categoryName,
         age: {},
-
+        prices: {}
       }
       this.formVisible = true
     })
