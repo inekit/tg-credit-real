@@ -220,36 +220,37 @@
                                 </div>
                             </div>
                             <div>
+                                <h2 class="ChannelPriceActions_channelPrice__title__ym2M9">Доступные форматы</h2>
+
                                 <div v-show="channel.prices.price_1 > 0" class="ChannelPriceActions_channelPrice__uWyC4">
-                                    <h2 class="ChannelPriceActions_channelPrice__title__ym2M9">Доступные форматы</h2>
                                     <div class="ChannelPriceActions_channelPrice__content__fLClw">
                                         <p class="ChannelPriceActions_channelPrice__text__Mbugf">1 час в топе</p>
                                         <p class="ChannelPriceActions_channelPrice__text__Mbugf">24 часа в ленте</p>
                                     </div>
-                                    <div class="ChannelPriceActions_channelPrice__price__20drU"><span>{{ channel.price_1 }}
+                                    <div class="ChannelPriceActions_channelPrice__price__20drU"><span>{{
+                                        channel.prices.price_1 }}
                                             руб.</span></div>
                                 </div>
                                 <div v-show="channel.prices.price_2 > 0" class="ChannelPriceActions_channelPrice__uWyC4">
-                                    <h2 class="ChannelPriceActions_channelPrice__title__ym2M9">Доступные форматы</h2>
                                     <div class="ChannelPriceActions_channelPrice__content__fLClw">
                                         <p class="ChannelPriceActions_channelPrice__text__Mbugf">2 часа в топе</p>
                                         <p class="ChannelPriceActions_channelPrice__text__Mbugf">48 часов в ленте</p>
                                     </div>
-                                    <div class="ChannelPriceActions_channelPrice__price__20drU"><span>{{ channel.price_2 }}
+                                    <div class="ChannelPriceActions_channelPrice__price__20drU"><span>{{
+                                        channel.prices.price_2 }}
                                             руб.</span></div>
                                 </div>
                                 <div v-show="channel.prices.price_3 > 0" class="ChannelPriceActions_channelPrice__uWyC4">
-                                    <h2 class="ChannelPriceActions_channelPrice__title__ym2M9">Доступные форматы</h2>
                                     <div class="ChannelPriceActions_channelPrice__content__fLClw">
                                         <p class="ChannelPriceActions_channelPrice__text__Mbugf">3 часа в топе</p>
                                         <p class="ChannelPriceActions_channelPrice__text__Mbugf">48 часа в ленте</p>
                                     </div>
-                                    <div class="ChannelPriceActions_channelPrice__price__20drU"><span>{{ channel.price_3 }}
+                                    <div class="ChannelPriceActions_channelPrice__price__20drU"><span>{{
+                                        channel.prices.price_3 }}
                                             руб.</span></div>
                                 </div>
 
                                 <div v-show="channel.prices.price > 0" class="ChannelPriceActions_channelPrice__uWyC4">
-                                    <h2 class="ChannelPriceActions_channelPrice__title__ym2M9">Доступные форматы</h2>
                                     <div class="ChannelPriceActions_channelPrice__content__fLClw">
                                         <p class="ChannelPriceActions_channelPrice__text__Mbugf">Без удаления</p>
                                     </div>
