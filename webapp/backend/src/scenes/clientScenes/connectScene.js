@@ -30,6 +30,12 @@ scene
   .addSelect({
     variable: "add_type",
     keyboard: "add_type_keyboard",
+    options: {
+      1: "add_type_1",
+      2: "add_type_2",
+      3: "add_type_3",
+      4: "add_type_ALL",
+    },
     handler: new Composer().action(/add\_type\_(.+)/g, async (ctx) => {
       await ctx.answerCbQuery().catch(console.log);
       ctx.scene.state.input.add_type = ctx.match(1);
