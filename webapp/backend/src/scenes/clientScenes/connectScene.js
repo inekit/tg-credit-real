@@ -48,6 +48,7 @@ scene
     variable: "post",
     cb: async (ctx) => {
       ctx.scene.state.input.post = ctx.message.message_id;
+      ctx.wizard.state.input.photos = [];
       await ctx.replyWithKeyboard("ENTER_PHOTOS", "skip_keyboard");
       ctx.wizard.selectStep(ctx.wizard.cursor + 1);
     },
@@ -60,15 +61,18 @@ scene
         await ctx.answerCbQuery().catch(console.log);
         sendToAdmin(ctx);
       })
-      .on("message", async (ctx) => {
-        if (!ctx.message.photo) return;
-        const photo = ctx.message.message_id;
-        sendToAdmin(ctx, photo);
+      .action("confirm", async (ctx) => {
+        await ctx.answerCbQuery().catch(console.log);
+        sendToAdmin(ctx);
+      })
+      .on("photo", async (ctx) => {
+        ctx.wizard.state.input.photos.push(ctx.message.message_id);
+        ctx.replyWithTitle("CONFIRM_TITLE", "confirm_keyboard");
       }),
   });
 
-async function sendToAdmin(ctx, photo) {
-  const { post, name, add_type } = ctx.wizard.state.input;
+async function sendToAdmin(ctx) {
+  const { post, name, add_type, photos } = ctx.wizard.state.input;
 
   ctx.replyWithTitle("APPOINTMENT_SENT");
   await ctx.telegram
@@ -86,12 +90,13 @@ async function sendToAdmin(ctx, photo) {
     .catch((e) => {
       console.log(e);
     });
-  if (photo)
-    await ctx.telegram
-      .forwardMessage(process.env.ADMIN_ID, ctx.chat.id, photo)
-      .catch((e) => {
-        console.log(e);
-      });
+  if (photos.length)
+    for (let photo of photos)
+      await ctx.telegram
+        .forwardMessage(process.env.ADMIN_ID, ctx.chat.id, photo)
+        .catch((e) => {
+          console.log(e);
+        });
 }
 
 module.exports = scene;
