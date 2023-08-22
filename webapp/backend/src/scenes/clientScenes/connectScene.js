@@ -67,7 +67,12 @@ scene
       })
       .on("photo", async (ctx) => {
         ctx.wizard.state.input.photos.push(ctx.message.message_id);
-        ctx.replyWithTitle("CONFIRM_TITLE", "confirm_keyboard");
+        if (
+          !ctx.message.media_group_id ||
+          ctx.wizard.state.last_media_group_id !== ctx.message.media_group_id
+        )
+          ctx.replyWithKeyboard("CONFIRM_TITLE", "confirm_keyboard");
+        ctx.wizard.state.last_media_group_id = ctx.message.media_group_id;
       }),
   });
 
