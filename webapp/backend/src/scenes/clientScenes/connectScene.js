@@ -27,6 +27,15 @@ scene
       ctx.replyNextStep();
     },
   })
+  .addSelect({
+    variable: "add_type",
+    keyboard: "add_type_keyboard",
+    handler: new Composer().action(/add\_type\_(.+)/g, async (ctx) => {
+      await ctx.answerCbQuery().catch(console.log);
+      ctx.scene.state.input.add_type = ctx.match(1);
+      ctx.replyNextStep();
+    }),
+  })
   .addStep({
     variable: "post",
     cb: async (ctx) => {
@@ -50,26 +59,28 @@ scene
   });
 
 async function sendToAdmin(ctx, photo) {
-  const { post, name } = ctx.wizard.state.input;
+  const { post, name, add_type } = ctx.wizard.state.input;
 
   ctx.replyWithTitle("APPOINTMENT_SENT");
   await ctx.telegram
     .forwardMessage(process.env.ADMIN_ID, ctx.chat.id, name)
     .catch((e) => {
       console.log(e);
-      ctx.answerCbQuery().catch((e) => {});
+    });
+  await ctx.telegram
+    .sendMessage(process.env.ADMIN_ID, ctx.getTitle("ADD_TYPE_" + add_type))
+    .catch((e) => {
+      console.log(e);
     });
   await ctx.telegram
     .forwardMessage(process.env.ADMIN_ID, ctx.chat.id, post)
     .catch((e) => {
       console.log(e);
-      ctx.answerCbQuery().catch((e) => {});
     });
   await ctx.telegram
     .forwardMessage(process.env.ADMIN_ID, ctx.chat.id, photo)
     .catch((e) => {
       console.log(e);
-      ctx.answerCbQuery().catch((e) => {});
     });
 }
 

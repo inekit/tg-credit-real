@@ -112,6 +112,17 @@ exports.finish_send_keyboard = (ctx) =>
     { columns: 1 }
   );
 
+exports.add_type_keyboard = (ctx) =>
+  inlineKeyboard(
+    [
+      callbackButton(ctx.getTitle("ADD_TYPE_1"), "add_type_1"),
+      callbackButton(ctx.getTitle("ADD_TYPE_2"), "add_type_2"),
+      callbackButton(ctx.getTitle("ADD_TYPE_3"), "add_type_3"),
+      callbackButton(ctx.getTitle("ADD_TYPE_ALL"), "add_type_ALL"),
+    ],
+    { columns: 1 }
+  );
+
 exports.finish_delivery_keyboard = (ctx) =>
   inlineKeyboard(
     [
