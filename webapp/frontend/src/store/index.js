@@ -2,7 +2,7 @@ import { createStore } from 'vuex'
 
 export default createStore({
   state: {
-    restAddr: 'https://92.255.79.59/colorsserver/api', //'http://127.0.0.1:3000/api', //
+    restAddr: 'https://24pricelist.site/colorsserver/api', //'http://127.0.0.1:3000/api', //
     sidebarVisible: '',
     sidebarUnfoldable: false,
     searchQuery: '',

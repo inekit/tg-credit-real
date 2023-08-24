@@ -26,7 +26,7 @@ exports.webapp_keyboard = (ctx, id) =>
     [
       webAppButton(
         ctx.getTitle("WEBAPP_INLINE_BUTTON"),
-        "https://92.255.79.59/colorsfront/channels/" + id
+        "https://24pricelist.site/colorsfront/channels/" + id
       ),
     ],
   ]);
@@ -36,7 +36,7 @@ exports.basket_keyboard = (ctx, id) =>
     [
       webAppButton(
         ctx.getTitle("BASKET_INLINE_BUTTON"),
-        "https://smoke-market.online/colorsfront/basket/" + id
+        "https://24pricelist.site/colorsfront/basket/" + id
       ),
     ],
     [callbackButton(ctx.getTitle("BACK_BUTTON"), "go_back")],
