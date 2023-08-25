@@ -33,7 +33,7 @@
 
         <CFormInput type="number" class="mb-3" label="Цена за 1 час в топе и 24 часа в ленте"
           v-model.number="formData.prices.price_1" />
-        <CFormInput type="number" class="mb-3" label="Цена за 2 часа в топе и 48 часа в ленте"
+        <CFormInput type="number" class="mb-3" label="Цена за 2 часа в топе и 48 часов в ленте"
           v-model.number="formData.prices.price_2" />
         <CFormInput type="number" class="mb-3" label="Цена за 3 часа в топе и 72 часа в ленте"
           v-model.number="formData.prices.price_3" />

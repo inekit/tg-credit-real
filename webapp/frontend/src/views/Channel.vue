@@ -243,7 +243,7 @@
                                 <div v-if="channel.prices.price_3 > 0" class="ChannelPriceActions_channelPrice__uWyC4">
                                     <div class="ChannelPriceActions_channelPrice__content__fLClw">
                                         <p class="ChannelPriceActions_channelPrice__text__Mbugf">3 часа в топе</p>
-                                        <p class="ChannelPriceActions_channelPrice__text__Mbugf">48 часа в ленте</p>
+                                        <p class="ChannelPriceActions_channelPrice__text__Mbugf">72 часа в ленте</p>
                                     </div>
                                     <div class="ChannelPriceActions_channelPrice__price__20drU"><span>{{
                                         channel.prices.price_3 }}
