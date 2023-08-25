@@ -226,7 +226,6 @@ export default {
       var formData = new FormData()
 
       formData.append('title', this.formData.title)
-      formData.append('price', this.formData.price)
 
       this.formData.select_name && formData.append('select_name', this.formData.select_name)
 
@@ -249,6 +248,7 @@ export default {
       this.formData.telemetr_link && formData.append('telemetr_link', this.formData.telemetr_link)
       this.formData.tgstat_id && formData.append('tgstat_id', this.formData.tgstat_id)
 
+      formData.append('price', this.formData.prices.price)
       formData.append('price_1', this.formData.prices.price_1)
       formData.append('price_2', this.formData.prices.price_2)
       formData.append('price_3', this.formData.prices.price_3)

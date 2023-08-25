@@ -215,7 +215,7 @@
                                         class="ChannelPriceActions_channelActions__button__MzwI0"><span>Связаться</span></button>
                                 </div>
                                 <div class="ChannelPriceActions_channelActions__body__7nfTf"><button type="button"
-                                        @click="openTg('https://t.me/Alivian')"
+                                        @click="openTg('https://t.me/Ulyanakkkx')"
                                         class="ChannelPriceActions_channelActions__button__MzwI0"><span>Поторговаться</span></button>
                                 </div>
                             </div>
