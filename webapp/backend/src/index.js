@@ -38,24 +38,14 @@ console.log("started");
     console.log(secretPath);
 
     const tlsOptions = {
-      key: fs.readFileSync(
-        "/etc/letsencrypt/live/24pricelist.site/privkey.pem"
-      ),
-      cert: fs.readFileSync(
-        "/etc/letsencrypt/live/24pricelist.site/fullchain.pem"
-      ),
-      ca: [
-        fs.readFileSync("/etc/letsencrypt/live/24pricelist.site/fullchain.pem"),
-      ],
+      key: fs.readFileSync("/etc/ssl/certs/rootCA.key"),
+      cert: fs.readFileSync("/etc/ssl/certs/rootCA.crt"),
+      ca: [fs.readFileSync("/etc/ssl/certs/rootCA.crt")],
     };
 
     bot.telegram
       .setWebhook(`${process.env.SERVER_URI}${secretPath}`, {
-        certificate: {
-          source: fs.readFileSync(
-            "/etc/letsencrypt/live/24pricelist.site/fullchain.pem"
-          ),
-        },
+        certificate: { source: fs.readFileSync("/etc/ssl/certs/rootCA.crt") },
         allowed_updates,
         drop_pending_updates: true,
       })
@@ -63,7 +53,7 @@ console.log("started");
         console.log(r);
       });
 
-    await bot.startWebhook(secretPath, undefined, 4003);
+    await bot.startWebhook(secretPath, tlsOptions, 8443);
 
     console.log(await ctx.telegram.getWebhookInfo());
   } else {
