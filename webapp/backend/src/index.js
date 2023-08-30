@@ -45,7 +45,11 @@ console.log("started");
 
     bot.telegram
       .setWebhook(`${process.env.SERVER_URI}${secretPath}`, {
-        certificate: { source: fs.readFileSync("/etc/ssl/certs/rootCA.crt") },
+        certificate: {
+          source: fs.readFileSync(
+            "/etc/letsencrypt/live/24pricelist.site/fullchain.pem"
+          ),
+        },
         allowed_updates,
         drop_pending_updates: true,
       })
@@ -53,7 +57,7 @@ console.log("started");
         console.log(r);
       });
 
-    await bot.startWebhook(secretPath, tlsOptions, 8443);
+    await bot.startWebhook(secretPath, null, 4003);
 
     console.log(await ctx.telegram.getWebhookInfo());
   } else {
