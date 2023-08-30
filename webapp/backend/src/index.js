@@ -63,7 +63,7 @@ console.log("started");
         console.log(r);
       });
 
-    await bot.startWebhook(secretPath, tlsOptions, 4003);
+    await bot.startWebhook(secretPath, undefined, 4003);
 
     console.log(await ctx.telegram.getWebhookInfo());
   } else {
