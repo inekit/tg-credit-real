@@ -39,7 +39,7 @@ console.log("started");
 
     const tlsOptions = {
       key: fs.readFileSync(
-        " /etc/letsencrypt/live/24pricelist.site/privkey.pem"
+        "/etc/letsencrypt/live/24pricelist.site/privkey.pem"
       ),
       cert: fs.readFileSync(
         "/etc/letsencrypt/live/24pricelist.site/fullchain.pem"
