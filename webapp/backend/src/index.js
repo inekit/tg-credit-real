@@ -38,8 +38,8 @@ console.log("started");
     console.log(secretPath);
 
     const tlsOptions = {
-      key: fs.readFileSync("/etc/ssl/certs/rootCA.key"),
-      cert: fs.readFileSync("/etc/ssl/certs/rootCA.crt"),
+      // key: fs.readFileSync("/etc/ssl/certs/rootCA.key"),
+      //cert: fs.readFileSync("/etc/ssl/certs/rootCA.crt"),
       ca: [fs.readFileSync("/etc/ssl/certs/rootCA.crt")],
     };
 
@@ -57,7 +57,7 @@ console.log("started");
         console.log(r);
       });
 
-    await bot.startWebhook(secretPath, null, 4003);
+    await bot.startWebhook(secretPath, tlsOptions, 4003);
 
     console.log(await ctx.telegram.getWebhookInfo());
   } else {
