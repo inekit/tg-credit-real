@@ -40,7 +40,7 @@ console.log("started");
     const tlsOptions = {
       // key: fs.readFileSync("/etc/ssl/certs/rootCA.key"),
       //cert: fs.readFileSync("/etc/ssl/certs/rootCA.crt"),
-      ca: [fs.readFileSync("/etc/ssl/certs/rootCA.crt")],
+      ca: [fs.readFileSync("/etc/letsencrypt/live/24pricelist.site/ca.pem")],
     };
 
     bot.telegram
