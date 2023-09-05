@@ -1,20 +1,26 @@
 export default [
   {
     component: 'CNavItem',
-    name: 'Каналы',
-    to: '/items',
+    name: 'Займы',
+    to: '/loans',
     icon: 'cil-description',
   },
   {
     component: 'CNavItem',
-    name: 'Категории',
-    to: '/categories',
+    name: 'Пользователи',
+    to: '/users',
     icon: 'cil-description',
   },
   {
     component: 'CNavItem',
     name: 'Рассылки',
     to: '/mailing',
+    icon: 'cil-description',
+  },
+  {
+    component: 'CNavItem',
+    name: 'Администраторы',
+    to: '/admins',
     icon: 'cil-description',
   },
 ]
