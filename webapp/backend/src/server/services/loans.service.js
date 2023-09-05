@@ -45,7 +45,6 @@ class BasketsService {
     return new Promise(async (res, rej) => {
       const skip = (page - 1) * take;
       searchQuery = searchQuery ? `%${searchQuery}%` : null;
-      category = category || null;
       user_id = user_id || null;
       admin_id = admin_id || null;
       status = status || null;
