@@ -2,8 +2,8 @@ import { createStore } from 'vuex'
 
 export default createStore({
   state: {
-    publicPath: 'https://24pricelist.site/colorsserver', //'http://127.0.0.1:3000/api/admin/',
-    socketAddr: 'https://24pricelist.site',
+    publicPath: 'https://92.255.79.59/colorsserver', //'http://127.0.0.1:3000/api/admin/',
+    socketAddr: 'https://92.255.79.59',
     sidebarVisible: '',
     sidebarUnfoldable: false,
   },
