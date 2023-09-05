@@ -12,7 +12,6 @@ class BasketsService {
     this.getLoanCalculation = this.getLoanCalculation.bind(this);
     this.getUserActiveAppointment = this.getUserActiveAppointment.bind(this);
     this.addLoanAppointment = this.addLoanAppointment.bind(this);
-    this.cancelAppointment = this.cancelAppointment.bind(this);
     this.changeLoanStatus = this.changeLoanStatus.bind(this);
     this.getLoans = this.getLoans.bind(this);
   }
