@@ -23,17 +23,6 @@ const scene = new CustomWizardScene("clientScene").enter(async (ctx) => {
         console.log(e);
         ctx.replyWithTitle("DB_ERROR");
       });
-
-    await connection
-      .getRepository("Order")
-      .save({
-        user_id: ctx.from.id,
-        status: "basket",
-      })
-      .catch(async (e) => {
-        console.log(e);
-        ctx.replyWithTitle("DB_ERROR");
-      });
   } else
     await connection
       .query("update users set username = $1 where id = $2", [
