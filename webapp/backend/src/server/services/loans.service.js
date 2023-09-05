@@ -41,6 +41,8 @@ class BasketsService {
     admin_id,
     user_id,
     status,
+    order = "id",
+    orderDesc,
   }) {
     return new Promise(async (res, rej) => {
       const skip = (page - 1) * take;
@@ -56,12 +58,16 @@ class BasketsService {
                     from public.loans l
                     left join users u on u.id = l.user_id
                     where (lower(l.name) like lower($1) or lower(l.surname) like lower($1) or lower(l.patronymic) like lower($1) or $1 is NULL)
-                    and (l.admin_id = $2 or $2 is NULL)  
+                    and (l.aprooved_by_id = $2 or $2 is NULL)  
                     and (l.user_id = $3 or $3 is NULL)  
                     and (l.status = $4 or $4 is NULL)
                     and (l.id = $5 or $5 is NULL)
                     group by l.id
-                    order by l.id
+                    ORDER BY ${
+                      ["id", "creation_date", "status"].includes(order)
+                        ? "l." + order
+                        : "l.id"
+                    } ${orderDesc === "true" ? "DESC" : ""}
                     LIMIT $6 OFFSET $7`;
         connection
           .query(query, [
