@@ -6,8 +6,8 @@ const bodyParser = require("body-parser");
 
 const { spawnSync } = require("child_process");
 
-const router = require("./routes/routes");
-const adminRouter = require("./routes/adminRoutes");
+const usersRouter = require("./routes/users.routes");
+const adminsRouter = require("./routes/admins.routes");
 
 var app = require("./app-preferences");
 
@@ -23,8 +23,8 @@ app.use(passport.session());
 const { Server } = require("socket.io");
 
 module.exports = (ctx) => {
-  app.use("/colorsserver/api", router(ctx));
-  app.use("/colorsserver/api/admin", adminRouter(ctx));
+  app.use("/colorsserver/api", usersRouter(ctx));
+  app.use("/colorsserver/api/admin", adminsRouter(ctx));
 
   app.post("/colorsserver/api/postback", async (req, res) => {
     console.log(req.body);

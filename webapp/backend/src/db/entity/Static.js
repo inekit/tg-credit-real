@@ -14,22 +14,5 @@ module.exports = new EntitySchema({
       primary: false,
       length: 4096,
     },
-    order: {
-      type: "varchar",
-      primary: false,
-      length: 1024,
-    },
-    card_number: {
-      type: "varchar",
-      primary: false,
-      length: 1024,
-      default: "ТЕСТ",
-    },
-    sbp_number: {
-      type: "varchar",
-      primary: false,
-      length: 1024,
-      default: "ТЕСТ",
-    },
   },
 });

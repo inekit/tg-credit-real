@@ -1,21 +1,33 @@
 var EntitySchema = require("typeorm").EntitySchema;
 
 module.exports = new EntitySchema({
-  name: "User",
-  tableName: "users",
+  name: "Loan",
+  tableName: "loans",
   columns: {
     id: {
       primary: true,
       type: "bigint",
+      generated: true,
     },
-    username: {
-      type: "varchar",
-      length: 255,
-      nullable: true,
+    user_id: {
+      type: "bigint",
+      nullable: false,
     },
-    last_use: {
-      type: "date",
-      nullable: true,
+    creation_date: {
+      createDate: true,
+    },
+    status: {
+      type: "enum",
+      enum: [
+        "Новый",
+        "Выдан",
+        "Получен",
+        "Отменен",
+        "Запрещен",
+        "На возврате",
+        "Закрыт",
+      ],
+      default: "Новый",
     },
     name: {
       type: "varchar",
@@ -55,17 +67,40 @@ module.exports = new EntitySchema({
       type: "date",
       nullable: true,
     },
-    verification_date: {
+    term_days: {
+      type: "int",
+      nullable: false,
+    },
+    sum: {
+      type: "int",
+      nullable: false,
+    },
+    issue_date: {
       type: "date",
       nullable: true,
     },
+    return_date: {
+      type: "date",
+      nullable: true,
+    },
+    assessment: {
+      type: "enum",
+      enum: ["1", "2", "3", "4", "5"],
+      nullable: true,
+    },
+    country: {
+      type: "enum",
+      enum: ["Тайланд"],
+      default: "Тайланд",
+    },
+    aprooved_by_id: { type: "bigint", nullable: false },
   },
   relations: {
-    referer: {
+    user: {
       target: "User",
-      type: "one-to-many",
-      cascade: true,
+      type: "many-to-one",
       joinColumn: true,
+      cascade: true,
       onDelete: "set null",
       onUpdate: "cascade",
     },

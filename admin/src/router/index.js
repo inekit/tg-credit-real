@@ -18,7 +18,7 @@ const routes = [
     path: '/',
     name: 'Home',
     component: DefaultLayout,
-    redirect: '/items',
+    redirect: '/loans',
     children: [
       {
         path: '/admins',
@@ -26,18 +26,9 @@ const routes = [
         component: () => import('@/views/Admins.vue'),
       },
       {
-        path: '/items',
-        name: 'Items',
-        component: () => import('@/views/Items.vue'),
-        children: [
-          {
-            path: '/items/project/:categoryName',
-            name: 'ItemsByCategory',
-            props: true,
-            component: () => import('@/views/Items.vue'),
-            children: [],
-          },
-        ],
+        path: '/users',
+        name: 'Users',
+        component: () => import('@/views/Users.vue'),
       },
       {
         path: '/static',
@@ -46,22 +37,16 @@ const routes = [
         children: [],
       },
       {
-        path: '/orders',
-        name: 'Orders',
-        component: () => import('@/views/Orders.vue'),
+        path: '/loans',
+        name: 'Loans',
+        component: () => import('@/views/Loans.vue'),
         children: [],
       },
       {
-        path: '/order/:orderId',
-        name: 'OrderItems',
+        path: '/loan/:loanId',
+        name: 'LoanInfo',
         props: true,
-        component: () => import('@/views/Order.vue'),
-        children: [],
-      },
-      {
-        path: '/categories',
-        name: 'Categories',
-        component: () => import('@/views/Categories.vue'),
+        component: () => import('@/views/Loan.vue'),
         children: [],
       },
       {
