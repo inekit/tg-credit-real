@@ -15,7 +15,7 @@ function getLoans(req, res, next) {
 
 function getCount(req, res, next) {
   loansService
-    .getCount(req.query, ctx)
+    .getCount(req.query)
     .then((data) => res.send(data))
     .catch((error) => next(error));
 }
