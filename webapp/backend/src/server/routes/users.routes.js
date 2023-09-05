@@ -7,9 +7,9 @@ module.exports = (ctx) => {
   router.get("/loan_calculation", LoansController.getLoanCalculation);
   router.get("/users", UsersController.getProfile);
 
-  router.post("/loan", LoansController.addLoanAppointment);
-  router.get("/loan", LoansController.getUserActiveAppointment);
-  router.put("/loan", LoansController.changeLoanStatus);
+  router.post("/loans", LoansController.addLoanAppointment);
+  router.get("/loans", LoansController.getUserActiveAppointment);
+  router.put("/loans", LoansController.changeLoanStatus);
 
   return router;
 };
