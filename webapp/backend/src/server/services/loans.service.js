@@ -52,7 +52,7 @@ class BasketsService {
       const connection = await tOrmCon;
       {
         const query = `select l.*, u.username,
-        o.surname||' '|| o.name || ' ' || o.patronymic as fio
+        surname||' '|| name || ' ' || patronymic as fio
                     from public.loans l
                     left join users u on u.id = l.user_id
                     where (lower(name) like lower($1) or lower(surname) like lower($1) or lower(patronymic) like lower($1) or $1 is NULL)
