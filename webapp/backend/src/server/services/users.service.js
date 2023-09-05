@@ -8,13 +8,13 @@ const {
 } = require("../utils/httpErrors");
 
 class UsersService {
-  constructor() {
+  /*constructor() {
     this.getUsers = this.getUsers.bind(this);
     this.getProfile = this.getProfile.bind(this);
     this.addUser = this.addUser.bind(this);
     this.editUser = this.editUser.bind(this);
     this.deleteUser = this.deleteUser.bind(this);
-  }
+  }*/
 
   getUsers(id, page, take) {
     return new Promise((res, rej) => {
