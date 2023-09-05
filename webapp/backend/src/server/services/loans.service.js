@@ -62,7 +62,7 @@ class BasketsService {
                     and (l.user_id = $3 or $3 is NULL)  
                     and (l.status = $4 or $4 is NULL)
                     and (l.id = $5 or $5 is NULL)
-                    group by l.id
+                    group by l.id, u.username
                     ORDER BY ${
                       ["id", "creation_date", "status"].includes(order)
                         ? "l." + order
