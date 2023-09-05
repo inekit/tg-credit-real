@@ -13,6 +13,13 @@ function getLoans(req, res, next) {
     .catch((error) => next(error));
 }
 
+function getCount(req, res, next) {
+  loansService
+    .getCount(req.query, ctx)
+    .then((data) => res.send(data))
+    .catch((error) => next(error));
+}
+
 function getUserActiveAppointment(req, res, next) {
   loansService
     .getUserActiveAppointment(req.query)
@@ -42,4 +49,5 @@ module.exports = {
   addLoanAppointment,
   changeLoanStatus,
   getLoans,
+  getCount,
 };

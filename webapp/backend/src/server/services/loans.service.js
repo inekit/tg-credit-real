@@ -7,13 +7,42 @@ const {
   NoInputDataError,
 } = require("../utils/httpErrors");
 
-class BasketsService {
+class LoansService {
   constructor() {
     this.getLoanCalculation = this.getLoanCalculation.bind(this);
     this.getUserActiveAppointment = this.getUserActiveAppointment.bind(this);
     this.addLoanAppointment = this.addLoanAppointment.bind(this);
     this.changeLoanStatus = this.changeLoanStatus.bind(this);
     this.getLoans = this.getLoans.bind(this);
+    this.getCount = this.getCount.bind(this);
+  }
+
+  getCount({ searchQuery, admin_id, user_id, status }) {
+    return new Promise(async (res, rej) => {
+      searchQuery = searchQuery ? `%${searchQuery}%` : null;
+
+      const connection = await tOrmCon;
+
+      connection
+        .query(
+          `select count(l.id)
+            from public.loans l
+            where (lower(l.name) like lower($1) or lower(l.surname) like lower($1) or lower(l.patronymic) like lower($1) or $1 is NULL)
+            and (l.aprooved_by_id = $2 or $2 is NULL)  
+            and (l.user_id = $3 or $3 is NULL)  
+            and (l.status = $4 or $4 is NULL)
+            group by l.id
+            ORDER BY l.id`,
+          [searchQuery, admin_id, user_id, status]
+        )
+        .then(async (data) => {
+          return res({ orders_count: data.length });
+        })
+        .catch((error) => {
+          console.log(error);
+          rej(new MySqlError(error));
+        });
+    });
   }
 
   getLoanCalculation({ term_days, sum }) {
@@ -202,4 +231,4 @@ class BasketsService {
   }
 }
 
-module.exports = new BasketsService();
+module.exports = new LoansService();

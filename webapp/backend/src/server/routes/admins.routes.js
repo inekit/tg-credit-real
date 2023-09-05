@@ -24,6 +24,7 @@ module.exports = (ctx) => {
 
   router.get("/loans", auth, LoansController.getLoans);
   router.put("/loans", auth, LoansController.changeLoanStatus);
+  router.get("/loans_count", auth, LoansController.getCount);
 
   router.post("/mailing", auth, MailingController.add(ctx));
 
