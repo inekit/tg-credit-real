@@ -90,7 +90,8 @@ class LoansService {
                       (lower(l.name) like lower($1) 
                       or lower(l.surname) like lower($1) 
                       or lower(l.patronymic) like lower($1) 
-                      or lower(l.user_id) like lower($1) 
+                      or l.user_id like $1
+                      or l.aprooved_by_id like $1
                       or lower(u.username) like lower($1) 
                       or $1 is NULL)
                     and (l.aprooved_by_id = $2 or $2 is NULL)  
