@@ -22,7 +22,7 @@ export default {
     }
   },
   async created() {
-    await myApi.get(this.$store.state.publicPath + '/api/id/').then((response) => {
+    await myApi.get(this.$store.state.publicPath + '/api/admin/id/').then((response) => {
       this.$store.state.id = response.data.id
     })
       .catch((error) => {

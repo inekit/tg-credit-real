@@ -1,14 +1,16 @@
 <template>
   <div>
     <OrderModal :visible="formVisible" :formData="formData" :mode="formMode" />
-    <CFormInput class="mb-4" type="search" v-model="searchQuery" @change="get(); getPageCount()" placeholder="Поиск" />
-    <CFormSelect aria-label="Default select example" v-model="status">
-      <option>Фильтр по статусу</option>
-      <option v-for="currentStatus in ['Новый', 'Выдан', 'Получен', 'Отменен', 'Запрещен', 'На возврате', 'Закрыт',]"
-        :key="currentStatus" @select="status = currentStatus; get(); getPageCount()" :value="currentStatus">
-        {{ currentStatus }}</option>
-    </CFormSelect>
-    <CFormCheck id="onlyMyCheck" label="Только мои" v-model="onlyMy" @change="get(); getPageCount()" />
+    <div class="search-block">
+      <CFormInput class="mb-4" type="search" v-model="searchQuery" @change="get(); getPageCount()" placeholder="Поиск" />
+      <CFormSelect aria-label="Default select example" v-model="status">
+        <option>Фильтр по статусу</option>
+        <option v-for="currentStatus in ['Новый', 'Выдан', 'Получен', 'Отменен', 'Запрещен', 'На возврате', 'Закрыт',]"
+          :key="currentStatus" @select="status = currentStatus; get(); getPageCount()" :value="currentStatus">
+          {{ currentStatus }}</option>
+      </CFormSelect>
+      <CFormCheck id="onlyMyCheck" label="Только мои" v-model="onlyMy" @change="get(); getPageCount()" />
+    </div>
     <Table :key="tableKey" :fields="tableFieldNames" :postData="get" :actions="dataActions" :rows="rows" editMode="form"
       :lastPageNumber="lastPageNumber" :getPageCount="getPageCount" name="Займы" />
   </div>
@@ -165,5 +167,14 @@ export default {
 <style lang="scss">
 button {
   margin-bottom: 20px;
+}
+
+.search-block {
+  display: flex;
+
+  &>* {
+    display: inline-block !important;
+    width: unset !important;
+  }
 }
 </style>

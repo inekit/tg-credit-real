@@ -8,12 +8,6 @@
         <CIcon :icon="logo" height="48" alt="Logo" />
       </CHeaderBrand>
       <CHeaderNav class="d-none d-md-flex me-auto">
-        <CNavItem>
-          <CNavLink href="/items"> Позиции </CNavLink>
-        </CNavItem>
-        <CNavItem>
-          <CNavLink href="/items"> Администраторы </CNavLink>
-        </CNavItem>
       </CHeaderNav>
       <CHeaderNav>
         <CNavItem>
