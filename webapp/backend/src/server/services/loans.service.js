@@ -86,7 +86,13 @@ class LoansService {
         l.surname||' '|| l.name || ' ' || l.patronymic as fio
                     from public.loans l
                     left join users u on u.id = l.user_id
-                    where (lower(l.name) like lower($1) or lower(l.surname) like lower($1) or lower(l.patronymic) like lower($1) or $1 is NULL)
+                    where 
+                      (lower(l.name) like lower($1) 
+                      or lower(l.surname) like lower($1) 
+                      or lower(l.patronymic) like lower($1) 
+                      or lower(l.user_id) like lower($1) 
+                      or lower(u.username) like lower($1) 
+                      or $1 is NULL)
                     and (l.aprooved_by_id = $2 or $2 is NULL)  
                     and (l.user_id = $3 or $3 is NULL)  
                     and (l.status = $4 or $4 is NULL)

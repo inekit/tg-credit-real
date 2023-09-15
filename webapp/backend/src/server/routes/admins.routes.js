@@ -28,6 +28,8 @@ module.exports = (ctx) => {
 
   router.post("/mailing", auth, MailingController.add(ctx));
 
+  router.post("/id", AdminsController.getId);
+
   router.post("/login", login.local);
   router.put("/register", register.local);
   router.get("/logout", auth, (req, res) => {

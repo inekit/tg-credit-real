@@ -2,6 +2,13 @@
   <div>
     <OrderModal :visible="formVisible" :formData="formData" :mode="formMode" />
     <CFormInput class="mb-4" type="search" v-model="searchQuery" @change="get(); getPageCount()" placeholder="Поиск" />
+    <CFormSelect aria-label="Default select example" v-model="status">
+      <option>Фильтр по статусу</option>
+      <option v-for="currentStatus in ['Новый', 'Выдан', 'Получен', 'Отменен', 'Запрещен', 'На возврате', 'Закрыт',]"
+        :key="currentStatus" @select="status = currentStatus; get(); getPageCount()" :value="currentStatus">
+        {{ currentStatus }}</option>
+    </CFormSelect>
+    <CFormCheck id="onlyMyCheck" label="Только мои" v-model="onlyMy" @change="get(); getPageCount()" />
     <Table :key="tableKey" :fields="tableFieldNames" :postData="get" :actions="dataActions" :rows="rows" editMode="form"
       :lastPageNumber="lastPageNumber" :getPageCount="getPageCount" name="Займы" />
   </div>
@@ -28,6 +35,8 @@ export default {
       myApi: myApi,
       formVisible: false,
       formData: {},
+      status: null,
+      onlyMy: false,
       rows: [],
       tableKey: 1,
       dataActions: {
@@ -81,10 +90,10 @@ export default {
     })
   },
   mounted() {
-    this.sockets.subscribe('UPDATE_LOANS', () => {
+    /*this.sockets.subscribe('UPDATE_LOANS', () => {
       console.log("updated")
       this.tableKey++
-    });
+    });*/
   },
   methods: {
     change(elObj) {
@@ -99,6 +108,8 @@ export default {
             take: take ?? 10,
             page: page ?? 1,
             searchQuery: this.searchQuery,
+            admin_id: this.onlyMy ? this.$store.state.id : undefined,
+            status: this.status,
             order,
             orderDesc
           },

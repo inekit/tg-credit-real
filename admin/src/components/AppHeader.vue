@@ -18,6 +18,7 @@
       <CHeaderNav>
         <CNavItem>
           <CNavLink href="#" @click="logout">
+            {{ this.$store.state.id }}
             <CIcon class="mx-2" icon="cil-user" size="lg" />
             Выйти
           </CNavLink>

@@ -6,6 +6,7 @@ export default createStore({
     socketAddr: 'https://92.255.79.59',
     sidebarVisible: '',
     sidebarUnfoldable: false,
+    id: null,
   },
   mutations: {
     toggleSidebar(state) {
