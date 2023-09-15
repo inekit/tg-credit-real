@@ -1,6 +1,6 @@
 <template>
   <div>
-    <AddUserModal :visible="formVisible" :formData="formData" />
+    <AddUserModal :visible="formVisible" :formData="formData" :mode="formMode" />
     <Table :fields="tableFieldNames" :postData="getUsers" :actions="dataActions" :rows="rows" name="Администраторы" />
   </div>
 </template>
@@ -34,13 +34,30 @@ export default {
       },
       tableFieldNames: [
         {
-          name: 'nick',
-          title: 'Никнейм',
+          name: 'id',
+          title: 'ID',
         },
         {
-          name: 'email',
-          title: 'Почта',
+          name: 'username',
+          title: 'Юзернейм',
         },
+        {
+          name: 'fio',
+          title: 'ФИО',
+        },
+        {
+          name: 'phone',
+          title: 'Телефон',
+        },
+        {
+          name: 'visa_expired_date',
+          title: 'Дата окончания визы',
+        },
+        {
+          name: 'verification_date',
+          title: 'Дата верификации',
+        },
+
       ],
     }
   },

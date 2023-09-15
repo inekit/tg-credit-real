@@ -3,7 +3,7 @@
     <OrderModal :visible="formVisible" :formData="formData" :mode="formMode" />
     <div class="search-block">
       <CFormInput class="mb-4" type="search" v-model="searchQuery" @change="get(); getPageCount()" placeholder="Поиск" />
-      <CFormSelect aria-label="Default select example" v-model="status">
+      <CFormSelect aria-label="Default select example" v-model="status" size="sm">
         <option>Фильтр по статусу</option>
         <option v-for="currentStatus in ['Новый', 'Выдан', 'Получен', 'Отменен', 'Запрещен', 'На возврате', 'Закрыт',]"
           :key="currentStatus" @select="status = currentStatus; get(); getPageCount()" :value="currentStatus">
@@ -174,7 +174,7 @@ button {
 
   &>* {
     display: inline-block !important;
-    width: unset !important;
+    // width: unset !important;
   }
 }
 </style>
