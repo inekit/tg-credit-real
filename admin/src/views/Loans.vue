@@ -117,7 +117,7 @@ export default {
             take: take ?? 10,
             page: page ?? 1,
             searchQuery: this.searchQuery,
-            admin_id: this.$route.params.adminId ?? this.onlyMy ? undefined : this.$store.state.id,
+            admin_id: this.$route.params.adminId ?? this.onlyMy ? this.$store.state.id : undefined,
             user_id: this.$route.params.userId,
             status: this.status,
             order,
@@ -134,12 +134,12 @@ export default {
         })
     },
     getPageCount(take) {
-      console.log(this.onlyMy, this.onlyMy ? undefined : this.$store.state.id)
+      console.log(this.$route.params.adminId, this.onlyMy, this.onlyMy ? undefined : this.$store.state.id)
       return myApi
         .get(this.$store.state.publicPath + '/api/admin/loans_count/', {
           params: {
             searchQuery: this.searchQuery,
-            admin_id: this.$route.params.adminId ?? this.onlyMy ? undefined : this.$store.state.id,
+            admin_id: this.$route.params.adminId ?? this.onlyMy ? this.$store.state.id : undefined,
             user_id: this.$route.params.userId,
             status: this.status,
           },
