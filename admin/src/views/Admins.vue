@@ -77,8 +77,8 @@ export default {
       return myApi
         .get(this.$store.state.publicPath + '/api/admin/admins/', {
           params: {
-            perPage: perPage ?? 0,
-            page: page ?? 0,
+            perPage: perPage ?? 10,
+            page: page ?? 1,
           }
         })
         .then((res) => {
@@ -90,17 +90,15 @@ export default {
           return false
         })
     },
-    deleteUser(id) {
-      console.log(id)
+    deleteUser(userObj) {
       const result = confirm('Вы действительно хотите удалить пользователя?')
       if (result)
         return myApi
           .delete(this.$store.state.publicPath + '/api/admin/admins/', {
-            data: { id },
+            data: { id: userObj.id },
           })
           .then(() => {
-            this.rows = this.rows.filter((el) => el.id !== id)
-            eventBus.$emit('userDeleted')
+            this.getUsers()
           })
           .catch((error) => {
             eventBus.$emit('noresponse', error)
