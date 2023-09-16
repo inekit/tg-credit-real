@@ -60,6 +60,11 @@ export default {
       this.getUsers()
       this.formData = {}
     })
+    eventBus.$on('addNewAdmin', () => {
+      this.formVisible = false
+      this.formData = {}
+    })
+
   },
   methods: {
     changeUser(userObj) {

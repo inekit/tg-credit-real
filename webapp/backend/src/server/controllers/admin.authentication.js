@@ -1,7 +1,7 @@
 const passport = require("../passport/passport");
 const bcrypt = require("bcryptjs");
 const salt = bcrypt.genSaltSync(10);
-const usersService = require("../services/users.service");
+const adminsService = require("../services/admins.service");
 
 function loginLocal(req, res, next) {
   passport.authenticate("local", function (err, user) {
@@ -24,22 +24,22 @@ function loginLocal(req, res, next) {
   })(req, res, next);
 }
 
-function registerLocal(req, res) {
+function registerLocal(req, res, next) {
   if (!req.body.password || !req.body.login)
     return res.status(403).send({ error: "no data" });
 
   let password = bcrypt.hashSync(req.body.password, salt);
   const user = { login: req.body.login, password };
 
-  usersService
-    .addUser(user)
+  adminsService
+    .add(user)
     .then((userData) => res.send({ isRegistered: true }))
     .catch((err) =>
       res.status(403).send(JSON.stringify({ isRegistered: false, err }))
     );
 }
 
-function editUser(req, res) {
+function editUser(req, res, next) {
   if (!req.body.password || !req.body.login)
     return res.status(403).send({ error: "no data" });
 
@@ -50,8 +50,8 @@ function editUser(req, res) {
     password,
   };
 
-  usersService
-    .editUser(user)
+  adminsService
+    .edit(user)
     .then((userData) => res.send({ isRegistered: true }))
     .catch((err) =>
       res.status(403).send(JSON.stringify({ isRegistered: false }))

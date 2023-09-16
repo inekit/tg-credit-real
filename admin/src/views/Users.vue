@@ -57,6 +57,10 @@ export default {
           name: 'verification_date',
           title: 'Дата верификации',
         },
+        {
+          name: 'ban',
+          title: 'Бан',
+        },
 
       ],
     }
@@ -89,11 +93,11 @@ export default {
           return false
         })
     },
-    banUser(id) {
+    banUser(userObj) {
       const result = confirm('Вы действительно хотите забанить пользователя?')
       if (result)
         return myApi
-          .put(this.$store.state.publicPath + '/api/admin/users/', { id, ban: true })
+          .put(this.$store.state.publicPath + '/api/admin/users/', { id: userObj.id, ban: !userObj.ban })
           .then(() => {
             eventBus.$emit('userAdded')
           })
