@@ -27,11 +27,13 @@ const myApi = axios.create({
 })
 
 export default {
-  name: 'Orders',
+  name: 'Loans',
   components: {
     OrderModal,
     Table,
   },
+  props: ['userId', 'adminId'],
+
   data() {
     return {
       myApi: myApi,
@@ -115,8 +117,8 @@ export default {
             take: take ?? 10,
             page: page ?? 1,
             searchQuery: this.searchQuery,
-            admin_id: this.$route.params.admin ?? this.onlyMy ? undefined : this.$store.state.id,
-            user_id: this.$route.params.user,
+            admin_id: this.$route.params.adminId ?? this.onlyMy ? undefined : this.$store.state.id,
+            user_id: this.$route.params.userId,
             status: this.status,
             order,
             orderDesc
@@ -137,8 +139,8 @@ export default {
         .get(this.$store.state.publicPath + '/api/admin/loans_count/', {
           params: {
             searchQuery: this.searchQuery,
-            admin_id: this.$route.params.admin ?? this.onlyMy ? undefined : this.$store.state.id,
-            user_id: this.$route.params.user,
+            admin_id: this.$route.params.adminId ?? this.onlyMy ? undefined : this.$store.state.id,
+            user_id: this.$route.params.userId,
             status: this.status,
           },
         })
