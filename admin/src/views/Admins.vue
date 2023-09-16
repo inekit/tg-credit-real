@@ -51,7 +51,7 @@ export default {
     },
     getUsers(perPage, page) {
       return myApi
-        .get(this.$store.state.publicPath + '/api/admin/users/', {
+        .get(this.$store.state.publicPath + '/api/admin/admins/', {
           perPage: perPage ?? 0,
           page: page ?? 0,
         })
@@ -69,7 +69,7 @@ export default {
       const result = confirm('Вы действительно хотите удалить пользователя?')
       if (result)
         return myApi
-          .delete(this.$store.state.publicPath + '/api/admin/users/', {
+          .delete(this.$store.state.publicPath + '/api/admin/admins/', {
             data: { id },
           })
           .then(() => {
@@ -84,7 +84,7 @@ export default {
       const result = confirm('Вы действительно хотите забанить пользователя?')
       if (result)
         return myApi
-          .put(this.$store.state.publicPath + '/api/admin/users/', { id, ban: true })
+          .put(this.$store.state.publicPath + '/api/admin/admins/', { id, ban: true })
           .then(() => {
             eventBus.$emit('userAdded')
           })
