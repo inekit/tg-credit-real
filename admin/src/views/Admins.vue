@@ -49,7 +49,6 @@ export default {
     changeUser(userObj) {
       this.formVisible = true
       this.formData = userObj
-
     },
     getUsers(perPage, page) {
       return myApi

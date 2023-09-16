@@ -1,4 +1,5 @@
 <template>
+  <CButton color="primary" @click="addNewAdmin">Добавить промокод</CButton>
   <CModal alignment="center" :visible="visible" @close="closeModal">
     <CModalHeader>
       <CModalTitle>{{ login }}</CModalTitle>
@@ -8,14 +9,13 @@
         <CInputGroupText>
           <CIcon icon="cil-user" />
         </CInputGroupText>
-        <CFormInput label="Пароль" placeholder="Введите логин" autocomplete="username" v-model="formData.login" />
+        <CFormInput placeholder="Введите логин" autocomplete="username" v-model="formData.login" />
       </CInputGroup>
       <CInputGroup class="mb-3">
         <CInputGroupText>
           <CIcon icon="cil-lock-locked" />
         </CInputGroupText>
-        <CFormInput type="password" label="Пароль" placeholder="Введите новый пароль" autocomplete="new-password"
-          v-model="password" />
+        <CFormInput type="password" placeholder="Введите новый пароль" autocomplete="new-password" v-model="password" />
       </CInputGroup>
     </CModalBody>
     <CModalFooter>
@@ -46,6 +46,9 @@ export default ({
 
   },
   methods: {
+    addNewAdmin() {
+      eventBus.$emit('addNewAdmin')
+    },
     closeModal() {
       eventBus.$emit('closeModal')
     },
@@ -53,7 +56,7 @@ export default ({
       if (!this.formData.login) throw new Error()
       var formData = new FormData()
       formData.append('login', this.formData.login)
-      formData.append('password', this.formData.order_id)
+      formData.append('password', this.password)
       formData.append('id', this.formData.id)
       return formData
     },
