@@ -1,5 +1,5 @@
 <template>
-  <CButton color="primary" @click="addNewAdmin">Добавить промокод</CButton>
+  <CButton color="primary" @click="addNewAdmin">Добавить администратора</CButton>
   <CModal alignment="center" :visible="visible" @close="closeModal">
     <CModalHeader>
       <CModalTitle>{{ login }}</CModalTitle>
@@ -71,7 +71,7 @@ export default ({
             },
           })
           .then(() => {
-            eventBus.$emit('postAdded')
+            eventBus.$emit('adminAdded')
           })
           .catch((e) => {
             eventBus.$emit('noresponse', e)
@@ -93,7 +93,7 @@ export default ({
             },
           })
           .then(() => {
-            eventBus.$emit('postEdited')
+            eventBus.$emit('adminEdited')
           })
           .catch((e) => {
             eventBus.$emit('noresponse', e)

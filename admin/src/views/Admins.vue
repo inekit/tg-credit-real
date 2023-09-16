@@ -29,7 +29,6 @@ export default {
       formData: {},
       rows: [],
       dataActions: {
-        Бан: { action: this.banUser, color: 'light' },
         Изменить: { action: this.changeUser, color: 'warning' },
         Удалить: { action: this.deleteUser, color: 'danger' },
       },
@@ -45,10 +44,28 @@ export default {
       ],
     }
   },
+  created() {
+    eventBus.$on('closeModal', () => {
+      this.formVisible = false
+      this.formData = {
+      }
+    })
+    eventBus.$on('adminEdited', () => {
+      this.formVisible = false
+      this.getUsers()
+      this.formData = {}
+    })
+    eventBus.$on('adminAdded', () => {
+      this.formVisible = false
+      this.getUsers()
+      this.formData = {}
+    })
+  },
   methods: {
     changeUser(userObj) {
       this.formVisible = true
       this.formData = userObj
+      this.formMode = 'edit'
     },
     getUsers(perPage, page) {
       return myApi
@@ -76,18 +93,6 @@ export default {
           .then(() => {
             this.rows = this.rows.filter((el) => el.id !== id)
             eventBus.$emit('userDeleted')
-          })
-          .catch((error) => {
-            eventBus.$emit('noresponse', error)
-          })
-    },
-    banUser(id) {
-      const result = confirm('Вы действительно хотите забанить пользователя?')
-      if (result)
-        return myApi
-          .put(this.$store.state.publicPath + '/api/admin/admins/', { id, ban: true })
-          .then(() => {
-            eventBus.$emit('userAdded')
           })
           .catch((error) => {
             eventBus.$emit('noresponse', error)

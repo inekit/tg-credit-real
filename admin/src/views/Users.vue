@@ -1,7 +1,7 @@
 <template>
   <div>
     <AddUserModal :visible="formVisible" :formData="formData" :mode="formMode" />
-    <Table :fields="tableFieldNames" :postData="getUsers" :actions="dataActions" :rows="rows" name="Администраторы"
+    <Table :fields="tableFieldNames" :postData="getUsers" :actions="dataActions" :rows="rows" name="Пользователи"
       editMode="form" />
   </div>
 </template>
@@ -29,9 +29,8 @@ export default {
       formData: {},
       rows: [],
       dataActions: {
-        Бан: { action: this.banUser, color: 'light' },
-        Изменить: { action: this.changeUser, color: 'warning' },
-        Удалить: { action: this.deleteUser, color: 'danger' },
+        Изменить: { action: this.changeUser, color: 'primary' },
+        Бан: { action: this.banUser, color: 'danger' },
       },
       tableFieldNames: [
         {
@@ -62,10 +61,18 @@ export default {
       ],
     }
   },
+  created() {
+    eventBus.$on('closeModal', () => {
+      this.formVisible = false
+      this.formData = {
+      }
+    })
+  },
   methods: {
     changeUser(userObj) {
       this.formVisible = true
       this.formData = userObj
+      this.formMode = 'edit'
     },
     getUsers(perPage, page) {
       return myApi
@@ -81,22 +88,6 @@ export default {
           eventBus.$emit('noresponse', error)
           return false
         })
-    },
-    deleteUser(id) {
-      console.log(id)
-      const result = confirm('Вы действительно хотите удалить пользователя?')
-      if (result)
-        return myApi
-          .delete(this.$store.state.publicPath + '/api/admin/users/', {
-            data: { id },
-          })
-          .then(() => {
-            this.rows = this.rows.filter((el) => el.id !== id)
-            eventBus.$emit('userDeleted')
-          })
-          .catch((error) => {
-            eventBus.$emit('noresponse', error)
-          })
     },
     banUser(id) {
       const result = confirm('Вы действительно хотите забанить пользователя?')

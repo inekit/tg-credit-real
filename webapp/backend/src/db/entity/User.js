@@ -59,6 +59,11 @@ module.exports = new EntitySchema({
       type: "date",
       nullable: true,
     },
+    ban: {
+      type: "boolean",
+      nullable: false,
+      default: false,
+    },
   },
   relations: {
     referer: {
