@@ -31,7 +31,7 @@ class UsersService {
           .query(
             `select * from users u where (id = $1 or $1 is NULL) and 
          (lower(u.name) like lower($2) or lower(u.surname) like lower($2) or lower(u.patronymic) like lower($2) or $2 is NULL)
-         order by id desc LIMIT $4 OFFSET $5`,
+         order by id desc LIMIT $3 OFFSET $4`,
             [id, searchQuery, take, skip]
           )
           .then((data) => res(data))
