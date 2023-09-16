@@ -76,8 +76,10 @@ export default {
     getUsers(perPage, page) {
       return myApi
         .get(this.$store.state.publicPath + '/api/admin/admins/', {
-          perPage: perPage ?? 0,
-          page: page ?? 0,
+          params: {
+            perPage: perPage ?? 0,
+            page: page ?? 0,
+          }
         })
         .then((res) => {
           this.rows = res.data

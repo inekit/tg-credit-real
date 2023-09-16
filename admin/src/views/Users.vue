@@ -1,7 +1,7 @@
 <template>
   <div>
     <AddUserModal :visible="formVisible" :formData="formData" :mode="formMode" />
-    <CFormInput type="search" v-model="searchQuery" @change="getUsers();" placeholder="Поиск" />
+    <CFormInput type="search" v-model="searchQuery" @change="getUsers();" placeholder="Поиск" class="mb-3" />
     <Table :fields="tableFieldNames" :postData="getUsers" :actions="dataActions" :rows="rows" name="Пользователи"
       editMode="form" />
   </div>
@@ -83,9 +83,11 @@ export default {
     getUsers(perPage, page) {
       return myApi
         .get(this.$store.state.publicPath + '/api/admin/users/', {
-          perPage: perPage ?? 10,
-          page: page ?? 1,
-          searchQuery: this.searchQuery,
+          params: {
+            perPage: perPage ?? 10,
+            page: page ?? 1,
+            searchQuery: this.searchQuery,
+          }
         })
         .then((res) => {
           this.rows = res.data
