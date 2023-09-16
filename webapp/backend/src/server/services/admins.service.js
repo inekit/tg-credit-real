@@ -76,7 +76,7 @@ class AdminsService {
       tOrmCon.then((connection) => {
         connection
           .getRepository("Admin")
-          .update({ id }, user)
+          .update({ id: user.id }, { id: user.id, ban: user.ban })
           .then((data) => res(data))
           .catch((error) => rej(new MySqlError(error)));
       });
