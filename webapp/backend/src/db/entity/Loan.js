@@ -93,11 +93,19 @@ module.exports = new EntitySchema({
       enum: ["Тайланд"],
       default: "Тайланд",
     },
-    aprooved_by_id: { type: "bigint", nullable: false },
+    aprooved_by_id: { type: "bigint", nullable: true },
   },
   relations: {
     user: {
       target: "User",
+      type: "many-to-one",
+      joinColumn: true,
+      cascade: true,
+      onDelete: "set null",
+      onUpdate: "cascade",
+    },
+    aprooved_b: {
+      target: "Admin",
       type: "many-to-one",
       joinColumn: true,
       cascade: true,
