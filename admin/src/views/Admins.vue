@@ -63,6 +63,7 @@ export default {
     eventBus.$on('addNewAdmin', () => {
       this.formVisible = true
       this.formData = {}
+      this.formMode = 'new'
     })
 
   },
