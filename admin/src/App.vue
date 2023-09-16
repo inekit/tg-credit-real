@@ -26,7 +26,7 @@ export default {
       this.$store.state.id = response.data.id
     })
       .catch((error) => {
-        eventBus.$emit('noresponse', error)
+        // eventBus.$emit('noresponse', error)
       })
   },
   methods: {}

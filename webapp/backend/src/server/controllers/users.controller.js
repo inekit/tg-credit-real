@@ -29,13 +29,6 @@ function deleteUser(req, res) {
     .catch((error) => next(error));
 }
 
-function addUser(req, res) {
-  usersService
-    .addUser(req.body)
-    .then((data) => res.send(data))
-    .catch((error) => next(error));
-}
-
 function editUser(req, res) {
   usersService
     .editUser(req.body)
@@ -47,6 +40,5 @@ module.exports = {
   getUsers,
   getProfile,
   deleteUser,
-  addUser,
   editUser,
 };

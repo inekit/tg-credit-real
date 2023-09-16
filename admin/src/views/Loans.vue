@@ -2,9 +2,9 @@
   <div>
     <OrderModal :visible="formVisible" :formData="formData" :mode="formMode" />
     <div class="search-block">
-      <CFormInput class="mb-4" type="search" v-model="searchQuery" @change="get(); getPageCount()" placeholder="Поиск" />
+      <CFormInput type="search" v-model="searchQuery" @change="get(); getPageCount()" placeholder="Поиск" />
       <CFormSelect aria-label="Default select example" v-model="status" size="sm">
-        <option>Фильтр по статусу</option>
+        <option :value="null">Фильтр по статусу</option>
         <option v-for="currentStatus in ['Новый', 'Выдан', 'Получен', 'Отменен', 'Запрещен', 'На возврате', 'Закрыт',]"
           :key="currentStatus" @select="status = currentStatus; get(); getPageCount()" :value="currentStatus">
           {{ currentStatus }}</option>
@@ -110,7 +110,7 @@ export default {
             take: take ?? 10,
             page: page ?? 1,
             searchQuery: this.searchQuery,
-            admin_id: this.onlyMy ? this.$store.state.id : undefined,
+            admin_id: this.onlyMy ? undefined : this.$store.state.id,
             status: this.status,
             order,
             orderDesc
@@ -129,7 +129,9 @@ export default {
       return myApi
         .get(this.$store.state.publicPath + '/api/admin/loans_count/', {
           params: {
-            searchQuery: this.searchQuery
+            searchQuery: this.searchQuery,
+            admin_id: this.onlyMy ? undefined : this.$store.state.id,
+            status: this.status,
           },
         })
         .then((res) => {
@@ -171,6 +173,9 @@ button {
 
 .search-block {
   display: flex;
+  margin: 1.5rem 0 !important;
+  gap: 1rem;
+  height: 2.5rem;
 
   &>* {
     display: inline-block !important;

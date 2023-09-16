@@ -28,7 +28,7 @@ class UsersService {
 
       tOrmCon.then((connection) => {
         connection
-          .getRepository("Admin")
+          .getRepository("User")
           .find({ where: filteres, skip, take })
           .then((data) => res(data))
           .catch((error) => rej(new MySqlError(error)));
@@ -57,23 +57,6 @@ class UsersService {
     });
   }
 
-  addUser(user) {
-    return new Promise((res, rej) => {
-      if (!checkInputData(user, "password", "login"))
-        return rej(
-          new NoInputDataError({ password: user?.password, login: user?.login })
-        );
-
-      tOrmCon.then((connection) => {
-        connection
-          .getRepository("Admin")
-          .save(user)
-          .then((data) => res(data))
-          .catch((error) => rej(new MySqlError(error)));
-      });
-    });
-  }
-
   deleteUser(id) {
     return new Promise((res, rej) => {
       if (!id) return rej(new NoInputDataError({ id: id }));
@@ -83,7 +66,7 @@ class UsersService {
 
       tOrmCon.then((connection) => {
         connection
-          .getRepository("Admin")
+          .getRepository("User")
           .delete({ id })
           .then((data) => res(data))
           .catch((error) => rej(new MySqlError(error)));
@@ -97,7 +80,7 @@ class UsersService {
 
       tOrmCon.then((connection) => {
         connection
-          .getRepository("Admin")
+          .getRepository("User")
           .update({ id }, user)
           .then((data) => res(data))
           .catch((error) => rej(new MySqlError(error)));

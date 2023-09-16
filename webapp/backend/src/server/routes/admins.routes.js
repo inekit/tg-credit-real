@@ -19,7 +19,7 @@ module.exports = (ctx) => {
 
   router.get("/users", auth, UsersController.getUsers);
   //router.put("/users", auth, UsersController.editUser);
-  router.post("/users", auth, UsersController.addUser);
+  //router.post("/users", auth, UsersController.addUser);
   router.delete("/users", auth, UsersController.deleteUser);
 
   router.get("/loans", auth, LoansController.getLoans);

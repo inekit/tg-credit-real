@@ -1,5 +1,5 @@
 const tOrmCon = require("../../db/connection");
-const { getUsers, deleteUser } = require("../services/users.service");
+const adminsService = require("../services/admins.service");
 const {
   HttpError,
   MySqlError,
@@ -20,7 +20,8 @@ function getId(req, res, next) {
 }
 
 function getAll(req, res) {
-  getUsers(req.query.id, req.query.page, req.query.take)
+  adminsService
+    .get(req.query.id, req.query.page, req.query.take)
     .then((userData) => res.status(200).send(userData))
     .catch((err) =>
       res.status(404).send({ error: "Не удается найти пользователя" })
@@ -29,7 +30,8 @@ function getAll(req, res) {
 
 function selfDelete(req, res) {
   const id = req.session.passport.user.toString();
-  deleteUser(id)
+  adminsService
+    .delete(id)
     .then((userData) => res.status(200).send({ status: true }))
     .catch((err) =>
       res
@@ -40,7 +42,8 @@ function selfDelete(req, res) {
 
 function adminDelete(req, res) {
   const id = req.body.id;
-  deleteUser(id)
+  adminsService
+    .delete(id)
     .then((userData) => res.status(200).send({ status: true }))
     .catch((err) => res.status(304).send({ status: false, error: err }));
 }
