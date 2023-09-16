@@ -8,7 +8,7 @@
 </style>
 
 <script>
-import eventBus from './eventBus'
+//import eventBus from './eventBus'
 import axios from 'axios'
 const myApi = axios.create({
   withCredentials: true,
@@ -25,7 +25,7 @@ export default {
     await myApi.get(this.$store.state.publicPath + '/api/admin/id/').then((response) => {
       this.$store.state.id = response.data.id
     })
-      .catch((error) => {
+      .catch(() => {
         // eventBus.$emit('noresponse', error)
       })
   },
