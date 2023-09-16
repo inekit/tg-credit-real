@@ -45,7 +45,7 @@ export default {
       rows: [],
       tableKey: 1,
       dataActions: {
-        "К займу": { action: this.routeToPosts, color: 'primary' },
+        "К займу": { action: this.routeToLoan, color: 'primary' },
         Удалить: { action: this.delete, color: 'danger' },
       },
       lastPageNumber: 1,
@@ -170,7 +170,7 @@ export default {
             eventBus.$emit('noresponse', error)
           })
     },
-    routeToPosts(item) {
+    routeToLoan(item) {
       this.$router.push('/loan/' + item.id)
     },
   },

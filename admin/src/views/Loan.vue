@@ -2,53 +2,60 @@
     <div>
         <div class="card mb-4 order-card">
             <div>
-                ID: {{ order.id }}
+                ID: {{ loan.id }}
             </div>
             <div>
-                Создан: {{ dateFormatter(order.creation_date) }}
+                Дата создания: {{ dateFormatter(loan.creation_date) }}
             </div>
             <div>
-                Телеграм: {{ order.username ? `@${order.username}` : "Нет" }}
+                ID заемщика: {{ loan.user_id }}
             </div>
             <div>
-                Телеграм ID: {{ order.user_id }}
+                Юзернейм Телеграм: {{ loan.username ? `@${loan.username}` : "Нет" }}
             </div>
             <div>
-                Доставка: {{ order.selected_dm }}
+                ФИО получателя: {{ `${loan.surname} ${loan.name} ${loan.patronymic}` }}
             </div>
             <div>
-                Адрес доставки: {{ order.address }}
+                Телефон: {{ loan.phone }}
             </div>
             <div>
-                Почтовый индекс: {{ order.postal_code }}
+                Дата рождения: {{ dateFormatter(loan.birth_date) }}
+            </div>
+            <div v-if="loan.passport_photo" class="img-container mb-3">
+                <CInputGroupText>Фото паспорта</CInputGroupText>
+                <img :src="loan.passport_photo" />
+            </div>
+            <div v-if="loan.visa_photo" class="img-container mb-3">
+                <CInputGroupText>Фото визы</CInputGroupText>
+                <img :src="loan.visa_photo" />
             </div>
             <div>
-                ФИО получателя: {{ `${order.surname} ${order.name} ${order.patronymic}` }}
+                Дата окончания визы: {{ dateFormatter(loan.visa_expired_date) }}
             </div>
             <div>
-                Телефон: {{ order.phone }}
+                Сумма займа: {{ loan.sum }}
             </div>
             <div>
-                Метод оплаты: {{ order.selected_po }}
+                Срок займа (в днях): {{ loan.term_days }}
             </div>
             <div>
-                Комментарий: {{ order.comment }}
-            </div>
-            <div class="reciept-container" v-if="order.selected_po === 'Перевод'">
-                <img :src="order.reciept_photo_link" width="480" />
+                Дата выдачи: {{ dateFormatter(loan.issue_date) }}
             </div>
             <div>
-                Стоимость доставки: {{ order.delivery_price !== null ? order.delivery_price : "Не учтена" }}
+                Дата возврата: {{ dateFormatter(loan.return_date) }}
             </div>
             <div>
-                Промокод: {{ order.promo_code ? `${order.promo_code} на ${order.promo_sum}${order.promo_type === 'money' ?
-                    'руб.' : '%'}` : 'Нет' }}
+                Страна: {{ loan.country }}
             </div>
             <div>
-                Сумма заказа: {{ order.total }}
+                ID ответственного администратора: {{ loan.aprooved_by_id }}
             </div>
             <div>
-                Статус: {{ order.status }}
+                Оценка заемщика: {{ loan.assessment }}
+            </div>
+            <div>
+                Статус: {{ loan.status }}
             </div>
             <div class="change-status">
                 <span class="w-100 mb-2">Изменить статус</span>
@@ -56,24 +63,11 @@
                     status }}</button>
 
             </div>
-            <div class="send-message">
-                <span class="w-100 mb-2">Отправить сообщение клиенту</span>
-                <CInputGroup class="mb-2">
-                    <CFormInput class="custon-input-part" placeholder="Напишите сообщение" aria-label="Напишите сообщение"
-                        aria-describedby="button-sendmessage" v-model="messageTemplate" />
-                    <CButton type="button" color="primary" variant="outline" id="button-sendmessage" @click="sendMessage">
-                        Отправить
-                    </CButton>
-                </CInputGroup>
-            </div>
         </div>
-        <Table :fields="tableFieldNames" :postData="get" :actions="dataActions" :rows="rows" editMode="form"
-            name="Позиции" />
     </div>
 </template>
   
 <script>
-import Table from '@/components/Table.vue'
 import eventBus from '../eventBus'
 import { dateFormatter } from '../utils/dateFormatter';
 import axios from 'axios'
@@ -85,24 +79,16 @@ const myApi = axios.create({
 
 export default {
     components: {
-        Table,
     },
-    props: ['orderId'],
+    props: ['loanId'],
     data() {
         return {
             myApi: myApi,
             formVisible: false,
             formData: {},
-            order: {},
+            loan: {},
             rows: [],
-            statuses: [
-                "Новый",
-                "Оплачен",
-                "В обработке",
-                "Доставляется",
-                "Доставлен",
-                "Завершен",
-                "Отменен",],
+            statuses: ['Новый', 'Выдан', 'Получен', 'Отменен', 'Запрещен', 'На возврате', 'Закрыт',],
             messageTemplate: null,
             tableFieldNames: [
                 {
@@ -125,6 +111,7 @@ export default {
         }
     },
     created() {
+        this.get()
     },
     methods: {
         change(elObj) {
@@ -136,43 +123,26 @@ export default {
         },
         dateFormatter,
         changeStatus(newStatus) {
-            this.$store.state.myApi.put(this.$store.state.publicPath + '/api/admin/orders', {
-                id: this.order.id,
+            this.$store.state.myApi.put(this.$store.state.publicPath + '/api/admin/loans', {
+                id: this.loan.id,
                 status: newStatus,
             })
                 .then(async () => {
-                    this.order.status = newStatus;
+                    this.loan.status = newStatus;
                 })
                 .catch(e => { eventBus.$emit('noresponse', e) })
         },
-        sendMessage() {
-            this.$store.state.myApi.post(this.$store.state.publicPath + '/api/admin/messages', {
-                user_id: this.order.user_id,
-                text: this.messageTemplate
-            })
-                .then(async () => {
-                    this.messageTemplate = null;
-                    alert("Сообщение успешно отправлено")
-                })
-                .catch(e => { eventBus.$emit('noresponse', e) })
-        },
-        get(take, page) {
+
+        get() {
             console.log(this.tag)
             return myApi
-                .get(this.$store.state.publicPath + '/api/admin/orders/', {
+                .get(this.$store.state.publicPath + '/api/admin/loans/', {
                     params: {
-                        take: take ?? 10,
-                        page: page ?? 1,
-                        id: this.$route.params.orderId,
+                        id: this.$route.params.loanId,
                     },
                 })
                 .then((res) => {
-                    res.data.items = res.data.items?.map(el => {
-                        if (el.mainside_id) el.title = `${el.title} (обр - ${el.mainside_id})`;
-                        return el
-                    })
-                    if (res.data.items?.length > 0) this.rows = res.data.items
-                    this.order = res.data
+                    this.loan = res.data
                 })
                 .catch((error) => {
                     eventBus.$emit('noresponse', error)
