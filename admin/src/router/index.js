@@ -40,7 +40,22 @@ const routes = [
         path: '/loans',
         name: 'Loans',
         component: () => import('@/views/Loans.vue'),
-        children: [],
+        children: [
+          {
+            path: '/loans/user/:userId',
+            name: 'LoansByUser',
+            props: true,
+            component: () => import('@/views/Loans.vue'),
+            children: [],
+          },
+          {
+            path: '/loans/admin/:adminId',
+            name: 'LoansByAdmin',
+            props: true,
+            component: () => import('@/views/Loans.vue'),
+            children: [],
+          },
+        ],
       },
       {
         path: '/loan/:loanId',

@@ -32,6 +32,7 @@ export default {
       searchQuery: null,
       dataActions: {
         Подробнее: { action: this.changeUser, color: 'primary' },
+        Займы: { action: this.routeToLoans, color: 'primary' },
         Бан: { action: this.banUser, color: 'danger' },
       },
       tableFieldNames: [
@@ -109,6 +110,9 @@ export default {
           .catch((error) => {
             eventBus.$emit('noresponse', error)
           })
+    },
+    routeToLoans(user) {
+      this.$router.push('/loans/user/' + user.id)
     },
   },
 }

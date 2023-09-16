@@ -115,7 +115,8 @@ export default {
             take: take ?? 10,
             page: page ?? 1,
             searchQuery: this.searchQuery,
-            admin_id: this.onlyMy ? undefined : this.$store.state.id,
+            admin_id: this.$route.params.admin ?? this.onlyMy ? undefined : this.$store.state.id,
+            user_id: this.$route.params.user,
             status: this.status,
             order,
             orderDesc
@@ -136,7 +137,8 @@ export default {
         .get(this.$store.state.publicPath + '/api/admin/loans_count/', {
           params: {
             searchQuery: this.searchQuery,
-            admin_id: this.onlyMy ? undefined : this.$store.state.id,
+            admin_id: this.$route.params.admin ?? this.onlyMy ? undefined : this.$store.state.id,
+            user_id: this.$route.params.user,
             status: this.status,
           },
         })

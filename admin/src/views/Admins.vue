@@ -29,6 +29,7 @@ export default {
       formData: {},
       rows: [],
       dataActions: {
+        Займы: { action: this.routeToLoans, color: 'primary' },
         Изменить: { action: this.changeUser, color: 'warning' },
         Удалить: { action: this.deleteUser, color: 'danger' },
       },
@@ -103,6 +104,9 @@ export default {
           .catch((error) => {
             eventBus.$emit('noresponse', error)
           })
+    },
+    routeToLoans(admin) {
+      this.$router.push('/loans/admin/' + admin.id)
     },
   },
 }
