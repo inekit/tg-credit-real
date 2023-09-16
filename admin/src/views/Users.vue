@@ -90,7 +90,7 @@ export default {
           }
         })
         .then((res) => {
-          this.rows = res.data
+          if (res.data?.length > 0) this.rows = res.data
           return res.data
         })
         .catch((error) => {
