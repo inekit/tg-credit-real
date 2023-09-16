@@ -9,7 +9,8 @@
           :key="currentStatus" :value="currentStatus">
           {{ currentStatus }}</option>
       </CFormSelect>
-      <CFormCheck id="onlyMyCheck" label="Только мои" v-model="onlyMy" @change="get(); getPageCount()" />
+      <CFormCheck id="onlyMyCheck" label="Только мои" v-bind:value="onlyMy"
+        @change="onlyMy = !onlyMy; get(); getPageCount()" />
     </div>
     <Table :key="tableKey" :fields="tableFieldNames" :postData="get" :actions="dataActions" :rows="rows" editMode="form"
       :lastPageNumber="lastPageNumber" :getPageCount="getPageCount" name="Займы" />
