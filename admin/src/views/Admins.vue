@@ -1,12 +1,13 @@
 <template>
   <div>
-    <AddUserModal :visible="formVisible" :formData="formData" />
-    <Table :fields="tableFieldNames" :postData="getUsers" :actions="dataActions" :rows="rows" name="Администраторы" />
+    <AddAdminModal :visible="formVisible" :formData="formData" />
+    <Table :fields="tableFieldNames" :postData="getUsers" :actions="dataActions" :rows="rows" name="Администраторы"
+      editMode="form" />
   </div>
 </template>
 
 <script>
-import AddUserModal from '@/components/AddUserModal.vue'
+import AddAdminModal from '@/components/AddAdminModal.vue'
 import Table from '@/components/Table.vue'
 import eventBus from '../eventBus'
 
@@ -18,7 +19,7 @@ const myApi = axios.create({
 export default {
   name: 'Users',
   components: {
-    AddUserModal,
+    AddAdminModal,
     Table,
   },
   data() {
@@ -34,12 +35,12 @@ export default {
       },
       tableFieldNames: [
         {
-          name: 'nick',
-          title: 'Никнейм',
+          name: 'id',
+          title: 'ID',
         },
         {
-          name: 'email',
-          title: 'Почта',
+          name: 'login',
+          title: 'Логин',
         },
       ],
     }
@@ -48,6 +49,7 @@ export default {
     changeUser(userObj) {
       this.formVisible = true
       this.formData = userObj
+
     },
     getUsers(perPage, page) {
       return myApi

@@ -4,7 +4,7 @@
     <div class="search-block">
       <CFormInput type="search" v-model="searchQuery" @change="get(); getPageCount()" placeholder="Поиск" />
       <CFormSelect v-model="status" size="sm">
-        <option value="">Фильтр по статусу</option>
+        <option :value="undefined">Фильтр по статусу</option>
         <option v-for="currentStatus in ['Новый', 'Выдан', 'Получен', 'Отменен', 'Запрещен', 'На возврате', 'Закрыт',]"
           :key="currentStatus" :value="currentStatus">
           {{ currentStatus }}</option>
@@ -131,6 +131,7 @@ export default {
         })
     },
     getPageCount(take) {
+      console.log(this.onlyMy, this.onlyMy ? undefined : this.$store.state.id)
       return myApi
         .get(this.$store.state.publicPath + '/api/admin/loans_count/', {
           params: {
