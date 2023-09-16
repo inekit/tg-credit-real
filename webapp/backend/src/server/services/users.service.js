@@ -11,7 +11,6 @@ class UsersService {
   constructor() {
     this.getUsers = this.getUsers.bind(this);
     this.getProfile = this.getProfile.bind(this);
-    this.addUser = this.addUser.bind(this);
     this.editUser = this.editUser.bind(this);
     this.deleteUser = this.deleteUser.bind(this);
   }
