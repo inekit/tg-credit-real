@@ -1,6 +1,7 @@
 <template>
   <div>
     <AddUserModal :visible="formVisible" :formData="formData" :mode="formMode" />
+    <CFormInput type="search" v-model="searchQuery" @change="getUsers();" placeholder="Поиск" />
     <Table :fields="tableFieldNames" :postData="getUsers" :actions="dataActions" :rows="rows" name="Пользователи"
       editMode="form" />
   </div>
@@ -28,6 +29,7 @@ export default {
       formVisible: false,
       formData: {},
       rows: [],
+      searchQuery: null,
       dataActions: {
         Подробнее: { action: this.changeUser, color: 'primary' },
         Бан: { action: this.banUser, color: 'danger' },
@@ -83,6 +85,7 @@ export default {
         .get(this.$store.state.publicPath + '/api/admin/users/', {
           perPage: perPage ?? 10,
           page: page ?? 1,
+          searchQuery: this.searchQuery,
         })
         .then((res) => {
           this.rows = res.data

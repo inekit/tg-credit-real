@@ -55,7 +55,7 @@ export default {
       if (this.login && this.password) {
         this.isempty = false
         myApi
-          .put(requestAddr, {
+          .post(requestAddr, {
             login: this.login,
             password: this.password,
           }).then(() => {
