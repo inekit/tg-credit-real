@@ -1,6 +1,6 @@
 <template>
   <div>
-    <AddAdminModal :visible="formVisible" :formData="formData" />
+    <AddAdminModal :visible="formVisible" :formData="formData" :mode="formMode" />
     <Table :fields="tableFieldNames" :postData="getUsers" :actions="dataActions" :rows="rows" name="Администраторы"
       editMode="form" />
   </div>

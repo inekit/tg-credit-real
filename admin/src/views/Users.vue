@@ -29,7 +29,7 @@ export default {
       formData: {},
       rows: [],
       dataActions: {
-        Изменить: { action: this.changeUser, color: 'primary' },
+        Подробнее: { action: this.changeUser, color: 'primary' },
         Бан: { action: this.banUser, color: 'danger' },
       },
       tableFieldNames: [
