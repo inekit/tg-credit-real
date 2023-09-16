@@ -38,6 +38,11 @@ import eventBus from '../eventBus'
 
 export default ({
   props: {
+    mode: {
+      required: true,
+      type: String,
+      validator: (value) => ['new', 'edit'].includes(value.toLowerCase()),
+    },
     visible: false,
     password: null,
     formData: {
