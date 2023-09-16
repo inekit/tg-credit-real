@@ -9,7 +9,7 @@ const {
 
 function getUsers(req, res, next) {
   usersService
-    .getUsers(req.query.id, req.query.page, req.query.take)
+    .getUsers(req.query)
     .then((data) => res.send(data))
     .catch((error) => next(error));
 }

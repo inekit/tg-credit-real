@@ -33,7 +33,7 @@ module.exports = (ctx) => {
   router.get("/id", AdminsController.getId);
 
   router.post("/login", login.local);
-  router.put("/register", register.local);
+  router.post("/register", register.local);
   router.get("/logout", auth, (req, res) => {
     req.logout(function (err) {
       if (err) {
