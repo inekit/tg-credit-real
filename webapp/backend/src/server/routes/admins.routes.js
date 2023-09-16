@@ -4,6 +4,7 @@ var {
   login,
   register,
   authAdmin: auth,
+  editUser: editAdmin,
 } = require("../controllers/admin.authentication");
 var AdminsController = require("../controllers/admin.controller");
 var LoansController = require("../controllers/loans.controller");
@@ -15,6 +16,7 @@ router.use(fileUpload({}));
 
 module.exports = (ctx) => {
   router.get("/admins", auth, AdminsController.getAll);
+  router.put("/admins", auth, editAdmin);
   router.delete("/admins", auth, AdminsController.adminDelete);
 
   router.get("/users", auth, UsersController.getUsers);

@@ -86,7 +86,7 @@ export default ({
         const formData = this.constractFromData(true)
 
         myApi
-          .put(this.$store.state.publicPath + '/api/admin/register', formData, {
+          .put(this.$store.state.publicPath + '/api/admin/admins', formData, {
             headers: {
               'Content-Type': `multipart/form-data`,
 

@@ -81,8 +81,8 @@ export default {
     getUsers(perPage, page) {
       return myApi
         .get(this.$store.state.publicPath + '/api/admin/users/', {
-          perPage: perPage ?? 0,
-          page: page ?? 0,
+          perPage: perPage ?? 10,
+          page: page ?? 1,
         })
         .then((res) => {
           this.rows = res.data
@@ -99,7 +99,7 @@ export default {
         return myApi
           .put(this.$store.state.publicPath + '/api/admin/users/', { id: userObj.id, ban: !userObj.ban })
           .then(() => {
-            eventBus.$emit('userAdded')
+            this.getUsers()
           })
           .catch((error) => {
             eventBus.$emit('noresponse', error)

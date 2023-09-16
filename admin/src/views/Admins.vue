@@ -61,7 +61,7 @@ export default {
       this.formData = {}
     })
     eventBus.$on('addNewAdmin', () => {
-      this.formVisible = false
+      this.formVisible = true
       this.formData = {}
     })
 
