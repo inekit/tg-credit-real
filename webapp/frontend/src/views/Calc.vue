@@ -275,6 +275,7 @@
 import eventBus from '../eventBus'
 import { ListLoader, InstagramLoader } from 'vue-content-loader'
 import NavBar from '@/components/Navbar.vue';
+import moment from 'moment'
 
 
 export default {
