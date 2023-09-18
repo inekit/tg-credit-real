@@ -48,7 +48,7 @@ class UsersService {
       const connection = await tOrmCon;
       connection
         .query(
-          `select u.*, avg(l.assessment)avg_assessment, 
+          `select u.*, avg(l.assessment) avg_assessment, 
           count(case when l.status = 'Закрыт' then 1 end) count_closed, 
           count(case when l.status = 'Отменен' then 1 end) count_cancelled, 
           count(case when l.status = 'Запрещен' then 1 end) count_forbidden,
