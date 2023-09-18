@@ -181,5 +181,14 @@ button {
 .custon-input-part {
     height: 38px !important
 }
+
+.img-container {
+    width: 480px;
+    overflow: hidden;
+
+    img {
+        width: 100%
+    }
+}
 </style>
   

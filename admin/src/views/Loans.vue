@@ -4,7 +4,7 @@
     <div class="search-block">
       <CFormInput type="search" v-model="searchQuery" @change="get(null, null, null, null, true); getPageCount()"
         placeholder="Поиск" />
-      <CFormSelect v-model="status" size="sm">
+      <CFormSelect v-bind:value="status" size="sm">
         <option :value="null">Все статусы</option>
         <option v-for="currentStatus in ['Новый', 'Выдан', 'Получен', 'Отменен', 'Запрещен', 'На возврате', 'Закрыт',]"
           :key="currentStatus" :value="currentStatus">
@@ -98,7 +98,6 @@ export default {
   watch: {
     status(newStatus) {
       console.log(newStatus)
-      if (newStatus === "Фильтр по статусу") this.status = null;
       this.get(null, null, null, null, true); this.getPageCount();
     }
   },
