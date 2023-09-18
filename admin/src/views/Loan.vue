@@ -58,7 +58,7 @@
                 Статус: {{ loan.status }}
             </div>
             <div class="change-status" v-if="statuses.length">
-                <div v-if="status !== 'На возврате'">
+                <div v-if="loan.status !== 'На возврате'">
                     <span class="w-100 mb-2">Изменить статус</span>
                     <button v-for="status in statuses" :key="status" class="btn btn-primary"
                         @click="changeStatus(status)">{{

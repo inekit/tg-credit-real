@@ -315,6 +315,10 @@ class LoansService {
           rej({ error: "Более ранний статус заказа" });
         else {
           if (status !== "Закрыт") assessment = null;
+          else {
+            if (assessment > 5 || assessment < 1 || !assessment)
+              rej({ error: "Неверная оценка" });
+          }
           const data = await connection
             .query(
               `update loans set status = $1,assessment=$4 where user_id = $2 and status = $3`,
