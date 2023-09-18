@@ -393,9 +393,6 @@ export default {
             for (let key in this.verificationData) {
                 formData.append(key, this.verificationData[key])
             }
-            this.imageData.visa_photo && formData.append('visa_preview', this.imageData.visa_photo)
-            this.imageData.passport_photo && formData.append('passport_preview', this.imageData.passport_photo)
-
             return formData
         },
         addLoan() {
@@ -408,7 +405,7 @@ export default {
                 return alert("Пожалуйста, заполните все поля")
             }
 
-            const formData = this.constractFromData(true)
+            const formData = this.constractFromData()
             this.$store.state.myApi
                 .post(this.$store.state.restAddr + '/loans', formData, {
                     headers: {
