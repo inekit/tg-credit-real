@@ -11,7 +11,7 @@ module.exports = (ctx) => {
 
   router.post("/loans", LoansController.addLoanAppointment);
   router.get("/loans", LoansController.getUserActiveAppointment);
-  router.put("/loans", LoansController.changeLoanStatus);
+  router.put("/loans", LoansController.changeLoanStatus(ctx));
 
   return router;
 };

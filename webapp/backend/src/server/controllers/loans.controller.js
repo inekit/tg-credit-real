@@ -47,7 +47,16 @@ function addLoanAppointment(req, res, next) {
 function changeLoanStatus(ctx) {
   return (req, res, next) => {
     loansService
-      .changeLoanStatus(req.body, ctx)
+      .changeLoanStatus(req.body, false, ctx)
+      .then((data) => res.send(data))
+      .catch((error) => next(error));
+  };
+}
+
+function changeLoanStatusAdmin(ctx) {
+  return (req, res, next) => {
+    loansService
+      .changeLoanStatus(req.body, true, ctx)
       .then((data) => res.send(data))
       .catch((error) => next(error));
   };
@@ -59,5 +68,6 @@ module.exports = {
   addLoanAppointment,
   changeLoanStatus,
   getLoans,
+  changeLoanStatusAdmin,
   getCount,
 };

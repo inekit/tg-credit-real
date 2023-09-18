@@ -276,7 +276,7 @@ class LoansService {
     });
   }
 
-  changeLoanStatus({ user_id, status, isAdmin }) {
+  changeLoanStatus({ user_id, status }, isAdmin, ctx) {
     return new Promise(async (res, rej) => {
       const connection = await tOrmCon;
 

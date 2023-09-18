@@ -25,7 +25,7 @@ module.exports = (ctx) => {
   router.delete("/users", auth, UsersController.deleteUser);
 
   router.get("/loans", auth, LoansController.getLoans);
-  router.put("/loans", auth, LoansController.changeLoanStatus);
+  router.put("/loans", auth, LoansController.changeLoanStatusAdmin(ctx));
   router.get("/loans_count", auth, LoansController.getCount);
 
   router.post("/mailing", auth, MailingController.add(ctx));
