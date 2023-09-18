@@ -67,13 +67,15 @@ export default ({
     },
     addAdmin() {
       try {
-        const formData = this.constractFromData()
+        //const formData = this.constractFromData()
 
         myApi
-          .post(this.$store.state.publicPath + '/api/admin/register', formData, {
-            headers: {
-              'Content-Type': 'multipart/form-data',
-            },
+          .post(this.$store.state.publicPath + '/api/admin/register', {
+            params: {
+              login: this.formData.login,
+              password: this.password,
+              id: this.formData.id
+            }
           })
           .then(() => {
             eventBus.$emit('adminAdded')
@@ -88,13 +90,15 @@ export default ({
     },
     editAdmin() {
       try {
-        const formData = this.constractFromData(true)
+        //const formData = this.constractFromData(true)
 
         myApi
-          .put(this.$store.state.publicPath + '/api/admin/admins', formData, {
-            headers: {
-              'Content-Type': `multipart/form-data`,
-            },
+          .put(this.$store.state.publicPath + '/api/admin/admins', {
+            params: {
+              login: this.formData.login,
+              password: this.password,
+              id: this.formData.id
+            }
           })
           .then(() => {
             eventBus.$emit('adminEdited')
