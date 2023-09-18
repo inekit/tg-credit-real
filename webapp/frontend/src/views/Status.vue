@@ -72,6 +72,7 @@ export default {
                         window.Telegram?.WebApp.disableClosingConfirmation()
                         return window.Telegram?.WebApp.close();
                     }
+                    this.$store.state.profileData.active_loan_status = status
                     this.loanData = await this.getLoanData()
 
                 })
