@@ -20,7 +20,6 @@ export default {
   },
   watch: {
     async  '$route.name'(newName) {
-      console.log(1232143234)
       this.$store.state.profileData = await this.getProfileData()
 
       if (newName !== 'home') return;

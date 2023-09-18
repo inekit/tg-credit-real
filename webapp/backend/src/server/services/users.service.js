@@ -54,10 +54,10 @@ class UsersService {
           count(case when l.status = 'Запрещен' then 1 end) count_forbidden,
           count(case when (l.status = 'Новый' or l.status = 'Выдан' or l.status = 'Получен' or l.status = 'На возврате') then l.status end) active_loan_status,
           count(l.status) count_total
-          from users u left join loans l on l.user_id = u.id where user_id = $1 group by u.id `,
+          from users u left join loans l on l.user_id = u.id where u.id = $1 group by u.id `,
           [user_id]
         )
-        .then((data) => res(data?.[0] ?? {}))
+        .then((data) => res(data?.[0]))
         .catch((error) => rej(new MySqlError(error)));
     });
   }
