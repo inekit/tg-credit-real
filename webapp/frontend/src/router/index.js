@@ -25,11 +25,6 @@ const routes = [
         name: 'Status',
         component: () => import('@/views/Status.vue'),
       },
-      {
-        path: '/verification',
-        name: 'Verification',
-        component: () => import('@/views/Verification.vue'),
-      },
     ],
   },
 ]

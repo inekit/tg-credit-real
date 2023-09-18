@@ -4,7 +4,7 @@
             <div>
                 <div class="Header_header__wrapper__5r0kF">
                     <div class="Header_country__back__Ogf+S">
-                        <a data-v-612f94fd="" type="button" class="back-icon" @click="routeBack"></a>
+                        <a v-show="stepNumber > 1" type="button" class="back-icon" @click="routeBack"></a>
                     </div>
                     <div class="Header_country__tab__nd8Jh">
                     </div>
@@ -36,64 +36,60 @@
                 <div class="Header_header__line__aozMJ"></div>
             </div>
             <transition name="slide-fade">
-                <div v-if="stepNumber === 1">
-                    <div class="CreateExchange_home__body__63ZPN">
-                        <div class="menu-page">
-                            <div>
-                                <div class="CreateExchange_home__body__header__title__k-9BQ">
-                                    <h2>Сумма</h2>
-                                    <button class="sc-Dmqmp dgnXQs">
-                                        <span>{{ verificationData.sum }} RUB</span>
-                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M7 10H21L17 6M17 14H3L7 18" stroke="url(#paint0_linear_2669_1378)"
-                                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                                            <defs>
-                                                <linearGradient id="paint0_linear_2669_1378" x1="3" y1="6" x2="22.4429"
-                                                    y2="9.1813" gradientUnits="userSpaceOnUse">
-                                                    <stop stop-color="#3BD8CC"></stop>
-                                                    <stop offset="1" stop-color="#3B9FCC"></stop>
-                                                </linearGradient>
-                                            </defs>
-                                        </svg>
-                                    </button>
-                                </div>
-                                <div class="slidecontainer">
-                                    <input type="range" min="1000" max="100000" class="slider" id="myRange"
-                                        v-model="verificationData.sum" @change="calcLoan">
+                <div class="CreateExchange_home__body__63ZPN" v-if="stepNumber === 1">
+                    <div class="menu-page">
+                        <div>
+                            <div class="CreateExchange_home__body__header__title__k-9BQ">
+                                <h2>Сумма</h2>
+                                <button class="sc-Dmqmp dgnXQs">
+                                    <span>{{ verificationData.sum }} RUB</span>
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M7 10H21L17 6M17 14H3L7 18" stroke="url(#paint0_linear_2669_1378)"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                        <defs>
+                                            <linearGradient id="paint0_linear_2669_1378" x1="3" y1="6" x2="22.4429"
+                                                y2="9.1813" gradientUnits="userSpaceOnUse">
+                                                <stop stop-color="#3BD8CC"></stop>
+                                                <stop offset="1" stop-color="#3B9FCC"></stop>
+                                            </linearGradient>
+                                        </defs>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="slidecontainer">
+                                <input type="range" min="1000" max="100000" class="slider" id="myRange"
+                                    v-model="verificationData.sum" @change="calcLoan">
+                            </div>
+                        </div>
+                        <div class="SelectInput_select__oxfzh">
+                            <div class="CreateExchange_home__body__header__title__k-9BQ">
+                                <h2>Срок</h2>
+                                <div class="sc-Dmqmp dgnXQs">
+                                    <span>{{ verificationData.term_days }} дн.</span>
                                 </div>
                             </div>
-                            <div class="SelectInput_select__oxfzh">
-                                <div class="CreateExchange_home__body__header__title__k-9BQ">
-                                    <h2>Срок</h2>
-                                    <div class="sc-Dmqmp dgnXQs">
-                                        <span>{{ verificationData.term_days }} дн.</span>
-                                    </div>
-                                </div>
-                                <div class="slidecontainer">
-                                    <input type="range" min="1" max="30" class="slider" id="myRange"
-                                        v-model="verificationData.term_days" @change="calcLoan">
-                                </div>
+                            <div class="slidecontainer">
+                                <input type="range" min="1" max="30" class="slider" id="myRange"
+                                    v-model="verificationData.term_days" @change="calcLoan">
                             </div>
-
-                            <div class="loan-calc">
-                                <div class="">
-                                    <h2>Нужно будет отдать</h2>
-                                </div><span>{{ return_sum ?? "???" }} RUB</span>
-                                <div class="">
-                                    <h2>До (включительно)</h2>
-                                </div><span>{{ untilDate }}</span>
-                            </div>
-
-                            <button class="Button_button__igezS CreateExchange_home__btn__B2lyA" type="button"
-                                @click="stepNumber = 2" :disabled="!verificationData.sum || !verificationData.term_days">
-                                Получить деньги
-                            </button>
                         </div>
 
+                        <div class="loan-calc">
+                            <div class="">
+                                <h2>Нужно будет отдать</h2>
+                            </div><span>{{ return_sum ?? "???" }} RUB</span>
+                            <div class="">
+                                <h2>До (включительно)</h2>
+                            </div><span>{{ untilDate }}</span>
+                        </div>
+
+                        <button class="Button_button__igezS CreateExchange_home__btn__B2lyA" type="button"
+                            @click="stepNumber = 2" :disabled="!verificationData.sum || !verificationData.term_days">
+                            Получить деньги
+                        </button>
                     </div>
                 </div>
-
             </transition>
             <transition name="slide-fade">
                 <div class="CreateExchange_home__body__63ZPN" v-if="stepNumber === 2">
@@ -308,11 +304,20 @@ export default {
         }
     },
     watch: {
+        stepNumber(newSN) {
+            if (newSN > 1) {
+                window.Telegram?.WebApp.BackButton.onClick(this.routeBack);
+                window.Telegram?.WebApp.BackButton.show();
+            }
+            else {
+                window.Telegram?.WebApp.BackButton.offClick(this.routeBack);
+                window.Telegram?.WebApp.BackButton.hide();
+            }
+        }
     },
     async beforeMount() {
-        window.Telegram?.WebApp.BackButton.onClick(this.routeBack);
-        window.Telegram?.WebApp.BackButton.show();
-
+        window.Telegram?.WebApp.BackButton.offClick(this.routeBack);
+        window.Telegram?.WebApp.BackButton.hide();
 
         console.log(this.params, this.$store.state.userId)
         this.verificationData = this.$store.state.profileData
@@ -329,8 +334,6 @@ export default {
 
     },
     async beforeUnmount() {
-        window.Telegram?.WebApp.MainButton.offClick(this.routeToBasket);
-        window.Telegram?.WebApp.MainButton.hide();
         window.Telegram?.WebApp.BackButton.offClick(this.routeBack);
         window.Telegram?.WebApp.BackButton.hide();
     },

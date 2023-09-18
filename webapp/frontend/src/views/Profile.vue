@@ -95,8 +95,6 @@ export default {
 
     },
     async beforeUnmount() {
-        window.Telegram?.WebApp.MainButton.offClick(this.routeToBasket);
-        window.Telegram?.WebApp.MainButton.hide();
         window.Telegram?.WebApp.BackButton.offClick(this.routeBack);
         window.Telegram?.WebApp.BackButton.hide();
     },

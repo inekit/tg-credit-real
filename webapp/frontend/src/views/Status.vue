@@ -46,8 +46,8 @@ export default {
     watch: {
     },
     async beforeMount() {
-        window.Telegram?.WebApp.BackButton.onClick(this.routeBack);
-        window.Telegram?.WebApp.BackButton.show();
+        window.Telegram?.WebApp.MainButton.offClick(this.routeToBasket);
+        window.Telegram?.WebApp.MainButton.hide();
 
         this.loanData = await this.getLoanData()
     },
@@ -56,10 +56,6 @@ export default {
 
     },
     async beforeUnmount() {
-        window.Telegram?.WebApp.MainButton.offClick(this.routeToBasket);
-        window.Telegram?.WebApp.MainButton.hide();
-        window.Telegram?.WebApp.BackButton.offClick(this.routeBack);
-        window.Telegram?.WebApp.BackButton.hide();
     },
     methods: {
         routeBack() {
