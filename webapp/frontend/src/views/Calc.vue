@@ -314,8 +314,8 @@ export default {
             }
             localStorage.stepNumber = newSN;
         },
-        verificationData() {
-            localStorage.verificationData = verificationData;
+        verificationData(newData) {
+            localStorage.verificationData = newData;
 
         }
 
