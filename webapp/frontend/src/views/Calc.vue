@@ -324,7 +324,7 @@ export default {
         window.Telegram?.WebApp.BackButton.hide();
 
         console.log(this.params, this.$store.state.userId)
-        this.stepNumber = localStorage.stepNumber;
+        this.stepNumber = parseInt(localStorage.stepNumber) ?? 1;
         this.verificationData = localStorage.verificationData ? JSON.parse(localStorage.verificationData) : this.$store.state.profileData
 
         this.imageData.passport_photo = this.verificationData.passport_photo ? `${this.$store.state.publicPath}/public/pics/${this.verificationData.passport_photo}` : null;
