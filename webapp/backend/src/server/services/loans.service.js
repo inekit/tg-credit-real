@@ -329,15 +329,17 @@ class LoansService {
             if (assessment > 5 || assessment < 1 || !assessment)
               throw new Error("Неверная оценка");
           }
+          console.log("fef", admin_id, req.session);
+          if (status !== "Выдан") admin_id = active_loan.aprooved_by_id;
           const data = await queryRunner.query(
-            `update loans set status = $1,assessment=$4 where user_id = $2 and status = $3`,
-            [status, user_id, active_loan.status, assessment]
+            `update loans set status = $1,assessment=$4, aprooved_by_id = $5 where user_id = $2 and status = $3`,
+            [status, user_id, active_loan.status, assessment, admin_id]
           );
 
           if (status === "Выдан")
             await queryRunner.query(
-              "update users set verification_date = now(), aprooved_by_id = $2 where id = $1",
-              [user_id, admin_id]
+              "update users set verification_date = now() where id = $1",
+              [user_id]
             );
 
           if (isAdmin)
