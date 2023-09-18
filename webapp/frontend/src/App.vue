@@ -14,6 +14,11 @@ export default {
     this.$store.state.userId = buttonUserId ?? this.params.get('user_id');
     this.$store.state.profileData = await this.getProfileData()
 
+    if (this.$store.state.profileData.ban) {
+      window.Telegram?.WebApp.disableClosingConfirmation()
+      return window.Telegram?.WebApp.close();
+    }
+
     if (this.$store.state.profileData?.active_loan_status) this.$router.push("/status")
     else this.$router.push("/calc")
 
