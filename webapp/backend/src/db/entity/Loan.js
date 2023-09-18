@@ -78,7 +78,6 @@ module.exports = new EntitySchema({
     return_sum: {
       type: "int",
       nullable: false,
-      default: 0,
     },
     issue_date: {
       type: "date",
