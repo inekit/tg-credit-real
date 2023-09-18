@@ -36,7 +36,7 @@
                 <div class="Header_header__line__aozMJ"></div>
             </div>
             <transition name="slide-fade">
-                <div class="CreateExchange_home__body__63ZPN" v-if="stepNumber === 1">
+                <div class="CreateExchange_home__body__63ZPN" v-if="stepNumber == 1">
                     <div class="menu-page">
                         <div>
                             <div class="CreateExchange_home__body__header__title__k-9BQ">
@@ -92,7 +92,7 @@
                 </div>
             </transition>
             <transition name="slide-fade">
-                <div class="CreateExchange_home__body__63ZPN" v-if="stepNumber === 2">
+                <div class="CreateExchange_home__body__63ZPN" v-if="stepNumber == 2">
                     <div class="menu-page">
                         <div class="">
                             <div class="CreateExchange_home__body__header__title__k-9BQ">
@@ -143,7 +143,7 @@
                 </div>
             </transition>
             <transition name="slide-fade">
-                <div class="CreateExchange_home__body__63ZPN" v-if="stepNumber === 3">
+                <div class="CreateExchange_home__body__63ZPN" v-if="stepNumber == 3">
                     <div class="verification-container">
                         <div class="CreateExchange_home__body__header__title__k-9BQ">
                             <h2>Получатель</h2>
@@ -324,6 +324,7 @@ export default {
         window.Telegram?.WebApp.BackButton.hide();
 
         console.log(this.params, this.$store.state.userId)
+        console.log(localStorage.stepNumber)
         this.stepNumber = parseInt(localStorage.stepNumber) ?? 1;
         this.verificationData = localStorage.verificationData ? JSON.parse(localStorage.verificationData) : this.$store.state.profileData
 
