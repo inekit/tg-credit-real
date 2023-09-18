@@ -31,7 +31,7 @@
                             </clipPath>
                         </defs>
                     </svg><span>Мой рейтинг</span></div>
-                <div><span>{{ +$store.state.profileData.avg_assessment?.toFixed(1) }}</span>
+                <div><span>{{ fixedRate }}</span>
                     <div v-for="rate in [1, 2, 3, 4, 5]" class="sc-iLkLTN flOtgo"
                         :class="$store.state.profileData.avg_assessment >= rate ? 'filled' : ''"><svg width="20" height="20"
                             viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -104,6 +104,11 @@ export default {
         routeBack() {
             this.$router.go(-1)
         },
+    },
+    computed: {
+        fixedRate() {
+            return +this.$store.state.profileData.avg_assessment?.toFixed(1)
+        }
     }
 }
 </script>
