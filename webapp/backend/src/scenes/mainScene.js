@@ -18,6 +18,7 @@ const scene = new CustomWizardScene("clientScene").enter(async (ctx) => {
       .save({
         id: ctx.from.id,
         username: ctx.from.username,
+        last_use: new Date(),
       })
       .catch(async (e) => {
         console.log(e);
@@ -25,9 +26,10 @@ const scene = new CustomWizardScene("clientScene").enter(async (ctx) => {
       });
   } else
     await connection
-      .query("update users set username = $1 where id = $2", [
+      .query("update users set username = $1, last_use = $3 where id = $2", [
         ctx.from.username,
         ctx.from.id,
+        new Date(),
       ])
       .catch(async (e) => {
         console.log(e);

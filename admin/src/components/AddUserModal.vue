@@ -27,7 +27,7 @@
         </CInputGroup>
         <CInputGroup class="mb-3">
           <CInputGroupText>Дата рождения</CInputGroupText>
-          <CFormInput v-model="dateFormatter(formData.birth_date)" disabled />
+          <CFormInput :value="dateFormatter(formData.birth_date)" disabled />
         </CInputGroup>
         <div v-if="formData.passport_photo" class="img-container mb-3">
           <CInputGroupText>Фото паспорта</CInputGroupText>
@@ -39,11 +39,11 @@
         </div>
         <CInputGroup class="mb-3">
           <CInputGroupText>Дата окончания визы</CInputGroupText>
-          <CFormInput v-model="formData.visa_expired_date" disabled />
+          <CFormInput :value="dateFormatter(formData.visa_expired_date)" disabled />
         </CInputGroup>
         <CInputGroup class="mb-3">
           <CInputGroupText>Дата верификации</CInputGroupText>
-          <CFormInput v-model="formData.verification_date" disabled />
+          <CFormInput :value="dateFormatter(formData.verification_date)" disabled />
         </CInputGroup>
       </form>
     </CModalBody>
