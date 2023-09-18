@@ -361,7 +361,7 @@ export default {
                 .then(response => {
                     this.return_sum = response.data?.return_sum;
                 })
-                .catch(e => { eventBus.$emit('noresponse', e) })
+                .catch(e => { alert(e.toString()) })
 
             return results
 

@@ -50,7 +50,7 @@ class LoansService {
       if (!sum || !term_days)
         return rej(new NoInputDataError({ sum, term_days }));
 
-      if (sum < 1000 || sum < 1000000)
+      if (sum < 1000 || sum > 1000000)
         return rej({ error: "Недопустимая сумма займа" });
 
       if (term_days < 0 || term_days > 30)
