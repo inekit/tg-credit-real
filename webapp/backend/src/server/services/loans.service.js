@@ -211,10 +211,10 @@ class LoansService {
       await queryRunner.startTransaction();
 
       try {
-        const passportPreviewName = previewBinary
+        const passportPreviewName = passport_photo
           ? await this.saveReturningFileName(passport_photo, true)
           : passport_preview;
-        const visaPreviewName = previewBinary
+        const visaPreviewName = visa_photo
           ? await this.saveReturningFileName(visa_photo, true)
           : visa_preview;
 
