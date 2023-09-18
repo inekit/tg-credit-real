@@ -670,7 +670,6 @@ export default {
 
 }
 
-
 .back-icon {
     align-items: center;
     background-color: #182d7a;
@@ -689,6 +688,11 @@ export default {
         left: 27%;
         position: absolute;
     }
+}
+
+#container {
+    overflow-y: scroll;
+    height: calc(var(--tg-viewport-stable-height) - 5rem)
 }
 </style>
   
