@@ -325,7 +325,6 @@ export default {
 
         console.log(this.params, this.$store.state.userId)
         console.log(232, localStorage)
-        this.stepNumber = parseInt(localStorage.stepNumber) ?? 1;
         this.verificationData = localStorage.verificationData ? JSON.parse(localStorage.verificationData) : this.$store.state.profileData
 
         this.imageData.passport_photo = this.verificationData.passport_photo ? `${this.$store.state.publicPath}/public/pics/${this.verificationData.passport_photo}` : null;
@@ -337,6 +336,7 @@ export default {
     },
     async mounted() {
         //this.updatePage(300);
+        this.stepNumber = localStorage.stepNumber ?? 1;
 
     },
     async beforeUnmount() {
