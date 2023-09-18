@@ -344,7 +344,7 @@ export default {
             return true
         },
         untilDate() {
-            return moment(new Date()).add(term_days, 'days').format('DD.MM.YYYY')
+            return moment(new Date()).add(this.verificationData.term_days, 'days').format('DD.MM.YYYY')
         }
     },
     methods: {
