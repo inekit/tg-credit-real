@@ -307,6 +307,8 @@ export default {
 
         const buttonUserId = window.Telegram?.WebApp?.initDataUnsafe?.user?.id
         this.$store.state.userId = buttonUserId ?? this.params.user_id;
+
+        console.log(this.params, this.$store.state.userId)
         this.verificationData = await this.getProfileData()
 
 
