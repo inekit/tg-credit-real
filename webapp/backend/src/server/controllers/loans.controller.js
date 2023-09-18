@@ -45,18 +45,9 @@ function addLoanAppointment(req, res, next) {
 }
 
 function changeLoanStatus(ctx) {
-  return function (req, res, next) {
-    console.log(req.body, req.session);
-
+  return (req, res, next) => {
     loansService
-      .changeLoanStatus(
-        Object.assign(req.body, {
-          admin_id: req.session.passport.user.toString(),
-          req: req.session,
-        }),
-        false,
-        ctx
-      )
+      .changeLoanStatus(req.body, false, ctx)
       .then((data) => res.send(data))
       .catch((error) => next(error));
   };
@@ -64,8 +55,15 @@ function changeLoanStatus(ctx) {
 
 function changeLoanStatusAdmin(ctx) {
   return (req, res, next) => {
+    console.log(req.body, req.session.passport);
     loansService
-      .changeLoanStatus(req.body, true, ctx)
+      .changeLoanStatus(
+        Object.assign(req.body, {
+          admin_id: req.session.passport.user.toString(),
+        }),
+        true,
+        ctx
+      )
       .then((data) => res.send(data))
       .catch((error) => next(error));
   };
