@@ -112,10 +112,13 @@ export default {
     },
     async created() {
         await this.get();
-        this.statuses = this.loan.status === 'Новый' ?
-            ['Выдан', 'Запрещен'] : this.loan.status === 'На возврате' ? ['Закрыт'] : this.loan.status === 'Выдан' ? ['Получен'] : []
+        this.printStatuses()
     },
     methods: {
+        printStatuses() {
+            this.statuses = this.loan.status === 'Новый' ?
+                ['Выдан', 'Запрещен'] : this.loan.status === 'На возврате' ? ['Закрыт'] : this.loan.status === 'Выдан' ? ['Получен'] : []
+        },
         change(elObj) {
             this.formVisible = true
             elObj.tags_array = new Set(elObj.tags_array)
@@ -131,6 +134,8 @@ export default {
             })
                 .then(async () => {
                     this.loan.status = newStatus;
+                    this.printStatuses()
+
                 })
                 .catch(e => { eventBus.$emit('noresponse', e) })
         },

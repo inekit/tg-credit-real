@@ -14,7 +14,7 @@
             <div class="sc-gpoSCe dAHVIv">
                 <div class="sc-cxiiTX cMGBId"><span>{{ $store.state.profileData.count_total }}</span><span>Займов
                         взято</span></div>
-                <div class="sc-cxiiTX cMGBId"><span>{{ $store.state.profileData.count_total }}</span><span>Займов
+                <div class="sc-cxiiTX cMGBId"><span>{{ $store.state.profileData.count_closed }}</span><span>Займов
                         погашено</span></div>
             </div>
             <div class="sc-hINMOq iqnFzV dark"></div>
