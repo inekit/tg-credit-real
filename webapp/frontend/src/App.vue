@@ -12,6 +12,9 @@ export default {
 
     const buttonUserId = window.Telegram?.WebApp?.initDataUnsafe?.user?.id
     this.$store.state.userId = buttonUserId ?? this.params.get('user_id');
+
+    delete localStorage.stepNumber, localStorage.verificationData;
+
     this.$store.state.profileData = await this.getProfileData()
 
     if (this.$store.state.profileData.ban) {

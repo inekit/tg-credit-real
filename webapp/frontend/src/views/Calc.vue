@@ -312,14 +312,21 @@ export default {
                 window.Telegram?.WebApp.BackButton.offClick(this.routeBack);
                 window.Telegram?.WebApp.BackButton.hide();
             }
+            localStorage.stepNumber = stepNumber;
+        },
+        verificationData() {
+            localStorage.verificationData = verificationData;
+
         }
+
     },
     async beforeMount() {
         window.Telegram?.WebApp.BackButton.offClick(this.routeBack);
         window.Telegram?.WebApp.BackButton.hide();
 
         console.log(this.params, this.$store.state.userId)
-        this.verificationData = this.$store.state.profileData
+        this.stepNumber = localStorage.stepNumber;
+        this.verificationData = localStorage.verificationData ?? this.$store.state.profileData
 
         this.imageData.passport_photo = this.verificationData.passport_photo ? `${this.$store.state.publicPath}/public/pics/${this.verificationData.passport_photo}` : null;
         this.imageData.visa_photo = this.verificationData.visa_photo ? `${this.$store.state.publicPath}/public/pics/${this.verificationData.visa_photo}` : null;
