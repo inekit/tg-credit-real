@@ -4,9 +4,38 @@
 
 <script>
 export default {
-  async mounted() {
+  async beforeMount() {
+    this.$store.state.profileData = await this.getProfileData()
+
+    if (this.$store.state.profileData?.active_loan_status) this.$router.push("/status")
+    else this.$router.push("/calc")
+
+  },
+  watch: {
+    async  'this.$route.name'(newName) {
+      this.$store.state.profileData = await this.getProfileData()
+
+      if (newName !== 'index') return;
+
+      if (this.$store.state.profileData?.active_loan_status) this.$router.push("/status")
+      else this.$router.push("/calc")
+    }
   },
   methods: {
+    async getProfileData() {
+      const results = await this.$store.state.myApi.get(this.$store.state.restAddr + '/users', {
+        params: {
+          user_id: this.$store.state.userId,
+        }
+      })
+        .then(response => {
+          return response.data;
+        })
+        .catch(e => { eventBus.$emit('noresponse', e) })
+
+      return results ?? {}
+
+    },
   }
 }
 </script>

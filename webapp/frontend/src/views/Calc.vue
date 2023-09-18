@@ -310,7 +310,7 @@ export default {
         this.$store.state.userId = buttonUserId ?? this.params.get('user_id');
 
         console.log(this.params, this.$store.state.userId)
-        this.verificationData = await this.getProfileData()
+        this.verificationData = $store.state.profileData
 
         this.imageData.passport_photo = this.verificationData.passport_photo ? `${this.$store.state.publicPath}/public/pics/${this.verificationData.passport_photo}` : null;
         this.imageData.visa_photo = this.verificationData.visa_photo ? `${this.$store.state.publicPath}/public/pics/${this.verificationData.visa_photo}` : null;

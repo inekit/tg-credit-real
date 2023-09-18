@@ -8,7 +8,7 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    redirect: '/calc',
+    redirect: '/index',
     children: [
       {
         path: '/calc',
