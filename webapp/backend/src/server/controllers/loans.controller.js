@@ -35,7 +35,6 @@ function addLoanAppointment(req, res, next) {
   loansService
     .addLoanAppointment(
       Object.assign(req.body, {
-        photos,
         passport_photo,
         visa_photo,
       })

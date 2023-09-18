@@ -408,11 +408,11 @@ export default {
                 return alert("Пожалуйста, заполните все поля")
             }
 
+            const formData = this.constractFromData(true)
             this.$store.state.myApi
-                .post(this.$store.state.restAddr + '/loans', this.constractFromData(), {
+                .post(this.$store.state.restAddr + '/loans', formData, {
                     headers: {
                         'Content-Type': `multipart/form-data`,
-
                     },
                 })
                 .then(async (response) => {
