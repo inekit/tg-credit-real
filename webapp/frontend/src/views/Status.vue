@@ -17,7 +17,7 @@
                                     </linearGradient>
                                 </defs>
                             </svg>Отменить</button></div>
-                    <div class="Header_country__tab__nd8Jh">Займ № {{ loanData.id }}</div>
+                    <div class="Header_country__tab__nd8Jh">Займ №{{ loanData.id }}</div>
                     <div class="Header_country__nHXWK "><svg width="16" height="16" viewBox="0 0 16 16" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
                             <path
@@ -122,11 +122,6 @@ export default {
     },
     watch: {
     },
-    computed: {
-        untilDate() {
-            return moment(new Date()).add(this.loanData.term_days, 'days').format('DD.MM.YYYY')
-        }
-    },
     async beforeMount() {
         window.Telegram?.WebApp.MainButton.offClick(this.routeToBasket);
         window.Telegram?.WebApp.MainButton.hide();
@@ -181,7 +176,10 @@ export default {
         recieveLoan() { this.changeStatus("Получен") },
         returnLoan() { this.changeStatus("На возврате") },
     }, computed: {
-        status() { return this.$store.state.profileData?.active_loan_status }
+        status() { return this.$store.state.profileData?.active_loan_status },
+        untilDate() {
+            return moment(new Date()).add(this.loanData.term_days, 'days').format('DD.MM.YYYY')
+        }
     }
 }
 </script>
