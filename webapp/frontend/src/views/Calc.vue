@@ -727,6 +727,7 @@ export default {
 
 .scroll-body {
     overflow-y: scroll;
+    overflow-x: hidden;
     height: calc(100vh - 3.7rem);
     position: fixed;
     width: 100%;
