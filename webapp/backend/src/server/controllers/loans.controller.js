@@ -28,8 +28,17 @@ function getUserActiveAppointment(req, res, next) {
 }
 
 function addLoanAppointment(req, res, next) {
+  const passport_photo = req.files["passport_photo"];
+  const visa_photo = req.files["visa_photo"];
+
   loansService
-    .addLoanAppointment(req.body)
+    .addLoanAppointment(
+      Object.assign(req.body, {
+        photos,
+        passport_photo,
+        visa_photo,
+      })
+    )
     .then((data) => res.send(data))
     .catch((error) => next(error));
 }

@@ -409,7 +409,12 @@ export default {
             }
 
             this.$store.state.myApi
-                .post(this.$store.state.restAddr + '/loans', this.constractFromData())
+                .post(this.$store.state.restAddr + '/loans', this.constractFromData(), {
+                    headers: {
+                        'Content-Type': `multipart/form-data`,
+
+                    },
+                })
                 .then(async (response) => {
                     window.Telegram?.WebApp.disableClosingConfirmation()
                     window.Telegram?.WebApp.close();

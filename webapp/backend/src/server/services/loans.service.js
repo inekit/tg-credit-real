@@ -234,7 +234,7 @@ class LoansService {
           country,
         });
 
-        connection.getRepository("Loan").save({
+        const data = await queryRunner.manager.getRepository("Loan").save({
           user_id,
           name,
           surname,
@@ -249,7 +249,7 @@ class LoansService {
           country,
         });
 
-        connection.getRepository("User").update(id, {
+        await queryRunner.manager.getRepository("User").update(id, {
           id,
           name,
           surname,
