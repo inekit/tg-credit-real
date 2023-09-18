@@ -124,7 +124,7 @@ export default {
         dateFormatter,
         changeStatus(newStatus) {
             this.$store.state.myApi.put(this.$store.state.publicPath + '/api/admin/loans', {
-                id: this.loan.id,
+                user_id: this.loan.user_id,
                 status: newStatus,
             })
                 .then(async () => {
