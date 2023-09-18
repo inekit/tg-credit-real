@@ -39,6 +39,12 @@
             <div>
                 Срок займа (в днях): {{ loan.term_days }}
             </div>
+            <div>
+                Способ выдачи: {{ loan.atm }}
+            </div>
+            <div>
+                Способ возврата: {{ loan.return_method }}
+            </div>
             <div v-if="loan.issue_date">
                 Дата выдачи: {{ dateFormatter(loan.issue_date) }}
             </div>
