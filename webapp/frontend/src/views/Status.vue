@@ -1,9 +1,9 @@
 <template>
     <div class="status-container">
-        <div class="sum-title">{{ sum }}</div>
-        <div class="length-title">{{ term_days }}</div>
-        <div class="get-title">{{ get_method }}</div>
-        <div class="return-title">{{ return_method }}</div>
+        <div class="sum-title">{{ loanData.sum }}</div>
+        <div class="length-title">{{ loanData.term_days }}</div>
+        <div class="get-title">{{ loanData.get_method }}</div>
+        <div class="return-title">{{ loanData.return_method }}</div>
         <div v-if="status === 'Новый'">
             <div class="status-title">Ваш займ ожидает одобрения менеджером. Вам придет уведомление, когда это случится.
             </div>
@@ -25,20 +25,22 @@
         </div>
 
     </div>
+    <NavBar />
 </template>
 
 <script>
 import eventBus from '../eventBus'
 import { ListLoader, InstagramLoader } from 'vue-content-loader'
+import NavBar from '@/components/Navbar.vue';
 
 
 export default {
-    components: { InstagramLoader },
+    components: { InstagramLoader, NavBar },
     data() {
         return {
             infoActive: true,
             sexActive: true,
-            channel: {},
+            loanData: {}
         }
     },
     watch: {
@@ -47,6 +49,7 @@ export default {
         window.Telegram?.WebApp.BackButton.onClick(this.routeBack);
         window.Telegram?.WebApp.BackButton.show();
 
+        this.loanData = await this.getLoanData()
     },
     async mounted() {
         //this.updatePage(300);
@@ -62,76 +65,15 @@ export default {
         routeBack() {
             this.$router.go(-1)
         },
-        async updatePage(delay) {
-
-            this.$refs['channel-page']?.classList.add("hidden")
-            document.body.classList.add('stop-scrolling')
-
-
-            setTimeout(() => {
-                const elements = document.getElementsByClassName('preloaders_block')
-
-                console.log(elements)
-
-                for (let el of elements) {
-                    el.classList.add("hidden")
-                }
-                this.$refs['channel-page']?.classList.remove("hidden")
-                document.body.classList.remove('stop-scrolling')
-
-            }, delay)
-        },
-        formatThousands(number) {
-            if (number >= 1000)
-                return `${+(number / 1000).toFixed(0)}K`
-            else return number;
-        },
-        openLink(link) {
-            window.open(link, '_blank')
-        },
-        openTg(link) {
-            window.open(link)
-        },
-        toggleFavorite() {
-            if (this.channel.is_favorite)
-                this.dropFavorite();
-            else this.addFavorite()
-        },
-        addFavorite() {
+        changeStatus(status) {
             this.$store.state.myApi
-                .post(this.$store.state.restAddr + '/favorites', {
-                    channel_id: this.$route.params.channelId,
-                    user_id: this.$store.state.userId,
-                })
+                .put(this.$store.state.restAddr + '/loans', {
+                    params: {
+                        status,
+                        user_id: this.$store.state.userId,
+                    }
+                },)
                 .then(async (response) => {
-                    this.channel.is_favorite = true;
-                })
-                .catch((e) => {
-                    alert("Эта позиция уже добавлена в корзину")
-                })
-        },
-        async dropFavorite() {
-            this.$store.state.myApi.delete(this.$store.state.restAddr + '/favorites', {
-                data: {
-                    user_id: this.$store.state.userId,
-                    channel_id: this.$route.params.channelId,
-                }
-            })
-                .then(async response => {
-                    this.channel.is_favorite = false;
-                })
-                .catch(e => { eventBus.$emit('noresponse', e) })
-        },
-        connect() {
-            if (this.isOrdering === true) return;
-            this.isOrdering = true;
-            this.$store.state.myApi.get(this.$store.state.restAddr + '/connect', {
-                params: {
-                    user_id: this.$store.state.userId,
-                    channel_id: this.channel.id,
-                }
-            })
-                .then(async () => {
                     window.Telegram?.WebApp.disableClosingConfirmation()
                     window.Telegram?.WebApp.close();
                 })
@@ -140,7 +82,25 @@ export default {
                     this.isOrdering = false;
                 })
         },
+        async getLoanData() {
+            const results = await this.$store.state.myApi.get(this.$store.state.restAddr + '/loans', {
+                params: {
+                    user_id: this.$store.state.userId,
+                }
+            })
+                .then(response => {
+                    return response.data;
+                })
+                .catch(e => { eventBus.$emit('noresponse', e) })
 
+            return results ?? {}
+
+        },
+        cancelLoan() { changeStatus("Отменен") },
+        recieveLoan() { changeStatus("Получен") },
+        returnLoan() { changeStatus("На возврате") },
+    }, computed: {
+        status() { return this.$store.state.profileData?.active_loan_status }
     }
 }
 </script>
