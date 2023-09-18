@@ -84,8 +84,7 @@ module.exports = new EntitySchema({
       nullable: true,
     },
     assessment: {
-      type: "enum",
-      enum: ["1", "2", "3", "4", "5"],
+      type: "int",
       nullable: true,
     },
     country: {
