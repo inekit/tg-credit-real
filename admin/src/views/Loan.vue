@@ -155,7 +155,7 @@ export default {
             this.$store.state.myApi.put(this.$store.state.publicPath + '/api/admin/loans', {
                 user_id: this.loan.user_id,
                 status: newStatus,
-                assessment: this.assessment
+                assessment: this.assessment,
             })
                 .then(async () => {
                     this.loan.status = newStatus;

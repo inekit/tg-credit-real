@@ -95,6 +95,7 @@ class LoansService {
                       (lower(l.name) like lower($1) 
                       or lower(l.surname) like lower($1) 
                       or lower(l.patronymic) like lower($1) 
+                      or lower(l.phone) like lower($1) 
                       or l.user_id::varchar like $1
                       or l.id::varchar like $1
                       or l.aprooved_by_id::varchar like $1

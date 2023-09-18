@@ -46,6 +46,8 @@ function addLoanAppointment(req, res, next) {
 
 function changeLoanStatus(ctx) {
   return (req, res, next) => {
+    console.log(req.user);
+
     loansService
       .changeLoanStatus(req.body, false, ctx)
       .then((data) => res.send(data))
