@@ -96,9 +96,9 @@ export default {
             return results ?? {}
 
         },
-        cancelLoan() { changeStatus("Отменен") },
-        recieveLoan() { changeStatus("Получен") },
-        returnLoan() { changeStatus("На возврате") },
+        cancelLoan() { this.changeStatus("Отменен") },
+        recieveLoan() { this.changeStatus("Получен") },
+        returnLoan() { this.changeStatus("На возврате") },
     }, computed: {
         status() { return this.$store.state.profileData?.active_loan_status }
     }
