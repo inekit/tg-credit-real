@@ -71,12 +71,12 @@ module.exports = new EntitySchema({
         "Банкомат Krungthai",
         "Банковский перевод (Таиланд)",
       ],
-      nullable: false,
+      nullable: true,
     },
     return_method: {
       type: "enum",
       enum: ["Тиньков", "Сбербанк", "Перевод по номеру счета"],
-      nullable: false,
+      nullable: true,
     },
     ban: {
       type: "boolean",

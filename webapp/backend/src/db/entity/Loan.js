@@ -104,11 +104,13 @@ module.exports = new EntitySchema({
         "Банкомат Krungthai",
         "Банковский перевод (Таиланд)",
       ],
+      default: "Любой банкомат",
       nullable: false,
     },
     return_method: {
       type: "enum",
       enum: ["Тиньков", "Сбербанк", "Перевод по номеру счета"],
+      default: "Тиньков",
       nullable: false,
     },
     aprooved_by_id: { type: "bigint", nullable: true },
