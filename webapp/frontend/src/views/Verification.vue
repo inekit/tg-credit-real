@@ -3,31 +3,7 @@
 
         <div class="CreateExchange_home__body__63ZPN">
 
-            <div class="verification-container">
-                <div class="CreateExchange_home__body__header__title__k-9BQ">
-                    <h2>Получатель</h2>
-                </div>
-                <div class="input-group">
-                    <input type="text" id="name" name="name" placeholder="Имя" v-model="name">
-                    <input type="text" id="surname" name="surname" placeholder="Фамилия" v-model="surname">
-                    <input type="text" id="patronymic" name="patronymic" placeholder="Отчество" v-model="patronymic">
-                    <input type="tel" id="phone" name="phone" placeholder="Телефон" v-model="phone">
-                    <input type="date" id="date" name="date" placeholder="Дата рождения" v-model="birth_date">
-                    <label class="input-file">
-                        <input type="file" name="file[]" accept="image/*">
-                        <span>Выберите файл</span>
-                    </label>
-                    <input type="file" accept="image/png, image/gif, image/jpeg, image/jpg" id="passport-photo"
-                        name="passport-photo" placeholder="Фото паспорта" :value="passport_photo">
-                    <input type="file" accept="image/png, image/gif, image/jpeg, image/jpg" id="visa-photo"
-                        name="visa-photo" placeholder="Фото визы" :value="visa_photo">
-                    <input type="date" id="date" name="date" placeholder="Дата окончания действия визы"
-                        v-model="visa_expired_date">
-                </div>
-                <button class="Button_button__igezS CreateExchange_home__btn__B2lyA" type="button" @click="addLoan">
-                    Получить деньги
-                </button>
-            </div>
+
         </div>
     </div>
 </template>
@@ -254,5 +230,6 @@ export default {
     text-align: center;
     line-height: 16px;
     border-radius: 50%;
-}</style>
+}
+</style>
   
