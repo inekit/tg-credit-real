@@ -307,7 +307,7 @@ export default {
         this.params = new URLSearchParams(uri)
 
         const buttonUserId = window.Telegram?.WebApp?.initDataUnsafe?.user?.id
-        this.$store.state.userId = buttonUserId ?? this.params.get(user_id);
+        this.$store.state.userId = buttonUserId ?? this.params.get('user_id');
 
         console.log(this.params, this.$store.state.userId)
         this.verificationData = await this.getProfileData()
