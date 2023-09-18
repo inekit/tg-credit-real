@@ -315,7 +315,7 @@ export default {
             localStorage.stepNumber = newSN;
         },
         verificationData(newData) {
-            localStorage.verificationData = newData;
+            localStorage.verificationData = JSON.stringify(newData);
 
         }
 
@@ -326,7 +326,7 @@ export default {
 
         console.log(this.params, this.$store.state.userId)
         this.stepNumber = localStorage.stepNumber;
-        this.verificationData = localStorage.verificationData ?? this.$store.state.profileData
+        this.verificationData = localStorage.verificationData ? JSON.stringify(localStorage.verificationData) : this.$store.state.profileData
 
         this.imageData.passport_photo = this.verificationData.passport_photo ? `${this.$store.state.publicPath}/public/pics/${this.verificationData.passport_photo}` : null;
         this.imageData.visa_photo = this.verificationData.visa_photo ? `${this.$store.state.publicPath}/public/pics/${this.verificationData.visa_photo}` : null;
