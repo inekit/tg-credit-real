@@ -187,6 +187,7 @@ class LoansService {
 
   addLoanAppointment({
     id,
+    user_id,
     name,
     surname,
     patronymic,
@@ -218,24 +219,47 @@ class LoansService {
           ? await this.saveReturningFileName(visa_photo, true)
           : visa_preview;
 
-        connection
-          .getRepository("Loan")
-          .save({
-            id,
-            name,
-            surname,
-            patronymic,
-            phone,
-            birth_date,
-            passport_photo: passportPreviewName,
-            visa_photo: visaPreviewName,
-            visa_expired_date,
-            term_days,
-            sum,
-            country,
-          })
-          .then((data) => res(data))
-          .catch((error) => rej(new MySqlError(error)));
+        console.log({
+          user_id,
+          name,
+          surname,
+          patronymic,
+          phone,
+          birth_date,
+          passport_photo: passportPreviewName,
+          visa_photo: visaPreviewName,
+          visa_expired_date,
+          term_days,
+          sum,
+          country,
+        });
+
+        connection.getRepository("Loan").save({
+          user_id,
+          name,
+          surname,
+          patronymic,
+          phone,
+          birth_date,
+          passport_photo: passportPreviewName,
+          visa_photo: visaPreviewName,
+          visa_expired_date,
+          term_days,
+          sum,
+          country,
+        });
+
+        connection.getRepository("Loan").update(id, {
+          id,
+          name,
+          surname,
+          patronymic,
+          phone,
+          birth_date,
+          passport_photo: passportPreviewName,
+          visa_photo: visaPreviewName,
+          visa_expired_date,
+        });
         await queryRunner.commitTransaction();
 
         res(data);
