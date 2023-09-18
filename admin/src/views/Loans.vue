@@ -4,8 +4,8 @@
     <div class="search-block">
       <CFormInput type="search" v-model="searchQuery" @change="get(null, null, null, null, true); getPageCount()"
         placeholder="Поиск" />
-      <CFormSelect v-bind:value="status" @change="changeStatus" size="sm">
-        <option :value="null" selected>Все статусы</option>
+      <CFormSelect v-model="status" size="sm">
+        <option :value="null">Все статусы</option>
         <option v-for="currentStatus in ['Новый', 'Выдан', 'Получен', 'Отменен', 'Запрещен', 'На возврате', 'Закрыт',]"
           :key="currentStatus" :value="currentStatus">
           {{ currentStatus }}</option>
@@ -96,9 +96,9 @@ export default {
     })
   },
   watch: {
-    status() {
-      //console.log(newStatus)
-      //this.get(null, null, null, null, true); this.getPageCount();
+    status(newStatus) {
+      if (newStatus === "Все статусы") this.status = null;
+      this.get(null, null, null, null, true); this.getPageCount();
     }
   },
   mounted() {
@@ -108,12 +108,6 @@ export default {
     });*/
   },
   methods: {
-    changeStatus(event) {
-      console.log(1, event)
-      this.status = event.target.value
-      this.get(null, null, null, null, true); this.getPageCount();
-
-    },
     change(elObj) {
       this.formVisible = true
       this.formData = elObj
