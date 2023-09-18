@@ -19,7 +19,7 @@ export default {
 
   },
   watch: {
-    async  'this.$route.name'(newName) {
+    async  '$route.name'(newName) {
       this.$store.state.profileData = await this.getProfileData()
 
       if (newName !== 'index') return;
