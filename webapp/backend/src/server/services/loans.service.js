@@ -287,6 +287,8 @@ class LoansService {
       )
         return rej({ error: "Недопустимый статус заказа" });
 
+      console.log(111111);
+
       const queryRunner = connection.createQueryRunner();
 
       await queryRunner.connect();
@@ -300,9 +302,10 @@ class LoansService {
           )
         )?.[0];
 
-        if (!active_loan?.status) rej({ error: "Нет активных займов" });
+        console.log(22222);
 
-        if (
+        if (!active_loan?.status) rej({ error: "Нет активных займов" });
+        else if (
           (active_loan.status === "Новый" &&
             !["Выдан", "Отменен", "Запрещен"].includes(status)) ||
           (active_loan.status === "Выдан" && status !== "Получен") ||
@@ -321,6 +324,8 @@ class LoansService {
 
           res(data);
         }
+
+        console.log(3333);
 
         await queryRunner.commitTransaction();
       } catch (error) {
