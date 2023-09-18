@@ -47,7 +47,6 @@ export default {
       tableKey: 1,
       dataActions: {
         "К займу": { action: this.routeToLoan, color: 'primary' },
-        Удалить: { action: this.delete, color: 'danger' },
       },
       lastPageNumber: 1,
       tableFieldNames: [
