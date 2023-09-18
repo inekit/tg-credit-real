@@ -57,7 +57,7 @@ class UsersService {
           from users u left join loans l on l.user_id = u.id where user_id = $1 group by u.id `,
           [user_id]
         )
-        .then((data) => res(data?.[0]))
+        .then((data) => res(data?.[0] ?? {}))
         .catch((error) => rej(new MySqlError(error)));
     });
   }
