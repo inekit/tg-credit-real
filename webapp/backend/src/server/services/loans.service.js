@@ -276,7 +276,7 @@ class LoansService {
     });
   }
 
-  changeLoanStatus({ user_id, status }, isAdmin, ctx) {
+  changeLoanStatus({ user_id, status, assessment }, isAdmin, ctx) {
     return new Promise(async (res, rej) => {
       const connection = await tOrmCon;
 
@@ -284,13 +284,10 @@ class LoansService {
         return rej(new NoInputDataError({ user_id, status }));
 
       if (
-        (isAdmin &&
-          ["Новый", "Получен", "Отменен", "На возврате"].includes(status)) ||
+        (isAdmin && ["Новый", "Отменен", "На возврате"].includes(status)) ||
         (!isAdmin && ["Новый", "Выдан", "Запрещен", "Закрыт"].includes(status))
       )
         return rej({ error: "Недопустимый статус заказа" });
-
-      console.log(111111);
 
       const queryRunner = connection.createQueryRunner();
 
@@ -305,30 +302,29 @@ class LoansService {
           )
         )?.[0];
 
-        console.log(22222);
-
         if (!active_loan?.status) rej({ error: "Нет активных займов" });
         else if (
           (active_loan.status === "Новый" &&
             !["Выдан", "Отменен", "Запрещен"].includes(status)) ||
           (active_loan.status === "Выдан" && status !== "Получен") ||
           (active_loan.status === "Получен" && status !== "На возврате") ||
-          (active_loan.status === "На возврате" && status !== "Закрыт")
+          (active_loan.status === "На возврате" &&
+            status !== "Закрыт" &&
+            status !== "Получен")
         )
           rej({ error: "Более ранний статус заказа" });
         else {
+          if (status !== "Закрыт") assessment = null;
           const data = await connection
             .query(
-              `update loans set status = $1 where user_id = $2 and status = $3`,
-              [status, user_id, active_loan.status]
+              `update loans set status = $1,assessment=$4 where user_id = $2 and status = $3`,
+              [status, user_id, active_loan.status, assessment]
             )
             .catch((error) => rej(new MySqlError(error)))
             .then((data) => res(data));
 
           res(data);
         }
-
-        console.log(3333);
 
         await queryRunner.commitTransaction();
       } catch (error) {

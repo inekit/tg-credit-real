@@ -57,10 +57,23 @@
             <div>
                 Статус: {{ loan.status }}
             </div>
-            <div class="change-status">
-                <span class="w-100 mb-2">Изменить статус</span>
-                <button v-for="status in statuses" :key="status" class="btn btn-primary" @click="changeStatus(status)">{{
-                    status }}</button>
+            <div class="change-status" v-if="statuses.length">
+                <div v-if="status !== 'На возврате'">
+                    <span class="w-100 mb-2">Изменить статус</span>
+                    <button v-for="status in statuses" :key="status" class="btn btn-primary"
+                        @click="changeStatus(status)">{{
+                            status }}</button>
+                </div>
+                <div v-else>
+                    <button class="btn btn-danger" @click="changeStatus('Получен')">Займ не возвращен</button>
+                    <button @click="showFinish = true">Займ возвращен</button>
+                    <div v-if="showFinish"> <span class="w-100 mb-2">Оцените клиента и завершите заказ</span>
+                        <input type="range" min="1" max="5" v-model="assessment">
+                        <button class="btn btn-danger" @click="changeStatus('Закрыт')">Оценить и подтвердить возврат
+                            займа</button>
+                    </div>
+
+                </div>
 
             </div>
         </div>
@@ -89,7 +102,9 @@ export default {
             loan: {},
             rows: [],
             statuses: [],
+            assessment: 5,
             messageTemplate: null,
+            showFinish: false,
             tableFieldNames: [
                 {
                     name: 'id',
@@ -117,7 +132,7 @@ export default {
     methods: {
         printStatuses() {
             this.statuses = this.loan.status === 'Новый' ?
-                ['Выдан', 'Запрещен'] : this.loan.status === 'На возврате' ? ['Закрыт'] : this.loan.status === 'Выдан' ? ['Получен'] : []
+                ['Выдан', 'Запрещен'] : this.loan.status === 'На возврате' ? ['Получен', 'Закрыт'] : this.loan.status === 'Выдан' ? [/*'Получен'*/] : []
         },
         change(elObj) {
             this.formVisible = true
@@ -131,11 +146,12 @@ export default {
             this.$store.state.myApi.put(this.$store.state.publicPath + '/api/admin/loans', {
                 user_id: this.loan.user_id,
                 status: newStatus,
+                assessment: this.assessment
             })
                 .then(async () => {
                     this.loan.status = newStatus;
                     this.printStatuses()
-
+                    this.loan.assessment = this.assessment
                 })
                 .catch(e => { eventBus.$emit('noresponse', e) })
         },

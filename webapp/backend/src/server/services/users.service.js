@@ -53,7 +53,7 @@ class UsersService {
           count(case when l.status = 'Отменен' then 1 end) count_cancelled, 
           count(case when l.status = 'Запрещен' then 1 end) count_forbidden,
           max(case when (l.status = 'Новый' or l.status = 'Выдан' or l.status = 'Получен' or l.status = 'На возврате') then l.status else null end) active_loan_status,
-          count(case when (l.status <> 'Отменен' adn l.status <> 'Запрещен') then 1 else 0 end) count_total
+          count(case when (l.status <> 'Отменен' and l.status <> 'Запрещен') then 1 else 0 end) count_total
           from users u left join loans l on l.user_id = u.id where u.id = $1 group by u.id `,
           [user_id]
         )
