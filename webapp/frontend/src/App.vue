@@ -3,6 +3,8 @@
 </template>
 
 <script>
+import eventBus from './eventBus'
+
 export default {
   async beforeMount() {
     this.$store.state.profileData = await this.getProfileData()
