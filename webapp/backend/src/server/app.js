@@ -1,7 +1,8 @@
 const express = require("express");
 const passport = require("passport");
 const setPayed = require("./utils/setPayed");
-
+var multer = require("multer");
+var upload = multer();
 const bodyParser = require("body-parser");
 
 const { spawnSync } = require("child_process");
@@ -14,6 +15,7 @@ var app = require("./app-preferences");
 app.use("/colorsserver/public", express.static("public"));
 
 app.use(bodyParser.json());
+app.use(upload.array());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
