@@ -132,11 +132,12 @@ class LoansService {
 
       connection
         .query(
-          `select * from loans where user_id = $1 and status = 'Новый' 
+          `select * from loans l where user_id = $1 and (l.status = 'Новый' or l.status = 'Выдан' or l.status = 'Получен' or l.status = 'На возврате') 
           limit 1`,
           [user_id]
         )
         .then(async (data) => {
+          console.log(data);
           const loan_appointment = data[0];
           return res(loan_appointment);
         })
