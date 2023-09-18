@@ -46,7 +46,7 @@ function editUser(req, res, next) {
 
   let password = bcrypt.hashSync(req.body.password, salt);
   const user = {
-    id: req.session.passport.user.toString(),
+    id: req.body.id, //req.session.passport.user.toString(),
     login: req.body.login,
     password,
   };
