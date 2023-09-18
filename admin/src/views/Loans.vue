@@ -96,7 +96,9 @@ export default {
     })
   },
   watch: {
-    status() {
+    status(newStatus) {
+      console.log(newStatus)
+      if (newStatus === "Фильтр по статусу") this.status = null;
       this.get(null, null, null, null, true); this.getPageCount();
     }
   },

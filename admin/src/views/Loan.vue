@@ -23,12 +23,12 @@
                 Дата рождения: {{ dateFormatter(loan.birth_date) }}
             </div>
             <div v-if="loan.passport_photo" class="img-container mb-3">
-                <CInputGroupText>Фото паспорта</CInputGroupText>
-                <img :src="loan.passport_photo" />
+                <label>Фото паспорта</label>
+                <img :src="`${$store.state.publicPath}/public/pics/${loan.passport_photo}`" />
             </div>
             <div v-if="loan.visa_photo" class="img-container mb-3">
-                <CInputGroupText>Фото визы</CInputGroupText>
-                <img :src="loan.visa_photo" />
+                <label>Фото визы</label>
+                <img :src="`${$store.state.publicPath}/public/pics/${loan.visa_photo}`" />
             </div>
             <div>
                 Дата окончания визы: {{ dateFormatter(loan.visa_expired_date) }}
@@ -39,19 +39,19 @@
             <div>
                 Срок займа (в днях): {{ loan.term_days }}
             </div>
-            <div>
+            <div v-if="loan.issue_date">
                 Дата выдачи: {{ dateFormatter(loan.issue_date) }}
             </div>
-            <div>
+            <div v-if="loan.return_date">
                 Дата возврата: {{ dateFormatter(loan.return_date) }}
             </div>
             <div>
                 Страна: {{ loan.country }}
             </div>
-            <div>
+            <div v-if="loan.aprooved_by_id">
                 ID ответственного администратора: {{ loan.aprooved_by_id }}
             </div>
-            <div>
+            <div v-if="loan.assessment">
                 Оценка заемщика: {{ loan.assessment }}
             </div>
             <div>
