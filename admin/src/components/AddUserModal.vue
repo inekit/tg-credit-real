@@ -27,7 +27,7 @@
         </CInputGroup>
         <CInputGroup class="mb-3">
           <CInputGroupText>Дата рождения</CInputGroupText>
-          <CFormInput v-model="formData.birth_date" disabled />
+          <CFormInput v-model="dateFormatter(formData.birth_date)" disabled />
         </CInputGroup>
         <div v-if="formData.passport_photo" class="img-container mb-3">
           <CInputGroupText>Фото паспорта</CInputGroupText>
@@ -53,6 +53,7 @@
 
 <script>
 import eventBus from '../eventBus'
+import { dateFormatter } from '../utils/dateFormatter';
 
 export default ({
   props: {
@@ -66,6 +67,18 @@ export default ({
     closeModal() {
       eventBus.$emit('closeModal')
     },
+    dateFormatter,
+
   }
 })
 </script>
+
+<style lang="scss" scoped>
+.img-container {
+  width: 100%;
+
+  img {
+    width: 100%;
+  }
+}
+</style>
