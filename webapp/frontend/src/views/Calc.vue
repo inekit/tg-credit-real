@@ -312,11 +312,10 @@ export default {
                 window.Telegram?.WebApp.BackButton.offClick(this.routeBack);
                 window.Telegram?.WebApp.BackButton.hide();
             }
-            localStorage.stepNumber = newSN;
+            localStorage.stepNumber = newSN ?? 1;
         },
         verificationData(newData) {
             localStorage.verificationData = JSON.stringify(newData);
-
         }
 
     },
