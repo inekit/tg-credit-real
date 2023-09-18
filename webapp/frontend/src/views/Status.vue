@@ -88,12 +88,14 @@
                         случится.</p>
                     <div v-if="status === 'Выдан'">
                         <p>Здесь инструкция о том как получить деньги выбранным способом</p>
-                        <button @click="recieveLoan">Я получил займ</button>
+                        <button @click="recieveLoan" class="Button_button__igezS CreateExchange_home__btn__B2lyA"
+                            type="button">Я получил займ</button>
                     </div>
                     <div v-if="status === 'Получен'">
                         <div class="return-sum">{{ return_sum }}</div>
                         <p>Здесь инструкция о том как вернуть займ выбранным способом</p>
-                        <button @click="returnLoan">Вернуть займ</button>
+                        <button @click="returnLoan" class="Button_button__igezS CreateExchange_home__btn__B2lyA"
+                            type="button">Вернуть займ</button>
                     </div>
                     <p v-if="status === 'На возврате'">Ваш возврат займа ожидает подтверждения менеджером. Вам придет
                         уведомление, когда это
