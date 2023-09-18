@@ -334,6 +334,12 @@ class LoansService {
               [user_id]
             );
 
+          if (isAdmin)
+            ctx.telegram.sendMessage(
+              user_id,
+              ctx.getTitle("NEW_STATUS", [status])
+            );
+
           res(data);
         }
 
