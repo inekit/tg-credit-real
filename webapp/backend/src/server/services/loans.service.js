@@ -323,9 +323,10 @@ class LoansService {
           );
 
           if (status === "Выдан")
-            await queryRunner.manager.getRepository("User").update(user_id, {
-              verification_date: Date.now(),
-            });
+            await queryRunner.query(
+              "update users set verification_date = now() where id = $1",
+              [user_id]
+            );
 
           res(data);
         }
