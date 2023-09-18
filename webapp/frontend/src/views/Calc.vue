@@ -311,6 +311,8 @@ export default {
         this.imageData.passport_photo = this.verificationData.passport_photo ? `${this.$store.state.publicPath}/public/pics/${this.verificationData.passport_photo}` : null;
         this.imageData.visa_photo = this.verificationData.visa_photo ? `${this.$store.state.publicPath}/public/pics/${this.verificationData.visa_photo}` : null;
 
+        this.verificationData.visa_expired_date = this.verificationData.visa_expired_date?.split("T")?.[0]
+        this.verificationData.birth_date = this.verificationData.birth_date?.split("T")?.[0]
 
     },
     async mounted() {
