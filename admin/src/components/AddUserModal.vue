@@ -15,7 +15,7 @@
         </CInputGroup>
         <CInputGroup class="mb-3">
           <CInputGroupText>Дата последнего использования</CInputGroupText>
-          <CFormInput v-model="formData.last_use" disabled />
+          <CFormInput :value="dateFormatter(formData.last_use)" disabled />
         </CInputGroup>
         <CInputGroup class="mb-3">
           <CInputGroupText>ФИО</CInputGroupText>
