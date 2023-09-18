@@ -84,9 +84,7 @@ export default {
         },
         async getLoanData() {
             const results = await this.$store.state.myApi.get(this.$store.state.restAddr + '/loans', {
-                params: {
-                    user_id: this.$store.state.userId,
-                }
+                user_id: this.$store.state.userId,
             })
                 .then(response => {
                     return response.data;
