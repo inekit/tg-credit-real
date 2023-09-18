@@ -87,7 +87,7 @@ class LoansService {
       {
         const query = `select l.*, u.username,
         l.surname||' '|| l.name || ' ' || l.patronymic as fio,
-        count (DISTINCT CASE WHEN ul.status <> 'Отменен' and ul.status <> 'Запрещен' then ul.id ELSE NULL END) - 1 orders_count
+        count (DISTINCT CASE WHEN ul.status <> 'Отменен' and ul.status <> 'Запрещен' then ul.id ELSE NULL END) - 1 loans_count
                     from public.loans l
                     left join users u on u.id = l.user_id
                     left join loans ul on u.id = ul.user_id
