@@ -391,7 +391,7 @@ export default {
 
             formData.append('user_id', this.$store.state.userId)
 
-            for (let key in this.verificationData.keys()) {
+            for (let key in Object.keys(this.verificationData)) {
                 formData.append(key, this.verificationData[key])
             }
 
