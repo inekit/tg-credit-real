@@ -94,7 +94,6 @@ export default ({
           .put(this.$store.state.publicPath + '/api/admin/admins', formData, {
             headers: {
               'Content-Type': `multipart/form-data`,
-
             },
           })
           .then(() => {
