@@ -199,8 +199,8 @@ class LoansService {
     term_days,
     sum,
     country = "Тайланд",
-    visa_preview,
-    passport_preview,
+    passportPhotoBinary,
+    visaPhotoBinary,
   }) {
     return new Promise(async (res, rej) => {
       const connection = await tOrmCon;
@@ -212,12 +212,12 @@ class LoansService {
       await queryRunner.startTransaction();
 
       try {
-        const passportPreviewName = passport_photo
-          ? await this.saveReturningFileName(passport_photo, true)
-          : passport_preview;
-        const visaPreviewName = visa_photo
-          ? await this.saveReturningFileName(visa_photo, true)
-          : visa_preview;
+        const passportPreviewName = passportPhotoBinary
+          ? await this.saveReturningFileName(passportPhotoBinary, true)
+          : passport_photo;
+        const visaPreviewName = visaPhotoBinary
+          ? await this.saveReturningFileName(visaPhotoBinary, true)
+          : visa_photo;
 
         console.log({
           user_id,

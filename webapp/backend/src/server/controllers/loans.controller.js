@@ -30,14 +30,14 @@ function getUserActiveAppointment(req, res, next) {
 
 function addLoanAppointment(req, res, next) {
   console.log(req.body);
-  const passport_photo = req.files["passport_photo"];
-  const visa_photo = req.files["visa_photo"];
+  const passport_photoBinary = req.files["passport_photo"];
+  const visa_photoBinary = req.files["visa_photo"];
 
   loansService
     .addLoanAppointment(
       Object.assign(req.body, {
-        passport_photo,
-        visa_photo,
+        passportPhotoBinary,
+        visaPhotoBinary,
       })
     )
     .then((data) => res.send(data))
