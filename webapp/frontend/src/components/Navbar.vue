@@ -3,7 +3,7 @@
         <div class="navbar__container">
             <div class="navbar__body">
                 <RouterLink aria-current="page" class="_icon-home BottomNavBar_bottomNavBar__link"
-                    :class="[$route.name !== 'Favourites' ? 'active' : '']" :to="`/index`">
+                    :class="[$route.name !== 'Favourites' ? 'active' : '']" :to="`/`">
                 </RouterLink>
                 <RouterLink class="_icon-bookmark BottomNavBar_bottomNavBar__link" active-class="active" :to="'/profile'">
                 </RouterLink>

@@ -20,9 +20,10 @@ export default {
   },
   watch: {
     async  '$route.name'(newName) {
+      console.log(1232143234)
       this.$store.state.profileData = await this.getProfileData()
 
-      if (newName !== 'index') return;
+      if (newName !== 'home') return;
 
       if (this.$store.state.profileData?.active_loan_status) this.$router.push("/status")
       else this.$router.push("/calc")
