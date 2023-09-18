@@ -103,7 +103,7 @@ module.exports = new EntitySchema({
       onDelete: "set null",
       onUpdate: "cascade",
     },
-    aprooved_b: {
+    aprooved_by: {
       target: "Admin",
       type: "many-to-one",
       joinColumn: true,
