@@ -29,7 +29,7 @@ class UsersService {
       tOrmCon.then((connection) => {
         connection
           .query(
-            `select * from users u, u.surname||' '|| u.name || ' ' || u.patronymic as fio
+            `select *, u.surname||' '|| u.name || ' ' || u.patronymic as fio from users u
              where (id = $1 or $1 is NULL) and 
          (lower(u.name) like lower($2) or lower(u.surname) like lower($2) or lower(u.patronymic) like lower($2) 
          or u.id::varchar like $2 or lower(u.username) like lower($2) or $2 is NULL)
