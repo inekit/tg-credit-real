@@ -286,7 +286,7 @@ class LoansService {
     });
   }
 
-  changeLoanStatus({ user_id, status, assessment }, isAdmin, ctx) {
+  changeLoanStatus({ user_id, status, assessment, admin_id }, isAdmin, ctx) {
     return new Promise(async (res, rej) => {
       const connection = await tOrmCon;
 
@@ -336,8 +336,8 @@ class LoansService {
 
           if (status === "Выдан")
             await queryRunner.query(
-              "update users set verification_date = now() where id = $1",
-              [user_id]
+              "update users set verification_date = now(), aprooved_by_id = $2 where id = $1",
+              [user_id, admin_id]
             );
 
           if (isAdmin)

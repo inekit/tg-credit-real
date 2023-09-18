@@ -46,10 +46,16 @@ function addLoanAppointment(req, res, next) {
 
 function changeLoanStatus(ctx) {
   return (req, res, next) => {
-    console.log("userobj", req.user.id);
+    console.log("userobj", req.session.passport.user.toString());
 
     loansService
-      .changeLoanStatus(req.body, false, ctx)
+      .changeLoanStatus(
+        Object.assign(req.body, {
+          admin_id: req.session.passport.user.toString(),
+        }),
+        false,
+        ctx
+      )
       .then((data) => res.send(data))
       .catch((error) => next(error));
   };
