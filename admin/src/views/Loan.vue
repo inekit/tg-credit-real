@@ -37,6 +37,9 @@
                 Сумма займа: {{ loan.sum }}
             </div>
             <div>
+                Сумма к возврату: {{ loan.return_sum }}
+            </div>
+            <div>
                 Срок займа (в днях): {{ loan.term_days }}
             </div>
             <div>

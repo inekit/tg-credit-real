@@ -54,9 +54,13 @@
                         <div class="Exchange_exchange__header__row__data__emKsz">{{
                             loanData.return_sum }} RUB</div>
                     </div>
-                    <div class="Exchange_exchange__header__row__QDAEe">
+                    <div v-if="status !== 'Новый'" class="Exchange_exchange__header__row__QDAEe">
                         <h3>До (включительно)</h3>
-                        <div class="Exchange_exchange__header__row__data__emKsz">{{ untilDate }} дн.</div>
+                        <div class="Exchange_exchange__header__row__data__emKsz">{{ untilDate }}</div>
+                    </div>
+                    <div v-else class="Exchange_exchange__header__row__QDAEe">
+                        <h3>Срок</h3>
+                        <div class="Exchange_exchange__header__row__data__emKsz">{{ loanData.term_days }} дн.</div>
                     </div>
                     <div class="Exchange_exchange__header__row__QDAEe">
                         <h3>Оплата:</h3>

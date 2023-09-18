@@ -137,7 +137,6 @@ class LoansService {
           [user_id]
         )
         .then(async (data) => {
-          console.log(data);
           const loan_appointment = data[0];
           return res(loan_appointment);
         })
@@ -237,6 +236,8 @@ class LoansService {
 
         if (active_loan_status) throw new Error("Уже есть активный займ");
 
+        const return_sum = this.getLoanCalculation({ sum, term_days });
+
         const data = await queryRunner.manager.getRepository("Loan").save({
           user_id,
           name,
@@ -248,6 +249,7 @@ class LoansService {
           visa_photo: visaPreviewName,
           visa_expired_date,
           term_days,
+          return_sum,
           atm,
           return_method,
           sum,
