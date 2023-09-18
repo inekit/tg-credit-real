@@ -324,7 +324,7 @@ export default {
         window.Telegram?.WebApp.BackButton.hide();
 
         console.log(this.params, this.$store.state.userId)
-        console.log(localStorage.stepNumber)
+        console.log(232, localStorage)
         this.stepNumber = parseInt(localStorage.stepNumber) ?? 1;
         this.verificationData = localStorage.verificationData ? JSON.parse(localStorage.verificationData) : this.$store.state.profileData
 
