@@ -223,20 +223,16 @@ class LoansService {
           ? await this.saveReturningFileName(visaPhotoBinary, true)
           : visa_photo;
 
-        console.log({
-          user_id,
-          name,
-          surname,
-          patronymic,
-          phone,
-          birth_date,
-          passport_photo: passportPreviewName,
-          visa_photo: visaPreviewName,
-          visa_expired_date,
-          term_days,
-          sum,
-          country,
-        });
+        const active_loan_status = (
+          await queryRunner.query(
+            `select u.id,
+          max(case when (l.status = 'Новый' or l.status = 'Выдан' or l.status = 'Получен' or l.status = 'На возврате') then l.status else null end) active_loan_status,
+          from users u left join loans l on l.user_id = u.id where u.id = $1 group by u.id `,
+            [user_id]
+          )
+        )?.[0]?.active_loan_status;
+
+        if (active_loan_status) throw new Error("Уже есть активный займ");
 
         const data = await queryRunner.manager.getRepository("Loan").save({
           user_id,
@@ -304,7 +300,7 @@ class LoansService {
           )
         )?.[0];
 
-        if (!active_loan?.status) rej({ error: "Нет активных займов" });
+        if (!active_loan?.status) throw new Error("Нет активных займов");
         else if (
           (active_loan.status === "Новый" &&
             !["Выдан", "Отменен", "Запрещен"].includes(status)) ||
@@ -314,20 +310,17 @@ class LoansService {
             status !== "Закрыт" &&
             status !== "Получен")
         )
-          rej({ error: "Более ранний статус заказа" });
+          throw new Error("Более ранний статус заказа");
         else {
           if (status !== "Закрыт") assessment = null;
           else {
             if (assessment > 5 || assessment < 1 || !assessment)
-              rej({ error: "Неверная оценка" });
+              throw new Error("Неверная оценка");
           }
-          const data = await connection
-            .query(
-              `update loans set status = $1,assessment=$4 where user_id = $2 and status = $3`,
-              [status, user_id, active_loan.status, assessment]
-            )
-            .catch((error) => rej(new MySqlError(error)))
-            .then((data) => res(data));
+          const data = await connection.query(
+            `update loans set status = $1,assessment=$4 where user_id = $2 and status = $3`,
+            [status, user_id, active_loan.status, assessment]
+          );
 
           if (status === "Выдан")
             await queryRunner.manager.getRepository("User").update(user_id, {
