@@ -340,7 +340,7 @@ export default {
     },
     methods: {
         routeBack() {
-            this.stepNumber--
+            if (this.stepNumber > 1) this.stepNumber--
         },
         previewImage: function (event, variableName) {
             var input = event.target;
@@ -672,16 +672,25 @@ export default {
 
 .back-icon {
     align-items: center;
-    background-color: #182d7a;
-    border-radius: 50%;
-    display: inline-flex;
-    font-size: .75rem;
-    height: 1.875rem;
-    justify-content: center;
-    left: 1.25rem;
-    position: absolute;
-    top: 0;
-    width: 1.875rem;
+    border: 1px solid #7c6dd2;
+    border-radius: 20px;
+    color: #fff;
+    -moz-column-gap: 8px;
+    column-gap: 8px;
+    display: flex;
+    font-size: 16px;
+    font-weight: 400;
+    height: 32px;
+    justify-content: flex-start;
+    line-height: 20px;
+    margin-left: auto;
+    padding: 8px;
+    position: relative;
+    text-align: center;
+    width: 32px;
+    width: -moz-fit-content;
+    /* width: fit-content; */
+    margin: 0;
 
     &:before {
         content: "";
@@ -692,7 +701,7 @@ export default {
 
 #container {
     overflow-y: scroll;
-    height: calc(var(--tg-viewport-stable-height) - 5rem)
+    height: calc(100vh - 5rem)
 }
 </style>
   
