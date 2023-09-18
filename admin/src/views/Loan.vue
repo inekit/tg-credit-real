@@ -142,7 +142,7 @@ export default {
                     },
                 })
                 .then((res) => {
-                    this.loan = res.data
+                    this.loan = res.data?.[0]
                 })
                 .catch((error) => {
                     eventBus.$emit('noresponse', error)

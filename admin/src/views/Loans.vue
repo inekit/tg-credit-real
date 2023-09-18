@@ -2,7 +2,8 @@
   <div>
     <OrderModal :visible="formVisible" :formData="formData" :mode="formMode" />
     <div class="search-block">
-      <CFormInput type="search" v-model="searchQuery" @change="get(); getPageCount()" placeholder="Поиск" />
+      <CFormInput type="search" v-model="searchQuery" @change="get(null, null, null, null, true); getPageCount()"
+        placeholder="Поиск" />
       <CFormSelect v-model="status" size="sm">
         <option :value="undefined">Фильтр по статусу</option>
         <option v-for="currentStatus in ['Новый', 'Выдан', 'Получен', 'Отменен', 'Запрещен', 'На возврате', 'Закрыт',]"
@@ -10,7 +11,7 @@
           {{ currentStatus }}</option>
       </CFormSelect>
       <CFormCheck id="onlyMyCheck" label="Только мои" v-bind:value="onlyMy"
-        @change="onlyMy = !onlyMy; get(); getPageCount()" />
+        @change="onlyMy = !onlyMy; get(null, null, null, null, true); getPageCount()" />
     </div>
     <Table :key="tableKey" :fields="tableFieldNames" :postData="get" :actions="dataActions" :rows="rows" editMode="form"
       :lastPageNumber="lastPageNumber" :getPageCount="getPageCount" name="Займы" />
@@ -96,7 +97,7 @@ export default {
   },
   watch: {
     status() {
-      this.get(); this.getPageCount();
+      this.get(null, null, null, null, true); this.getPageCount();
     }
   },
   mounted() {
@@ -111,7 +112,7 @@ export default {
       this.formData = elObj
       this.formMode = 'edit'
     },
-    get(take, page, order, orderDesc) {
+    get(take, page, order, orderDesc, setNull) {
       return myApi
         .get(this.$store.state.publicPath + '/api/admin/loans/', {
           params: {
@@ -126,7 +127,10 @@ export default {
           },
         })
         .then((res) => {
-          if (res.data?.length > 0) this.rows = res.data
+          if (setNull) this.rows = res.data
+          else
+            if (res.data?.length > 0)
+              this.rows = res.data
           return res.data
         })
         .catch((error) => {
