@@ -83,6 +83,7 @@ export default {
                 font-weight: 400;
                 line-height: 1;
                 text-transform: none;
+                color: #706c88;
             }
         }
 

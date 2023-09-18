@@ -74,17 +74,22 @@
                                     v-model="verificationData.term_days" @change="calcLoan">
                             </div>
                         </div>
-
-                        <div class="loan-calc">
-                            <div class="">
-                                <h2>Нужно будет отдать</h2>
-                            </div><span>{{ return_sum ?? "???" }} RUB</span>
-                        </div>
-                        <button class="Button_button__igezS CreateExchange_home__btn__B2lyA" type="button"
-                            @click="stepNumber = 2" :disabled="!verificationData.sum || !verificationData.term_days">
-                            Получить деньги
-                        </button>
                     </div>
+                </div>
+                <div class="CreateExchange_home__body__63ZPN" v-if="stepNumber === 1">
+                    <div class="loan-calc">
+                        <div class="">
+                            <h2>Нужно будет отдать</h2>
+                        </div><span>{{ return_sum ?? "???" }} RUB</span>
+                        <div class="">
+                            <h2>До (включительно)</h2>
+                        </div><span>{{ moment(new Date()).add(term_days, 'days').format('DD.MM.YYYY') }}</span>
+                    </div>
+
+                    <button class="Button_button__igezS CreateExchange_home__btn__B2lyA" type="button"
+                        @click="stepNumber = 2" :disabled="!verificationData.sum || !verificationData.term_days">
+                        Получить деньги
+                    </button>
                 </div>
             </transition>
             <transition name="slide-fade">
@@ -694,8 +699,20 @@ export default {
 
     &:before {
         content: "";
-        left: 27%;
+        left: 25%;
         position: absolute;
+        -webkit-font-feature-settings: normal;
+        font-feature-settings: normal;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        display: block;
+        font-family: icons;
+        font-style: normal;
+        font-variant: normal;
+        font-size: 13;
+        font-weight: 400;
+        line-height: 1;
+        text-transform: none;
     }
 }
 
