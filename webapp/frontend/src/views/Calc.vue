@@ -303,11 +303,11 @@ export default {
     async beforeMount() {
         window.Telegram?.WebApp.BackButton.onClick(this.routeBack);
         window.Telegram?.WebApp.BackButton.show();
-        let uri = window.location.search.substring(1);
+        let uri = window.location.search;
         this.params = new URLSearchParams(uri)
 
         const buttonUserId = window.Telegram?.WebApp?.initDataUnsafe?.user?.id
-        this.$store.state.userId = buttonUserId ?? this.params.user_id;
+        this.$store.state.userId = buttonUserId ?? this.params.get(user_id);
 
         console.log(this.params, this.$store.state.userId)
         this.verificationData = await this.getProfileData()
