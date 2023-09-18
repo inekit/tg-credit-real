@@ -54,10 +54,12 @@ export default {
         },
         {
           name: 'visa_expired_date',
+          type: 'date',
           title: 'Дата окончания визы',
         },
         {
           name: 'verification_date',
+          type: 'date',
           title: 'Дата верификации',
         },
         {

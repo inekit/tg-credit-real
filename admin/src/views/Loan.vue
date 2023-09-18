@@ -69,7 +69,7 @@
                     <button @click="showFinish = true">Займ возвращен</button>
                     <div v-if="showFinish"> <span class="w-100 mb-2">Оцените клиента и завершите заказ</span>
                         <input type="range" min="1" max="5" v-model="assessment">
-                        <button class="btn btn-danger" @click="changeStatus('Закрыт')">Оценить и подтвердить возврат
+                        <button class="btn btn-primary" @click="changeStatus('Закрыт')">Оценить и подтвердить возврат
                             займа</button>
                     </div>
 
