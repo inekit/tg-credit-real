@@ -4,7 +4,7 @@
             <div>
                 <div class="Header_header__wrapper__5r0kF">
                     <div class="Header_country__back__Ogf+S">
-                        Logo
+                        <a data-v-612f94fd="" type="button" class="back-icon" @click="routeBack"></a>
                     </div>
                     <div class="Header_country__tab__nd8Jh">
                     </div>
@@ -340,7 +340,7 @@ export default {
     },
     methods: {
         routeBack() {
-            this.$router.go(-1)
+            this.stepNumber--
         },
         previewImage: function (event, variableName) {
             var input = event.target;
@@ -668,6 +668,27 @@ export default {
     }
 
 
+}
+
+
+.back-icon {
+    align-items: center;
+    background-color: #182d7a;
+    border-radius: 50%;
+    display: inline-flex;
+    font-size: .75rem;
+    height: 1.875rem;
+    justify-content: center;
+    left: 1.25rem;
+    position: absolute;
+    top: 0;
+    width: 1.875rem;
+
+    &:before {
+        content: "";
+        left: 27%;
+        position: absolute;
+    }
 }
 </style>
   
