@@ -314,10 +314,12 @@ export default {
             }
             localStorage.stepNumber = newSN ?? 1;
         },
-        verificationData(newData) {
-            console.log(1)
-            localStorage.verificationData = JSON.stringify(newData);
-        }
+        verificationData: {
+            handler: function (newData) {
+                localStorage.verificationData = JSON.stringify(newData);
+            },
+            deep: true
+        },
 
     },
     async beforeMount() {
