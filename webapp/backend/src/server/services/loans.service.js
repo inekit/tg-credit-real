@@ -13,6 +13,7 @@ class LoansService {
     this.getUserActiveAppointment = this.getUserActiveAppointment.bind(this);
     this.addLoanAppointment = this.addLoanAppointment.bind(this);
     this.changeLoanStatus = this.changeLoanStatus.bind(this);
+    this.saveReturningFileName = this.saveReturningFileName.bind(this);
     this.getLoans = this.getLoans.bind(this);
     this.getCount = this.getCount.bind(this);
   }
@@ -142,6 +143,48 @@ class LoansService {
     });
   }
 
+  async saveReturningFileName(image, isPreview) {
+    if (typeof image === String) return image;
+
+    let fName = image?.name;
+    console.log(image);
+
+    let fNameFullPath;
+    if (fName) {
+      let fNameSplit = fName.split(".");
+      const fileFormat = fNameSplit[fNameSplit.length - 1];
+      fNameFullPath = image.md5 + "." + fileFormat;
+      await image?.mv("public/pics/" + fNameFullPath);
+
+      console.log(image.mimetype.split("/")[0]);
+
+      if (fileFormat !== "webp" && image.mimetype.split("/")[0] === "image")
+        await webp
+          .cwebp(
+            `public/pics/${fNameFullPath}`,
+            `public/pics/${image.md5}.webp`,
+            "-q 80"
+          )
+          .then(async (r) => {
+            if (isPreview) {
+              await webp
+                .cwebp(
+                  `public/pics/${fNameFullPath}`,
+                  `public/pics/${image.md5}_preview.webp`,
+                  "-q 90 -resize 480 0"
+                )
+                .catch((e) => console.log(e));
+            }
+            await fs.unlink(`public/pics/${fNameFullPath}`).catch((e) => {});
+            fNameFullPath = image.md5 + ".webp";
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+    }
+    return fNameFullPath;
+  }
+
   addLoanAppointment({
     user_id,
     name,
@@ -155,27 +198,55 @@ class LoansService {
     term_days,
     sum,
     country = "Тайланд",
+    visa_preview,
+    passport_preview,
   }) {
     return new Promise(async (res, rej) => {
       const connection = await tOrmCon;
-      connection
-        .getRepository("Loan")
-        .save({
-          user_id,
-          name,
-          surname,
-          patronymic,
-          phone,
-          birth_date,
-          passport_photo,
-          visa_photo,
-          visa_expired_date,
-          term_days,
-          sum,
-          country,
-        })
-        .then((data) => res(data))
-        .catch((error) => rej(new MySqlError(error)));
+
+      const queryRunner = connection.createQueryRunner();
+
+      await queryRunner.connect();
+
+      await queryRunner.startTransaction();
+
+      try {
+        const passportPreviewName = previewBinary
+          ? await this.saveReturningFileName(passport_photo, true)
+          : passport_preview;
+        const visaPreviewName = previewBinary
+          ? await this.saveReturningFileName(visa_photo, true)
+          : visa_preview;
+
+        connection
+          .getRepository("Loan")
+          .save({
+            user_id,
+            name,
+            surname,
+            patronymic,
+            phone,
+            birth_date,
+            passport_photo: passportPreviewName,
+            visa_photo: visaPreviewName,
+            visa_expired_date,
+            term_days,
+            sum,
+            country,
+          })
+          .then((data) => res(data))
+          .catch((error) => rej(new MySqlError(error)));
+        await queryRunner.commitTransaction();
+
+        res(data);
+      } catch (error) {
+        console.log(error);
+        await queryRunner.rollbackTransaction();
+
+        rej(new MySqlError(error));
+      } finally {
+        await queryRunner.release();
+      }
     });
   }
 

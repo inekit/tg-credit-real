@@ -312,6 +312,9 @@ export default {
         console.log(this.params, this.$store.state.userId)
         this.verificationData = await this.getProfileData()
 
+        this.imageData.passport_photo = this.verificationData.passport_photo ? `${this.$store.state.publicPath}/public/pics/${this.verificationData.passport_photo}` : null;
+        this.imageData.visa_photo = this.verificationData.visa_photo ? `${this.$store.state.publicPath}/public/pics/${this.verificationData.visa_photo}` : null;
+
 
     },
     async mounted() {
@@ -394,6 +397,8 @@ export default {
             for (let key in this.verificationData) {
                 formData.append(key, this.verificationData[key])
             }
+            this.imageData.visa_photo && formData.append('visa_preview', this.imageData.visa_photo)
+            this.imageData.passport_photo && formData.append('passport_preview', this.imageData.passport_photo)
 
             return formData
         },
