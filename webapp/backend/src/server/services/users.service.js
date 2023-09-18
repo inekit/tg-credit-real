@@ -79,7 +79,7 @@ class UsersService {
     });
   }
 
-  editUser({ id, ban }) {
+  editUser({ id, ban }, ctx) {
     return new Promise((res, rej) => {
       if (!id) return rej(new NoInputDataError({ id }));
 
@@ -87,7 +87,13 @@ class UsersService {
         connection
           .getRepository("User")
           .update({ id }, { ban })
-          .then((data) => res(data))
+          .then(async (data) => {
+            await ctx.telegram
+              .sendMessage(id, ctx.getTitle("YOU_ARE_BANNED"))
+              .catch(console.log);
+
+            res(data);
+          })
           .catch((error) => rej(new MySqlError(error)));
       });
     });

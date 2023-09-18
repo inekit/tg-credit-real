@@ -29,11 +29,13 @@ function deleteUser(req, res, next) {
     .catch((error) => next(error));
 }
 
-function editUser(req, res, next) {
-  usersService
-    .editUser(req.body)
-    .then((data) => res.send(data))
-    .catch((error) => next(error));
+function editUser(ctx) {
+  return (req, res, next) => {
+    usersService
+      .editUser(req.body, ctx)
+      .then((data) => res.send(data))
+      .catch((error) => next(error));
+  };
 }
 
 module.exports = {
