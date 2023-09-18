@@ -302,29 +302,7 @@ class LoansService {
           )
         )?.[0];
 
-        console.log(22222);
-
-        if (!active_loan?.status) rej({ error: "Нет активных займов" });
-        else if (
-          (active_loan.status === "Новый" &&
-            !["Выдан", "Отменен", "Запрещен"].includes(status)) ||
-          (active_loan.status === "Выдан" && status !== "Получен") ||
-          (active_loan.status === "Получен" && status !== "На возврате") ||
-          (active_loan.status === "На возврате" && status !== "Закрыт")
-        )
-          rej({ error: "Более ранний статус заказа" });
-        else {
-          const data = await connection
-            .query(
-              `update loans set status = $1 where user_id = $2 and status = $3`,
-              [status, user_id, active_loan.status]
-            )
-            .catch((error) => rej(new MySqlError(error)))
-            .then((data) => res(data));
-
-          res(data);
-        }
-
+        res({ d: 1 });
         console.log(3333);
 
         await queryRunner.commitTransaction();
