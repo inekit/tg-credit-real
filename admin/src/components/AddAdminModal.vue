@@ -52,7 +52,8 @@ export default ({
   },
   methods: {
     addNewAdmin() {
-      eventBus.$emit('addNewAdmin')
+      eventBus.$emit('addNewAdmin');
+      this.password = null
     },
     closeModal() {
       eventBus.$emit('closeModal')
@@ -98,7 +99,6 @@ export default ({
             id: this.formData.id
           })
           .then(() => {
-            this.password = null;
             eventBus.$emit('adminEdited')
           })
           .catch((e) => {
