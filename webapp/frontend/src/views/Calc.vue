@@ -383,6 +383,17 @@ export default {
             return results ?? {}
 
         },
+        constractFromData() {
+            var formData = new FormData()
+
+            formData.append('user_id', this.$store.state.userId)
+
+            for (let key in this.verificationData.keys()) {
+                formData.append(key, this.verificationData[key])
+            }
+
+            return formData
+        },
         addLoan() {
             if (this.isOrdering === true) return;
 
