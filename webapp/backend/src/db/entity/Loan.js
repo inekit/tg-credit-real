@@ -92,6 +92,25 @@ module.exports = new EntitySchema({
       enum: ["Тайланд"],
       default: "Тайланд",
     },
+    atm: {
+      type: "enum",
+      enum: [
+        "Любой банкомат",
+        "Личная встреча",
+        "Банкомат Bangkok Bank",
+        "Банкомат Kungsri",
+        "Банкомат SCB",
+        "Банкомат Kasikorn",
+        "Банкомат Krungthai",
+        "Банковский перевод (Таиланд)",
+      ],
+      nullable: false,
+    },
+    return_method: {
+      type: "enum",
+      enum: ["Тиньков", "Сбербанк", "Перевод по номеру счета"],
+      nullable: false,
+    },
     aprooved_by_id: { type: "bigint", nullable: true },
   },
   relations: {
