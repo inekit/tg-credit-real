@@ -98,6 +98,7 @@ export default ({
             id: this.formData.id
           })
           .then(() => {
+            this.password = null;
             eventBus.$emit('adminEdited')
           })
           .catch((e) => {
