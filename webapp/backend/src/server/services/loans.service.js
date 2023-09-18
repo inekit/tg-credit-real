@@ -186,7 +186,7 @@ class LoansService {
   }
 
   addLoanAppointment({
-    user_id,
+    id,
     name,
     surname,
     patronymic,
@@ -221,7 +221,7 @@ class LoansService {
         connection
           .getRepository("Loan")
           .save({
-            user_id,
+            id,
             name,
             surname,
             patronymic,
