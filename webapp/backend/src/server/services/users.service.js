@@ -89,7 +89,12 @@ class UsersService {
           .update({ id }, { ban })
           .then(async (data) => {
             await ctx.telegram
-              .sendMessage(id, ctx.getTitle("YOU_ARE_BANNED"))
+              .sendMessage(
+                id,
+                ban
+                  ? ctx.getTitle("YOU_ARE_BANNED")
+                  : ctx.getTitle("YOU_ARE_UNBANNED")
+              )
               .catch(console.log);
 
             res(data);
