@@ -15,7 +15,7 @@ var app = require("./app-preferences");
 app.use("/colorsserver/public", express.static("public"));
 
 app.use(bodyParser.json());
-//app.use(upload.array());
+app.use(upload.none());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
