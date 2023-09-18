@@ -71,11 +71,10 @@ export default ({
 
         myApi
           .post(this.$store.state.publicPath + '/api/admin/register', {
-            params: {
-              login: this.formData.login,
-              password: this.password,
-              id: this.formData.id
-            }
+            login: this.formData.login,
+            password: this.password,
+            id: this.formData.id
+
           })
           .then(() => {
             eventBus.$emit('adminAdded')
@@ -94,11 +93,9 @@ export default ({
 
         myApi
           .put(this.$store.state.publicPath + '/api/admin/admins', {
-            params: {
-              login: this.formData.login,
-              password: this.password,
-              id: this.formData.id
-            }
+            login: this.formData.login,
+            password: this.password,
+            id: this.formData.id
           })
           .then(() => {
             eventBus.$emit('adminEdited')
