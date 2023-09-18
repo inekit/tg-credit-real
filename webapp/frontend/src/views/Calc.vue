@@ -367,7 +367,7 @@ export default {
 
         },
         async getProfileData() {
-            const results = await this.$store.state.myApi.get(this.$store.state.restAddr + '/profile', {
+            const results = await this.$store.state.myApi.get(this.$store.state.restAddr + '/users', {
                 params: {
                     user_id: this.$store.state.userId,
                 }

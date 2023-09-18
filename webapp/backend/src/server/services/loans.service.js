@@ -57,7 +57,7 @@ class LoansService {
         return rej({ error: "Недопустимый срок займа" });
 
       res({
-        return_sum: sum + (sum / 100) * term_days,
+        return_sum: +sum + +(sum / 100) * term_days,
       });
     });
   }
