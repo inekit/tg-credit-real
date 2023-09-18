@@ -311,7 +311,7 @@ class LoansService {
         )
           rej({ error: "Более ранний статус заказа" });
         else {
-          await connection
+          const data = await connection
             .query(
               `update loans set status = $1 where user_id = $2 and status = $3`,
               [status, user_id, active_loan.status]
@@ -319,7 +319,7 @@ class LoansService {
             .catch((error) => rej(new MySqlError(error)))
             .then((data) => res(data));
 
-          res({ count_users });
+          res(data);
         }
 
         await queryRunner.commitTransaction();
