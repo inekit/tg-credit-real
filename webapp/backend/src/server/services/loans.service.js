@@ -226,7 +226,7 @@ class LoansService {
         const active_loan_status = (
           await queryRunner.query(
             `select u.id,
-          max(case when (l.status = 'Новый' or l.status = 'Выдан' or l.status = 'Получен' or l.status = 'На возврате') then l.status else null end) active_loan_status,
+          max(case when (l.status = 'Новый' or l.status = 'Выдан' or l.status = 'Получен' or l.status = 'На возврате') then l.status else null end) active_loan_status
           from users u left join loans l on l.user_id = u.id where u.id = $1 group by u.id `,
             [user_id]
           )
