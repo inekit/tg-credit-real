@@ -40,6 +40,7 @@ function registerLocal(req, res, next) {
 }
 
 function editUser(req, res, next) {
+  console.log(req.body);
   if (!req.body.password || !req.body.login)
     return res.status(403).send({ error: "no data" });
 

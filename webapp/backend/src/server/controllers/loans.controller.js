@@ -55,7 +55,6 @@ function changeLoanStatus(ctx) {
 
 function changeLoanStatusAdmin(ctx) {
   return (req, res, next) => {
-    console.log(req.body, req.session.passport);
     loansService
       .changeLoanStatus(
         Object.assign(req.body, {
