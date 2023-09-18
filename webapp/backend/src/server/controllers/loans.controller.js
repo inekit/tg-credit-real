@@ -29,9 +29,9 @@ function getUserActiveAppointment(req, res, next) {
 }
 
 function addLoanAppointment(req, res, next) {
-  console.log(req.body);
-  const passport_photoBinary = req.files["passport_photo"];
-  const visa_photoBinary = req.files["visa_photo"];
+  console.log(req.body, req.files);
+  const passportPhotoBinary = req.files["passport_photo"];
+  const visaPhotoBinary = req.files["visa_photo"];
 
   loansService
     .addLoanAppointment(
