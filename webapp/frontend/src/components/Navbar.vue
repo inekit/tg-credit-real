@@ -1,12 +1,12 @@
 <template>
     <div class="navbar">
-        <div class="container">
+        <div class="navbar__container">
             <div class="navbar__body">
                 <RouterLink aria-current="page" class="_icon-home BottomNavBar_bottomNavBar__link"
-                    :class="[$route.name !== 'Favourites' ? 'active' : '']" :to="`/channels/${$store.state.userId}`">
+                    :class="[$route.name !== 'Favourites' ? 'active' : '']" :to="`/channels`">
                 </RouterLink>
-                <RouterLink class="_icon-bookmark BottomNavBar_bottomNavBar__link" active-class="active"
-                    :to="'/favourites'"></RouterLink>
+                <RouterLink class="_icon-bookmark BottomNavBar_bottomNavBar__link" active-class="active" :to="'/profile'">
+                </RouterLink>
             </div>
         </div>
     </div>
@@ -36,13 +36,18 @@ export default {
 }
 
 .navbar {
-    background-color: #77759b40;
+    background-color: #1f1c2f;
     bottom: 0;
     box-shadow: 0 0 20px rgba(0, 0, 0, .5);
     left: 0;
     position: fixed;
     width: 100%;
     z-index: 5;
+
+    .navbar__container {
+        max-width: none;
+        padding: 0 1.25rem;
+    }
 
     .navbar__body {
         align-items: center;
