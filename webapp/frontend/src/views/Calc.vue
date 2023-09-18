@@ -303,7 +303,7 @@ export default {
     async beforeMount() {
         window.Telegram?.WebApp.BackButton.onClick(this.routeBack);
         window.Telegram?.WebApp.BackButton.show();
-        this.params = new URLSearchParams(uri)
+        this.params = new URLSearchParams(window.location.href)
 
         const buttonUserId = window.Telegram?.WebApp?.initDataUnsafe?.user?.id
         this.$store.state.userId = buttonUserId ?? this.params.user_id;
@@ -405,10 +405,7 @@ export default {
             }
 
             this.$store.state.myApi
-                .post(this.$store.state.restAddr + '/loans', {
-                    user_id: this.$store.state.userId,
-                    ...this.verificationData
-                })
+                .post(this.$store.state.restAddr + '/loans', this.constractFromData())
                 .then(async (response) => {
                     window.Telegram?.WebApp.disableClosingConfirmation()
                     window.Telegram?.WebApp.close();
