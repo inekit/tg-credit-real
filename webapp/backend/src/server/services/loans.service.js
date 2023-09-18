@@ -249,7 +249,7 @@ class LoansService {
           country,
         });
 
-        connection.getRepository("Loan").update(id, {
+        connection.getRepository("User").update(id, {
           id,
           name,
           surname,
