@@ -68,10 +68,8 @@ export default {
         changeStatus(status) {
             this.$store.state.myApi
                 .put(this.$store.state.restAddr + '/loans', {
-                    params: {
-                        status,
-                        user_id: this.$store.state.userId,
-                    }
+                    status,
+                    user_id: this.$store.state.userId,
                 },)
                 .then(async (response) => {
                     window.Telegram?.WebApp.disableClosingConfirmation()
@@ -84,7 +82,9 @@ export default {
         },
         async getLoanData() {
             const results = await this.$store.state.myApi.get(this.$store.state.restAddr + '/loans', {
-                user_id: this.$store.state.userId,
+                params: {
+                    user_id: this.$store.state.userId,
+                }
             })
                 .then(response => {
                     return response.data;
