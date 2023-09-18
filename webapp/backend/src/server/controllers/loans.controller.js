@@ -52,7 +52,7 @@ function changeLoanStatus(ctx) {
       .changeLoanStatus(
         Object.assign(req.body, {
           admin_id: req.session.passport.user.toString(),
-          req,
+          req: req.session,
         }),
         false,
         ctx
