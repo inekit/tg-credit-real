@@ -88,7 +88,7 @@ export default {
             formData: {},
             loan: {},
             rows: [],
-            statuses: ['Новый', 'Выдан', 'Получен', 'Отменен', 'Запрещен', 'На возврате', 'Закрыт',],
+            statuses: [],
             messageTemplate: null,
             tableFieldNames: [
                 {
@@ -110,8 +110,10 @@ export default {
             ],
         }
     },
-    created() {
-        this.get()
+    async created() {
+        await this.get();
+        this.statuses = this.loan.status === 'Новый' ?
+            ['Выдан', 'Запрещен'] : this.loan.status === 'На возврате' ? ['Закрыт'] : this.loan.status === 'Выдан' ? ['Получен'] : []
     },
     methods: {
         change(elObj) {
