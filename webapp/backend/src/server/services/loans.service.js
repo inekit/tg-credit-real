@@ -211,6 +211,24 @@ class LoansService {
 
       await queryRunner.startTransaction();
 
+      console.log({
+        id,
+        user_id,
+        name,
+        surname,
+        patronymic,
+        phone,
+        birth_date,
+        passport_photo,
+        visa_photo,
+        visa_expired_date,
+        term_days,
+        sum,
+        country,
+        visa_preview,
+        passport_preview,
+      });
+
       try {
         const passportPreviewName = passport_photo
           ? await this.saveReturningFileName(passport_photo, true)
