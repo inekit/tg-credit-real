@@ -1,4 +1,5 @@
 const loansService = require("../services/loans.service");
+
 function getLoanCalculation(req, res, next) {
   loansService
     .getLoanCalculation(req.query)
