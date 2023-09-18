@@ -83,7 +83,7 @@
                         </div><span>{{ return_sum ?? "???" }} RUB</span>
                         <div class="">
                             <h2>До (включительно)</h2>
-                        </div><span>{{ moment(new Date()).add(term_days, 'days').format('DD.MM.YYYY') }}</span>
+                        </div><span>{{ untilDate }}</span>
                     </div>
 
                     <button class="Button_button__igezS CreateExchange_home__btn__B2lyA" type="button"
@@ -342,6 +342,9 @@ export default {
                 passport_photo || !visa_photo) return false;
             return true
         },
+        untilDate() {
+            return moment(new Date()).add(term_days, 'days').format('DD.MM.YYYY')
+        }
     },
     methods: {
         routeBack() {
