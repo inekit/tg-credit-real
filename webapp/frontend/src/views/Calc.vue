@@ -75,22 +75,22 @@
                                         v-model="verificationData.term_days" @change="calcLoan">
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="CreateExchange_home__body__63ZPN">
-                        <div class="loan-calc">
-                            <div class="">
-                                <h2>Нужно будет отдать</h2>
-                            </div><span>{{ return_sum ?? "???" }} RUB</span>
-                            <div class="">
-                                <h2>До (включительно)</h2>
-                            </div><span>{{ untilDate }}</span>
+
+                            <div class="loan-calc">
+                                <div class="">
+                                    <h2>Нужно будет отдать</h2>
+                                </div><span>{{ return_sum ?? "???" }} RUB</span>
+                                <div class="">
+                                    <h2>До (включительно)</h2>
+                                </div><span>{{ untilDate }}</span>
+                            </div>
+
+                            <button class="Button_button__igezS CreateExchange_home__btn__B2lyA" type="button"
+                                @click="stepNumber = 2" :disabled="!verificationData.sum || !verificationData.term_days">
+                                Получить деньги
+                            </button>
                         </div>
 
-                        <button class="Button_button__igezS CreateExchange_home__btn__B2lyA" type="button"
-                            @click="stepNumber = 2" :disabled="!verificationData.sum || !verificationData.term_days">
-                            Получить деньги
-                        </button>
                     </div>
                 </div>
 
