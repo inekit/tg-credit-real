@@ -7,6 +7,7 @@ const titles = require("telegraf-steps").titlesGetter(__dirname + "/Titles");
 const tOrmCon = require("./db/connection");
 const sendOrder = require("./Utils/sendOrder");
 require("dotenv").config();
+const getUser = require("./Utils/getUser");
 
 const moment = require("moment");
 const mainStage = new Stage(
@@ -18,6 +19,13 @@ const mainStage = new Stage(
     default: "clientScene",
   }
 );
+
+mainStage.use(async (ctx, next) => {
+  const user = await getUser(ctx);
+  if (!user.ban) return next();
+
+  return await ctx.replyWithTitle("YOU_ARE_BANNED", {});
+});
 
 mainStage.start(async (ctx) => ctx.scene.enter("clientScene"));
 
