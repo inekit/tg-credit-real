@@ -317,7 +317,7 @@ class LoansService {
             if (assessment > 5 || assessment < 1 || !assessment)
               throw new Error("Неверная оценка");
           }
-          const data = await connection.query(
+          const data = await queryRunner.query(
             `update loans set status = $1,assessment=$4 where user_id = $2 and status = $3`,
             [status, user_id, active_loan.status, assessment]
           );
