@@ -382,8 +382,8 @@ export default {
             for (let key in this.verificationData) {
                 formData.append(key, this.verificationData[key])
             }
-            this.imageData.visa_photo && formData.append('visa_preview', this.imageData.visa_photo)
-            this.imageData.passport_photo && formData.append('passport_preview', this.imageData.passport_photo)
+            //this.imageData.visa_photo && formData.append('visa_preview', this.imageData.visa_photo)
+            //this.imageData.passport_photo && formData.append('passport_preview', this.imageData.passport_photo)
 
             return formData
         },
