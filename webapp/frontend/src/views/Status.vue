@@ -47,7 +47,6 @@ export default {
         window.Telegram?.WebApp.BackButton.onClick(this.routeBack);
         window.Telegram?.WebApp.BackButton.show();
 
-        this.channel = await this.getChannel(this.$route.params.channelId);
     },
     async mounted() {
         //this.updatePage(300);
@@ -141,21 +140,7 @@ export default {
                     this.isOrdering = false;
                 })
         },
-        async getChannel(id) {
-            const results = await this.$store.state.myApi.get(this.$store.state.restAddr + '/items', {
-                params: {
-                    id: id,
-                    user_id: this.$store.state.userId,
-                }
-            })
-                .then(response => {
-                    return response.data[0];
-                })
-                .catch(e => { eventBus.$emit('noresponse', e) })
 
-            return results
-
-        },
     }
 }
 </script>
