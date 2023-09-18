@@ -68,8 +68,12 @@ export default {
                     user_id: this.$store.state.userId,
                 },)
                 .then(async (response) => {
-                    window.Telegram?.WebApp.disableClosingConfirmation()
-                    window.Telegram?.WebApp.close();
+                    if (status !== 'Получен') {
+                        window.Telegram?.WebApp.disableClosingConfirmation()
+                        return window.Telegram?.WebApp.close();
+                    }
+                    this.loanData = await this.getLoanData()
+
                 })
                 .catch(e => {
                     eventBus.$emit('noresponse', e);
