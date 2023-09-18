@@ -5,7 +5,7 @@
       <CFormInput type="search" v-model="searchQuery" @change="get(null, null, null, null, true); getPageCount()"
         placeholder="Поиск" />
       <CFormSelect v-model="status" size="sm">
-        <option :value="undefined">Фильтр по статусу</option>
+        <option :value="null">Все статусы</option>
         <option v-for="currentStatus in ['Новый', 'Выдан', 'Получен', 'Отменен', 'Запрещен', 'На возврате', 'Закрыт',]"
           :key="currentStatus" :value="currentStatus">
           {{ currentStatus }}</option>
