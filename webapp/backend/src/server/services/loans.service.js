@@ -86,9 +86,11 @@ class LoansService {
       const connection = await tOrmCon;
       {
         const query = `select l.*, u.username,
-        l.surname||' '|| l.name || ' ' || l.patronymic as fio
+        l.surname||' '|| l.name || ' ' || l.patronymic as fio,
+        count (DISTINCT CASE WHEN ul.status <> 'Отменен' and ul.status <> 'Запрещен' then ul.id ELSE NULL END) - 1 orders_count
                     from public.loans l
                     left join users u on u.id = l.user_id
+                    left join loans ul on u.id = ul.user_id
                     where 
                       (lower(l.name) like lower($1) 
                       or lower(l.surname) like lower($1) 
@@ -326,6 +328,11 @@ class LoansService {
             )
             .catch((error) => rej(new MySqlError(error)))
             .then((data) => res(data));
+
+          if (status === "Выдан")
+            await queryRunner.manager.getRepository("User").update(id, {
+              verification_date: Date.now(),
+            });
 
           res(data);
         }
