@@ -236,7 +236,7 @@ class LoansService {
 
         if (active_loan_status) throw new Error("Уже есть активный займ");
 
-        const return_sum = this.getLoanCalculation({ sum, term_days });
+        const return_sum = await this.getLoanCalculation({ sum, term_days });
 
         const data = await queryRunner.manager.getRepository("Loan").save({
           user_id,
