@@ -7,6 +7,11 @@ import eventBus from './eventBus'
 
 export default {
   async beforeMount() {
+    let uri = window.location.search;
+    this.params = new URLSearchParams(uri)
+
+    const buttonUserId = window.Telegram?.WebApp?.initDataUnsafe?.user?.id
+    this.$store.state.userId = buttonUserId ?? this.params.get('user_id');
     this.$store.state.profileData = await this.getProfileData()
 
     if (this.$store.state.profileData?.active_loan_status) this.$router.push("/status")
