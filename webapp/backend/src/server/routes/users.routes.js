@@ -2,6 +2,8 @@ var express = require("express");
 var router = express.Router();
 var LoansController = require("../controllers/loans.controller");
 var UsersController = require("../controllers/users.controller");
+var fileUpload = require("express-fileupload");
+router.use(fileUpload({}));
 
 module.exports = (ctx) => {
   router.get("/loan_calculation", LoansController.getLoanCalculation);
