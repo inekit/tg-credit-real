@@ -107,7 +107,7 @@ export default {
     },
     computed: {
         fixedRate() {
-            return +this.$store.state.profileData.avg_assessment?.toFixed(1)
+            return +parseFloat(this.$store.state.profileData.avg_assessment)?.toFixed(1)
         }
     }
 }
