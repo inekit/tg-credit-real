@@ -44,7 +44,7 @@ console.log("started");
       .setWebhook(`${process.env.SERVER_URI}${secretPath}`, {
         certificate: {
           source: fs.readFileSync(
-            "/etc/letsencrypt/live/92.255.79.59/fullchain.pem"
+            "/etc/letsencrypt/live/1130333-cc94997.tw1.ru/fullchain.pem"
           ),
         },
         allowed_updates,

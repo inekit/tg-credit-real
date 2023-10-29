@@ -26,7 +26,7 @@ exports.webapp_keyboard = (ctx, id) =>
     [
       webAppButton(
         ctx.getTitle("WEBAPP_INLINE_BUTTON"),
-        "https://92.255.79.59/colorsfront/channels/" + id
+        "https://1130333-cc94997.tw1.ru/colorsfront/channels/" + id
       ),
     ],
   ]);
@@ -36,7 +36,7 @@ exports.basket_keyboard = (ctx, id) =>
     [
       webAppButton(
         ctx.getTitle("BASKET_INLINE_BUTTON"),
-        "https://92.255.79.59/colorsfront/basket/" + id
+        "https://1130333-cc94997.tw1.ru/colorsfront/basket/" + id
       ),
     ],
     [callbackButton(ctx.getTitle("BACK_BUTTON"), "go_back")],
