@@ -324,7 +324,10 @@ export default {
     },
     async beforeMount() {
         window.Telegram?.WebApp.BackButton.offClick(this.routeBack);
-        window.Telegram?.WebApp.BackButton.hide();
+        window.Telegram?.WebApp.BackButton.hide()
+        window.Telegram?.WebApp.expand()
+
+        window.Telegram?.WebApp.enableClosingConfirmation()
 
         console.log(this.params, this.$store.state.userId)
         console.log(232, localStorage)
