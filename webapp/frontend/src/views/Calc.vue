@@ -58,7 +58,7 @@
                                 </button>
                             </div>
                             <div class="slidecontainer">
-                                <input type="range" min="1000" max="100000" class="slider" id="myRange"
+                                <input type="range" min="1000" max="100000" step="100" class="slider" id="myRange"
                                     v-model="verificationData.sum" @change="calcLoan">
                             </div>
                         </div>
@@ -157,8 +157,11 @@
                             <input type="tel" id="phone" name="phone" placeholder="Телефон"
                                 v-model="verificationData.phone">
                             <label for="birth-date">Дата рождения</label>
-                            <input type="date" id="birth-date" name="birth-date" placeholder="Дата рождения"
+                            <input type="date" :max="nowDate" id="birth-date" name="birth-date" placeholder="Дата рождения"
                                 v-model="verificationData.birth_date">
+                            <label for="visa-expired-date">Дата окончания действия визы</label>
+                            <input type="date" id="visa-expired-date" name="visa-expired-date" :min="nowDate"
+                                placeholder="Дата окончания действия визы" v-model="verificationData.visa_expired_date">
                             <label>Подтверждение личности</label>
                             <div class="image-input-container">
                                 <div class="input-file-row">
@@ -186,9 +189,7 @@
                                     <img class="preview" :src="imageData.visa_photo">
                                 </div>
                             </div>
-                            <label for="visa-expired-date">Дата окончания действия визы</label>
-                            <input type="date" id="visa-expired-date" name="visa-expired-date"
-                                placeholder="Дата окончания действия визы" v-model="verificationData.visa_expired_date">
+
                         </div>
                         <button class="Button_button__igezS CreateExchange_home__btn__B2lyA" type="button" @click="addLoan"
                             :disabled="!checkRequired">
@@ -295,7 +296,7 @@ export default {
                 passport_photo: null, visa_photo: null,
             },
             return_sum: null,
-
+            nowDate: new Date(),
             atm_list: ["Любой банкомат", "Личная встреча", "Банкомат Bangkok Bank", "Банкомат Kungsri", "Банкомат SCB", "Банкомат Kasikorn", "Банкомат Krungthai", "Банковский перевод (Таиланд)"],
 
             stepNumber: 1,
@@ -347,7 +348,7 @@ export default {
     },
     async mounted() {
         //this.updatePage(300);
-
+        calcLoan()
     },
     async beforeUnmount() {
         window.Telegram?.WebApp.BackButton.offClick(this.routeBack);
@@ -619,7 +620,12 @@ export default {
     padding: 12px;
     width: 100%;
     min-width: 100%;
-    -webkit-appearance: none;
+    appearance: none;
+
+    &::-webkit-date-and-time-value {
+        text-align: left;
+        height: 52px;
+    }
 
     &::-webkit-input-placeholder {
         color: #706c88;
