@@ -385,6 +385,8 @@ export default {
                 })
                 .catch(e => { alert(e.toString()) }))
 
+            console.log(sum, await sum)
+
             return sum
 
         },
