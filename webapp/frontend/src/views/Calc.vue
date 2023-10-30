@@ -158,12 +158,11 @@
                             <input type="tel" id="phone" name="phone" placeholder="Телефон"
                                 v-model="verificationData.phone">
                             <label for="birth-date">Дата рождения</label>
-                            <input type="date" :max="new Date().toISOString().split('T')[0]" id="birth-date"
-                                name="birth-date" placeholder="Дата рождения" v-model="verificationData.birth_date">
+                            <input type="date" :max="nowDate" id="birth-date" name="birth-date" placeholder="Дата рождения"
+                                v-model="verificationData.birth_date">
                             <label for="visa-expired-date">Дата окончания действия визы</label>
-                            <input type="date" id="visa-expired-date" name="visa-expired-date"
-                                :min="new Date().toISOString().split('T')[0]" placeholder="Дата окончания действия визы"
-                                v-model="verificationData.visa_expired_date">
+                            <input type="date" id="visa-expired-date" name="visa-expired-date" :min="nowDate"
+                                placeholder="Дата окончания действия визы" v-model="verificationData.visa_expired_date">
                             <label>Подтверждение личности</label>
                             <div class="image-input-container">
                                 <div class="input-file-row">
@@ -300,6 +299,7 @@ export default {
             atm_list: ["Любой банкомат", "Личная встреча", "Банкомат Bangkok Bank", "Банкомат Kungsri", "Банкомат SCB", "Банкомат Kasikorn", "Банкомат Krungthai", "Банковский перевод (Таиланд)"],
             return_sum: null,
             stepNumber: 1,
+            nowDate: new Date().toISOString().split('T')[0],
             chooseAtmOpened: false,
             return_list: ["Тиньков", "Сбербанк", "Перевод по номеру счета"],
             chooseReturnOpened: false,
