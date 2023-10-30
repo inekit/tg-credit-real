@@ -59,7 +59,7 @@
                             </div>
                             <div class="slidecontainer">
                                 <input type="range" min="1000" max="100000" step="100" class="slider" id="myRange"
-                                    v-model="verificationData.sum">
+                                    @change="calcLoan()" v-model="verificationData.sum">
                             </div>
                         </div>
                         <div class="SelectInput_select__oxfzh">
@@ -70,7 +70,7 @@
                                 </div>
                             </div>
                             <div class="slidecontainer">
-                                <input type="range" min="1" max="30" class="slider" id="myRange"
+                                <input type="range" min="1" max="30" class="slider" id="myRange" @change="calcLoan()"
                                     v-model="verificationData.term_days">
                             </div>
                         </div>
@@ -297,7 +297,7 @@ export default {
             },
             nowDate: new Date(),
             atm_list: ["Любой банкомат", "Личная встреча", "Банкомат Bangkok Bank", "Банкомат Kungsri", "Банкомат SCB", "Банкомат Kasikorn", "Банкомат Krungthai", "Банковский перевод (Таиланд)"],
-
+            return_sum: null,
             stepNumber: 1,
             chooseAtmOpened: false,
             return_list: ["Тиньков", "Сбербанк", "Перевод по номеру счета"],
@@ -320,11 +320,6 @@ export default {
         verificationData: {
             handler: function (newData, oldData) {
                 localStorage.verificationData = JSON.stringify(newData);
-
-                console.log(newData.sum, oldData.sum, newData.term_days, oldData.term_days)
-                if (newData.sum !== oldData.sum || newData.term_days !== oldData.term_days)
-                    this.calcLoan()
-
             },
             deep: true
         },
