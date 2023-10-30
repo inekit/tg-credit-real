@@ -78,7 +78,7 @@
                         <div class="loan-calc">
                             <div class="">
                                 <h2>Нужно будет отдать</h2>
-                            </div><span>{{ returnSum ?? "???" }} RUB</span>
+                            </div><span>{{ return_sum ?? "???" }} RUB</span>
                             <div class="">
                                 <h2>До (включительно)</h2>
                             </div><span>{{ untilDate }}</span>
@@ -318,8 +318,12 @@ export default {
             localStorage.stepNumber = newSN ?? 1;
         },
         verificationData: {
-            handler: function (newData) {
+            handler: function (newData, oldData) {
                 localStorage.verificationData = JSON.stringify(newData);
+
+                if (newData.sum !== oldData.sum || newData.term_days !== oldData.term_days)
+                    this.calcLoan()
+
             },
             deep: true
         },
@@ -348,6 +352,8 @@ export default {
         this.verificationData.visa_expired_date = this.verificationData.visa_expired_date?.split("T")?.[0]
         this.verificationData.birth_date = this.verificationData.birth_date?.split("T")?.[0]
 
+        this.calcLoan()
+
     },
     async mounted() {
         //this.updatePage(300);
@@ -371,29 +377,27 @@ export default {
         untilDate() {
             return moment(new Date()).add(this.verificationData.term_days, 'days').format('DD.MM.YYYY')
         },
-        async returnSum() {
+    },
+    methods: {
+        routeBack() {
+            if (this.stepNumber > 1) this.stepNumber--
+        },
+        async calcLoan() {
             if (!this.verificationData.term_days || !this.verificationData.sum) return;
 
-            const sum = await (this.$store.state.myApi.get(this.$store.state.restAddr + '/loan_calculation', {
+            const results = await this.$store.state.myApi.get(this.$store.state.restAddr + '/loan_calculation', {
                 params: {
                     term_days: this.verificationData.term_days,
                     sum: this.verificationData.sum,
                 }
             })
                 .then(response => {
-                    return response.data?.return_sum;
+                    this.return_sum = response.data?.return_sum;
                 })
-                .catch(e => { alert(e.toString()) }))
+                .catch(e => { alert(e.toString()) })
 
-            console.log(sum, await sum)
+            return results
 
-            return sum
-
-        },
-    },
-    methods: {
-        routeBack() {
-            if (this.stepNumber > 1) this.stepNumber--
         },
         previewImage: function (event, variableName) {
             var input = event.target;
