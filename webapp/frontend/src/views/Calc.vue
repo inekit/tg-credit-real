@@ -59,7 +59,7 @@
                             </div>
                             <div class="slidecontainer">
                                 <input type="range" min="1000" max="100000" step="100" class="slider" id="myRange"
-                                    v-model="verificationData.sum" @change="calcLoan">
+                                    v-model="verificationData.sum">
                             </div>
                         </div>
                         <div class="SelectInput_select__oxfzh">
@@ -71,14 +71,14 @@
                             </div>
                             <div class="slidecontainer">
                                 <input type="range" min="1" max="30" class="slider" id="myRange"
-                                    v-model="verificationData.term_days" @change="calcLoan">
+                                    v-model="verificationData.term_days">
                             </div>
                         </div>
 
                         <div class="loan-calc">
                             <div class="">
                                 <h2>Нужно будет отдать</h2>
-                            </div><span>{{ return_sum ?? "???" }} RUB</span>
+                            </div><span>{{ returnSum ?? "???" }} RUB</span>
                             <div class="">
                                 <h2>До (включительно)</h2>
                             </div><span>{{ untilDate }}</span>
@@ -295,7 +295,6 @@ export default {
                 name: null, surname: null, patronymic: null, birth_date: null, visa_expired_date: null, phone: null,
                 passport_photo: null, visa_photo: null,
             },
-            return_sum: null,
             nowDate: new Date(),
             atm_list: ["Любой банкомат", "Личная встреча", "Банкомат Bangkok Bank", "Банкомат Kungsri", "Банкомат SCB", "Банкомат Kasikorn", "Банкомат Krungthai", "Банковский перевод (Таиланд)"],
 
@@ -352,7 +351,6 @@ export default {
     },
     async mounted() {
         //this.updatePage(300);
-        calcLoan()
     },
     async beforeUnmount() {
         window.Telegram?.WebApp.BackButton.offClick(this.routeBack);
@@ -372,7 +370,24 @@ export default {
         },
         untilDate() {
             return moment(new Date()).add(this.verificationData.term_days, 'days').format('DD.MM.YYYY')
-        }
+        },
+        async returnSum() {
+            if (!this.verificationData.term_days || !this.verificationData.sum) return;
+
+            const sum = await this.$store.state.myApi.get(this.$store.state.restAddr + '/loan_calculation', {
+                params: {
+                    term_days: this.verificationData.term_days,
+                    sum: this.verificationData.sum,
+                }
+            })
+                .then(response => {
+                    return response.data?.return_sum;
+                })
+                .catch(e => { alert(e.toString()) })
+
+            return sum
+
+        },
     },
     methods: {
         routeBack() {
@@ -391,25 +406,6 @@ export default {
 
             }
         },
-
-        async calcLoan() {
-            if (!this.verificationData.term_days || !this.verificationData.sum) return;
-
-            const results = await this.$store.state.myApi.get(this.$store.state.restAddr + '/loan_calculation', {
-                params: {
-                    term_days: this.verificationData.term_days,
-                    sum: this.verificationData.sum,
-                }
-            })
-                .then(response => {
-                    this.return_sum = response.data?.return_sum;
-                })
-                .catch(e => { alert(e.toString()) })
-
-            return results
-
-        },
-
         constractFromData() {
             var formData = new FormData()
 
@@ -770,6 +766,7 @@ export default {
     position: fixed;
     width: 100%;
     padding: 0 16px;
+    width: 100%;
 }
 </style>
   
