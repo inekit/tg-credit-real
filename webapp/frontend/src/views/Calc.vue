@@ -288,8 +288,8 @@ export default {
             sexActive: true,
             channel: {},
             verificationData: {
-                sum: null,
-                term_days: null,
+                sum: 1000,
+                term_days: 7,
                 atm: null,
                 return_method: null,
                 name: null, surname: null, patronymic: null, birth_date: null, visa_expired_date: null, phone: null,
@@ -620,7 +620,7 @@ export default {
     padding: 12px;
     width: 100%;
     min-width: 100%;
-    appearance: none;
+    -webkit-appearance: none;
 
     &::-webkit-date-and-time-value {
         text-align: left;
