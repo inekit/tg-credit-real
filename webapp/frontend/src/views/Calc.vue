@@ -635,8 +635,7 @@ export default {
 
     &::-webkit-date-and-time-value {
         text-align: left;
-        height: 52px;
-        padding: 0 12px;
+        height: 28px;
 
     }
 
