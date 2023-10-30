@@ -321,6 +321,7 @@ export default {
             handler: function (newData, oldData) {
                 localStorage.verificationData = JSON.stringify(newData);
 
+                console.log(newData.sum, oldData.sum, newData.term_days, oldData.term_days)
                 if (newData.sum !== oldData.sum || newData.term_days !== oldData.term_days)
                     this.calcLoan()
 
@@ -352,11 +353,11 @@ export default {
         this.verificationData.visa_expired_date = this.verificationData.visa_expired_date?.split("T")?.[0]
         this.verificationData.birth_date = this.verificationData.birth_date?.split("T")?.[0]
 
-        this.calcLoan()
 
     },
     async mounted() {
         //this.updatePage(300);
+        this.calcLoan()
     },
     async beforeUnmount() {
         window.Telegram?.WebApp.BackButton.offClick(this.routeBack);
