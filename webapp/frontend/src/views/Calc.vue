@@ -159,6 +159,7 @@
                             <label for="birth-date">Дата рождения</label>
                             <input type="date" id="birth-date" name="birth-date" placeholder="Дата рождения"
                                 v-model="verificationData.birth_date">
+                            <label>Подтверждение личности</label>
                             <div class="image-input-container">
                                 <div class="input-file-row">
                                     <label class="input-file">
@@ -618,6 +619,9 @@ export default {
     padding: 12px;
     width: 100%;
     min-width: 100%;
+    margin-bottom: 12px;
+    display: block;
+    -webkit-appearance: none;
 
     &::-webkit-input-placeholder {
         color: #706c88;
