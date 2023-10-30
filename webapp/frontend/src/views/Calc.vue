@@ -198,6 +198,7 @@
                     </div>
                 </div>
             </transition>
+            <div class="spacer"></div>
         </div>
     </div>
     <div v-if="chooseAtmOpened">
@@ -473,6 +474,12 @@ export default {
         margin-top: 20px;
         display: block;
     }
+}
+
+.spacer {
+    height: 16px;
+    margin: 0 0 -16px 0;
+    background: transparent;
 }
 
 .CreateExchange_home__body__63ZPN {
