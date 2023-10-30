@@ -156,7 +156,8 @@
                                 v-model="verificationData.patronymic">
                             <input type="tel" id="phone" name="phone" placeholder="Телефон"
                                 v-model="verificationData.phone">
-                            <input type="date" id="date" name="date" placeholder="Дата рождения"
+                            <label for="birth-date">Дата рождения</label>
+                            <input type="date" id="birth-date" name="birth-date" placeholder="Дата рождения"
                                 v-model="verificationData.birth_date">
                             <div class="image-input-container">
                                 <div class="input-file-row">
@@ -184,8 +185,9 @@
                                     <img class="preview" :src="imageData.visa_photo">
                                 </div>
                             </div>
-                            <input type="date" id="date" name="date" placeholder="Дата окончания действия визы"
-                                v-model="verificationData.visa_expired_date">
+                            <label for="visa-expired-date">Дата окончания действия визы</label>
+                            <input type="date" id="visa-expired-date" name="visa-expired-date"
+                                placeholder="Дата окончания действия визы" v-model="verificationData.visa_expired_date">
                         </div>
                         <button class="Button_button__igezS CreateExchange_home__btn__B2lyA" type="button" @click="addLoan"
                             :disabled="!checkRequired">
@@ -615,6 +617,7 @@ export default {
     margin-bottom: 12px;
     padding: 12px;
     width: 100%;
+    min-width: 100%;
 
     &::-webkit-input-placeholder {
         color: #706c88;
@@ -627,6 +630,13 @@ export default {
     &:focus {
         border: 1px solid #000;
     }
+}
+
+.input-group>label {
+    color: #706c88;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 24px;
 }
 
 .image-input-container {
