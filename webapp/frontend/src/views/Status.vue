@@ -131,6 +131,9 @@ export default {
     async beforeMount() {
         window.Telegram?.WebApp.MainButton.offClick(this.routeToBasket);
         window.Telegram?.WebApp.MainButton.hide();
+        window.Telegram?.WebApp.BackButton.offClick(this.routeBack);
+        window.Telegram?.WebApp.BackButton.hide()
+        window.Telegram?.WebApp.expand()
 
         this.loanData = await this.getLoanData()
     },
