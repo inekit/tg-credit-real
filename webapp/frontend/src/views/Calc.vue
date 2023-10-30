@@ -35,6 +35,7 @@
                 </div>
                 <div class="Header_header__line__aozMJ"></div>
             </div>
+
             <transition name="slide-fade">
                 <div class="CreateExchange_home__body__63ZPN" v-if="stepNumber == 1">
                     <div class="menu-page">
@@ -198,7 +199,6 @@
                     </div>
                 </div>
             </transition>
-            <div class="spacer"></div>
         </div>
     </div>
     <div v-if="chooseAtmOpened">
@@ -476,15 +476,18 @@ export default {
     }
 }
 
-.spacer {
-    height: 16px;
-    margin: 0 0 -16px 0;
-    background: transparent;
-}
 
 .CreateExchange_home__body__63ZPN {
     position: absolute;
     width: calc(100% - 32px);
+
+    &::after {
+        position: absolute;
+        content: "";
+        bottom: -16px;
+        height: 16px;
+        width: 1px;
+    }
 }
 
 .slide-fade-enter-active {
