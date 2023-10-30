@@ -158,10 +158,10 @@
                             <input type="tel" id="phone" name="phone" placeholder="Телефон"
                                 v-model="verificationData.phone">
                             <label for="birth-date">Дата рождения</label>
-                            <input type="date" :max="nowDate" id="birth-date" name="birth-date" placeholder="Дата рождения"
-                                v-model="verificationData.birth_date">
+                            <input type="date" :max="new Date()" id="birth-date" name="birth-date"
+                                placeholder="Дата рождения" v-model="verificationData.birth_date">
                             <label for="visa-expired-date">Дата окончания действия визы</label>
-                            <input type="date" id="visa-expired-date" name="visa-expired-date" :min="nowDate"
+                            <input type="date" id="visa-expired-date" name="visa-expired-date" :min="new Date()"
                                 placeholder="Дата окончания действия визы" v-model="verificationData.visa_expired_date">
                             <label>Подтверждение личности</label>
                             <div class="image-input-container">
@@ -296,7 +296,6 @@ export default {
                 name: null, surname: null, patronymic: null, birth_date: null, visa_expired_date: null, phone: null,
                 passport_photo: null, visa_photo: null,
             },
-            nowDate: new Date(),
             atm_list: ["Любой банкомат", "Личная встреча", "Банкомат Bangkok Bank", "Банкомат Kungsri", "Банкомат SCB", "Банкомат Kasikorn", "Банкомат Krungthai", "Банковский перевод (Таиланд)"],
             return_sum: null,
             stepNumber: 1,
@@ -637,6 +636,8 @@ export default {
     &::-webkit-date-and-time-value {
         text-align: left;
         height: 52px;
+        padding: 0 12px;
+
     }
 
     &::-webkit-input-placeholder {
