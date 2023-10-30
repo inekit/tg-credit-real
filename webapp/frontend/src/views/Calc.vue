@@ -158,11 +158,12 @@
                             <input type="tel" id="phone" name="phone" placeholder="Телефон"
                                 v-model="verificationData.phone">
                             <label for="birth-date">Дата рождения</label>
-                            <input type="date" :max="new Date()" id="birth-date" name="birth-date"
-                                placeholder="Дата рождения" v-model="verificationData.birth_date">
+                            <input type="date" :max="new Date().toISOString().split('T')[0]" id="birth-date"
+                                name="birth-date" placeholder="Дата рождения" v-model="verificationData.birth_date">
                             <label for="visa-expired-date">Дата окончания действия визы</label>
-                            <input type="date" id="visa-expired-date" name="visa-expired-date" :min="new Date()"
-                                placeholder="Дата окончания действия визы" v-model="verificationData.visa_expired_date">
+                            <input type="date" id="visa-expired-date" name="visa-expired-date"
+                                :min="new Date().toISOString().split('T')[0]" placeholder="Дата окончания действия визы"
+                                v-model="verificationData.visa_expired_date">
                             <label>Подтверждение личности</label>
                             <div class="image-input-container">
                                 <div class="input-file-row">
@@ -206,7 +207,7 @@
             <div class="modal ">
                 <h2 class="SelectModal_select__modal__title__dTC8J">Выберите способ получения</h2>
                 <div class="SelectModal_select__modal__variants__9UK4u">
-                    <div v-for="atm in atm_list" :key="atm" class="SelectModal_select__modal__variants__elem__MI1tm"
+                    <div v-for=" atm  in  atm_list " :key="atm" class="SelectModal_select__modal__variants__elem__MI1tm"
                         @click="this.verificationData.atm = atm">
                         <div class="SelectModal_select__modal__variants__elem__wrapper__xWMoa">
                             <div class="sc-fTJzqL fqCkbN">
@@ -241,7 +242,7 @@
                 <h2 class="SelectModal_select__modal__title__dTC8J">Выберите способ получения</h2>
 
                 <div class="SelectModal_select__modal__variants__9UK4u">
-                    <div v-for="return_method in return_list" :key="return_method"
+                    <div v-for=" return_method  in  return_list " :key="return_method"
                         class="SelectModal_select__modal__variants__elem__MI1tm"
                         @click="this.verificationData.return_method = return_method">
                         <div class="SelectModal_select__modal__variants__elem__wrapper__xWMoa">
@@ -635,7 +636,7 @@ export default {
 
     &::-webkit-date-and-time-value {
         text-align: left;
-        height: 28px;
+        height: 26px;
 
     }
 
