@@ -374,7 +374,7 @@ export default {
         async returnSum() {
             if (!this.verificationData.term_days || !this.verificationData.sum) return;
 
-            const sum = await this.$store.state.myApi.get(this.$store.state.restAddr + '/loan_calculation', {
+            const sum = await (this.$store.state.myApi.get(this.$store.state.restAddr + '/loan_calculation', {
                 params: {
                     term_days: this.verificationData.term_days,
                     sum: this.verificationData.sum,
@@ -383,7 +383,7 @@ export default {
                 .then(response => {
                     return response.data?.return_sum;
                 })
-                .catch(e => { alert(e.toString()) })
+                .catch(e => { alert(e.toString()) }))
 
             return sum
 
