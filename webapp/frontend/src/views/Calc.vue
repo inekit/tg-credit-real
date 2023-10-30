@@ -619,8 +619,6 @@ export default {
     padding: 12px;
     width: 100%;
     min-width: 100%;
-    margin-bottom: 12px;
-    display: block;
     -webkit-appearance: none;
 
     &::-webkit-input-placeholder {
@@ -641,6 +639,8 @@ export default {
     font-size: 16px;
     font-weight: 700;
     line-height: 24px;
+    margin-bottom: 12px;
+    display: block;
 }
 
 .image-input-container {
