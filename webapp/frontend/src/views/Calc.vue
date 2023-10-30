@@ -337,7 +337,11 @@ export default {
         console.log(232, localStorage)
         this.stepNumber = localStorage.stepNumber ?? 1;
 
+        const tvd = this.verificationData;
+
         this.verificationData = localStorage.verificationData ? JSON.parse(localStorage.verificationData) : this.$store.state.profileData
+
+        this.verificationData = Object.assign(tvd, this.verificationData);
 
         this.imageData.passport_photo = this.verificationData.passport_photo ? `${this.$store.state.publicPath}/public/pics/${this.verificationData.passport_photo}` : null;
         this.imageData.visa_photo = this.verificationData.visa_photo ? `${this.$store.state.publicPath}/public/pics/${this.verificationData.visa_photo}` : null;
